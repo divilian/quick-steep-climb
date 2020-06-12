@@ -51,7 +51,7 @@ each letter stood for, you could laboriously crank out the answer with a
 calculator.
 
 Another example was the algebra of sets we learned about in \textit{Cool, Brisk
-Walk} chapter 2. We could take the sets $A, \mathbb{N}, B,$ and $\mathbb{Q}$
+Walk} chapter 2. We could take the sets $A, B, \mathbb{N},$ and $\mathbb{Q}$
 and combine them with set operations to get:
 
 \vspace{-.25in}
@@ -88,16 +88,44 @@ if you take the exclusive-or of two propositions $L \oplus A$, you will get
 \index{porcupine}
 
 This is important because without this guarantee, we couldn't build up complex
-expressions and be certain they would mean anything. Take the expression
-$12 + \frac{227}{45}$. Even without a calculator, you know these operations can
-in principle be done, because whatever exact value $\frac{227}{45}$ turns out
-to be, it's guaranteed to be \textit{a number}, and therefore it can be
-meaningfully added to 12. If, when dividing one number by another the result
-might be a \textit{set} (or a proposition, or a porcupine), then the whole
-expression would become meaningless: you can't add a number to a porcupine.
+expressions and be certain they would mean anything. Take the expression $12 +
+\frac{227}{45}$. Even without a calculator, you know these operations can in
+principle be done, because whatever exact value $\frac{227}{45}$ turns out to
+be, it's guaranteed to be \textit{a number}, and therefore it can be
+meaningfully added to 12. If, when dividing one number by another, the result
+might wind up being a \textit{set} (or a proposition, or a porcupine), then the
+whole expression would become meaningless: you can't add a number to a
+porcupine.
 
 In this book we'll combine vectors and matrices in a myriad of different ways,
 and we will always get vectors and matrices back. That's why they constitute
 ``an algebra.''
 
 \section{``Linear''}
+
+\index{linear}
+\index{function}
+
+The word \textit{linear} is related to the word \textit{line}: this is because
+a function that is linear looks like a line when it's plotted. Suppose I make
+\$11.75/hour at my part-time job, and I want to figure out my take-home pay for
+last week's work. Obviously, my paycheck (before taxes and what-not) will be
+11.75 times the number of hours I work. The left side of
+Figure~\ref{fig:linearNLPlots} shows my hours vs.~my pay, which is, not
+surprisingly, a line.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.45\textwidth]{linear.png}
+\includegraphics[width=0.45\textwidth]{nonlinear.png}
+\caption{Linear and non-linear functions.}
+\label{fig:linearNLPlots}
+\end{figure}
+
+By contrast, suppose I wanted to predict how tall a typical American human
+female would be based on her age. While it's true that for most age ranges the
+two variables increase together (just as more hours-worked implies more
+take-home pay, so does more years-on-earth implies more inches-off-the-ground),
+the plot is no longer a straight line (see the right side of
+Figure~\ref{fig:linearNLPlots}).
+
