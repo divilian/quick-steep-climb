@@ -129,3 +129,108 @@ take-home pay, so does more years-on-earth implies more inches-off-the-ground),
 the plot is no longer a straight line (see the right side of
 Figure~\ref{fig:linearNLPlots}).
 
+It's worth lingering for a moment on what linear \textit{means} and how it
+colors our assumptions about what to expect. Imagine this conversation:
+
+\begin{dialogue}
+
+\speak{You} Hey boss, I know I'm normally only scheduled to work for 12 hours a
+week, and I get 120 bucks for that. But I need to start saving up for a plane
+ticket to see my grandparents, so I'd like to inch that up to 15 hours next
+week. That okay?
+
+\speak{Boss} Sure, you can do 15 next week. That'll make your take-home
+pay an even \$5,000 for the week.
+
+\speak{You} \direct{Jaw drops open} Whoa, five \textit{grand}?! Heck, in that
+case, push me up to 20 -- I can make some headway on my fall tuition!
+
+\speak{Boss} Twenty hours it is -- you'll earn a total of 75\textcent~for
+that.
+
+\speak{You} \textit{D'oh!!}
+
+\end{dialogue}
+
+The above dialogue is absurd. But exactly \textit{why} is it absurd? Answer:
+because we expect weekly-pay-vs.-hours-worked to be linear, and the values
+given in the dialogue violate our linear assumptions.
+
+\bigskip
+The following scene, by contrast, \textit{isn't} absurd:
+
+\begin{dialogue}
+
+\speak{You} It's now been 12 months since I bought it, and my Blackberry stock
+is currently worth \$120. Dear Crystal Ball, how much will it be worth three
+months from now (the 15-month point)?
+
+\speak{Crystal Ball} Blackberry will skyrocket in the public's imagination
+three months from now, so at the 15-month mark your stock will be valued at
+\$5,000.
+
+\speak{You} Woo-hoo! And how about at the 20-month mark?
+
+\speak{Crystal Ball} Unfortunately for shareholders, Blackberry Inc.~will make
+some bad business decisions and crash. The stock will be nearly worthless --
+just 75\textcent.
+
+\speak{You} Yikes -- glad I asked! Please sell it in three months, okay?
+
+\end{dialogue}
+
+This scenario doesn't seem out of the question because we have no expectations
+about stock prices being linear in time.
+
+\medskip
+
+So what exactly are those linear expectations? If you work it out, they come
+down to two:
+
+\definecolor{shadecolor}{rgb}{.9,.9,.9}
+\begin{framed}
+If a function $f(x)$ is linear, then:
+\begin{compactitem}
+\item $f(a\cdot x)$ is always simply $a\cdot f(x)$.
+\item $f(x+y)$ is always simply $f(x)+f(y)$.
+\end{compactitem}
+\end{framed}
+
+Take the first one. Let's say Wawa is selling a King Size Kit Kat bar for
+\$1.50. How much would four bars cost? The answer's got to be \$6.00. It would
+be weird to be anything else. In this example, if $x$ is the number of Kit Kat
+bars, and $f(x)$ is the total cost. $f(x) = 1.5x$, and predictably, $f(4\cdot
+1) = 4 \cdot f(1) = 4 \cdot 1.5 = 6.$
+
+For the second rule, let's say we bought two Kit Kat bars today and three more
+tomorrow. How much for the total? If the universe is working normally, buying
+two today and three tomorrow would be the same price as buying five altogether.
+And it's true: $f(2+3) = f(2) + f(3) = 3 + 4.5 = 7.5 = f(5)$. It would be weird
+to work any other way.
+
+When we have non-linear functions, we don't expect these things to be true. If
+my nine-year old daughter is 4 feet tall, I don't expect her to be 8 feet tall
+when she turns eighteen. $f(a\cdot x) \neq a\cdot f(x)$. And if my Blackberry
+stock is worth \$5,000 after sixteen months and \$100 after the company's
+disastrous seventeenth, we don't count on it being worth \$5,100 after 33
+months. $f(x+y) \neq f(x)+f(y)$.
+
+For the rest of this entire book, the two assumptions above will always be
+true. It may seem limiting, but as we've seen, there are lots of cases where it
+simply doesn't make any sense for our function \textit{not} to be linear.
+
+\section{This book contains only elephants}
+
+\index{elephants}
+\index{Ulam, Stanis\l{}aw}
+
+The great mathematician and computational scientist Stanis\l{}aw Ulam once
+quipped that dividing functions into linear and non-linear is like dividing
+zoology into ``elephant'' and ``non-elephant.'' In a way it's true, because
+there are certainly far more functions that \textit{don't} obey the above two
+properties than there are those that do. By the same token, though, there are
+far more pay schemes we could invent than just ``a regular hourly rate.'' But
+hourly rates come up very, very often, and when they do, there's a lot of
+amazingly useful things we can do with them. Join us on our hike and you'll
+see.
+
