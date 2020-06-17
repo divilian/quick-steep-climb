@@ -107,12 +107,25 @@ and we will always get vectors and matrices back. That's why they constitute
 \index{function}
 
 The word \textit{linear} is related to the word \textit{line}: this is because
-a function that is linear looks like a line when it's plotted. Suppose I make
-\$11.75/hour at my part-time job, and I want to figure out my take-home pay for
-last week's work. Obviously, my paycheck (before taxes and what-not) will be
-11.75 times the number of hours I work. The left side of
-Figure~\ref{fig:linearNLPlots} shows my hours vs.~my pay, which is, not
-surprisingly, a line.
+a function that is linear looks like a line when it's plotted.\footnote{Now
+there's one confusing detail I want to clear up right away. You'll recall that
+in high school, you learned that the equation for a straight line was
+\index{y=mx+b@$y=mx+b$} ``$y=mx+b$''. Would it surprise you if I told you that
+this is \textit{not} considered a linear function, according to the worldview
+of this book? Yep.~:\textbackslash~Sorry for the surprise. That high school
+thing is actually called an \index{affine function} \textbf{affine} function
+rather than a linear function. The reason is the $b$, also called the
+\index{y-intercept@$y$-intercept} $y$-intercept. If $b$ is anything other than
+zero, then neither of the two ``linear expectations'' that we'll see on
+p.~\pageref{linearExpectations} will be true. For example, if $f(x)=3x+7$, then
+$f(2)$ (which is 13) won't be $2\cdot f(1)$ (which is 20), as our linearity
+definition requires. For us in this book, the only functions considered
+``linear'' are those lines that \index{origin} \textit{pass through the
+origin}, and thus have a $y$-intercept of 0.} Suppose I make \$11.75/hour at my
+part-time job, and I want to figure out my take-home pay for last week's work.
+Obviously, my paycheck (before taxes and what-not) will be 11.75 times the
+number of hours I work. The left side of Figure~\ref{fig:linearNLPlots} shows
+my hours vs.~my pay, which is, not surprisingly, a line.
 
 \begin{figure}[ht]
 \centering
@@ -184,11 +197,14 @@ about stock prices being linear in time.
 
 \medskip
 
+\index{expectations, linear}
+\index{linear expectations}
 So what exactly are those linear expectations? If you work it out, they come
 down to two:
 
 \definecolor{shadecolor}{rgb}{.9,.9,.9}
 \begin{framed}
+\label{linearExpectations}
 If a function $f(x)$ is linear, then:
 \begin{compactitem}
 \item $f(a\cdot x)$ is always simply $a\cdot f(x)$.
