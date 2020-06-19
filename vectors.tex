@@ -165,16 +165,124 @@ vector with my height and weight in it, we would write:
 \overrightarrow{\textbf{stephen}} = [\ 210\ \ 74 \ ].
 \end{align*}
 
+\section{Five ways to think about vectors}
+
+In the mathematical writings you'll encounter, computer scientists use the word
+``vector'' in a variety of ways. They're all ultimately compatible with each
+other, but they can seem disorientingly different at first. Really, it's a
+tribute to how powerful the vector concept is that people use them in so many
+ways for so many different things.
+
+I'm going to suggest that there are \textit{five} different ways to think about
+a vector, and I'm going to arrange these ways on a continuum from ``concrete''
+to ``abstract.'' This spectrum is depicted in Figure~\ref{fig:fiveWays}.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=1\textwidth]{fiveWays.pdf}
+\caption{Five ways to think about a vector.}
+\label{fig:fiveWays}
+\end{figure}
+
+Let's take it from the bottom.
+
+\subsection{1. A sequence of two coordinates}
+
+\index{coordinate}
+\index{element}
+This is the height-weight example, in which something like
+$\overrightarrow{\textbf{stephen}}$ is an ordered pair that can easily be
+visualized on a two-dimensional Cartesian plane. Because of this plotting
+aspect, I'll often call the two parts of the vector \textbf{coordinates}, but
+as we create vectors with more pieces I'll more often call them
+\textbf{elements}. These terms mean the same thing -- they both refer to the
+individual components of the vector.
+
+\index{index number}
+
+We will need a way to select each of the coordinates individually, and for that
+we use \textbf{index numbers} (sometimes abbreviated to simply
+``\textbf{index},'' the plural of which is ``indices.'') As you can see in
+Figure~\ref{fig:fiveWays}, I've put two smaller numbers directly below the two
+coordinates of the bottom vector, to indicate that we call them ``coordinate
+\#0'' and ``coordinate \#1.'' We'll also use the phrase ``\textbf{index into
+the vector},'' where ``index'' is a verb. If I take that bottom-most vector,
+and index into it at coordinate 1, I get the (scalar) value 93.
+
+You might wonder why I didn't write ``1'' and ``2'' instead of starting with
+zero, and the answer has to do with the fact that we'll be using Python in this
+book. Every programming language has a way of indexing into its vector-like
+objects, and Python, Java, and C++ all begin indexing with the number 0. There
+are actually some good reasons for this, which I won't get into. It's not
+universally embraced, however; languages like R and Julia start their indexing
+at 1. Go figure.
+
+I put this figure at the extreme ``concrete'' end of the spectrum, because it's
+so nuts-and-bolts and easy to visualize. As we ascend up the hierarchy,
+things will get less and less visualizable.
 
 
------
+\subsection{2. A sequence of more than two coordinates}
 
+As I mentioned earlier in this chapter, having more than two coordinates in a
+vector isn't really all that weird...you simply have to give up any hope of
+visualizing it geometrically. But it's easy enough to do: a list of four
+numbers -- 89, 93, 70, and 133 -- is the most natural thing in the world. One
+could imagine finding the sum of the elements, the maximum element, the number
+of negative elements, or other more exotic things.
 
-5 different ways to think about a vector
+Again, our indexing starts at 0, and this time goes up to 3. Note what this
+implies: if we have a vector with four elements, there is no element \#4! This
+is a common pitfall for newcomers to the subject and to languages like Python.
+If I have a vector with $n$ coordinates, those coordinates are numbered 0 up to 
+$n-1$, but \textit{not} up to $n$.
 
-1. a 2-d vector of reals, w/ index  (index into the X vector and get a value,
-which is the element)
-2. higher than 2 dimensions. can't visualize it; have to suspend our disbelief.
-3. names instead of indices  (even less geometric)
-4. non-numeric elements
-5. a thing that satisfies certain properties
+\subsection{3. A collection with non-numeric indices}
+
+At this point of the hierarchy, I change my nomenclature from ``sequence'' to
+``collection.'' That's because here, we don't \textit{number} the elements of
+our vector anymore but instead \textit{name} them. Thus there isn't any
+meaningful order to the elements anymore -- instead of ``IQ \#0,'' ``IQ \#1,''
+and so forth, we have ``Jezebel's IQ,'' ``Filbert's IQ,'' and the like. Nothing
+super weird here, but things may be starting to look less and less math-y to
+you.
+
+% TODO: talk about how diff languages represent this in diff ways; with R, you
+% can name the elements of a vector, whereas in Python, you'll need a dict.
+
+\subsection{4. A collection with non-numeric elements}
+
+Heck, if the indices don't have to be numbers, why would the elements need to
+be? And indeed we will often have cause to work with vectors like the one in
+place 4 of the continuum, in which there's not a number in sight. This example
+holds the favorite colors for each of our four friends, which are of course
+non-numeric.
+
+\subsection{5. Just a ``thing''}
+
+Finally, you won't see this usage of vectors until you get to some more
+advanced math, but I'd be doing you a disservice if I didn't point it out here.
+I remember the first time I read some research in which the author was going on
+and on about ``vectors,'' and I was dreadfully confused because none of his
+``vectors'' seemed to have any elements in them! I was like, ``what do you mean
+\textit{vectors}, dude? Did your word processor auto-correct a different
+word?''
+
+\index{vector space}
+\index{algebra@``an algebra''}
+
+This computer scientist was treating ``vectors'' as whole objects, not even
+considering what their elements were (or whether they even \textit{had} any
+elements). He was working with an abstract notion called a \textbf{vector
+space} which we'll touch on much later; for now I'll just tell you that it's
+closely related to the notion of an algebra that we discussed in
+Chapter~\ref{ch:intro}. He was taking advantage of some of the elegant results
+presented later in this book, which are guaranteed to hold for whatever
+mathematical objects you care to define, as long as you obey certain ground
+rules -- whether those objects have any ``elements'' to them or not. I mention
+this mostly to anchor your future self in solid ground the first time you
+inevitably come across the use of ``vector'' as a very un-list-like thing.
+You'll remember reading this, say to yourself ``ah yes -- Stephen warned me
+once that the extreme abstract end of the continuum works like this,'' and
+proceed with confidence. I won't say anything more about it in this book.
+
