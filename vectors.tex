@@ -31,7 +31,7 @@ we haven't really talked about ``dimensions,'' yet. But think of the plain-old
 in the middle, positive numbers to the right and negative numbers to the left,
 and the whole thing extends infinitely in just one direction\footnote{It might
 seem like ``two directions,'' since the number line goes both to the left and
-to the right. But since \index{left-ness} \index{right-neww} left-ness is the
+to the right. But since \index{left-ness} \index{right-ness} left-ness is the
 exact opposite of right-ness, these are considered ``the same direction''; it's
 just a matter of how far you go back or forth you go along that one straight
 path.}.
@@ -254,9 +254,9 @@ you.
 
 Heck, if the indices don't have to be numbers, why would the elements need to
 be? And indeed we will often have cause to work with vectors like the one in
-place 4 of the continuum, in which there's not a number in sight. This example
-holds the favorite colors for each of our four friends, which are of course
-non-numeric.
+step 4 of the hierarchy (Figure~\ref{fig:fiveWays}), in which there's not a
+number in sight. This example holds the favorite colors for each of our four
+friends, which are of course non-numeric.
 
 \subsection{5. Just a ``thing''}
 
@@ -285,4 +285,138 @@ inevitably come across the use of ``vector'' as a very un-list-like thing.
 You'll remember reading this, say to yourself ``ah yes -- Stephen warned me
 once that the extreme abstract end of the continuum works like this,'' and
 proceed with confidence. I won't say anything more about it in this book.
+
+\section{And a vector is also a function}
+
+\index{function}
+
+Oh, and yet another way to think of vectors: as \textbf{function}s. We'll talk
+about vectors as inputs to functions later in this book. But it's worth
+recognizing at this point that a vector itself essentially \textit{is} a
+function.
+
+\index{domain}
+\index{codomain}
+
+You'll remember from Chapter 3 of \textit{Cool, Brisk Walk} that a function is
+a mapping from a set of inputs to a set of outputs. Each member of the input
+set (a.k.a. the ``domain'') is assigned a member of the output set
+(``codomain'') as its value. (No member of the domain can be assigned to more
+than one member of the codomain, but the reverse is not a constraint: multiple
+members of the domain \textit{can} be assigned to the same member of the
+codomain.)
+
+Now consider this vector:
+
+\begin{center}
+\begin{tabular}{ccccccc}
+$\overrightarrow{\textbf{x}} = [$ & 45 & -12 & 9 & 45 & 0 & $]$ \\
+& \scriptsize{0} & \scriptsize{1} & \scriptsize{2} & \scriptsize{3} & \scriptsize{4}& \\
+\normalsize
+\end{tabular}
+\end{center}
+\vspace{-.15in}
+
+It's a sequence of numbered elements, sure. But couldn't it just as easily be
+interpreted as a function from index numbers to values? (See
+Figure~\ref{vectorFunction1}.)
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=1\textwidth]{vectorFunction1.png}
+\caption[.]{The vector $\overrightarrow{\textbf{x}}$, interpreted as a function.}
+\label{vectorFunction1}
+\end{figure}
+
+In function syntax, $\overrightarrow{\textbf{x}}(0) = 45$,
+$\overrightarrow{\textbf{x}}(1) = -12$, $\overrightarrow{\textbf{x}}(3) = 45$,
+and so on. It makes even more sense with a non-numeric vector like the
+``favorite color'' example (Fig.~\ref{fig:fiveWays}), where 
+$\overrightarrow{\textbf{faveColor}}(\textrm{Biff}) = \textrm{blue}$ and
+$\overrightarrow{\textbf{faveColor}}(\textrm{Betty Lou}) = \textrm{purple}$.
+
+\index{ah-ha@``ah-ha"!''~moment}
+\index{dictionary}
+\index{hash table}
+\index{array}
+\index{associative array}
+\index{list}
+\index{vector}
+\index{function}
+I remember having a real ``ah-ha!''~moment the day I first realized that
+vectors (called ``arrays'' or ``lists'' in some programming languages) were
+really the same as key/value-pair-based associative arrays (called
+``dictionaries'' or ``hash tables'' in some programming languages) with an
+index number as the key; and that both were equivalent to functions (with
+inputs being keys/indices and outputs being values) as well. Wow. Sometimes it
+seems like the universe is really all just one thing.
+
+%Vectors in the wild
+%
+%
+%time series
+%
+%temperatures over time
+%
+%
+%
+%items with attributes
+%
+%loan attributes: age, credit score, loan amount, salary
+%
+%
+%
+%MP3 file
+%
+%everything has to be in binary to be in a computer
+%
+%air displacement vs. time
+%
+%sampling
+%
+%
+%
+%image files
+%
+%BW vs color
+%
+%can do finding faces, brighten the image, whatever
+%
+%
+%
+%binary string of text
+%
+%plain-text, encrypt with key, to get cipher text
+%
+%
+%
+%
+%Google, vector representation of web pages
+%
+%bag of words
+%
+%
+%
+%Emails, spam detectors
+%
+%
+%
+%matchmaker.com 
+%
+%
+%
+%Facebook:
+%represent each vertex as a vector of people-he's-friends-with 
+%
+%
+%Purchasing patterns, 
+%recommender systems (collaborative filbert)
+%
+%
+%
+%system state, population growth
+
+
+
+
 
