@@ -101,15 +101,25 @@ direction and have the same length; the point they start at is irrelevant.}
 \label{fig:vector}
 \end{figure}
 
+\index{magnitude (of a vector)}
+\index{length (of a vector)}
+\index{point of origin}
+\index{direction (of a vector)}
+
 You can see this illustrated on the right-hand side figure, where I've drawn
 several copies of \textit{the same vector}. This may seem weird, but in terms
 of pictures, here's how you want to think of it: \textbf{a vector has a
-direction and a length, but not a starting point}. In the case of Stephen's
-biometrics, the vector's direction is east-by-northeast-ish (19.4\textdegree\
-to be exact, if you wanted to work out the trig) and its length is 222.6
-(Pythagorean Theorem), but it doesn't have an intrinsic ``starting point'';
-it's just an arrow pointing this-a-way and yea-far, no matter where it's
-anchored.
+direction and a magnitude, but not a starting point}. (The word
+``\textbf{magnitude}'' simply means how long\footnote{We have to be careful
+with our terminology here, because we'll use the word \textbf{length} to
+describe the number of elements of a vector, which of course is totally
+different than the magnitude as drawn in space. The vector in the present
+example has a magnitude in the two hundreds, but a length of only 2.} the
+vector is from its tail to its tip.) In the case of Stephen's biometrics, the
+vector's direction is east-by-northeast-ish (about 20\textdegree\
+counter-clockwise from the $x$-axis) and its magnitude is 220 or so, but it
+doesn't have any intrinsic ``point of origin''; it's just an arrow pointing
+this-a-way and yea-far, no matter where it might be anchored.
 
 \index{mosquito}
 
@@ -165,7 +175,17 @@ vector with my height and weight in it, we would write:
 \overrightarrow{\textbf{stephen}} = [\ 210\ \ 74 \ ].
 \end{align*}
 
+\medskip
+
 \section{Five ways to think about vectors}
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=1\textwidth]{fiveWays.pdf}
+\caption{Five ways to think about a vector.}
+\label{fig:fiveWays}
+\end{figure}
+
 
 In the mathematical writings you'll encounter, computer scientists use the word
 ``vector'' in a variety of ways. They're all ultimately compatible with each
@@ -176,13 +196,6 @@ ways for so many different things.
 I'm going to suggest that there are \textit{five} different ways to think about
 a vector, and I'm going to arrange these ways on a continuum from ``concrete''
 to ``abstract.'' This spectrum is depicted in Figure~\ref{fig:fiveWays}.
-
-\begin{figure}[ht]
-\centering
-\includegraphics[width=1\textwidth]{fiveWays.pdf}
-\caption{Five ways to think about a vector.}
-\label{fig:fiveWays}
-\end{figure}
 
 Let's take it from the bottom.
 
@@ -206,20 +219,67 @@ we use \textbf{index numbers} (sometimes abbreviated to simply
 Figure~\ref{fig:fiveWays}, I've put two smaller numbers directly below the two
 coordinates of the bottom vector, to indicate that we call them ``coordinate
 \#0'' and ``coordinate \#1.'' We'll also use the phrase ``\textbf{index into
-the vector},'' where ``index'' is a verb. If I take that bottom-most vector,
-and index into it at coordinate 1, I get the (scalar) value 93.
+the vector},'' where ``index'' is a verb. If we take that bottom-most vector,
+and index into it at coordinate 1, we get the (scalar) value 93.
 
-You might wonder why I didn't write ``1'' and ``2'' instead of starting with
-zero, and the answer has to do with the fact that we'll be using Python in this
-book. Every programming language has a way of indexing into its vector-like
-objects, and Python, Java, and C++ all begin indexing with the number 0. There
-are actually some good reasons for this, which I won't get into. It's not
-universally embraced, however; languages like R and Julia start their indexing
-at 1. Go figure.
+Notation-wise, if we have a two-dimensional vector called
+$\overrightarrow{\textbf{bob}}$, we'll often write $bob_0$ for the value of the
+first coordinate and $bob_1$ for the second.
 
-I put this figure at the extreme ``concrete'' end of the spectrum, because it's
-so nuts-and-bolts and easy to visualize. As we ascend up the hierarchy,
-things will get less and less visualizable.
+As an aside, you might wonder why the coordinates are numbered 0 and 1 instead
+of 1 and 2. The answer has to do with the fact that we'll be using Python in
+this book. Every programming language has a way of indexing into its
+vector-like objects, and Python, Java, and C++ all begin indexing with the
+number 0. There are actually some good reasons for this, which I won't get
+into. It's not universally embraced, however; languages like R and Julia start
+their indexing at 1. Go figure.
+
+\index{tail (of a geometric vector)}
+\index{tip (of a geometric vector)}
+
+Geometrically, we can compute a vector's direction and magnitude using
+principles from trigonometry. Figure~\ref{fig:directionMag} shows a vector
+$\overrightarrow{\textbf{v}} = [\ 74 \ 210\ ]$ pictorially. Its $0^\text{th}$
+coordinate (a.k.a. $v_0$) is 74, measured on the $x$-axis, and $v_1$ is 210.
+Traditionally, a two-dimensional vector's magnitude is called $r$ (for
+``radius,'' I think, although don't think about that too hard) and its
+direction is called $\theta$ (``theta''). The magnitude is just the crow-flies
+distance from the vector's \textbf{tail} to its \textbf{tip} (computed using
+the Pythagorean Theorem) and the direction is the arctangent of the
+rise-over-run. In equations:
+
+\vspace{-.25in}
+\begin{align*}
+r &= \sqrt{v_0^2 + v_1^2} \\
+\theta &= \tan^{-1} \frac{v_1}{v_0} \\
+\end{align*}
+\vspace{-.55in}
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=.7\textwidth]{directionMag.png}
+\caption[.]{The magnitude ($r$) and direction ($\theta$) of the vector
+$\overrightarrow{\textbf{v}} = [\ 74 \ 210\ ]$. The direction $\theta$ is the
+angle that $\overrightarrow{\textbf{v}}$ makes counter-clockwise with the
+$x$-axis.}
+\label{fig:directionMag}
+\end{figure}
+\smallskip
+
+\index{polar coordinates}
+\index{Cartesian coordinates}
+
+In this case, $r$ works out to 222.6 and $\theta$ is 70.6\textdegree. Think
+about this, too: if, instead of giving you the values of $v_0$ and $v_1$, I
+instead gave you the values of $r$ and $\theta$, you'd still have \textit{all
+the information about the vector}, just in a different form. These are
+sometimes called the \textbf{polar coordinates} of a vector, instead of the
+\textbf{Cartesian coordinates}. They're written this way: $222.6 \measuredangle
+70.6$\textdegree.
+
+Anyway, I put this way of thinking about vectors at the extreme ``concrete''
+end of the spectrum, because it's so nuts-and-bolts and easy to visualize. As
+we ascend up the hierarchy, things will get less and less visualizable.
 
 
 \subsection{2. A sequence of more than two coordinates}
