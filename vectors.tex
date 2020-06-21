@@ -109,21 +109,27 @@ direction and have the same length; the point they start at is irrelevant.}
 \index{length (of a vector)}
 \index{point of origin}
 \index{direction (of a vector)}
+\index{tail (of a vector)}
+\index{tip (of a vector)}
+\index{Stark, Arya}
 
 You can see this illustrated on the right-hand side figure, where I've drawn
 several copies of \textit{the same vector}. This may seem weird, but in terms
 of pictures, here's how you want to think of it: \textbf{a vector has a
-direction and a magnitude, but not a starting point}. (The word
-``\textbf{magnitude}'' simply means how long\footnote{We have to be careful
-with our terminology here, because we'll use the word \textbf{length} to
-describe the number of elements of a vector, which of course is totally
-different than the magnitude as drawn in space. The vector in the present
-example has a magnitude in the two hundreds, but a length of only 2.} the
-vector is from its tail to its tip.) In the case of Stephen's biometrics, the
-vector's direction is east-by-northeast-ish (about 20\textdegree\
-counter-clockwise from the $x$-axis) and its magnitude is 220 or so, but it
-doesn't have any intrinsic ``point of origin''; it's just an arrow pointing
-this-a-way and yea-far, no matter where it might be anchored.
+direction and a magnitude, but not a starting point}. The direction is the
+specific angle in which it points, and (for now) we use the word
+``\textbf{magnitude}'' to mean how long the vector is from its \textbf{tail} to
+its \textbf{tip}. (As Arya Stark would say, the tip is the ``pointy end'' with
+the arrowhead.) Curiously, there are alternative ways of judging the length, or
+magnitude, of a vector, which we'll revisit in section~\ref{sec:norms}.
+
+\index{counter-clockwise}
+
+In the case of Stephen's biometric vector, its direction is
+east-by-northeast-ish (about 19.4\textdegree\ counter-clockwise from the
+$x$-axis) and its magnitude is 222.6. But it doesn't have any intrinsic ``point
+of origin''; it's just an arrow pointing this-a-way and yea-far, no matter
+where it might be anchored.
 
 \index{mosquito}
 
@@ -217,8 +223,8 @@ individual components of the vector.
 
 \index{index number}
 
-We will need a way to select each of the coordinates individually, and for that
-we use \textbf{index numbers} (sometimes abbreviated to simply
+We will need a way to select one of the coordinates individually, and for that
+we use an \textbf{index number} (sometimes abbreviated to simply
 ``\textbf{index},'' the plural of which is ``indices.'') As you can see in
 Figure~\ref{fig:fiveWays}, I've put two smaller numbers directly below the two
 coordinates of the bottom vector, to indicate that we call them ``coordinate
@@ -242,9 +248,9 @@ their indexing at 1. Go figure.
 \index{tip (of a geometric vector)}
 
 Geometrically, we can compute a vector's direction and magnitude using
-principles from trigonometry. Figure~\ref{fig:directionMag} shows a vector
-$\overrightarrow{\textbf{v}} = [\ 74 \ 210\ ]$ pictorially. Its $0^\text{th}$
-coordinate (a.k.a. $v_0$) is 74, measured on the $x$-axis, and $v_1$ is 210.
+trigonometry. Figure~\ref{fig:directionMag} shows a vector
+$\overrightarrow{\textbf{v}} = [\ 9 \ \ 21\ ]$ pictorially. Its $0^\text{th}$
+coordinate (a.k.a. $v_0$) is 9, measured on the $x$-axis, and $v_1$ is 21.
 Traditionally, a two-dimensional vector's magnitude is called $r$ (for
 ``radius,'' I think, although don't think about that too hard) and its
 direction is called $\theta$ (``theta''). The magnitude is just the crow-flies
@@ -262,10 +268,10 @@ r &= \sqrt{v_0^2 + v_1^2} \\
 \begin{figure}[ht]
 \centering
 \includegraphics[width=.7\textwidth]{directionMag.png}
-\caption[.]{The magnitude ($r$) and direction ($\theta$) of the vector
-$\overrightarrow{\textbf{v}} = [\ 74 \ 210\ ]$. The direction $\theta$ is the
+\caption[.]{The direction ($\theta$) and magnitude ($r$) of the vector
+$\overrightarrow{\textbf{v}} = [\ 9 \ \ 21\ ]$. The direction $\theta$ is the
 angle that $\overrightarrow{\textbf{v}}$ makes counter-clockwise with the
-$x$-axis.}
+$x$-axis, and the magnitude is the length of the line.}
 \label{fig:directionMag}
 \end{figure}
 \smallskip
@@ -273,13 +279,14 @@ $x$-axis.}
 \index{polar coordinates}
 \index{Cartesian coordinates}
 
-In this case, $r$ works out to 222.6 and $\theta$ is 70.6\textdegree. Think
+In this case, $r$ works out to 22.8 and $\theta$ is 66.8\textdegree. Think
 about this, too: if, instead of giving you the values of $v_0$ and $v_1$, I
 instead gave you the values of $r$ and $\theta$, you'd still have \textit{all
 the information about the vector}, just in a different form. These are
 sometimes called the \textbf{polar coordinates} of a vector, instead of the
-\textbf{Cartesian coordinates}. They're written this way: $222.6 \measuredangle
-70.6$\textdegree.
+\textbf{Cartesian coordinates}. The polar coordinates are usually written as
+``$22.8 \measuredangle 66.8$\textdegree,'' which is the same vector as $[\ 9 \
+\ 21 \ ]$, just written in a different way.
 
 Anyway, I put this way of thinking about vectors at the extreme ``concrete''
 end of the spectrum, because it's so nuts-and-bolts and easy to visualize. As
@@ -316,11 +323,11 @@ you.
 
 \subsection{4. A collection with non-numeric elements}
 
-Heck, if the indices don't have to be numbers, why would the elements need to
-be? And indeed we will often have cause to work with vectors like the one in
-step 4 of the hierarchy (Figure~\ref{fig:fiveWays}), in which there's not a
-number in sight. This example holds the favorite colors for each of our four
-friends, which are of course non-numeric.
+And heck, if the indices don't have to be numbers, why would the elements need
+to be? And indeed we will often have cause to work with vectors like the one in
+step 4 of the hierarchy (Figure~\ref{fig:fiveWays}, p.~\pageref{fig:fiveWays}),
+in which there's not a number in sight. This example holds the favorite colors
+for each of our four friends, which are of course non-numeric.
 
 \subsection{5. Just a ``thing''}
 
@@ -407,13 +414,15 @@ $\overrightarrow{\textbf{faveColor}}(\textrm{Betty Lou}) = \textrm{purple}$.
 \index{list}
 \index{vector}
 \index{function}
+
 I remember having a real ``ah-ha!''~moment the day I first realized that
 vectors (called ``arrays'' or ``lists'' in some programming languages) were
-really the same as key/value-pair-based associative arrays (called
-``dictionaries'' or ``hash tables'' in some programming languages) with an
-index number as the key; and that both were equivalent to functions (with
-inputs being keys/indices and outputs being values) as well. Wow. Sometimes it
-seems like the universe is really all just one thing.
+really the same as key/value-pair-based associative arrays (also called
+``dictionaries'' or ``hash tables'') with \textit{an index number as the key}.
+Later, I had another ``ah-ha!''~and realized that both were equivalent to
+functions as well, if you viewed the keys/indices as the function's domain and
+the elements as the codomain. Wow. Sometimes it seems like the universe is
+really all just one thing.
 
 %Vectors in the wild
 %
@@ -481,6 +490,61 @@ seems like the universe is really all just one thing.
 %system state, population growth
 
 
+%operations
+%
+%scalar-vector multiplication
+%    no such thing as scalar-vector addition! (although programming languages
+%        give you a convenient shortcut)
+%    distributive
+%vector addition
+%    can't add two vectors of different length / # dimensions
+%    if not indexed by number, must have the same domain (index labels)
+%    commutative
+%    (subtraction)
+%vector multiplication (dot product)
+%    (a.k.a inner product, sorta)
+%    can't multiply two vectors of different length  or w/ diff domain
+%    commutative
+%
+%
+%
+%brownies / chippers / etc  example
+%    first "how much of each ingredient would I need for these recipes"
+%    then "how much would it cost at Wegmans to buy that list"
+%
+%
+%
+%what needs to be true about the vectors for me to get a big dot product? big
+%    elements? Yes, sorta, but no...
+%
+%    taking the dot product is a crude way of telling you "how aligned they are"
+%
+%    matchmaker example
+%        (of course, Jezebel could max it out with all 10's and beat the system)
+%
+%
+%dot product geometrically (three different orthogonal cases)
+%    if they're orthogonal, their dot product is zero.
+%    another way to compute dot product: magnitude of one vec * meg of other
+%        * cos theta
 
 
+\section{Norms and normalization}
+\label{sec:norms}
 
+    "size" "bigness" "magnitude" "length"
+    magnitude / length
+
+%    the l^n norm  (but don't use n if you also use n for # of vec elems)
+%    l^2 norm -- Euclidean norm / Pythagorean Theorem / crow flies
+
+%    more generally, n=3, n=4, n=193   (note: have to take abs value)
+% manhattan / taxicab norm
+% l^0 norm (number of non-zero entries in vector)
+% l^inf norm, abs value of max element
+
+%"Normalizing" -- dividing by the norm. (just want the magnitude)
+%    [ 4 3 ] -> [ 4/5  3/5 ]
+% only care about the direction
+% now jezebel can't cheat with [ 10 10 10 10 10 ]. same as Chad, who answered
+% [ 5 5 5 5 5 ].
