@@ -244,8 +244,8 @@ number 0. There are actually some good reasons for this, which I won't get
 into. It's not universally embraced, however; languages like R and Julia start
 their indexing at 1. Go figure.
 
-\index{tail (of a geometric vector)}
-\index{tip (of a geometric vector)}
+\index{tail (of a vector)}
+\index{tip (of a vector)}
 
 Geometrically, we can compute a vector's direction and magnitude using
 trigonometry. Figure~\ref{fig:directionMag} shows a vector
@@ -308,6 +308,11 @@ is a common pitfall for newcomers to the subject and to languages like Python.
 If I have a vector with $n$ coordinates, those coordinates are numbered 0 up to 
 $n-1$, but \textit{not} up to $n$.
 
+\index{dimension}
+Also note that the number of elements/coordinates is also the
+\textbf{dimensionality} (number of dimensions) of the vector. Simply put, a
+vector that has nine elements in it is called ``a 9-dimensional vector.''
+
 \subsection{3. A collection with non-numeric indices}
 
 At this point of the hierarchy, I change my nomenclature from ``sequence'' to
@@ -317,6 +322,10 @@ meaningful order to the elements anymore -- instead of ``IQ \#0,'' ``IQ \#1,''
 and so forth, we have ``Jezebel's IQ,'' ``Filbert's IQ,'' and the like. Nothing
 super weird here, but things may be starting to look less and less math-y to
 you.
+
+\index{label}
+
+I'll sometimes call the names of the elements \textbf{label}s.
 
 % TODO: talk about how diff languages represent this in diff ways; with R, you
 % can name the elements of a vector, whereas in Python, you'll need a dict.
@@ -402,9 +411,11 @@ Figure~\ref{vectorFunction1}.)
 In function syntax, $\overrightarrow{\textbf{x}}(0) = 45$,
 $\overrightarrow{\textbf{x}}(1) = -12$, $\overrightarrow{\textbf{x}}(3) = 45$,
 and so on. It makes even more sense with a non-numeric vector like the
-``favorite color'' example (Fig.~\ref{fig:fiveWays}), where 
+``favorite color'' example (Fig.~\ref{fig:fiveWays}), where
 $\overrightarrow{\textbf{faveColor}}(\textrm{Biff}) = \textrm{blue}$ and
 $\overrightarrow{\textbf{faveColor}}(\textrm{Betty Lou}) = \textrm{purple}$.
+Instead of index numbers, the function's domain is comprised of the vector's
+labels.
 
 \index{ah-ha@``ah-ha"!''~moment}
 \index{dictionary}
@@ -490,17 +501,188 @@ really all just one thing.
 %system state, population growth
 
 
-%operations
-%
-%scalar-vector multiplication
-%    no such thing as scalar-vector addition! (although programming languages
-%        give you a convenient shortcut)
-%    distributive
-%vector addition
-%    can't add two vectors of different length / # dimensions
-%    if not indexed by number, must have the same domain (index labels)
-%    commutative
-%    (subtraction)
+\section{Vector operations}
+
+We're going to be combining scalars/vectors to yield other scalars/vectors like
+literally all the time. The following three operations must be mastered until
+you can do them in your sleep.
+
+\subsection{Operation \#1: Scalar-vector multiplication}
+
+What do you think you'd get if you multiplied a scalar like 2 by a vector like
+$[\ 3\ \ 0\ \ 4\ ]$? As with all mathematics, we can define this operation to
+be anything we want. A reasonable guess would be to take the scalar number of
+copies of the vector, like so:
+
+\vspace{-.15in}
+\begin{align*}
+2 \cdot [\ 3\ \ 0\ \ 4\ ] = [\ 3\ \ 0\ \ 4\ \ 3\ \ 0\ \ 4\ ] ? \quad  \quad
+\textrm{NOPE}
+\end{align*}
+\vspace{-.15in}
+
+But we're not doing to define it that way. Instead, we'll multiply the scalar
+by each of the vector's elements individually, to get another vector with the
+same number of elements:
+
+\vspace{-.15in}
+\begin{align*}
+2 \cdot [\ 3\ \ 0\ \ 4\ ] = [\ 6\ \ 0\ \ 8\ ]
+\end{align*}
+\vspace{-.15in}
+
+\index{scalar-vector multiplication}
+
+This turns out to be more useful. So in general, a scalar $a$ times a vector
+$\overrightarrow{\textbf{v}}$ will be:
+
+\vspace{-.15in}
+\begin{center}
+\begin{framed}
+\textbf{Scalar-vector multiplication:}
+\begin{align*}
+a \overrightarrow{\textbf{v}} = a [\ v_0\ \ v_1\ \ \dots \ \ v_{n-1}\ ] =
+[\ a \cdot v_0\ \ a \cdot v_1\ \ \dots \ \ a \cdot v_{n-1}\ ],
+\end{align*}
+where $n$ is the number of elements in the vector.
+\end{framed}
+\end{center}
+\vspace{-.15in}
+
+Interestingly, there's no such thing (in common use) as ``scalar-vector
+\textit{addition}.'' In other words, if someone tried to do this:
+
+\vspace{-.15in}
+\begin{align*}
+2 + [\ 3\ \ 0\ \ 4\ ] = \ ??
+\end{align*}
+\vspace{-.15in}
+
+\index{no can do@``no can do''}
+we're simply going to say ``no can do.''
+
+By the way, some programming languages (including Python) do give the
+programmer a convenient shorthand by allowing them to type
+$2 + [\ 3\ \ 0\ \ 4\ ]$ and get the value $[\ 5\ \ 2\ \ 6\ ]$. This isn't
+considered a bona fide mathematical operation, though; just a notational
+convenience.
+
+\subsection{Operation \#2: Vector addition}
+
+Adding two vectors together, though, is a perfectly acceptable enterprise,
+provided that the vectors have the same number of elements. The way we do it is
+to add each pair of elements together and produce another vector of the same
+number of dimensions. In other words, adding $[\ 2\ \ 9\ ]$ to $[\ 4\ \ -2\ ]$
+gives us:
+
+\vspace{-.15in}
+\begin{align*}
+[\ 2\ \ 9\ ] + [\ 4\ \ -2\ ] = [\ 6\ \ 7\ ],
+\end{align*}
+\vspace{-.15in}
+
+and in general:
+
+\vspace{-.15in}
+\begin{center}
+\begin{framed}
+\textbf{Vector addition:}
+\begin{align*}
+\overrightarrow{\textbf{x}} + \overrightarrow{\textbf{y}} &=
+[\ x_0\ \ x_1\ \ \dots \ \ x_{n-1}\ ] +
+[\ y_0\ \ y_1\ \ \dots \ \ y_{n-1}\ ] \\
+&= [\ x_0 + y_0\ \ x_1 + y_1\ \ \dots \ \ x_{n-1} + y_{n-1}\ ],
+\end{align*}
+where $n$ is the number of elements in each vector.
+\end{framed}
+\end{center}
+\vspace{-.15in}
+
+An important issue arises in level 3 of our Figure~\ref{fig:fiveWays} hierarchy
+(p.~\pageref{fig:fiveWays}). How do we add two vectors that aren't indexed by
+number? Answer: we add the elements from each vector that correspond to the
+same \textit{label}. And yes, the vectors must \textit{have} exactly the same
+labels in order to be legitimately added in this way; otherwise, we call the
+whole thing off. So:
+
+\begin{center}
+\begin{tabular}{ccccccccc}
+[ & 3 & 5 & 8 & ] \ + \ [ & 1 & -6 & 4 & ] \ = \\
+& \scriptsize{peacock} & \scriptsize{green} & \scriptsize{plum} & &
+\scriptsize{peacock} & \scriptsize{green} & \scriptsize{plum} & \\
+\normalsize
+\end{tabular}
+\vspace{-.15in}
+\begin{tabular}{ccccc}
+[ & 4 & -1 & 12 & ], \\
+& \scriptsize{peacock} & \scriptsize{green} & \scriptsize{plum} & \\
+\normalsize
+\end{tabular}
+\end{center}
+\vspace{-.15in}
+
+and
+
+\begin{center}
+\begin{tabular}{ccccccccc}
+[ & 2 & 1 & 4 & ] \ + \ [ & 3 & 3 & 0 & ] \ = \\
+& \scriptsize{scarlet} & \scriptsize{mustard} & \scriptsize{green} & &
+\scriptsize{scarlet} & \scriptsize{white} & \scriptsize{plum} & \\
+\normalsize
+\end{tabular}
+
+\index{no can do@``no can do''}
+\vspace{-.15in}
+``no can do.''
+\end{center}
+\vspace{-.15in}
+
+\index{commutative}
+\index{distributive}
+
+\medskip
+You can probably tell that vector addition is \textbf{commutative}, meaning
+that whether we add $\overrightarrow{\textbf{x}}$ +
+$\overrightarrow{\textbf{y}}$ or $\overrightarrow{\textbf{y}}$ +
+$\overrightarrow{\textbf{x}}$, we get the same answer. It's also true that
+vector addition, combined with scalar-vector multiplication, is
+\textbf{distributive}. This means:
+
+\vspace{-.15in}
+\begin{align*}
+a (\overrightarrow{\textbf{x}} + \overrightarrow{\textbf{y}}) &=
+a \overrightarrow{\textbf{x}} + a \overrightarrow{\textbf{y}}
+\end{align*}
+\vspace{-.15in}
+and
+
+\vspace{-.15in}
+\begin{align*}
+(a + b) \overrightarrow{\textbf{x}} &=
+a \overrightarrow{\textbf{x}} + b \overrightarrow{\textbf{x}}
+\end{align*}
+\vspace{-.15in}
+
+for any scalars $a$ and $b$ and vectors $\overrightarrow{\textbf{x}}$ and
+$\overrightarrow{\textbf{y}}$. This is a useful fact to know, which we'll
+sometimes rely on.
+
+\medskip
+
+By the way, you might wonder whether vector subtraction is a thing, and it is:
+in fact it turns out to just use scalar multiplication by $-1$. So:
+
+\vspace{-.15in}
+\begin{center}
+$\overrightarrow{\textbf{x}} - \overrightarrow{\textbf{y}} =
+\overrightarrow{\textbf{x}} + (-1 \overrightarrow{\textbf{y}}) =$ \\
+$ [\ x_0 - y_0\ \ x_1 - y_1\ \ \dots \ \ x_{n-1} - y_{n-1}\ ]$.
+\end{center}
+
+For example, $[\ 5\ \ 2\ \ 7\ ] - [\ 1\ \ 4\ \ 7\ ]$ is just $[\ 4\ \ -2\ \ 0\ ]$.
+
+\subsection{Operation \#3: Vector multiplication (dot product)}
+
 %vector multiplication (dot product)
 %    (a.k.a inner product, sorta)
 %    can't multiply two vectors of different length  or w/ diff domain
