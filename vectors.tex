@@ -1044,52 +1044,159 @@ This book is chock full of examples of using vectors in the real world. Let me
 give one now which illustrates the eminent usefulness of these three vector
 operations.
 
+\smallskip
+Let's say we've been tasked with baking goodies for a bake sale. There are
+three recipes we're planning on making in bulk: chocolate chippers (my personal
+fave), brownies, and fudge. Upon consulting our recipe book, we write down an
+ingredient list for each:
+
+\index{chocolate chip cookies}
+\index{fudge}
+\index{brownies}
+
+\begin{center}
+\begin{tabular}{ccccccc}
+$\overrightarrow{\textbf{chippers}}$ \ = [ & 2 & 1 & 1 & 1 & 3 &] \\
+& \scriptsize{butter} & \scriptsize{sugar} & \scriptsize{chips} &
+\scriptsize{flour} & \scriptsize{eggs} \smallskip \\
+$\overrightarrow{\textbf{brownies}}$ \ = [ & 1 & 1 & 4 & 2 & 2 &] \\
+& \scriptsize{butter} & \scriptsize{sugar} & \scriptsize{chips} &
+\scriptsize{flour} & \scriptsize{eggs} \smallskip \\
+\ \ $\overrightarrow{\textbf{fudge}}$ \quad \ = [ & 2 & 2 & 4 & 0 & 0 &]. \\
+& \scriptsize{butter} & \scriptsize{sugar} & \scriptsize{chips} &
+\scriptsize{flour} & \scriptsize{eggs} \bigskip \\
+\end{tabular}
+\end{center}
+\vspace{-.05in}
+
+This shows, for each of our five ingredients, how many ``units'' of each one is
+required for one recipe's worth.\footnote{Warning: do \textit{not} attempt to
+use these ingredient lists to actually make real goodies! I have left many
+things out for simplicity. These would taste ratchet if you made them. Consult
+a real recipe book.} Chocolate chip cookies evidently require two sticks of
+butter, one cup of sugar, one package of Ghirardelli chocolate chips,
+\textit{etc.}
+
+\medskip
+
+Additionally, we define these two vectors:
+\index{fat, saturated}
+\index{saturated fat}
+\index{Wegmans}
+\index{shopping list}
+
+\begin{center}
+\begin{tabular}{ccccccc}
+$\overrightarrow{\textbf{wegmans}}$ \quad \ = [ & 1.59 & 2.79 & 3.49 & 1.67 &
+.4 &] \\
+& \scriptsize{butter} & \scriptsize{sugar} & \scriptsize{chips} &
+\scriptsize{flour} & \scriptsize{eggs} \medskip \\
+$\overrightarrow{\textbf{satfat}}$ \quad \ = [ & 56 & 0 & 24 & 1 & 1.6 &] \\
+& \scriptsize{butter} & \scriptsize{sugar} & \scriptsize{chips} &
+\scriptsize{flour} & \scriptsize{eggs} \medskip \\
+\normalsize
+\end{tabular}
+\end{center}
+\vspace{-.15in}
+
+The first shows how much each of these ingredients is currently selling for at
+Wegmans. For the health-conscious, the second shows how many grams of
+saturated fat is present in each unit of the various ingredients. (*shudder*)
+
+\medskip
+Now, let's consider some common questions we might need to answer:
+
+\begin{enumerate}
+\itemsep1.5em
+\item ``If we want to bake five batches of chocolate chippers for our bake sale,
+what's on our shopping list?''
+
+The answer is a simple vector operation:
+
+% TODO: make this not look ratchet:
+
+\vspace{.2in}
+$\overrightarrow{\textbf{shoppinglist}}$ = 5 
+$\overrightarrow{\textbf{chippers}}$
+\vspace{-.15in}
+\begin{center}
+\begin{tabular}{rlcccccc}
+&\quad\quad= [ & 10 & 5 & 5 & 5 & 15 &] \\
+&& \scriptsize{butter} & \scriptsize{sugar} & \scriptsize{chips} &
+\scriptsize{flour} & \scriptsize{eggs} & \smallskip \\
+\end{tabular}
+\end{center}
+
+Scalar-vector multiplication gives us exactly what we want: multiply the number
+of recipes by each ingredient's per-recipe quantity.
+
+\item ``We've decided on six recipes of brownies and fudge, plus a dozen
+batches of chocolate chippers. What's on our shopping list?''
+\label{shoppingListQuestion}
+
+Putting vector addition into the mix (see what I did there?) gives us our
+elegant answer:
+
+\begin{center}
+$\overrightarrow{\textbf{shoppinglist}}$ 
+= 6 $\overrightarrow{\textbf{brownies}}$
++ 6 $\overrightarrow{\textbf{fudge}}$
++ 12 $\overrightarrow{\textbf{chippers}}$
+
+\begin{tabular}{rlcccccc}
+&\quad\quad\quad\quad  = [ & 42 & 30 & 60 & 24 & 48 &] \\
+&& \scriptsize{butter} & \scriptsize{sugar} & \scriptsize{chips} &
+\scriptsize{flour} & \scriptsize{eggs} & \smallskip \\
+\end{tabular}
+\end{center}
+
+\item ``My recipe tells me there are 16 brownies in a batch. How much saturated
+fat is in each brownie?''
+
+\index{dot product}
+
+Here's where the dot product comes in handy. We have a vector
+($\overrightarrow{\textbf{brownies}}$) that gives us the amount of each
+ingredient, and another ($\overrightarrow{\textbf{satfat}}$) that gives us
+per-unit fat content. The dot product is just what we need: multiply each
+ingredient amount by its fat content, and add up the results. It's a snap! All
+we then need to do is find the per-serving total by taking only a sixteenth of
+a batch, which is scalar-vector multiplication again. Putting it all together:
+
 \begin{align*}
-\overrightarrow{chippers} &= [ 
-    \text{butter:2} \  
-    \text{sugar:1} \  
-    \text{chips:1} \ 
-    \text{flour:1} \ 
-    \text{eggs:3} 
-]\\
-\overrightarrow{brownies} &= [ 
-    \text{butter:1} \  
-    \text{sugar:1} \  
-    \text{chips:4} \ 
-    \text{flour:2} \ 
-    \text{eggs:2} 
-]\\
-\overrightarrow{fudge} &= [ 
-    \text{butter:2} \  
-    \text{sugar:2} \  
-    \text{chips:4} \ 
-    \text{flour:0} \ 
-    \text{eggs:0} 
-]\\
-\overrightarrow{wegmans} &= [ 
-    \text{butter:1.59} \  
-    \text{sugar:2.79} \  
-    \text{chips:3.49} \ 
-    \text{flour:1.67} \ 
-    \text{eggs:.4} 
-]\\
-\overrightarrow{satfat} &= [ 
-    \text{butter:56} \  
-    \text{sugar:0} \  
-    \text{chips:24} \ 
-    \text{flour:1} \ 
-    \text{eggs:1.6} 
-]
+\textit{fatPerBrownie} &=
+\frac{1}{16} (\overrightarrow{\textbf{brownies}} \cdot
+\overrightarrow{\textbf{satfat}}) \\[10pt]
+&= \frac{1}{16} (1\cdot 56 + 1\cdot 0 + 4\cdot 24 + 2\cdot 1 + 2\cdot 1.6)
+\smallskip \\[10pt]
+&= 9.825\  \textrm{grams}.
 \end{align*}
-\vspace{-.2in}
 
-%brownies / chippers / etc  example
-%    first "how much of each ingredient would I need for these recipes"
-%    then "how much would it cost at Wegmans to buy that list"
-%
-%
+Ouch. Better sneak just one of those.
 
+\item Finally, ``how much is this all going to cost me at Wegmans?''
 
+We already computed the grand shopping list in
+question~\ref{shoppingListQuestion}, above. To get the cost of this list, we
+again simply use the dot product:
+
+\begin{align*}
+\textit{totalCost} &=
+\overrightarrow{\textbf{shoppinglist}} \cdot
+\overrightarrow{\textbf{wegmans}} \\[5pt]
+&= 42\cdot 1.59 + 30\cdot 2.79 + 60\cdot 3.49 + 24\cdot 1.67 + 48\cdot .4
+\smallskip \\[5pt]
+&= \$419.16.
+\end{align*}
+
+Wowza: I sure hope we sell all these!
+
+\end{enumerate}
+
+Hopefully this gives you a feel for why the three operations -- and especially
+the dot product -- are eminently useful. They turn out to be exactly what we
+want to do with vectors much of the time, which is why they were invented. Get
+to know them intimately.
 
 \section{Norms and normalization}
 \label{sec:norms}
