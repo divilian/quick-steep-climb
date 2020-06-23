@@ -605,6 +605,10 @@ same \textit{label}. And yes, the vectors must \textit{have} exactly the same
 labels in order to be legitimately added in this way; otherwise, we call the
 whole thing off. So:
 
+\index{Mrs.~Peacock}
+\index{Mr.~Green}
+\index{Prof.~Plum}
+
 \begin{center}
 \begin{tabular}{ccccccccc}
 [ & 3 & 5 & 8 & ] \ + \ [ & 1 & -6 & 4 & ] \ = \\
@@ -622,6 +626,10 @@ whole thing off. So:
 \vspace{-.15in}
 
 and
+
+\index{Miss Scarlet}
+\index{Mrs.~White}
+\index{Col.~Mustard}
 
 \begin{center}
 \begin{tabular}{ccccccccc}
@@ -683,26 +691,251 @@ For example, $[\ 5\ \ 2\ \ 7\ ] - [\ 1\ \ 4\ \ 7\ ]$ is just $[\ 4\ \ -2\ \ 0\ ]
 
 \subsection{Operation \#3: Vector multiplication (dot product)}
 
-%vector multiplication (dot product)
-%    (a.k.a inner product, sorta)
-%    can't multiply two vectors of different length  or w/ diff domain
-%    commutative
-%
-%
-%
+\index{dot product}
+\index{cross product}
+
+Our third and final vector operation is the least intuitive of the three; at
+least, it doesn't work the way I expected it to when I first learned it. It's
+most commonly called the \textbf{dot product}.\footnote{There is at least one
+other type of vector multiplication in common use, which we won't need in this
+book. It's called the \textbf{cross product}, and is designated by a $\times$
+instead of a $\cdot$. Interestingly, although the dot product is defined for
+vectors of any number of dimensions, the cross product is only defined for
+vectors of exactly three dimensions. (Not 2. Not 4. Only exactly 3.) Another
+curious fact is that the cross product between two vectors gives you a vector
+back, not a scalar like the dot product does.}
+
+The first thing you have to wrap your head around is the fact that \textit{two
+vectors multiplied together give you a scalar.} Yeah, no cap: if you multiply
+an 18-dimensional vector by another 18-dimensional vector, you get back a
+single lonely number.
+
+Operationally, what happens is that you \textit{multiply} the corresponding
+elements of the two vectors together, and then \textit{add} the result. So:
+
+\vspace{-.15in}
+\begin{align*}
+[\ 7\ \ 8\ ] \cdot [\ 5\ \ 1\ ] = 7\cdot 5 + 8\cdot1 = 43
+\end{align*}
+\vspace{-.15in}
+
+As with vector addition, we disallow taking the dot product of two vectors with
+differing numbers of elements. Also, in the case of vectors with labels instead
+of index numbers, we insist that the vectors have identical labels in order to
+meaningfully dot-product them.
+
+\index{dot product}
+\begin{center}
+\begin{framed}
+\textbf{Vector multiplication (dot product):}
+\begin{align*}
+\overrightarrow{\textbf{x}} \cdot \overrightarrow{\textbf{y}} &=
+[\ x_0\ \ x_1\ \ \dots \ \ x_{n-1}\ ] \cdot
+[\ y_0\ \ y_1\ \ \dots \ \ y_{n-1}\ ] \\
+&= x_0 \cdot y_0\ + x_1 \cdot y_1\ + \dots + x_{n-1} \cdot y_{n-1},
+\end{align*}
+where $n$ is the number of elements in each vector.
+\end{framed}
+\end{center}
+\vspace{-.15in}
+
+\index{commutative}
+
+It should be obvious to you that the dot product operation is commutative:
+$\overrightarrow{\textbf{x}} \cdot \overrightarrow{\textbf{y}}$ always gives
+the same result as $\overrightarrow{\textbf{y}} \cdot
+\overrightarrow{\textbf{x}}$.
+
+\subsubsection{Why?}
+
+Okay, now to address the elephant in the living room: \textit{why} would
+mathematicians define vector multiplication in this way? What's the matter with
+just multiplying corresponding elements and yielding a vector answer, like we
+did with vector addition?
+
+The answer is that the dot product as defined above is incredibly useful, much
+more so than pairwise-multiplication will turn out to be. In fact, it's
+possibly the single most important calculation in linear algebra: all kinds of
+applications and more advanced computations use it as a building block.
+
+To see this, consider the following question. What needs to be true about two
+vectors in order for them to have a large dot product?
+
+Your first inclination might be to answer ``the individual vector entries need
+to be large.'' This is sort of true...but only sort of. Consider the following
+two vectors:
+
+\vspace{-.15in}
+\begin{align*}
+\overrightarrow{\textbf{a}} &= [\ 95\ \ 0\ 381\  ] \\
+\overrightarrow{\textbf{b}} &= [\ 0\ \ 1056\ 0\  ] \\
+\end{align*}
+\vspace{-.15in}
+
+Thar's som' mighty big entries in them vectors. Surely multiplying them
+together would give a large result, right? No:
+
+\vspace{-.15in}
+\begin{align*}
+[\ 95\ \ 0\ 381\ ] \cdot [\ 0\ \ 1056\ 0\ ] &= \\
+95 \cdot 0 + 0 \cdot 1056 + 381 \cdot 0 &= 0.
+\end{align*}
+\vspace{-.15in}
+
+We get zilch. By contrast, these two wimpy-looking vectors:
+
+\vspace{-.15in}
+\begin{align*}
+\overrightarrow{\textbf{c}} &= [\ 1\ \ 2\ \ 5\ ] \\
+\overrightarrow{\textbf{d}} &= [\ 0\ \ 2\ \ 7\ ] \\
+\end{align*}
+\vspace{-.15in}
+
+do give a fairly hefty result:
+
+\vspace{-.15in}
+\begin{align*}
+[\ 1\ \ 2\ \ 5\ ] \cdot [\ 0\ \ 2\ \ 7\ ] &= \\
+1 \cdot 0 + 2 \cdot 2 + 5 \cdot 7 &= 39.
+\end{align*}
+\vspace{-.15in}
+
+What's going on here?
+
+\medskip
+
+If you stare at the above calculations, you'll hit on a deep truth which is
+worth pondering at length. And that is that in order for the dot product to be
+large, the vectors must not only have large entries, but be large \textit{in
+the same places.}
+
+The reason that $\overrightarrow{\textbf{a}}$ and $\overrightarrow{\textbf{b}}$
+had such a stunningly low dot product is that although they had large entries,
+they were completely out of sync with each other. $\overrightarrow{\textbf{a}}$
+had high values precisely where $\overrightarrow{\textbf{b}}$ had low ones, and
+vice versa. On the other hand, even though the individual elements of
+$\overrightarrow{\textbf{c}}$ and  $\overrightarrow{\textbf{d}}$ were pretty
+small, they fit together nicely: for example, $\overrightarrow{\textbf{c}}$'s
+largest entry and $\overrightarrow{\textbf{d}}$'s largest entry were in the
+same place (element \#2), which led to a kind of synergy.
+
+Consider how the dot product would change if we altered
+$\overrightarrow{\textbf{d}}$ to be $[\ 7\ \ 2\ \ 0\ ]$ instead of $[\ 0\ \ 2\
+\ 7\ ]$:
+
+\vspace{-.15in}
+\begin{align*}
+[\ 1\ \ 2\ \ 5\ ] \cdot [\ 7\ \ 2\ \ 0\ ] &= \\
+1 \cdot 7 + 2 \cdot 2 + 5 \cdot 0 &= 11.
+\end{align*}
+\vspace{-.15in}
+
+Dang, we dropped from 39 all the way to 11 just by reordering the entries. 
+
+\index{Jezebel}
+
+This ability to judge roughly ``how aligned'' two vectors are comes up all the
+time. Consider a dating website. Let's say that Jezebel, a heterosexual female,
+signs up for a dating service and answers the questions on a compatibility
+survey. She's asked, ``on a scale of 1 to 10, how much do you like action
+movies? Outdoor hikes? Candlelight dinners? Reading mystery novels?'' Suppose
+her answers are the following:
+
+\begin{center}
+\begin{tabular}{cccccc}
+$\overrightarrow{\textbf{jezebel}}$ = [ & 5 & 2 & 10 & 2 & ] \\
+& \scriptsize{action} & \scriptsize{hiking} & \scriptsize{candlelight} &
+\scriptsize{mystery} & \\
+\normalsize
+\end{tabular}
+\end{center}
+\vspace{-.15in}
+
+\index{Filbert}
+\index{Wendell}
+\index{Biff}
+
+Now there are three eligible heterosexual bachelors on this site: Biff,
+Filbert, and Wendell. They also took the survey, and came up with these
+responses:
+
+\begin{center}
+\begin{tabular}{cccccc}
+$\overrightarrow{\textbf{biff}}$ \quad \ = [ & 10 & 10 & 1 & 1 & ] \\
+& \scriptsize{action} & \scriptsize{hiking} & \scriptsize{candlelight} &
+\scriptsize{mystery} & \medskip \\
+
+$\overrightarrow{\textbf{filbert}}$ \ = [ & 6 & 2 & 8 & 4 & ] \\
+& \scriptsize{action} & \scriptsize{hiking} & \scriptsize{candlelight} &
+\scriptsize{mystery} & \medskip \\
+
+$\overrightarrow{\textbf{wendell}}$ = [ & 1 & 3 & 3 & 10 & ] \\
+& \scriptsize{action} & \scriptsize{hiking} & \scriptsize{candlelight} &
+\scriptsize{mystery} & \\
+\normalsize
+\end{tabular}
+\end{center}
+\vspace{-.15in}
+
+The central question that \texttt{matchmaker.com} must ask is: which of these
+three young gentlemen should be recommended to Jezebel?
+
+\smallskip
+
+The answer lies in the dot product. Just by eyeballing the survey results, you
+can probably tell that Filbert is Jezebel's best match: he has high values in
+roughly the same place that she does. If we compute the dot product of Jezebel
+with each of the three guys, we see that the math bears that out:
+
+\begin{align*}
+\overrightarrow{\textbf{jezebel}} \cdot \overrightarrow{\textbf{biff}} &=
+5 \cdot 10 + 2 \cdot 10 + 10 \cdot 1 + 2 \cdot 1 = 82 \\
+\overrightarrow{\textbf{jezebel}} \cdot \overrightarrow{\textbf{filbert}} &=
+5 \cdot 6 + 2 \cdot 2 + 10 \cdot 8 + 2 \cdot 4 = 122 \\
+\overrightarrow{\textbf{jezebel}} \cdot \overrightarrow{\textbf{wendell}} &=
+5 \cdot 1 + 2 \cdot 3 + 10 \cdot 3 + 2 \cdot 10 = 61 \\
+\end{align*}
+
+Since Filbert has the highest dot product with Jezebel, Filbert's vector is in
+some sense ``more closely aligned'' with hers, reflecting their similar
+interests. So our website will show Filbert's pic and profile to Jezebel.
+
+\medskip
+
+\index{Mr.~Right}
+
+It might occur to you that someone could ``beat the system'' here by answering
+10 on all their survey questions. After all, increasing the individual entries
+in a vector can't \textit{hurt} its dot product with another vector; the worst
+it could do is not help matters, if the second vector has a zero there. So
+let's say the insidious Mr.~Right (?) creates an account on the system, and
+answers:
+
+\begin{center}
+\begin{tabular}{cccccc}
+$\overrightarrow{\textbf{mrright}}$ \quad \ = [ & 10 & 10 & 10 & 10 & ] \\
+& \scriptsize{action} & \scriptsize{hiking} & \scriptsize{candlelight} &
+\scriptsize{mystery} & \medskip \\
+\normalsize
+\end{tabular}
+\end{center}
+\vspace{-.15in}
+
+Pairing him with Jezebel yields:
+
+\begin{align*}
+\overrightarrow{\textbf{jezebel}} \cdot \overrightarrow{\textbf{mrright}} &=
+5 \cdot 10 + 2 \cdot 10 + 10 \cdot 10 + 2 \cdot 10 = 190 \\
+\end{align*}
+
+which blows away the competition. Mr.~Right can have any girl he wants, whether
+or not they're truly compatible. There's a way to fix this, which we'll see
+later in this chapter. For now, just grasp the main point that two vectors
+having large entries in the same places tends to magnify their dot product.
+
 %brownies / chippers / etc  example
 %    first "how much of each ingredient would I need for these recipes"
 %    then "how much would it cost at Wegmans to buy that list"
-%
-%
-%
-%what needs to be true about the vectors for me to get a big dot product? big
-%    elements? Yes, sorta, but no...
-%
-%    taking the dot product is a crude way of telling you "how aligned they are"
-%
-%    matchmaker example
-%        (of course, Jezebel could max it out with all 10's and beat the system)
 %
 %
 %dot product geometrically (three different orthogonal cases)
