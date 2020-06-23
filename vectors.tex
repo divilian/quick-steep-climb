@@ -933,15 +933,162 @@ or not they're truly compatible. There's a way to fix this, which we'll see
 later in this chapter. For now, just grasp the main point that two vectors
 having large entries in the same places tends to magnify their dot product.
 
+\subsection{Geometric interpretation}
+
+Now let's build some \textit{geometric} intuition about the dot product.
+Consider the two vectors $\overrightarrow{\textbf{a}}$ and
+$\overrightarrow{\textbf{b}}$ in Figure~\ref{fig:dotproduct1}.
+$\overrightarrow{\textbf{a}}$ is the vector $[\ 2\ \ 0\ ]$ and
+$\overrightarrow{\textbf{b}}$ is $[\ 0\ \ 3\ ]$. What is their dot product?
+$2\cdot 0 + 0\cdot 3 = $ a big fat zero.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.45\textwidth]{dotProduct1a.png}
+\includegraphics[width=0.45\textwidth]{dotProduct1b.png}
+\caption{Two vectors whose dot product is 0.}
+\label{fig:dotproduct1}
+\end{figure}
+
+\bigskip
+Okay, same exercise, but now in Figure~\ref{fig:dotproduct2}. Now we have the
+vectors $\overrightarrow{\textbf{a}} = [\ 3\ \ 3\ ]$ and
+$\overrightarrow{\textbf{b}} = [\ -2\ \ 2\ ]$. What is their dot product? Once
+more, zero: $3\cdot -2 + 3\cdot 2 = 0$.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.45\textwidth]{dotProduct2a.png}
+\includegraphics[width=0.45\textwidth]{dotProduct2b.png}
+\caption{Another two vectors whose dot product is 0.}
+\label{fig:dotproduct2}
+\end{figure}
+
+\bigskip
+One more chorus. Figure~\ref{fig:dotproduct3} shows the
+vectors $\overrightarrow{\textbf{a}} = [\ 1\ \ -2\ ]$ and
+$\overrightarrow{\textbf{b}} = [\ -4\ \ -2\ ]$. What is their dot product? Yet
+again, exactly zero: $1\cdot -4 + -2\cdot -2 = 0$.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.40\textwidth]{dotProduct3a.png}
+\includegraphics[width=0.40\textwidth]{dotProduct3b.png}
+\caption{Yet another two vectors whose dot product is 0.}
+\label{fig:dotproduct3}
+\end{figure}
+
+\bigskip
+
+\index{perpendicular}
+\index{orthogonal}
+\index{right angle}
+
+Three pairs of vectors, all of which have zero dot products. Now what's common
+to all three examples? Answer: \textit{the vectors are perpendicular to each
+other.} This is easier to see when we plot each pair on the same graph, as in
+Figure~\ref{fig:allTogether}.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.31\textwidth]{dotProduct1.png}
+\includegraphics[width=0.31\textwidth]{dotProduct2.png}
+\includegraphics[width=0.31\textwidth]{dotProduct3.png}
+\caption{The three pairs of vectors plotted together. The fact that they are
+orthogonal to each other is what makes their dot products zero.}
+\label{fig:allTogether}
+\end{figure}
+
+Whenever you have two vectors at exactly right angles to each other, their dot
+product will be at a minimum; namely, zero. Our linear algebra term for this,
+annoyingly, is not ``perpendicular'' (a word you already know) but
+\textbf{orthogonal}. When two vectors are orthogonal, they're ``as unaligned as
+possible.''
+
+Think of it this way. Pick any of the three pairs of vectors in
+Figure~\ref{fig:allTogether}, and pretend that your goal is to go in the
+$\overrightarrow{\textbf{b}}$ direction. You want to get ``as b-ward as
+possible.'' But suppose your only option was to go in the direction of
+$\overrightarrow{\textbf{a}}$. Would you make any meaningful progress towards
+your goal? The answer is no: $\overrightarrow{\textbf{a}}$ is exactly the
+direction that doesn't let you move \textit{anywhere} you want to go. On the
+left-most figure, for example, if your goal was to get from the origin due
+north to the point $(0,15)$, you can't make any progress whatsoever if you're
+allowed only to travel along the $x$-axis. And that's true for all three of
+those pairs.
+
+To get a non-zero dot product, the two vectors at least have to point
+\textit{somewhat} in the same direction. Take the two in
+Figure~\ref{fig:dotProduct4}, where $\overrightarrow{\textbf{a}} = [\ 3\ \ -3\
+]$ and $\overrightarrow{\textbf{b}} = [\ 2\ \ -4\ ]$. These vectors are clearly
+\textit{not} orthogonal, and hence their dot product is non-zero: $3\cdot 2 +
+-3\cdot -4 = 18$.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.80\textwidth]{dotProduct4.png}
+\caption{Two \textit{non}-orthogonal vectors, whose dot product is 18.}
+\label{fig:dotProduct4}
+\end{figure}
+
+In general, the more the arrows point in the same direction, the higher the dot
+product, holding everything else equal. The more they diverge to right angles,
+the more the dot product drops to zero. I'll have more to say about this in
+Section~\ref{sec:norms} when we look at an alternate way to compute the dot
+product geometrically.
+
+
+\section{The vector operations in action}
+
+This book is chock full of examples of using vectors in the real world. Let me
+give one now which illustrates the eminent usefulness of these three vector
+operations.
+
+\begin{align*}
+\overrightarrow{chippers} &= [ 
+    \text{butter:2} \  
+    \text{sugar:1} \  
+    \text{chips:1} \ 
+    \text{flour:1} \ 
+    \text{eggs:3} 
+]\\
+\overrightarrow{brownies} &= [ 
+    \text{butter:1} \  
+    \text{sugar:1} \  
+    \text{chips:4} \ 
+    \text{flour:2} \ 
+    \text{eggs:2} 
+]\\
+\overrightarrow{fudge} &= [ 
+    \text{butter:2} \  
+    \text{sugar:2} \  
+    \text{chips:4} \ 
+    \text{flour:0} \ 
+    \text{eggs:0} 
+]\\
+\overrightarrow{wegmans} &= [ 
+    \text{butter:1.59} \  
+    \text{sugar:2.79} \  
+    \text{chips:3.49} \ 
+    \text{flour:1.67} \ 
+    \text{eggs:.4} 
+]\\
+\overrightarrow{satfat} &= [ 
+    \text{butter:56} \  
+    \text{sugar:0} \  
+    \text{chips:24} \ 
+    \text{flour:1} \ 
+    \text{eggs:1.6} 
+]
+\end{align*}
+\vspace{-.2in}
+
 %brownies / chippers / etc  example
 %    first "how much of each ingredient would I need for these recipes"
 %    then "how much would it cost at Wegmans to buy that list"
 %
 %
-%dot product geometrically (three different orthogonal cases)
-%    if they're orthogonal, their dot product is zero.
-%    another way to compute dot product: magnitude of one vec * meg of other
-%        * cos theta
+
 
 
 \section{Norms and normalization}
@@ -963,3 +1110,17 @@ having large entries in the same places tends to magnify their dot product.
 % only care about the direction
 % now jezebel can't cheat with [ 10 10 10 10 10 ]. same as Chad, who answered
 % [ 5 5 5 5 5 ].
+
+%revisit geometric dot product:
+%This brings up a second, equally legitimate way to compute and to think about
+%the dot product. 
+%    if they're orthogonal, their dot product is zero.
+%    another way to compute dot product: magnitude of one vec * meg of other
+%        * cos theta
+%\begin{figure}[ht]
+%\centering
+%\includegraphics[width=0.80\textwidth]{dotProduct4.png}
+%\caption{An alternate way to compute the dot product of two vectors, using the
+%angle between them in the calculation.}
+%\label{fig:dotProduct4}
+%\end{figure}
