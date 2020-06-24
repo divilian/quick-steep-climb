@@ -246,13 +246,16 @@ their indexing at 1. Go figure.
 
 \index{tail (of a vector)}
 \index{tip (of a vector)}
+\index{radius@``radius''}
+\index{Pythagorean Theorem}
+\index{crow-flies distance@``crow-flies'' distance}
 
 Geometrically, we can compute a vector's direction and magnitude using
 trigonometry. Figure~\ref{fig:directionMag} shows a vector
 $\overrightarrow{\textbf{v}} = [\ 9 \ \ 21\ ]$ pictorially. Its $0^\text{th}$
 coordinate (a.k.a. $v_0$) is 9, measured on the $x$-axis, and $v_1$ is 21.
 Traditionally, a two-dimensional vector's magnitude is called $r$ (for
-``radius,'' I think, although don't think about that too hard) and its
+``radius,'' I believe, although don't think about that too hard) and its
 direction is called $\theta$ (``theta''). The magnitude is just the crow-flies
 distance from the vector's \textbf{tail} to its \textbf{tip} (computed using
 the Pythagorean Theorem) and the direction is the arctangent of the
@@ -282,11 +285,11 @@ $x$-axis, and the magnitude is the length of the line.}
 In this case, $r$ works out to 22.8 and $\theta$ is 66.8\textdegree. Think
 about this, too: if, instead of giving you the values of $v_0$ and $v_1$, I
 instead gave you the values of $r$ and $\theta$, you'd still have \textit{all
-the information about the vector}, just in a different form. These are
-sometimes called the \textbf{polar coordinates} of a vector, instead of the
-\textbf{Cartesian coordinates}. The polar coordinates are usually written as
-``$22.8 \measuredangle 66.8$\textdegree,'' which is the same vector as $[\ 9 \
-\ 21 \ ]$, just written in a different way.
+the information about the vector}, just in a different form. We sometimes call
+$r$ and $\theta$ the \textbf{polar coordinates} of a vector, and $v_0$ and
+$v_1$ the \textbf{Cartesian coordinates}. The polar coordinates are usually
+written as ``$22.8 \measuredangle 66.8$\textdegree,'' which is the same vector
+as $[\ 9 \ \ 21 \ ]$, just written in a different way.
 
 Anyway, I put this way of thinking about vectors at the extreme ``concrete''
 end of the spectrum, because it's so nuts-and-bolts and easy to visualize. As
@@ -1198,19 +1201,273 @@ the dot product -- are eminently useful. They turn out to be exactly what we
 want to do with vectors much of the time, which is why they were invented. Get
 to know them intimately.
 
-\section{Norms and normalization}
+\section{More about magnitude}
 \label{sec:norms}
 
-    "size" "bigness" "magnitude" "length"
-    magnitude / length
+\index{tip (of a vector)}
+\index{tail (of a vector)}
+\index{Pythagorean Theorem}
+\index{Euclidean distance}
+\index{crow-flies distance@``crow-flies'' distance}
 
-%    the l^n norm  (but don't use n if you also use n for # of vec elems)
-%    l^2 norm -- Euclidean norm / Pythagorean Theorem / crow flies
+Flip for a moment back to Figure~\ref{fig:directionMag} on
+p.~\pageref{fig:directionMag}. You'll recall that we defined the ``magnitude''
+of the $\overrightarrow{\textbf{v}}$ vector as $r$: the crow-flies distance
+from its tail to its tip, as computed by the Pythagorean Theorem. In that case,
+we computed $r = \sqrt{v_0^2 + v_1^2} = 22.8$ for
+$\overrightarrow{\textbf{v}}$'s magnitude.
 
-%    more generally, n=3, n=4, n=193   (note: have to take abs value)
-% manhattan / taxicab norm
-% l^0 norm (number of non-zero entries in vector)
-% l^inf norm, abs value of max element
+Now like all of mathematics, we can define things however we want. It turns out
+that this crow-flies distance thing -- also called the \textbf{Euclidean
+distance} after Euclid, the ancient Greek geometer -- is only one possible way
+to define the ``length'' or ``magnitude'' of a vector. This section includes
+several others which prove useful in various settings.
+
+\index{norm (of a vector)}
+% TODO: put notation in index
+\index{double-pipe sign@double-pipe sign ($\norm{\cdot}$)}
+
+Oh, and before we get started, here's yet another piece of verbiage. The
+preferred mathematical term for the sort of generalized magnitude measurement
+presented below is the ``\textbf{norm}'' of a vector. We'll define several
+different norms, each of which offers a different take on measuring a vector's
+``size'' or ``bigness.'' No matter how we define it, \textit{the norm of a
+vector is always a scalar}. We use double-pipe signs to represent it, like
+this: $\norm{\overrightarrow{\textbf{v}}}$.
+
+\subsection{The Euclidean (``$\boldsymbol\ell^\textbf{2}$'') norm}
+
+The most common norm is the \textbf{Euclidean norm}, which is just what we
+covered on p.~\pageref{fig:directionMag}. The Pythagorean Theorem is your
+friend.
+
+Importantly, though, this norm applies equally well in \textit{any} number of
+dimensions, not just two. Suppose we had a five-dimensional vector, like this
+one:
+
+\begin{center}
+$\overrightarrow{\textbf{f}} = [\ 3\ \ -4\ \ 5\ \ 17\ \ 0\ ]$.
+\end{center}
+
+The Pythagorean Theorem -- which in high school you may have only learned in a
+two-dimensional setting -- still works just fine:
+
+\begin{center}
+$\norm{\overrightarrow{\textbf{f}}} =
+\sqrt{3^2 + (-4)^2 + 5^2 + 17^2 + 0^2} = 18.412$.
+\end{center}
+
+Note: you still \textit{square} the entries and take the \textit{square} root
+of the sum. (You don't take the fifth power of the entries and the fifth root
+of the sum, like I expected when I first learned this.)
+
+The result is (*deep breath*): ``the length of the straight line from the
+origin to the point $(3,-4,5,17,0)$ in five-dimensional space.'' You can't
+visualize it, so don't try. Just believe. No matter how many entries a vector
+has, you can compute its crow-flies length this way.
+
+Now for weird but ultimately consistent reasons, this Euclidean norm is also
+called the ``$\ell^2$ norm''\footnote{Pronounced ``ell two,'' not ``ell
+squared.''} of the vector. And we will sometimes write the 2 in as a subscript
+to the double-pipe, like this:
+
+\begin{center}
+$\norm{\overrightarrow{\textbf{f}}}_2 = 18.412$.
+\end{center}
+
+I know it seems strange, but just go with it for now. And remember this, too:
+if we \textit{don't} have any subscript after the $\norm{\cdot}$ signs,
+\textit{the default is 2}. In other words, unless explicitly stated, the
+``normal'' meaning of \textit{norm} is the $\ell^2$ norm, a.k.a. Euclidean
+distance, computed by the Pythagorean Theorem.
+
+\subsection{The Manhattan (``$\boldsymbol\ell^\textbf{1}$'') norm}
+
+\index{Manhattan norm}
+\index{taxicab norm}
+
+Imagine yourself in downtown Manhattan, New York City. You're a software
+developer on an upper floor of the sleek new building at the corner of 33rd
+Street and 8th Avenue. It's just about time for lunch, and you and your fellow
+developers are discussing where to go -- the Thai place on 25th St.~and 10th
+Ave.? The new Hungarian restaurant that opened up on 44th St.~and 6th Ave.? Or
+will it be just the greasy subway shop four blocks uptown today?
+
+One of the factors in your decision is the distance: you can't take forever for
+lunch because you have a team meeting at 1:30pm. So you need to work out how
+long it will take to walk (or take a taxicab) to each of these places. 
+
+Now one (stupid) approach would be to use find the latitude and longitude of
+both your office and each of the restaurants, and compute the Euclidean
+distance. I say ``stupid'' because this is really only useful if you have a
+helicopter. (We can dream.) In my world, you can't fly over buildings; you have
+to walk around them. There's no point in computing the crow-flies distance if
+you're not a crow.
+
+So how do we determine the distance? Simple: it's just the number of blocks you
+have to walk. Consider the Thai place. To get from 35th Street to 24th, we have
+to walk five blocks. To get from 8th Avenue to 10th, we have to walk two.
+Therefore, the walking distance between these two restaurants is ``ten
+blocks.'' Note that it doesn't matter whether we walk the blocks west first and
+then south, or south first and then west, or zig-zag back and forth between
+streets and avenues: as long as we travel one of the shortest routes through
+the buildings (which means never going east or north), it'll be ten blocks.
+
+For reasons which should now be obvious, this way to measure distance is called
+the \textbf{Manhattan norm} (or \textbf{taxicab norm}). You can measure the
+Manhattan distance between two points by simply \textit{adding the absolute
+value of the pairwise differences between elements.} That's easier to do than
+to say. For our office-to-Thai-restaurant journey:
+
+\vspace{-.15in}
+\begin{align*}
+\textrm{dist}_\textrm{Manhattan} = |33-25| + |8-10| = 8 + 2 = 10\ 
+\textrm{blocks}
+\end{align*}
+
+The Euclidean distance, of course, is somewhat less:
+
+\vspace{-.15in}
+\begin{align*}
+\textrm{dist}_\textrm{Euclidean} = \sqrt{(33-25)^2 + (8-10)^2} = 8.246\ 
+\textrm{blocks}
+\end{align*}
+
+which is why helicopters can be useful.
+
+When speaking of the norm of a vector, we always start at the origin and travel
+out from there. The Manhattan norm of a vector $\overrightarrow{\textbf{v}}$,
+which is written $\norm{\overrightarrow{\textbf{v}}}_1$, is thus: 
+
+\begin{center}
+$\norm{\overrightarrow{\textbf{v}}}_1 = |v_0| + |v_1| + \cdots + |v_{n-1}|$,
+\end{center}
+
+where $n$ is the vector's number of dimensions. For example, let's compute the
+Manhattan norm of the 5-d vector $\overrightarrow{\textbf{f}}$ we previously
+used (with value $[\ 3\ \ -4\ \ 5\ \ 17\ \ 0\ ]$, you'll recall):
+
+\vspace{-.15in}
+\begin{align*}
+\norm{\overrightarrow{\textbf{f}}}_1 &= |3| + |-4| + |5| + |17| + |0| = 29.
+\end{align*}
+
+Quite a bit higher than the Euclidean norm of 18.412, as expected.
+
+By the way, just as the Euclidean norm was called the $\ell^2$ norm, the
+Manhattan norm is called the $\ell^1$ (``ell one'') norm. You might take a
+moment to mull over why, and then see if you're right when I unveil the
+explanation in the next section.
+
+\subsection{This ``$\boldsymbol\ell^\textbf{\#}$'' business}
+
+Okay. Here's how the Euclidean, Manhattan, and all the other norms we haven't
+yet discussed are related.
+
+First, I'm going to write the formula for the Manhattan norm in a slightly
+different way. You'll probably wonder why I would complicate the expression,
+but suspend your disbelief for a moment. Instead of this:
+
+\begin{center}
+$\norm{\overrightarrow{\textbf{v}}}_1 = |v_0| + |v_1| + \cdots + |v_{n-1}|$,
+\end{center}
+
+I'm going to write it this way:
+
+\begin{center}
+$\norm{\overrightarrow{\textbf{v}}}_1 = \sqrt[1]{|v_0|^1 + |v_1|^1 + \cdots +
+|v_{n-1}|^1}$.
+\end{center}
+
+Wut? Yeah. First, convince yourself that I haven't actually changed anything.
+Remember that any number ``to the first power'' is just the number itself. And
+notice that I'm not taking the \textit{square} root here, but ``the
+\textit{first} root.'' If you didn't know this, ``the first root'' of a number
+is also just the number itself.
+
+Bottom line is that these two formulas for the Manhattan norm are identical.
+
+All right, but why do this? Here's why. Check out these two expressions, back
+to back:
+
+\vspace{-.15in}
+\begin{align*}
+\norm{\overrightarrow{\textbf{v}}}_1 &= \sqrt[1]{|v_0|^1 + |v_1|^1 + \cdots +
+|v_{n-1}|^1} \quad \textrm{(Manhattan norm)}\\
+\norm{\overrightarrow{\textbf{v}}}_2 &= \sqrt[2]{|v_0|^2 + |v_1|^2 + \cdots +
+|v_{n-1}|^2} \quad \textrm{(Euclidean norm)}\\
+\end{align*}
+
+Aha. See where I'm going with this? I've slipped in absolute value signs in the
+Euclidean norm elements -- but that's okay, since if you square a negative
+number you get a positive result anyway. And I put a ``2'' above the root sign,
+to be explicit that it's the \textit{square} root. Now the formulas are
+identical except for ``1'' vs.~``2.''
+
+And now I'm going to tell you that we can use \textit{any} number, not just 1
+or 2. The others don't have special names, but they're legit nonetheless:
+
+\vspace{-.15in}
+\begin{align*}
+\norm{\overrightarrow{\textbf{v}}}_1 &= \sqrt[1]{|v_0|^1 + |v_1|^1 + \cdots +
+|v_{n-1}|^1} \quad \textrm{(Manhattan norm)}\\
+\norm{\overrightarrow{\textbf{v}}}_2 &= \sqrt[2]{|v_0|^2 + |v_1|^2 + \cdots +
+|v_{n-1}|^2} \quad \textrm{(Euclidean norm)}\\
+\norm{\overrightarrow{\textbf{v}}}_3 &= \sqrt[3]{|v_0|^3 + |v_1|^3 + \cdots +
+|v_{n-1}|^3} \quad \textrm{($\ell^3$ norm)}\\
+\norm{\overrightarrow{\textbf{v}}}_4 &= \sqrt[4]{|v_0|^4 + |v_1|^4 + \cdots +
+|v_{n-1}|^4} \quad \textrm{($\ell^4$ norm)}\\
+\norm{\overrightarrow{\textbf{v}}}_5 &= \sqrt[5]{|v_0|^5 + |v_1|^5 + \cdots +
+|v_{n-1}|^5} \quad \textrm{($\ell^5$ norm)}\\
+& \vdots \\
+\norm{\overrightarrow{\textbf{v}}}_\infty &= \sqrt[\infty]{|v_0|^\infty +
+|v_1|^\infty + \cdots + |v_{n-1}|^\infty} \quad \textrm{($\ell^\infty$ norm)}\\
+\end{align*}
+
+That's right, we can even have an ``infinity norm.'' So what do all these options do?
+
+
+\subsection{$\boldsymbol\ell^\textbf{3}$ and higher norms}
+
+Let's go back to our friend $\overrightarrow{\textbf{f}}$ whose value
+is $[\ 3\ \ -4\ \ 5\ \ 17\ \ 0\ ]$. We've already computed the first two norms;
+let's keep going and see what happens:
+
+\vspace{-.15in}
+\begin{align*}
+\norm{\overrightarrow{\textbf{f}}}_1 &= \sqrt[1]{|3|^1 + |-4|^1 + |5|^1 + |17|^1 + |0|^1} = 29\\
+\norm{\overrightarrow{\textbf{f}}}_2 &= \sqrt[2]{|3|^2 + |-4|^2 + |5|^2 + |17|^2 + |0|^2} = 18.412\\
+\norm{\overrightarrow{\textbf{f}}}_3 &= \sqrt[3]{|3|^3 + |-4|^3 + |5|^3 + |17|^3 + |0|^3} = 17.246\\
+\norm{\overrightarrow{\textbf{f}}}_4 &= \sqrt[4]{|3|^4 + |-4|^4 + |5|^4 + |17|^4 + |0|^4} = 17.049\\
+\norm{\overrightarrow{\textbf{f}}}_5 &= \sqrt[5]{|3|^5 + |-4|^5 + |5|^5 + |17|^5 + |0|^5} = 17.010\\
+& \vdots \\
+\norm{\overrightarrow{\textbf{f}}}_\infty &= \sqrt[\infty]{|3|^\infty + |-4|^\infty + |5|^\infty + |17|^\infty + |0|^\infty} = 17.\\
+\end{align*}
+
+It's interesting: the numbers get smaller and smaller as we increase the \# in
+``$\ell^{\#}$'', and they finally converge on \textit{the highest individual
+element of the vector.} Cool! $\overrightarrow{\textbf{f}}$'s highest entry was
+17, and lo and behold that's what the $\ell^\infty$ norm gives us.
+
+The method to the madness is this: the higher the norm we take of a vector, the
+more that only the single largest element matters. The lower the norm we take,
+the more that all the elements equally matter. Think about the Manhattan norm:
+we simply added up the (absolute value of the) elements. Every element had a
+chance to shine. Higher and higher norms squeeze the life out of everything
+except the single highest value.
+
+\subsection{The $\boldsymbol\ell^\textbf{0}$ norm}
+
+Lastly, and mostly for fun, I'll throw a ``$\ell^0$'' norm in. What does the
+``zero norm'' do? It's defined to be \textit{the number of non-zero elements}
+in the vector. So for our friend $\overrightarrow{\textbf{f}}$, we say that
+$\norm{\overrightarrow{\textbf{f}}}_0 = 4$. This is at the other extreme from the
+infinity norm: now not only do all the elements count, but they count
+\textit{equally}. I don't care if you're 17 or 3; as long as you're not zero
+you count towards my $\ell^0$ norm.
+
+
+% TODO: picture showing Manhattan distance and city blocks.
 
 %"Normalizing" -- dividing by the norm. (just want the magnitude)
 %    [ 4 3 ] -> [ 4/5  3/5 ]
