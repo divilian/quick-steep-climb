@@ -105,5 +105,5 @@ plot!([0,0],[-5,5],color="black",linewidth=1)
 plot!([-5,5],[0,0],color="black",linewidth=1)
 xlims!((-4,4))
 ylims!((-4,4))
-savefig("dotProductRevisited.png")
+savefig("dotProductWithAngle.png")
 
