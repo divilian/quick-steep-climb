@@ -836,6 +836,7 @@ $\overrightarrow{\textbf{d}}$ to be $[\ 7\ \ 2\ \ 0\ ]$ instead of $[\ 0\ \ 2\
 Dang, we dropped from 39 all the way to 11 just by reordering the entries. 
 
 \index{Jezebel}
+\label{matchmakerExample}
 
 This ability to judge roughly ``how aligned'' two vectors are comes up all the
 time. Consider a dating website. Let's say that Jezebel, a heterosexual female,
@@ -1260,6 +1261,10 @@ Figure~\ref{fig:dotProduct4WithAngle}. To refresh your memory, the vector
 $\overrightarrow{\textbf{a}}$ is $[\ 3\ \ -3\ ]$ and
 $\overrightarrow{\textbf{b}}$ is $[\ 2\ \ -4\ ]$.
 
+
+% TODO: add a second plot to this figure, showing two vectors with the same
+% magnitudes as the existing plot, but with a bigger angle between them, and
+% show how the dot product is less.
 \begin{figure}[ht]
 \centering
 \includegraphics[width=0.6\textwidth]{dotProductWithAngle.png}
@@ -1549,10 +1554,135 @@ infinity norm: now not only do all the elements count, but they count
 \textit{equally}. I don't care if you're 17 or 3; as long as you're not zero
 you count towards my $\ell^0$ norm.
 
+\section{Normalizing}
 
-%"Normalizing" -- dividing by the norm. (just want the magnitude)
-%    [ 4 3 ] -> [ 4/5  3/5 ]
-% only care about the direction
-% now jezebel can't cheat with [ 10 10 10 10 10 ]. same as Chad, who answered
-% [ 5 5 5 5 5 ].
+\index{normalizing (a vector)}
 
+Finally, let me mention the concept of ``\textbf{normalizing}'' a vector. To
+normalize a vector means to whack it down to size: make its length be exactly
+1. We do this when we only care about a vector's \textit{direction}, not its
+magnitude, and when the magnitude might actually get in the way.
+
+First I'll tell you how to do this, and then give you an idea of why we'd want
+to. The how part is easy: you just divide the vector by its norm. (We can
+choose whichever norm is appropriate, often Euclidean.) Just as ``subtracting
+two vectors'' meant ``multiply the second vector by $-1$ and add them,'' so
+``dividing a vector by a scalar'' means ``multiply the vector by
+1-over-the-scalar.''
+
+For example, if we normalize our vector $\overrightarrow{\textbf{b}} = [\ 2\ \
+-4\ ]$ from the last section, we get:
+
+\vspace{-.15in}
+\begin{align*}
+\frac{\overrightarrow{\textbf{b}}}{\norm{\overrightarrow{\textbf{b}}}} =
+\frac{[\ 2\ \ -4\ ]}{\norm{[\ 2\ \ -4\ ]}} =
+\frac{[\ 2\ \ -4\ ]}{\sqrt{2^2 + (-4)^2}} =
+\frac{[\ 2\ \ -4\ ]}{4.472} = [\ .447 \ \ -.894\ ].
+\end{align*}
+
+This is a vector that's in the same direction as $\overrightarrow{\textbf{b}}$,
+but of magnitude 1. We can verify this:
+
+\vspace{-.15in}
+\begin{align*}
+\textrm{angle} = \tan^{-1} \frac{-.894}{.447} = -63.43\degree, \\
+\textrm{magnitude} = \sqrt{.447^2 + (-.894)^2} = 1.
+\end{align*}
+
+\index{Mr.~Right}
+
+Okay, now why would we want to normalize a vector? Isn't throwing away the
+magnitude tantamount to losing important information? Well, it depends. Let's
+return to our matchmaker dating site (p.~\pageref{matchmakerExample}). You'll
+recall that the odious Mr.~Right was trying to game the system by answering 10
+to all the survey questions. ``Action movies? I love 'em! Hiking! Love it!
+Candlelight dinners? Love 'em!...'' He figured he could be every woman's dream
+match because he'd have the maximum dot product with all of them.
+
+But if we \textit{normalize} each person's vector before taking the dot
+product, we put everybody on the same playing field. Effectively, each person
+has the same amount of points to ``spend'' on the various survey questions, and
+giving a high answer to one question means you're essentially going to have to
+give a low answer to others.
+
+\index{Filbert}
+
+Consider Filbert, whose answers were:
+
+\begin{center}
+\begin{tabular}{cccccc}
+$\overrightarrow{\textbf{filbert}}$ \quad \ = [ & 6 & 2 & 8 & 4 & ] \\
+& \scriptsize{action} & \scriptsize{hiking} & \scriptsize{candlelight} &
+\scriptsize{mystery} & \medskip \\
+\end{tabular}
+\end{center}
+\vspace{-.15in}
+
+His norm was $\sqrt{6^2+2^2+8^2+4^2}=10.95$, so when we normalize him, we get:
+
+\begin{center}
+\begin{tabular}{cccccc}
+$\frac{\overrightarrow{\textbf{filbert}}}{\norm{\overrightarrow{\textbf{filbert}}}}$
+\quad \ = [ & .548 & .183 & .730 & .365 & ] \\
+& \scriptsize{action} & \scriptsize{hiking} & \scriptsize{candlelight} &
+\scriptsize{mystery} & \medskip \\
+\end{tabular}
+\end{center}
+\vspace{-.15in}
+
+Biff's norm was $\sqrt{10^2+10^2+1^2+1^2}=14.21$, so when we normalize him, we get:
+
+\begin{center}
+\begin{tabular}{cccccc}
+$\frac{\overrightarrow{\textbf{biff}}}{\norm{\overrightarrow{\textbf{biff}}}}$
+\quad \ = [ & .704 & .704 & .070 & .070 & ] \\
+& \scriptsize{action} & \scriptsize{hiking} & \scriptsize{candlelight} &
+\scriptsize{mystery} & \medskip \\
+\end{tabular}
+\end{center}
+\vspace{-.15in}
+
+As for Mr.~Right, he has the largest norm: $\sqrt{10^2+10^2+10^2+10^2}=20$. So
+no matter how much he tries to fool the ladies with his huge answers, his
+normalized version is simply:
+
+\begin{center}
+\begin{tabular}{cccccc}
+$\frac{\overrightarrow{\textbf{mrright}}}{\norm{\overrightarrow{\textbf{mrright}}}}$
+\quad \ = [ & .5 & .5 & .5 & .5 & ] \\
+& \scriptsize{action} & \scriptsize{hiking} & \scriptsize{candlelight} &
+\scriptsize{mystery} & \medskip \\
+\end{tabular}
+\end{center}
+\vspace{-.15in}
+
+See how that works? Your survey responses now become relative to your
+\textit{other} survey responses. Answering 10 to everything is the
+same as answering 5 to everything, or even 0 to everything: you're effectively
+saying ``I like all these activities equally.'' The only way to \textit{truly}
+say ``I really do love candlelight dinners'' is to rank candlelight dinners
+higher than other activities which you admit you like less.
+
+Using normalized versions of the vectors, let's see how each of our eligible
+bachelors pairs up with Jezebel:
+
+\scriptsize
+\begin{align*}
+\overrightarrow{\textbf{jezebel}} \cdot \overrightarrow{\textbf{biff}} &=
+.434 \cdot .704 + .173 \cdot .704 + .867 \cdot .070 + .173 \cdot .070 = .5 \\
+\overrightarrow{\textbf{jezebel}} \cdot \overrightarrow{\textbf{filbert}} &=
+.434 \cdot .548 + .173 \cdot .183 + .867 \cdot .730  + .173 \cdot .365 =
+\textbf{.966} \\
+\overrightarrow{\textbf{jezebel}} \cdot \overrightarrow{\textbf{wendell}} &=
+.434 \cdot .092 + .173 \cdot .275 + .867 \cdot .275 + .173 \cdot .917 = .485 \\
+\overrightarrow{\textbf{jezebel}} \cdot \overrightarrow{\textbf{mrright}} &=
+.434 \cdot .500 + .173 \cdot .500 + .867 \cdot .500 + .173 \cdot .500 = .824 \\
+\end{align*}
+
+\normalsize
+Filbert it is. Mr.~Right's scheme was defeated: normalization revealed that
+Filbert is truly more compatible with Jezebel than he is.
+
+Let's bring this chapter to a close, and wish Filbert and Jezebel a very
+romantic evening together. :)
