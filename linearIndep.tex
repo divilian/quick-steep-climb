@@ -239,12 +239,96 @@ Actually, I'll make it \$5,000.
 Don't get too frustrated before you realize the simple truth: it's not
 possible.
 
+\subsection{The key point: \underline{\textit{why}} blue dominoes don't work}
 
+You don't have to be too clever to recognize that this whole Domino Game thing
+is really math in disguise. And if you haven't seen the connection yet, let me
+just point out the following so you can do a face palm:
 
+\begin{compactitem}
+\item Dominoes are just two-dimensional vectors.
+\item ``Taking some number of the left (or right) domino'' is just
+scalar-vector multiplication.
+\item Adding together your copies-of-the-left-domino and your
+copies-of-the-right-domino is just vector addition.
+\end{compactitem}
 
+\index{linear combination}
+The central theme of the game is figuring out ``which vectors you can make from
+which other vectors.'' The result of ``making'' a new domino is called a linear
+combination:
 
+\begin{center}
+You get a \textbf{linear combination} of vectors when you multiply each of them
+by a scalar and add them up (to yield another vector).
+\end{center}
 
+Any vector you can obtain this way is a linear combination of the vectors you
+used. The scalars definitely don't have to all be the same. Also, each scalar
+can be zero or even negative.
 
+A critical question will turn out to be: what is the complete set of vectors
+that are \textit{possible} to get as linear combinations of some ``starter
+vectors?'' And to answer that, I'm going to give you a whole new perspective on
+dominoes.
+
+\subsection{Dominoes are vectors}
+
+Several of our puzzles involved the yellow starter dominoes 1--2 and 4--4. As I
+indicated, dominoes are really vectors in disguise. So I have plotted these two
+``dominoes'' in Figure~\ref{fig:yellowVectors}.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.8\textwidth]{yellowVectors.png}
+\caption{Plotting the dominoes
+\protect\includegraphics[width=0.07\textwidth]{gray1_2.png} and
+\protect\includegraphics[width=0.07\textwidth]{gray4_4.png} as vectors.}
+%\protect{\raisebox{-0.3\height}{\includegraphics[width=0.05\textwidth]{gray4_4.png}}} as
+%vectors.}
+\label{fig:yellowVectors}
+\end{figure}
+
+Also on the diagram are two dashed lines, each going off to infinity in both
+directions. Consider first the steepest of the two lines. It's pointing in
+exactly the same direction as the $[\ 1\ \ 2\ ]$ vector. It represents
+\textit{all the points you can get to by multiplying that vector by a scalar}.
+Take a moment and digest that thought completely. You'll see that some of the
+points that dashed line goes through are $(2,4)$, $(4,8)$, $(0,0)$,
+$(-\frac{1}{2},-1)$, and $(-4,-8)$. Those points are the tips of the vectors
+you would get if you multiplied $[\ 1\ \ 2\ ]$ by 2, 4, 0, $-\frac{1}{2}$, and
+$-4$, respectively. Similar comments apply to the dashed line that extends the
+$[\ 4\ \ 4\ ]$ vector.
+
+Now consider the process of trying to reach a goal domino like
+\includegraphics[width=0.06\textwidth]{white6_8.png}, also known as $[\ 6\ \ 8\
+]$. What we're effectively asking is: is there any linear combination of $[\ 1\
+\ 2\ ]$ and $[\ 4\ \ 4\ ]$ that will reach the point $[\ 6\ \ 8\ ]$? The
+setting for this problem is on the left-hand side of 
+Figure~\ref{fig:yellowVectors6_8}.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.44\textwidth]{yellowVectors6_8.png}
+\includegraphics[width=0.44\textwidth]{yellowVectors6_8sol.png}
+\caption{Can we reach the point
+\protect\includegraphics[width=0.06\textwidth]{white6_8.png} using only
+multiples of the vectors 
+\protect\includegraphics[width=0.06\textwidth]{gray1_2.png} and
+\protect\includegraphics[width=0.06\textwidth]{gray4_4.png}? Yes!}
+\label{fig:yellowVectors6_8}
+\end{figure}
+
+By fiddling around with these numbers Domino-Game-style, you'll hit on the
+solution of ``\textbf{two} and \textbf{one}'': two
+\includegraphics[width=0.06\textwidth]{gray1_2.png} dominoes plus one
+\includegraphics[width=0.06\textwidth]{gray4_4.png} domino gives you a
+\includegraphics[width=0.06\textwidth]{white6_8.png} domino. That can be
+pictured visually on the right-hand side Figure~\ref{fig:yellowVectors6_8}.
+Starting at the origin, and moving two times in the direction of the $[\ 1\ \
+2\ ]$ vector, we get to the point $[\ 2\ \ 4\ ]$. From there, moving once in
+the direction of the $[\ 4\ \ 4\ ]$ vector lands us exactly on the point $[\ 6\
+\ 8\ ]$. Voil\`{a}!
 
 
 
