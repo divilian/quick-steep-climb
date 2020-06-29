@@ -191,17 +191,18 @@ interesting questions:
 \begin{enumerate}
 \itemsep.1em
 
-\item Were your solutions that same as mine in each case? If so, do you think
-that was just coincidence? If not, how many different solutions do you think
-are possible?
+\item \label{uniqueSolution} Were your solutions that same as mine in each
+case? If so, do you think that was just coincidence? If not, how many different
+solutions do you think are possible?
 
-\item Is it always possible to solve a puzzle like this, no matter what the
-\textit{goal} domino is? Or are only a small number of goal dominoes actually
-possible to produce?
+\item \label{alwaysSolveNoMatterGoal} Is it always possible to solve a puzzle
+like this, no matter what the \textit{goal} domino is? Or are only a small
+number of goal dominoes actually possible to produce?
 
-\item Is it always possible to solve a puzzle like this, no matter what the
-\textit{starter} dominoes are? Or is it only in a few cleverly crafted
-scenarios where the numbers happen to work out just right?
+\item \label{alwaysSolveNoMatterStarters} Is it always possible to solve a
+puzzle like this, no matter what the \textit{starter} dominoes are? Or is it
+only in a few cleverly crafted scenarios where the numbers happen to work out
+just right?
 
 \end{enumerate}
 
@@ -312,10 +313,11 @@ Figure~\ref{fig:yellowVectors6_8}.
 \includegraphics[width=0.44\textwidth]{yellowVectors6_8.png}
 \includegraphics[width=0.44\textwidth]{yellowVectors6_8sol.png}
 \caption{Can we reach the point
-\protect\includegraphics[width=0.06\textwidth]{white6_8.png} using only
-multiples of the vectors 
+\protect\includegraphics[width=0.06\textwidth]{white6_8.png} (the {\Large
+$\star$} at
+point $[\ 6\ 8\ ]$) using only multiples of the vectors
 \protect\includegraphics[width=0.06\textwidth]{gray1_2.png} and
-\protect\includegraphics[width=0.06\textwidth]{gray4_4.png}? Yes!}
+\protect\includegraphics[width=0.06\textwidth]{gray4_4.png}? \textit{Yes!}}
 \label{fig:yellowVectors6_8}
 \end{figure}
 
@@ -329,6 +331,84 @@ Starting at the origin, and moving two times in the direction of the $[\ 1\ \
 2\ ]$ vector, we get to the point $[\ 2\ \ 4\ ]$. From there, moving once in
 the direction of the $[\ 4\ \ 4\ ]$ vector lands us exactly on the point $[\ 6\
 \ 8\ ]$. Voil\`{a}!
+
+\medskip
+
+That was fun -- let's try some more. What about the point $[\ 3\ \ 2\ ]$. Can
+we reach \textit{it} by using only multiples of $[\ 1\ \ 2\ ]$ and $[\ 4\ \ 4\
+]$?
+
+\index{windshield wiper}
+At first glance, it doesn't seem so; after all, the point $(3,2)$ is outside
+the ``windshield wiper'' angle between the two dashed lines. But it turns out
+we can, if we go against the grain. Moving ``$-1$ times in the $[\ 1\ \ 2\ ]$
+direction'' takes us to the point $[\ -1\ \ -2\ ]$. From there, we do
+\textit{almost} a complete 180\textdegree. Heading back northeast once in the
+$[\ 4\ \ 4\ ]$ direction lands us on $[\ 3\ \ 2\ ]$ as desired. Bingo! (See
+Figure~\ref{fig:yellowVectors3_2}.)
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.44\textwidth]{yellowVectors3_2.png}
+\includegraphics[width=0.44\textwidth]{yellowVectors3_2sol.png}
+\caption{Can we reach the point $[\ 3\ \ 2\ ]$ using only $[\ 1\ \ 2\ ]$ and
+$[\ 4\ \ 4\ ]$? \textit{Yes!}}
+\label{fig:yellowVectors3_2}
+\end{figure}
+
+\index{backwards}
+And how about $[\ 0\ \ 4\ ]$? This time it's the 
+\includegraphics[width=0.06\textwidth]{gray4_4.png} domino that we use
+``backwards.'' Going four times in the $[\ 1\ \ 2\ ]$ direction followed by
+$-1$ in the $[\ 4\ \ 4\ ]$ direction gives us the solution ``4 \& $-1$,'' as
+depicted in Figure~\ref{fig:yellowVectors0_4}.
+
+\begin{figure}[hb]
+\centering
+\includegraphics[width=0.44\textwidth]{yellowVectors0_4.png}
+\includegraphics[width=0.44\textwidth]{yellowVectors0_4sol.png}
+\caption{Can we reach the point $[\ 0\ \ 4\ ]$ using only $[\ 1\ \ 2\ ]$ and
+$[\ 4\ \ 4\ ]$? \textit{Yes!}}
+\label{fig:yellowVectors0_4}
+\end{figure}
+
+At this point, you'll probably guess what I'm going to say next. Yes indeed,
+\textit{any} point in the entire $x,y$ plane can be reached through some
+combination of the $[\ 1\ \ 2\ ]$ and $[\ 4\ \ 4\ ]$ vectors. And that gives us
+the answer to one of our questions from p.~\pageref{alwaysSolveNoMatterGoal}
+(question \#\ref{alwaysSolveNoMatterGoal}): surprisingly, \textit{yes} we can
+always find a solution to the Domino Game puzzle, no matter what the goal
+domino is. Amazing!
+
+Most of my students are as surprised by that result as I was back in the day.
+When I first give them Domino puzzles, they figure, ``okay, Stephen has
+specially concocted a case where it just happens to work out that I can combine
+the two yellow dominoes into a white one somehow. I'll work his special puzzle
+and come up with the slick answer.'' Little do they realize that \textit{any}
+white domino whatsoever is solvable; I didn't have to come up with anything
+special at all.
+
+\smallskip
+
+Now the second lesson of these vector pictures may be harder to see. It's the
+answer to question \#\ref{uniqueSolution} from p.~\pageref{uniqueSolution}. Not
+only can every Domino problem be solved, but \textit{it can be solved in only
+one way.}
+
+If you did it right, your answers to the six puzzles on
+pp.~\pageref{startDominoPuzzles}-\pageref{endDominoPuzzes} were exactly the
+same as mine on p.~\pageref{dominoPuzzleAnswers}. Perhaps that struck you as a
+coincidence at first: ``gee, it's sure funny that I always keep hitting on the
+exact same solution that Stephen did!'' But if you stare at
+Figure~\ref{fig:yellowVectors6_8} and friends, you might see the reason.
+Starting from the origin, and striking out in the first vector's direction, you
+only have one choice if you want to get to the right place. In
+Figure~\ref{fig:yellowVectors6_8}'s case, you \textit{must} stop at $[\ 2\ \ 4\
+]$. If you stop earlier, or later, then you're destined to miss the mark: going
+in the $[\ 4\ \ 4\ ]$ direction from anywhere else you might stop won't land
+you at exactly $[\ 6\ \ 8\ ]$.
+
+
 
 
 
