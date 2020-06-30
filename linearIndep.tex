@@ -17,7 +17,7 @@ the rules:
 
 \begin{framed}
 \begin{compactenum}
-\item You are given one or more yellow\footnotemark ``starter dominoes.''
+\item You are given one or more \textbf{yellow}\footnotemark ``starter dominoes.''
 \item The object of the game is to build the white ``goal domino'' from these
 starter dominoes.
 \item You can ``use'' any number of each starter domino (even a fraction, even
@@ -228,10 +228,10 @@ Goal domino:
 \hspace{1.3in}
 \raisebox{-0.3\height}{\includegraphics[width=0.3\textwidth]{white3_4.png}}
 
-Our starter dominoes are blue\footnote{Dark gray, actually, since I made this
-book black\&white to keep costs down.} instead of yellow this time, for reasons
-I'll explain below. Other than that, it's the same kind of problem. Go ahead --
-try it!
+Our starter dominoes are \textbf{blue}\footnote{Dark gray, actually, since I
+made this book black\&white to keep costs down.} instead of yellow this time,
+for reasons I'll explain below. Other than that, it's the same kind of problem.
+Go ahead -- try it!
 
 I'll mail you \$5 if you can figure it out and send me a solution.
 
@@ -408,9 +408,166 @@ Figure~\ref{fig:yellowVectors6_8}'s case, you \textit{must} stop at $[\ 2\ \ 4\
 in the $[\ 4\ \ 4\ ]$ direction from anywhere else you might stop won't land
 you at exactly $[\ 6\ \ 8\ ]$.
 
+\subsection{But...}
+
+So every point is reachable, and is reachable in only one way. But that's only
+\textit{\underline{if}} you have yellow starter dominoes. If you've got blue
+ones, it's a totally different story.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.7\textwidth]{blueVectors.png}
+\caption{Can we reach the points
+$[\ 6\ \ 8\ ]$,
+$[\ 0\ \ 4\ ]$,
+$[\ 4\ \ 1\ ]$,
+$[\ -6\ \ -4\ ]$,
+$[\ -3\ \ -3\ ]$...or virtually anything else
+using only $[\ 2\ \ 3\ ]$ and $[\ 4\ \ 6\ ]$? \textbf{No.}}
+\bigskip
+\label{fig:blueVectors}
+\end{figure}
+
+Figure~\ref{fig:blueVectors} shows the hopeless situation. The telltale sign of
+misery is that \textit{there's only one dashed line.} The 
+{\includegraphics[width=0.06\textwidth]{darkgray2_3.png}} and
+{\includegraphics[width=0.06\textwidth]{darkgray4_6.png}} vectors point in
+\textit{exactly} the same direction, so no matter how hard we try, there's no
+getting off that one line. In the middle of a promising two-dimensional
+landscape, we're stuck in a one-dimensional sub-world.
 
 
+\section{Linear independence in two dimensions}
 
+\index{linear independence}
+
+The yellow {\includegraphics[width=0.06\textwidth]{gray1_2.png}} and
+{\includegraphics[width=0.06\textwidth]{gray4_4.png}} vectors are called
+\textbf{linearly independent}. By contrast, the blue
+{\includegraphics[width=0.06\textwidth]{darkgray2_3.png}} and
+{\includegraphics[width=0.06\textwidth]{darkgray4_6.png}} vectors are
+\textbf{linearly dependent}. Figure~\ref{fig:dominoFacts}
+(p.~\pageref{fig:dominoFacts}) sums up some
+extremely important facts about these two cases in one handy table. Let me
+explain each item in turn.
+
+\vspace{-.2in}
+
+\begin{itemize}
+\itemsep.1em
+
+\item \textbf{Yellow dominoes are linearly independent.} This means they point
+in different directions, so that each one gives you a ``fresh'' degree of
+freedom to travel in.
+
+% DANGER: "up" to refer to figure
+
+\item \textbf{You can't get one yellow domino from the other.} A corollary of
+the ``different directions'' thing is that if you tried to get to the tip of
+the first yellow domino using only the second, you couldn't do it. Look back at
+Figure~\ref{fig:yellowVectors} (p.~\pageref{fig:yellowVectors}) if you don't
+believe me. From the origin, can you get to the point $[\ 1\ \ 2\ ]$ going only
+in the $[\ 4\ \ 4\ ]$ direction? No. But if you look up at
+Figure~\ref{fig:blueVectors} you'll see that you \textit{can} do it with our
+blue dominoes. Can you get to $[\ 2\ \ 3\ ]$ using only the $[\ 4\ \ 6\ ]$
+vector? Sure, just take half of it.
+
+Another way to think of it is that if you have blue dominoes, one of them is
+superfluous. Say you have $[\ 2\ \ 3\ ]$, and I come along trying to sell you
+$[\ 4\ \ 6\ ]$ as well. Why bother? You can already go in that direction! Heck,
+you can produce $[\ 4\ \ 6\ ]$ yourself just by doubling the domino you already
+have.
+
+
+\item \textbf{Yellow dominoes are the common case.} Suppose I picked two
+dominoes out of a bag and put them in front of you. Are they more likely to be
+yellow, or blue? A moment's consideration will tell you the answer is yellow.
+The only way the dominoes can be blue is if they point in
+\underline{\textit{exactly}} the same direction. The odds of that are
+fantastically small.
+
+Think of it this way. Let's say the first domino out of the bag is $[\ 1\ \ 3\
+]$. And let's say the left half of the second domino is 4, so that the second
+domino is $[\ 4\ \ ?\ ]$. Think about what would have to happen for the pair of
+dominoes to be blue. That question mark would have to be exactly 12.
+\textit{Only} 12. Absolutely any other number for the question mark would give
+you yellow dominoes.
+
+\item \textbf{With yellow dominoes, you can get \textit{any} white domino.}
+This is perhaps the most important point. The yellow dominoes have enough
+coverage that any point in the entire plane is reachable using them. The sorry
+blue dominoes, on the other hand, are inbred; you can't get anywhere on the
+plane except the points along their shared, lonely line.
+
+\item \textbf{With yellow dominoes, each solution is unique.} This may or may
+not have been obvious to you from the diagrams, but I promise it's so. You can
+reach each point in only one way. By contrast, everything the blue dominoes can
+reach -- which admittedly, ain't much -- can be reached in multiple ways
+(including the origin; see the next point).
+
+\index{trivial@``trivial'' solution}
+
+\item \textbf{Yellow dominoes can't get to the origin, except ``trivially.''}
+One last point is that with yellow dominoes, the only way to get to the origin
+is to take zero of the first domino and zero of the second. (This is called a
+\textbf{trivial solution}.) That's because once you set out in the first
+domino's direction, using the second one has to take you in a
+\textit{different} direction, and hence not back to where you came. With blue
+dominoes, you can do this in many different ways: take six $[\ 2\ \ 3\ ]$'s
+minus three $[\ 4\ \ 6\ ]$'s, or $-1$ $[\ 2\ \ 3\ ]$'s and half a $[\ 4\ \ 6\
+]$, \textit{etc.} I guess that's some small recompense for having to stay on
+that one line: blue dominoes truly \textit{own} that line and can tread it to
+their heart's content. This seemingly obscure fact will actually play a
+surprising role later on.
+
+\end{itemize}
+
+By the way, a student once asked me, ``what if you get one yellow domino and
+one blue? What happens then?'' Perhaps you'll see the answer immediately as one
+of my other students did. The answer is \textit{that can't happen.} No domino
+is, by itself, intrinsically yellow or blue: it's only yellow or blue
+\textit{with respect to another one.} It's the \textit{pair} of dominoes that
+are yellow if they point in different directions, or blue if they point in the
+same direction.
+
+
+\begin{figure}[ht]
+\begin{framed}
+\begin{center}
+\small
+\hspace{-.2in}
+\begin{tabular}{l|r}
+Yellow dominos \ 
+\raisebox{-0.25\height}{\includegraphics[width=0.07\textwidth]{gray1_2.png}} 
+\raisebox{-0.25\height}{\includegraphics[width=0.07\textwidth]{gray4_4.png}} &
+\raisebox{-0.25\height}{\includegraphics[width=0.07\textwidth]{darkgray2_3.png}} 
+\raisebox{-0.25\height}{\includegraphics[width=0.07\textwidth]{darkgray4_6.png}} 
+\ Blue dominos \smallskip \\
+\hline \\ 
+linearly \textbf{independent} & linearly \textbf{dependent} \\
+can't get any yellow from others & 
+can get each blue from others \\
+``common'' & ``rare'' \\
+can make \textit{any} white domino & can make only a few \\
+each goal reachable in one way & each goal reachable \textit{many} ways \\
+can only get
+\raisebox{-0.3\height}{\includegraphics[width=0.07\textwidth]{white0_0.png}} 
+``trivially" &
+can get 
+\raisebox{-0.3\height}{\includegraphics[width=0.07\textwidth]{white0_0.png}}
+in many ways \\
+\end{tabular}
+\end{center}
+\end{framed}
+\vspace{-.2in}
+\caption{Important domino facts.}
+\label{fig:dominoFacts}
+\end{figure}
+
+% linearly dependent: can get to zero non-trivially, and to any point on the
+%   line in multiple ways
+% linearly dependent is rarer
+% you can't have "one blue domino"
 
 \pagebreak
 \subsection*{Answers to Domino Game puzzles from
@@ -453,7 +610,7 @@ $-1$ \raisebox{-0.3\height}{\includegraphics[width=0.1\textwidth]{gray4_4.png}} 
 \item {Solution: \textbf{0 \& 0}}
 
 \quad 0 \raisebox{-0.3\height}{\includegraphics[width=0.1\textwidth]{gray1_2.png}} \ \& \
-0 \ \raisebox{-0.3\height}{\includegraphics[width=0.1\textwidth]{gray4_4.png}} \ = \
+0 \raisebox{-0.3\height}{\includegraphics[width=0.1\textwidth]{gray4_4.png}} \ = \
 \raisebox{-0.3\height}{\includegraphics[width=0.1\textwidth]{white0_0.png}} \quad
 
 \end{enumerate}
