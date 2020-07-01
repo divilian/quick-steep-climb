@@ -564,10 +564,100 @@ in many ways \\
 \label{fig:dominoFacts}
 \end{figure}
 
-% linearly dependent: can get to zero non-trivially, and to any point on the
-%   line in multiple ways
-% linearly dependent is rarer
-% you can't have "one blue domino"
+\section[Linear independence in more dimensions]{\large Linear independence in more dimensions}
+
+Now I wish things could stay that easy but they just can't. When we move to
+three dimensions (and beyond) things become more subtle, even besides being
+harder to visualize.
+
+First let's look at an easy case. Suppose you have the three ``triominoes'' $[\
+1\ 2\ 3\ ]$, $[\ -4\ 0\ 1\ ]$, and $[\ 2\ 4\ 6\ ]$. You can probably eyeball
+those and see that they are \textit{not} linearly independent, because the
+first and third dominoes are multiples of each other. (Multiply $[\ 1\ 2\ 3\ ]$
+by 2 and you get $[\ 2\ 4\ 6\ ]$.) And if you can get one vector from one of
+the others, that's the death knell for our yellow hopes and dreams: These
+vectors are unavoidably blue.
+
+In three dimensions, blue triominoes mean that we can't get to every point in
+three-dimensional \textbf{space} just by using those vectors. That's hard to
+visualize, but if you can picture the following, you'll get the idea. Recall
+that in 2-d, blue vectors sat on the same dashed line. You couldn't get to the
+rest of the plane. In 3-d, blue vectors all sit on the same \textit{plane}. You
+can get anywhere on that two-dimensional surface, but not anywhere else in the
+vastness of three-dimensional space.
+
+Perhaps this is easier to see if I change the example. Suppose my three
+triominoes are $[\ 4\ 2\ 0\ ]$, $[\ 2\ 3\ 0\ ]$, and $[\ 6\ 5\ 0\ ]$. Now you
+can add multiples of these three vectors together all day, but you'll never get
+a third entry other than zero. I can't get to a point like $[\ 4\ 3\ 7\ ]$,
+because how would I ever get a 7 in the third slot? All the vectors I have to
+work with have a zero there!
+
+In picture terms, if we consider the coordinates to be $x$, $y$, and $z$, where
+the $z$ axis goes ``in'' and ``out'' of the page, those three vectors let us
+reach only the points \textit{on} the flat page. All the points in space that
+are in front of the page, or behind the page, are out of reach.
+
+\smallskip
+
+I promise you the same basic thing is true for $[\ 1\ 2\ 3\ ]$, $[\ -4\ 0\ 1\
+]$, $[\ 2\ 4\ 6\ ]$ example. It's only harder to see in your mind's eye because
+in this case, the plane we're trapped on isn't flat. It's angled through space,
+slicing slant-wise through the origin. But it's still true that the vast
+majority of 3-d points can't be reached. The problem here, just like with blue
+dominoes, is that one of the vectors in the list (the third one) doesn't give
+us any power we didn't already have with one of the others (the first one).
+
+\medskip
+
+Now so far, this seems just the same as the two-dimensional case, except that
+we have three entries per vector to work with. But unfortunately, even if none
+of the three vectors is a multiple of any of the other, that's \textit{not}
+enough to guarantee linear independence. Three vectors which are ``pairwise
+independent'' from each other -- meaning $\overrightarrow{v_1}$ is not a
+multiple of $\overrightarrow{v_2}$, nor $\overrightarrow{v_2}$ of
+$\overrightarrow{v_3}$, nor $\overrightarrow{v_3}$ of $\overrightarrow{v_1}$ --
+can still be a linearly dependent set.
+
+\index{linear combination}
+
+How? \textit{If one is a linear combination of the other two.} Consider these
+three vectors:
+
+\begin{center}
+\begin{tabular}{rlrrrl}
+$\overrightarrow{v_1}$ &= [\ & 2\ & 0\ & $-3$\ & ] \\
+$\overrightarrow{v_2}$ &= [\ & $-1$\ & 4\ & 4\ & ] \\
+$\overrightarrow{v_3}$ &= [\ & 3\ & 4\ & $-2$\ & ] \\
+\end{tabular}
+\end{center}
+
+Those look pretty linearly independent to me. But they're not. If you take
+twice the first vector plus the second vector, you get the third vector:
+
+\begin{align*}
+2 \overrightarrow{v_1} + 1 \overrightarrow{v_2} &=
+[\ 4\ \ 0\ \ -6\ ] + [\ -1\ \ 4\ \ 4\ ] = [\ 3\ \ 4\ \ -2\ ] = \overrightarrow{v_3} \\
+\end{align*}
+
+As before, then, the third vector \textit{didn't give us any additional power.}
+If we wanted to move in the $[\ 3\ 4\ -2\ ]$ direction, we could do so using
+only vectors $\overrightarrow{v_1}$ and $\overrightarrow{v_2}$ in the right
+quantities. The offer of that $\overrightarrow{v_3}$ vector leaves us with an
+awkward pause and saying as politely as possible ``no, thanks.''
+
+Now finally, we're ready for our supreme definition of linear independence, no
+matter how many dimensions. Here goes:
+
+\begin{framed}
+A set of vectors is \textbf{linearly independent} only if none of them can be
+made from a linear combination of the others.
+\end{framed}
+
+If you're given a set of vectors, and you can find a superfluous one in the
+bunch, remove it so you whittle the set down to size. When you get to the point
+where none of the remaining vectors can be deleted without losing the ability
+to reach some points, then you know you have a linearly independent set.
 
 \pagebreak
 \subsection*{Answers to Domino Game puzzles from
