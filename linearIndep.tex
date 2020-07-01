@@ -659,6 +659,163 @@ bunch, remove it so you whittle the set down to size. When you get to the point
 where none of the remaining vectors can be deleted without losing the ability
 to reach some points, then you know you have a linearly independent set.
 
+\section{Foundational definitions}
+
+We close this heady chapter by defining a few more crucial terms that we'll
+make use of again and again.
+
+\index{vector space}
+
+\begin{framed}
+A ``\textbf{vector space}'' is a world of $n$ dimensions in which
+$n$-dimensional vectors live. (like the $x$-$y$ plane, or the 3-d space.)
+\end{framed}
+
+I hinted at this term back on p.~\pageref{vectorSpace}, and mentioned that it's
+sometimes used in a very abstract way. The above definition, believe it or not,
+is a pretty brass-tacks definition, since we're defining it in terms of
+dimensions and coordinates. Just think of a ``vector space'' as ``the place
+where vectors (of a particular length) live'' and you won't be too far off.
+
+\index{span}
+\begin{framed}
+The set of \textit{all} linear combinations of a set of vectors is called the
+\textbf{span} of that set.
+\end{framed}
+
+This is precisely the question of ``where can I \textit{get} using these
+starter dominoes?'' that we asked in the Domino Game. I can combine starter
+vectors with each other in numerous ways to get other vectors. If I kept doing
+that and doing that infinitely, what is my \textit{entire} set of possible
+vacation spots? Answer: the \textbf{span}.
+
+To be concrete:
+
+\vspace{-.15in}
+\begin{itemize}
+
+\item The span of \{ 
+\raisebox{-0.25\height}{\includegraphics[width=0.07\textwidth]{gray1_2.png}},
+\raisebox{-0.25\height}{\includegraphics[width=0.07\textwidth]{gray4_4.png}}
+\} is \textbf{the whole $x$-$y$ plane}.
+
+\item The span of \{
+\raisebox{-0.25\height}{\includegraphics[width=0.07\textwidth]{darkgray2_3.png}},
+\raisebox{-0.25\height}{\includegraphics[width=0.07\textwidth]{darkgray4_6.png}}
+\}, on the other hand, is merely \textbf{the line through the origin with slope
+$\frac{3}{2}$} (``rise over run'').
+
+\item The span of \{ $[2 \ 3 \ 1],\  [0 \ -9 \ 0], \ [0 \ 1 \ 1]$ \} is
+\textbf{the whole three-dimensional $x$-$y$-$z$ space}, since that set is
+linearly independent. (You can believe me or not, but it is. We'll figure out
+how to verify that later on.)
+
+\item The span of \{ $[2 \ 0 \ -3],\  [-1 \ 4 \ 4],\  [3 \ 4 \ -2]$ \} is
+\textit{not} the whole $x$-$y$-$z$ space, since as we learned above, that set
+is not linearly independent. Its span is merely \textbf{a 2-d plane slicing
+through the origin} of three-dimensional space.
+
+\end{itemize}
+
+
+\index{basis}
+
+\begin{framed}
+A \textbf{basis} for a vector space is a \textit{linearly independent} set of
+vectors that \textit{spans} the space.
+\end{framed}
+
+Note that two-part definition. Your vectors have to (1) be independent of one
+another, and (2) span the entire space. Only then do they constitute a basis.
+
+Important fact: if you have a basis, then every vector in the entire vector
+space can be expressed as a linear combination of the basis vectors in exactly
+one way.
+
+For example, we saw that \{ $[1\ \ 2\ ]$, $[\ 4 \ \ 4]$ \} was a basis for the
+$x$-$y$ plane. Therefore, every point on the $x$-$y$ plane can be formed by a
+unique linear combination of those vectors:
+
+\begin{align*}
+[\ 6 \ \ 8\ ] &= 2 [\ 1 \ \ 2\ ] + 1 [\ 4 \ \ 4\ ] \\
+[\ 0 \ \ 4\ ] &= 4 [\ 1 \ \ 2\ ] - 1 [\ 4 \ \ 4\ ] \\
+[\ 4 \ \ -4\ ] &= -8 [\ 1 \ \ 2\ ] + 3 [\ 4 \ \ 4\ ] \\
+\end{align*}
+\vspace{-.7in}
+\begin{center}
+\textit{etc.}
+\end{center}
+
+We'll look at this in a new and deep way later on, but you can begin to grasp
+it now: using a basis kind of gives us \textit{a new coordinate system} in
+which to express a vector. For example, as shown above, the vector $[\ 4\ \ -4\
+]$ can be expressed as \textbf{--8} of the $[\ 1\ \ 2\ ]$ vector plus
+\textbf{3} of the $[\ 4\ \ 4\ ]$ vector. That means that its coordinates are
+kinda sorta ``$(-8,3)$'' in this basis rather than ``$(4,-4)$'' in the original
+basis. Dude, that's mind-blowing.
+
+\index{basis}
+\index{standard basis}
+\begin{framed}
+The ``\textbf{standard basis}'' is a basis whose vectors have norm 1 and that
+point in each axis direction.
+\end{framed}
+
+In other words:
+
+\begin{compactitem}
+
+\item In two dimensions, the standard basis is the vectors $[\ 1\ \ 0\ ]$ and
+$[\ 0\ \ 1\ ]$.
+
+\item In three dimensions, it's the vectors $[\ 1\ \ 0\ \ 0\ ]$, $[\ 0\ \ 1\ \
+0\ ]$, and $[\ 0\ \ 0\ \ 1\ ]$.
+
+\item In four dimensions, it's the vectors $[\ 1\ \ 0\ \ 0\ \ 0\ ]$, $[\ 0\ \ 1\ \
+0\ \ 0\ ]$, $[\ 0\ \ 0\ \ 1\ \ 0\ ]$, and $[\ 0\ \ 0\ \ 0\ \ 1\ ]$.
+
+\item \textit{Etc.}
+\end{compactitem}
+
+
+\smallskip
+Note that in the standard basis, we have:
+
+\vspace{-.3in}
+\begin{align*}
+[\ 6 \ \ 8\ ] &= 6 [\ 1 \ \ 0\ ] + 8 [\ 0 \ \ 1\ ] \\
+[\ 0 \ \ 4\ ] &= 0 [\ 1 \ \ 0\ ] + 4 [\ 0 \ \ 1\ ] \\
+[\ 4 \ \ -4\ ] &= 4 [\ 1 \ \ 0\ ] - 4 [\ 0 \ \ 1\ ] \\
+\end{align*}
+\vspace{-.6in}
+\begin{center}
+\textit{etc.}
+\end{center}
+
+Thus the standard basis is sort of the ``natural'' coordinate system, if you
+will. 
+
+Fact: all possible bases for a vector space have the \textit{same} number of
+vectors in them. Why? Well, you can't span the space with any fewer. And you
+can't be linearly independent if you have any more. So no matter what basis you
+tell me you have for the $x$-$y$ plane, I know it'd better have exactly two
+vectors in it or you're a liar. If you tell me you have a basis for 
+$x$-$y$-$z$ space, it'd better have three vectors in it: no more, and no fewer.
+
+Last one, which you might already be able to guess:
+
+\index{dimension}
+\begin{framed}
+The \textbf{dimension} of a vector space is the number of elements in a basis
+for it.
+\end{framed}
+
+We've talked about the dimension of a \textit{vector} before, but not of a
+vector space. The dimension of a vector space is how many vectors are required
+to get everywhere in it. And that in turn is simply the dimension of the
+vectors that live in it. It's no accident that for \textit{three}-dimensional
+space, a basis has \textit{three} vectors with \textit{three} elements each.
+
 \pagebreak
 \subsection*{Answers to Domino Game puzzles from
 pp.~\pageref{startDominoPuzzles}-\pageref{endDominoPuzzes}}
