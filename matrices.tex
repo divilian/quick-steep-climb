@@ -1,0 +1,89 @@
+
+\chapter{Matrices}
+
+It's now time for the granddaddy of all linear algebra entities: the
+\textbf{matrix}. When we've finished this part of our climb, you'll actually be
+able to see the summit we'll eventually reach.
+
+By the way, the plural of \textit{matrix} is \textbf{matrices} (pronounced
+MAY-trih-sees), kind of like the plural of \textit{index} is \textit{indices.}
+But don't forget the singular is still ``\textit{matrix}!'' Don't let me (or
+anyone else) catch you uttering the non-word ``matrice'' -- you'll sound like a
+dweeb and drive me up a wall.
+
+\section{Row and column vectors}
+\index{vector}
+
+Up to now, a vector has simply been a vector. I haven't made a big deal about
+how you write it on the page. We've been free to write a vector
+$\overrightarrow{\textbf{x}}$ with the three elements 6, 2, and 9 in either of
+these ways:
+
+\vspace{-.15in}
+\begin{center}
+\begin{tabular}{ccc}
+$\overrightarrow{\textbf{x}}$ = \textbf{[}$\ 6\ \ 2\ \ 9\ $\textbf{]} &
+\quad\quad \textit{...or...} \quad\quad &
+$\overrightarrow{\textbf{x}}$ = $\begin{bmatrix} 6 \\ 2 \\ 9 \end{bmatrix}$ \ 
+\end{tabular}
+\end{center}
+\vspace{-.15in}
+
+\index{function}
+
+Or heck, you could even write it diagonally if you want. This flexibility is
+because all that really matters is the \textit{function} view of a vector that
+we discussed in section~\ref{vectorIsFunction} (p.~\pageref{vectorIsFunction}).
+No matter which way you write it, if I asked you for the value of ``element
+\#0,'' you'd say 6, and if I asked for ``element \#2,'' you'd say 9. The way
+it's drawn on paper has been immaterial.
+
+\index{row vector}
+\index{column vector}
+
+That will still be true sometimes. But beginning with this chapter, it's going
+to sometimes turn out to matter whether or not we think of a vector as a
+\textbf{row vector} (the left-hand-side version of
+$\overrightarrow{\textbf{x}}$, above) or a \textbf{column vector} (the
+right-hand-side). Memorize these terms: they matter, and you'll have to have
+them on the tip of your neural cortex. A row goes horizontally, side-to-side;
+and a column goes vertically, up-to-down.
+
+I'll try to always be very careful to emphasize the row vs.~column nature of a
+vector in those cases where it turns out to matter.
+
+\index{default}
+
+By the way, one surprising thing (at least, it was to me) is that the
+``default'' is for an unspecified vector to be treated as a \textit{column}
+vector, not a row. Column vectors take up more room on the page, and aren't as
+natural when you're writing on paper, which I guess is why it surprised me. At
+any rate, whenever a vector is under discussion, try to visualize it as an
+up-and-down column of entries, unless the accompanying text explicitly says
+otherwise.
+
+\section{The matrix}
+
+\index{matrix (plural: matrices)}
+
+At last, the matrix.
+
+%A matrix, capital letter, with no arrow on the top
+%
+%(example)
+%
+%always rectangle, but not always square
+%
+%rows and columns, list as row x column.
+%
+%
+%A_1,2 is element at row 1, column 2  (we'll use Python's numbering system)
+%
+%Could do it with labels instead
+%
+%    Mon Tue Wed Thu, and Fred, Rich, DC
+%
+%    Cartesian product. A matrix is a function from Cities x Days -> Reals
+%
+
+
