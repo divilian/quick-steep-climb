@@ -85,9 +85,12 @@ A =
 \end{align*}
 \vspace{-.15in}
 
+\index{dimension}
+
 Matrices are always rectangular, but not always square. The $A$ matrix is
 called a ``$3\times 4$'' (three-by-four) matrix, since it has three
-\textbf{row}s and four \textbf{column}s. Again, it's important to master this
+\textbf{row}s and four \textbf{column}s. We say that $3\times 4$ are the
+matrix's \textbf{dimensions}. Again, it's important to master all this
 terminology. When giving the dimensions of a matrix, you always list the number
 of rows first, and then the number of columns.
 
@@ -192,3 +195,103 @@ domain is really all the ordered pairs of cities-and-days, like (D.C., Thurs)
 and (Richmond, Monday). The function takes any ordered pair like that and gives
 you a number telling you how hot that city was on that day. It's a snap when
 seen this way.
+
+
+\section{Matrix operations}
+
+Just as section~\ref{vectorOps} listed the permissible actions we could perform
+on vectors (and scalars), so this section lists the operations we can perform
+on matrices (and vectors, and scalars). There's one other big one which I'll
+save for entire separate chapter, but there are still four useful ones we'll
+cover here.
+
+\subsection{Operation \#1: scalar-matrix multiplication}
+
+This one's a piece of cake. Recall that multiplying a scalar by a vector
+amounted to multiplying the scalar by each of its elements, producing a vector
+of the same dimension. Same here: we get a matrix of the same dimension by
+multiplying individually:
+
+\vspace{-.15in}
+\begin{align*}
+4 \cdot
+\begin{bmatrix}
+3 & 2 & 9 \\
+1 & -1 & 0 \\
+\end{bmatrix}
+=
+\begin{bmatrix}
+12 & 8 & 36 \\
+4 & -4 & 0 \\
+\end{bmatrix}.
+\end{align*}
+\vspace{-.15in}
+
+Sometimes we'll put a dot between the two, as above, though we'll often omit
+that and just write the scalar and matrix side-by-side. Either way, it means
+scalar-matrix multiplication.
+
+\subsection{Operation \#2: matrix addition}
+
+Also a piece of cake, and just what you'd expect:
+
+\vspace{-.15in}
+\begin{align*}
+\begin{bmatrix}
+4 & 1 \\
+1 & -2 \\
+3 & 18 \\
+\end{bmatrix}
+\begin{bmatrix}
+1 & 2 \\
+5 & 2 \\
+-10 & -10 \\
+\end{bmatrix}
++
+\begin{bmatrix}
+5 & 3 \\
+6 & 0 \\
+-7 & 8 \\
+\end{bmatrix}.
+\end{align*}
+\vspace{-.15in}
+
+The only hard part is not going cross-eyed as you zigzag your eyeballs across
+the page to match up entries.
+
+As with vector addition, you simply can't add two matrices at all if they don't
+have the same dimensions. Also just like vectors, we can \textit{subtract} one
+matrix from another just by adding the first matrix to ``$-1$ times the second
+matrix.''
+
+%transpose
+%2x3 transpose gives us 3x2.  (Ai,j = ATj,i)
+%
+%use transpose on a row vector to get a column vector.
+%(Treating the vector as a one-row / one-col matrix when we do this)
+%
+%
+%matrix-vector multiplication. not what you'd expect. not even the kind of
+%result you'd expect.
+%
+%Make A a 4x2, x a column vector 2x1.
+%if mxn matrix, you need a n-dimensional column vector (or "nx1 matrix")
+%weird! # of rows of one must be # of columns of the other.
+%get an mx1 answer!
+%
+%two different ways to think about this A dot xvector.
+%
+%1. All the dot products of the vector with the matrix's rows.
+%2. A linear combination of the matrix's columns (with the vector's elements as
+%coefficients.)
+%
+%Show the second thing all worked out as the linear combo of columns.
+%
+%
+%Why think about it as way 1? Jezebel col vector, matrix of all the guys (heck,
+%let's put guys surveys in columns too, then that requires transpose
+%
+%
+%Why think about it in way 2? Recipes matrix. each column is one recipe, each
+%row is an ingredient. Vector shows how many of each recipe you want to make.
+%
