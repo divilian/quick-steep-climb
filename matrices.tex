@@ -120,6 +120,10 @@ As with vectors, we won't always use index numbers to designate rows and
 columns: sometimes we'll use labels. Check out this matrix $W$ (for
 ``weather''):
 
+\index{Fredericksburg, Virginia}
+\index{Washington, D.C.}
+\index{Richmond, Virginia}
+
 \vspace{-.4in} 
 \begin{adjustwidth}{}{60pt}
 \begin{center}
@@ -299,13 +303,15 @@ As you can see, if we start with an $m\times n$ matrix, transposing it gives us
 an $n\times m$ matrix. Fat-and-wide becomes tall-and-skinny, and vice versa.
 And in symbols,
 
-\vspace{-.15in}
+\vspace{-.25in}
 \begin{align*}
 A_{i,j} = A^\intercal_{j,i}
 \end{align*}
-\vspace{-.15in}
+\vspace{-.25in}
 
-for all the rows $i$ and columns $j$ of the $A$ matrix.
+for all the rows $i$ and columns $j$ of the $A$ matrix. Note how the $i$ and
+$j$ swapped places in the subscript. The element at row 7, column 19 of $A$ is
+the same as the one at row 19, column 7 of $A^\intercal$.
 
 \smallskip
 
@@ -332,6 +338,10 @@ it makes sense to say things like:
 9 & 2 & 4 \\
 \end{bmatrix}.
 \end{align*}
+
+When speaking, by the way, you pronounce
+$\overrightarrow{\textbf{x}}^\intercal$ as ``x-transpose'' and $A^\intercal$ as
+``A-transpose.''
 
 \subsection{Operation \#4: matrix-vector multiplication}
 
@@ -360,17 +370,20 @@ Here goes:
 \end{bmatrix}.
 \end{align*}
 
-Surprise number one is that we multiplied a $2\times 3$ matrix by a column
-vector and got back a $2\times 1$ matrix. Ooookay. Surprise number two are the
+Can you figure out why in the world that would be the answer?
+
+Surprise number one is the \textit{type} of thing we got back. We multiplied a
+$2\times 3$ matrix by a three-dimensional column vector and this produced...a
+\textit{two}-dimensional column vector. Ooookay. Surprise number two are the
 contents of that vector. 28 and $-3$, what the...?
 
 Things will get considerably clearer if you remember the \textit{dot product}
 operator from section~\ref{dotProduct} (p.~\pageref{dotProduct}). What we did
-here was \textit{compute \underline{each} row of the matrix dot-product-ed with
-the vector}. A dot product, you'll recall, gives us a single scalar as an
-answer. So, since $[\ 2\ \ 2\ \ 7\ ] \cdot [\ 1\ \ -1\ \ 4\ ]$ is 28, and $[\
-1\ \ 4\ \ 0\ ] \cdot [\ 1\ \ -1\ \ 4\ ]$ is $-3$, our result is a vector
-containing those two results.
+here was \textit{separately compute \underline{each} row of the matrix
+dot-product-ed with the vector}. A dot product, you'll recall, gives us a
+single scalar as an answer. So, since $[\ 2\ \ 2\ \ 7\ ] \cdot [\ 1\ \ -1\ \ 4\
+]$ is 28, and $[\ 1\ \ 4\ \ 0\ ] \cdot [\ 1\ \ -1\ \ 4\ ]$ is $-3$, our result
+is a vector containing those two results.
 
 This can really trip you up later if you don't master it now, so take a minute
 and master the above calculation. Make sure you understand how the
@@ -384,52 +397,326 @@ The rules for when matrix-vector multiplication are possible are:
 \item The vector must be a column vector, or at least treated as such for
 purposes of performing the operation.
 \item The number of \textit{columns} (not rows) in the matrix must be the same
-as the dimension of (or the number of entries in) the vector. If these do not
+as the dimension of (the number of entries in) the vector. If these do not
 match, the game is over.
-\item If 1 and 2 check out, then the operation is permissible, and the result
-is a column vector whose dimension (number of entries) is the same as the
-number of \textit{rows} (not columns) in the matrix.
 \end{compactenum}
+
+If these two check out, then the operation is permissible, and the result is a
+column vector whose dimension (number of entries) is the same as the number of
+\textit{rows} (not columns) in the matrix.
 
 For example:
 
 \begin{compactitem}
 \item A wide $5\times 17$ matrix times a 17-dimensional column vector is legal,
 and gives a 5-dimensional vector result.
-\item A tall $18\times 3$ matrix times a 3-dimensional column vector is legal,
-and gives an 18-dimensional vector result.
-\item A wide $5\times 17$ matrix times a 17-dimensional \textit{row} vector is
+\item A tall $17\times 5$ matrix times a 5-dimensional column vector is legal,
+and gives an 17-dimensional vector result.
+\item A wide $5\times 17$ matrix times a 5-dimensional column vector is
 illegal.
-\item A wide $5\times 17$ matrix times a \textit{5}-dimensional column vector is
-illegal.
+\item A wide $5\times 17$ matrix times any \textit{row} vector is illegal.
 \end{compactitem}
+
+\medskip
 
 Sometimes it helps to stretch your neck out a bit before attempting
 matrix-vector multiplication. That's because you have to visualize a
 (potentially long) row of numbers being paired up, one-by-one, with a
 (potentially tall) column of numbers. It's not too hard once you get used to
-it, but it's surprisingly difficult to move across the page with your left
-eyeball at the same time you're moving \textit{down} the page with your right
-eyeball. Like all things, practice.
+it, but it can be surprisingly difficult at first to move across the page with
+your left eyeball at the same time you're moving \textit{down} the page with
+your right eyeball. Like all things, practice.
 
-\subsection{Outer and inner products}
 
 \subsection{Two ways to think about matrix-vector multiplication}
 
-%
-%two different ways to think about this A dot xvector.
-%
-%1. All the dot products of the vector with the matrix's rows.
-%2. A linear combination of the matrix's columns (with the vector's elements as
-%coefficients.)
-%
-%Show the second thing all worked out as the linear combo of columns.
-%
-%
-%Why think about it as way 1? Jezebel col vector, matrix of all the guys (heck,
-%let's put guys surveys in columns too, then that requires transpose
-%
-%
-%Why think about it in way 2? Recipes matrix. each column is one recipe, each
-%row is an ingredient. Vector shows how many of each recipe you want to make.
-%
+Now there are two different ways to think about the matrix-vector product. Each
+one is useful in certain situations, so it's very important to master
+\textit{both} interpretations. Here they are:
+
+\begin{framed}
+\label{twoInterpretations}
+\begin{samepage}
+Two different ways to think about $A \cdot \overrightarrow{\textbf{x}}$:
+\begin{compactenum}
+\item All of the dot products between the \textit{rows} of $A$ with
+$\overrightarrow{\textbf{x}}$.
+\item A linear combination of $A$'s \textit{columns}.
+($\overrightarrow{\textbf{x}}$'s elements are the coefficients of the
+linear combination.)
+\end{compactenum}
+\end{samepage}
+\end{framed}
+
+The first interpretation is what we've learned operationally so far. To compute
+$A \cdot \overrightarrow{\textbf{x}}$, we take each of $A$'s rows, in turn, and
+dot-product them with the vector, producing a new vector of answers.
+
+\index{Jezebel}
+
+When does it make sense to think of it this way? Think back to Jezebel and
+friends (p.~\pageref{matchmakerExample}). Let's say we have Jezebel's
+(normalized) survey answers in a vector $\overrightarrow{\textbf{j}}$:
+
+\begin{center}
+\begin{tabular}{cccccc}
+$\overrightarrow{\textbf{j}}$ = [ & .434 & .173 & .867 & .173 & ]. \\
+& \scriptsize{action} & \scriptsize{hiking} & \scriptsize{candle} &
+\scriptsize{mystery} & \\
+\normalsize
+\end{tabular}
+\end{center}
+\vspace{-.15in}
+
+Now suppose we have all the eligible Men's (normalized) survey answers in a
+matrix $M$, like so:
+
+\vspace{-.3in} 
+\begin{adjustwidth}{}{30pt}
+\begin{center}
+\begin{multicols}{2}
+\begin{flushright}
+\hspace*{1cm} \\
+\hspace*{1cm} \\
+\footnotesize{biff} \\
+\footnotesize{filbert} \\
+\footnotesize{wendell} \\
+%\footnotesize{mrright} \\
+\end{flushright}
+\columnbreak
+\vspace{-1.5in} 
+\begin{align*}
+\begin{bmatrix}
+.704 \ & \ .704 \ & \ .070 \ & \ .070 \\
+.548 \ & \ .183 \ & \ .730 \ & \ .365 \\
+.092 \ & \ .275 \ & \ .275 \ & \ .917 \\
+%.500 \ & \ .500 \ & \ .500 \ & \ .500 \\
+\end{bmatrix}
+\end{align*}
+\vspace{-.15in}
+\hspace*{-.1in}
+\ \scriptsize{action} \ \ \ \scriptsize{hiking} \ \  \scriptsize{candle} \ \ 
+\scriptsize{mystery} \\
+\end{multicols}
+\end{center}
+\end{adjustwidth}
+\vspace{-.15in}
+
+A very reasonable way to store these entries, I think you'll agree. Each row
+represent one man's (normalized) survey responses, where each column is one of
+the questions.
+
+\index{transpose}
+
+Now we can compute Jezebel's compatibility with every guy under the sun in one
+fell swoop! All we need to do is transpose her vector into a column vector, and
+perform matrix-vector multiplication:
+
+\vspace{-.15in}
+\begin{align*}
+M \cdot \overrightarrow{\textbf{j}}^\intercal =
+\begin{bmatrix}
+.704 \ & \ .704 \ & \ .070 \ & \ .070 \\
+.548 \ & \ .183 \ & \ .730 \ & \ .365 \\
+.092 \ & \ .275 \ & \ .275 \ & \ .917 \\
+%.500 \ & \ .500 \ & \ .500 \ & \ .500 \\
+\end{bmatrix} \cdot 
+\begin{bmatrix}
+.434 \\ .173 \\ .867 \\ .173 \\
+\end{bmatrix} =
+\begin{bmatrix}
+.500 \\ .966 \\ .484 \\ % .824 \\
+\end{bmatrix}.
+\end{align*}
+\vspace{-.15in}
+
+Boom! The elements of our answer represent Jezebel's compatibility with Biff,
+Filbert, and Wendell, respectively. That's because the \textit{first} element
+of our answer was the dot product of the \textit{first} row of $M$ (Biff's row)
+with $\overrightarrow{\textbf{j}}$. Ditto for the other two.
+
+As you can see, this is really nothing more than automating and repeating our
+individual dot product calculations, since that's what the matrix-vector
+product \textit{is}, according to interpretation 1. Instead of just multiplying
+Jezebel's vector times Biff's, we can multiply it times a thousand different
+guys all at once, to get a thousand different compatibilities. In the end, we
+see that Filbert and Jezebel are paired together as expected, which means all
+is right with the world.
+
+\bigskip
+
+\index{bake sale}
+\index{brownies}
+\index{chocolate chip cookies}
+\index{fudge}
+\index{Rice Krispie treats}
+The other way to think about the matrix-vector product is as a linear
+combination of the matrix's \textit{columns}. The bake sale example from
+p.~\pageref{bakeSale} is a case where it makes sense to think about it this
+way. Let's make a ``Recipes matrix'' $R$ in which each column is one recipe,
+and each row corresponds to an ingredient. The entries tell us the quantity of
+that ingredient required for one batch of each of the recipes:
+
+\vspace{-.3in} 
+%\begin{adjustwidth}{}{0pt}
+\begin{center}
+\begin{multicols}{2}
+\begin{flushright}
+\hspace*{1cm} \\
+\hspace*{1cm} \\
+\small{butter} \\
+\small{sugar} \\
+\small{chips} \\
+\small{flour} \\
+\small{eggs} \\
+\small{marshmallow} \\
+\small{rice krispies} \\
+\end{flushright}
+\columnbreak
+\vspace{-1.5in} 
+\begin{align*}
+\setlength\arraycolsep{13pt}
+\begin{bmatrix}
+2 \ & \ 1 \ & \ 2 \ & \ 2 \\
+1 \ & \ 1 \ & \ 2 \ & \ 0 \\
+1 \ & \ 4 \ & \ 4 \ & \ 0 \\
+1 \ & \ 2 \ & \ 0 \ & \ 0 \\
+3 \ & \ 2 \ & \ 0 \ & \ 0 \\
+0 \ & \ 0 \ & \ 0 \ & \ 5 \\
+0 \ & \ 0 \ & \ 0 \ & \ 2 \\
+\end{bmatrix}
+\end{align*}
+\vspace{-.15in}
+\hspace*{-.1in}
+\scriptsize{chippers} \ \ \scriptsize{brownies} \ \  \scriptsize{fudge} \ 
+\scriptsize{rice krispies} \\
+\end{multicols}
+\end{center}
+%\end{adjustwidth}
+\vspace{-.15in}
+
+When we do our bake sale planning, we decide we want to bake the following
+number of \textbf{b}atches for our first day of the sale:
+
+\begin{center}
+\begin{tabular}{cccccc}
+$\overrightarrow{\textbf{b}}$ = [ & 5 & 5 & 2 & 6 & ]. \\
+& \scriptsize{chippers} & \scriptsize{brownies} & \scriptsize{fudge} &
+\scriptsize{rice krispies} & \\
+\normalsize
+\end{tabular}
+\end{center}
+\vspace{-.15in}
+
+How do we compute our complete shopping list? Simple: transpose
+$\overrightarrow{\textbf{b}}$ and do matrix-vector multiplication:
+
+\vspace{-.15in}
+\begin{align*}
+R \cdot \overrightarrow{\textbf{b}}^\intercal =
+\begin{bmatrix}
+2 \ & \ 1 \ & \ 2 \ & \ 2 \\
+1 \ & \ 1 \ & \ 2 \ & \ 0 \\
+1 \ & \ 4 \ & \ 4 \ & \ 0 \\
+1 \ & \ 2 \ & \ 0 \ & \ 0 \\
+3 \ & \ 2 \ & \ 0 \ & \ 0 \\
+0 \ & \ 0 \ & \ 0 \ & \ 5 \\
+0 \ & \ 0 \ & \ 0 \ & \ 2 \\
+\end{bmatrix} \cdot 
+\begin{bmatrix}
+5 \\ 5 \\ 2 \\ 6 \\
+\end{bmatrix} =
+\begin{bmatrix}
+31\\ 14\\ 33\\ 15\\ 25\\ 30\\ 12 \\
+\end{bmatrix}.
+\end{align*}
+\vspace{-.15in}
+
+We'll clean out Publix by purchasing 31 sticks of butter, 14 cups of sugar, 33
+bags of chocolate chips, and so on.
+
+Now why do I say that the \textit{second} interpretation from
+p.~\pageref{twoInterpretations} is the right one here? Because we're treating
+the columns as meaningful entities. The left-most column is ``how much stuff to
+buy for \textit{each} chocolate chip cookie batch.'' The second column is ``how
+much stuff to buy for each brownie batch.'' And so forth. So what we're really
+doing in this calculation is saying ``we want 5 chipper recipes, so 5 times the
+first column; and also 5 brownie recipes, so 5 times the second column; 2
+batches of fudge, so twice the third column; plus 6 times the last column for
+our 6 trays of Rice Krispie treats.'' Mathematically, we're doing this:
+
+\vspace{-.15in}
+\begin{align*}
+5 
+\begin{bmatrix}
+2  \\
+1  \\
+1  \\
+1  \\
+3  \\
+0  \\
+0  \\
+\end{bmatrix} +
+5 
+\begin{bmatrix}
+1\\
+1\\
+4\\
+2\\
+2\\
+0\\
+0\\
+\end{bmatrix} +
+2 
+\begin{bmatrix}
+2 \\
+2 \\
+4 \\
+0 \\
+0 \\
+0 \\
+0 \\
+\end{bmatrix} +
+6 
+\begin{bmatrix}
+2 \\
+0 \\
+0 \\
+0 \\
+0 \\
+5 \\
+2 \\
+\end{bmatrix} =
+\begin{bmatrix}
+31\\ 14\\ 33\\ 15\\ 25\\ 30\\ 12 \\
+\end{bmatrix},
+\end{align*}
+\vspace{-.15in}
+
+which is exactly a linear combination of the recipes. The coefficient of each
+vector -- the scalar in each scalar-vector multiplication -- is the
+corresponding element of our $\overrightarrow{\textbf{b}}$ vector, telling us
+how much of each recipe to make.
+
+\bigskip
+
+A couple additional thoughts before we leave this section. First, I don't know
+about you, but I think it's actually quite remarkable that these two different
+definitions of matrix-vector multiplication turn out to give the same answer.
+In \#1, we're taking the dot product of each of the matrix's rows with the
+entire vector. In \#2, we're working with the columns of the matrix, not the
+rows, and we're not doing any dot products at all; we're treating the vector as
+a sequence of coefficients and doing scalar-vector multiplication with them.
+These seem like totally different -- perhaps even opposite, or competing --
+operations, yet they always work out to the same result.
+
+Finally, I'll just say that if you think it's annoying to take the transpose of
+the vector and write it up-and-down, I feel your pain. It does seem much more
+sensible (and less prone to error) to just leave the row vector as a row
+vector, because then it lines up visually with the \textit{rows} of the matrix
+that we're taking its dot product with anyway. It's hard enough to keep all the
+numbers straight without having to constantly shift between horizontal and
+vertical vision \textit{as} you're calculating! Anyway, I guess I've just
+learned to accept this over the years, since it's universal to define the
+operation this way. My advice is to grumble to yourself a while and then try to
+do the same.
