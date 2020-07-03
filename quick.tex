@@ -21,10 +21,19 @@
 \usepackage{dialogue}
 \usepackage{mathtools}
 \usepackage{gensymb}
+\usepackage{mleftright}
 \makesavenoteenv{tabular}
 \usepackage[hidelinks]{hyperref}
 %\usepackage{enumerate}       
 
+% For diagonal line through matrix diagonal:
+\usepackage{tikz}
+\newcommand\tikzmark[1]{%
+  \tikz[overlay,remember picture,baseline] \node [anchor=base] (#1) {};}
+\newcommand\MyLine[3][]{%
+  \begin{tikzpicture}[overlay,remember picture]
+    \draw[#1] (#2.north west) -- (#3.south east);
+  \end{tikzpicture}}
 \DeclarePairedDelimiter{\norm}{\lVert}{\rVert}
 
 % Lulu.com

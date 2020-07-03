@@ -720,3 +720,338 @@ vertical vision \textit{as} you're calculating! Anyway, I guess I've just
 learned to accept this over the years, since it's universal to define the
 operation this way. My advice is to grumble to yourself a while and then try to
 do the same.
+
+\section{``Special'' matrices}
+
+Finally, there are some terms for ``special'' matrices that satisfy certain
+properties, which will come up for us in important contexts. We'll start with
+the least restrictive definition and repeatedly add further constraints to it
+for successively more restrictive ones.
+
+\index{square matrix}
+Easiest of all, a \textbf{square} matrix is simply one that has the same number
+of rows and columns. Any $4\times 4$ matrix is square, and no $6\times 7$
+matrix is square. Simple. And yes, in case you're wondering, we can have a
+$1\times 1$ matrix, which is considered square.
+
+\medskip
+
+\index{symmetric matrix}
+
+In order for a matrix to be \textbf{symmetric}, it has to be
+square.\footnote{There are more advanced versions of some of the definitions in
+this section that don't require square-ness, but they won't come up for us.}
+Further, in a symmetric matrix \textit{the rows and the columns are
+interchangeable.} For example:
+
+\vspace{-.15in}
+\begin{align*}
+\begin{bmatrix}
+9 & 7 & 2 & 8\\
+7 & -3 & 0 & -1\\
+2 & 0 & 5 & 4 \\
+8 & -1 & 4 & 16 \\
+\end{bmatrix}
+\end{align*}
+\vspace{-.15in}
+
+In this matrix, row \#0 is $[\ 9\ \ 7\ \ 2\ \ 8\ ]$, and column \#0 is
+\textit{also} $[\ 9\ \ 7\ \ 2\ \ 8\ ]$. Similarly, row \#1 and column \#1 are
+the same, as are row \#2 and column \#2, and row \#3 and column \#3.
+
+Mathematically, a matrix $M$ is symmetric only if:
+
+\vspace{-.15in}
+\begin{align*}
+\forall i,j \ M_{i,j} = M_{j,i}.
+\end{align*}
+\vspace{-.15in}
+
+In other words, you must be able to swap the row and column numbers and get the
+same value. The entry at row 5 column 8 must be the same as the one at row 8
+column 5, \textit{etc.} If that's not true every time, it's not a symmetric
+matrix.
+
+It might help you understand the meaning of ``symmetric'' if you mentally
+visualize a line from the upper-left entry to the lower-right entry of the
+matrix:
+
+\vspace{-.15in}
+\begin{align*}
+\begin{bmatrix} \tikzmark{a}
+9 & 7 & 2 & 8\\
+7 & -3 & 0 & -1\\
+2 & 0 & 5 & 4 \\
+8 & -1 & 4 & 16 \tikzmark{b} \\
+\end{bmatrix}
+\end{align*}
+\MyLine[thick]{a}{b}
+\vspace{-.15in}
+
+\index{main diagonal, of a matrix}
+\index{diagonal, of a matrix}
+\index{mirror}
+
+These entries, by the way, where the row number equals the column number, are
+called the \textbf{main diagonal} (or just the \textbf{diagonal}) of the
+matrix. If a matrix is symmetric, you could imagine that line being a mirror:
+and it perfectly reflects one side to the other. The two 7's are on matching,
+opposite sides of that line, as are the two 2's, the two 0's, the two 8's, the
+two $-1$'s, and the two 4's. Note that the entries \textit{on} the main
+diagonal can be anything at all -- they don't affect the symmetric-ness (or
+not) of the matrix.
+
+This property may seem obscure, but it will come up surprisingly often.
+
+By the way, you might have expected a ``symmetric matrix'' to be one that was a
+mirror image of itself left-to-right-wise, or top-to-bottom-wise. Nope. That
+doesn't turn out to be a useful concept. The definition above, however --
+reflection along the main diagonal -- turns out to be immensely useful.
+
+\medskip
+
+\index{upper-triangular}
+Okay, next one. A matrix is said to be \textbf{upper-triangular} if \textit{all
+entries below the main diagonal are zero.} Example:
+
+\vspace{-.15in}
+\begin{align*}
+\begin{bmatrix}
+9 & 7 & 2 & 8\\
+0 & -3 & 0 & -1\\
+0 & 0 & 5 & 4 \\
+0 & 0 & 0 & 16 \\
+\end{bmatrix}
+\end{align*}
+\vspace{-.15in}
+
+This matrix is upper-triangular because I've zeroed-out everything below the
+$9,-3,5,16$ entries of the main diagonal. Note that it's perfectly fine to also
+have a 0 above -- or even on -- the diagonal. The existence of such a zero
+doesn't disqualify you from upper-triangular-ness. The only requirement is that
+all entries \textit{below} the diagonal must be zero.
+
+\index{lower-triangular}
+
+You can probably tell why the word ``triangular'' is used: the possibly-nonzero
+entries are all arranged in a right triangle in the upper-right half of the
+matrix. Occasionally it will also be useful to talk about a
+\textbf{lower-triangular} matrix, which has zeroes in every entry
+\textit{above} the diagonal. And again, you have to be square for your upper-
+or lower- triangular-ness to even be under consideration.
+
+\medskip
+
+\index{diagonal matrix}
+
+Also common is the notion of a \textbf{diagonal matrix}. Be careful: a ``a
+diagonal matrix'' is different from ``the diagonal \textit{of} a matrix!'' A
+diagonal matrix is one where all entries \textit{not} on the diagonal must be
+zero. Example:
+
+\vspace{-.15in}
+\begin{align*}
+\begin{bmatrix}
+9 & 0 & 0 & 0\\
+0 & -3 & 0 & 0\\
+0 & 0 & 5 & 0 \\
+0 & 0 & 0 & 16 \\
+\end{bmatrix}
+\end{align*}
+\vspace{-.15in}
+
+Food for thought: a diagonal matrix is both upper-triangular \textit{and}
+lower-triangular.
+
+Like I said, we're getting more and more restrictive as we go. If you're
+planning on being a $6\times 6$ diagonal matrix, there's a whole lot of your
+life already set in stone. The only choices you have are what to put on your
+diagonal.
+
+\medskip
+
+\index{identity matrix}
+
+But we can get more restrictive still! Believe it or not, a very common and
+interesting type of matrix will be a so-called \textbf{identity matrix}. Get
+this: an identity matrix is a diagonal matrix \textit{with only 1's on the
+diagonal.} Talk about confining. Once you've decided on your size, you have
+literally no choices. The one and only $4\times 4$ identity matrix is this one:
+
+\vspace{-.15in}
+\begin{align*}
+\begin{bmatrix}
+1 & 0 & 0 & 0\\
+0 & 1 & 0 & 0\\
+0 & 0 & 1 & 0 \\
+0 & 0 & 0 & 1 \\
+\end{bmatrix}
+\end{align*}
+\vspace{-.15in}
+
+For every natural number $n$, there's one and only one identity matrix of that
+size. Sometimes we call that matrix $I_n$ for short; in other words, the matrix
+above is sometimes called $I_4$. 
+
+In the next chapter, you'll learn the excellent reason that this kind of matrix
+is called an ``identity'' matrix. For now, test yourself with these questions:
+
+\begin{compactenum}
+\label{specialMatrixQuiz}
+\item Are all square matrices symmetric?
+\item Are all symmetric matrices square?
+\item Are all symmetric matrices upper-triangular?
+\item Are all upper-triangular matrices symmetric?
+\item Are all diagonal matrices upper-triangular?
+\item Are all upper-triangular matrices diagonal?
+\item Are all diagonal matrices symmetric?
+\item Are all diagonal matrices identity matrices?
+\item Are all identity matrices upper-triangular?
+\item Are all identity matrices diagonal?
+\end{compactenum}
+
+The answers are at the end of the chapter (p.~\pageref{specialMatrixQuizSols}).
+
+\bigskip
+
+\index{block diagonal matrix}
+Finally, one more special matrix type that's a bit different from the previous
+ones. It's called a \textbf{block diagonal matrix}. A matrix is block diagonal
+if it can be partitioned into rectangular chunks (called ``blocks'') such that
+each chunk on the diagonal is square, and all entries in the non-diagonal
+chunks must be all zeros.
+
+Whoa, that's hard to visualize. Let's look at some examples:
+
+\vspace{-.15in}
+\begin{align*}
+\mleft[
+\begin{array}{cccc}
+3 & 2 & 0 & 0\\
+4 & 4 & 0 & 0\\
+0 & 0 & 9 & 7 \\
+0 & 0 & 2 & 6 \\
+\end{array}
+\mright]
+\end{align*}
+\vspace{-.15in}
+
+This is a block diagonal matrix. Why? Because if we break it up this way:
+
+\vspace{-.15in}
+\begin{align*}
+\mleft[
+\begin{array}{cc|cc}
+3 & 2 & 0 & 0\\
+4 & 4 & 0 & 0\\
+\hline
+0 & 0 & 9 & 7 \\
+0 & 0 & 2 & 6 \\
+\end{array}
+\mright]
+\end{align*}
+\vspace{-.15in}
+
+we can see that it satisfies the conditions. The two blocks on the diagonal
+(which are the 3--2--4--4 block and the 9--7--2--6 block) are square ($2\times
+2$), and all the entries in the off-diagonal blocks are zeroes.
+
+Sometimes it can take a little fiddling around to find the right partition. Try
+this one:
+
+\vspace{-.15in}
+\begin{align*}
+\mleft[
+\begin{array}{cccc}
+1 & 4 & 3 & 0\\
+6 & 8 & 2 & 0\\
+5 & 1 & 5 & 0 \\
+0 & 0 & 0 & 7 \\
+\end{array}
+\mright]
+\end{align*}
+\vspace{-.15in}
+
+Does that one look block diagonal to you? It is:
+
+\vspace{-.15in}
+\begin{align*}
+\mleft[
+\begin{array}{ccc|c}
+1 & 4 & 3 & 0\\
+6 & 8 & 2 & 0\\
+5 & 1 & 5 & 0 \\
+\hline
+0 & 0 & 0 & 7 \\
+\end{array}
+\mright]
+\end{align*}
+\vspace{-.15in}
+
+Notice that the blocks that are \textit{not} on the diagonal don't have to be
+square. All that matters are the diagonal blocks, and here we have a $3\times
+3$ and a $1\times 1$, so we're good.
+
+Here's one more for the road:
+
+\vspace{-.15in}
+\begin{align*}
+\mleft[
+\begin{array}{ccccccc}
+4 & 0 & 0 & 0 & 0 & 0 & 0\\
+0 & 9 & 0 & 3 & 3 & 0 & 0\\
+0 & 0 & 0 & 0 & 0 & 0 & 0\\
+0 & 0 & 2 & 0 & 0 & 0 & 0\\
+0 & 7 & 0 & 0 & 5 & 0 & 0\\
+0 & 0 & 0 & 0 & 0 & 6 & 3\\
+0 & 0 & 0 & 0 & 0 & 1 & 0\\
+\end{array}
+\mright]
+\end{align*}
+\vspace{-.15in}
+
+Is this one, too, block diagonal? All the extra (and unnecessary) zeroes might
+fool you, but if you partition it this way:
+
+\vspace{-.15in}
+\begin{align*}
+\mleft[
+\begin{array}{c|cccc|cc}
+4 & 0 & 0 & 0 & 0 & 0 & 0\\
+\hline
+0 & 9 & 0 & 3 & 3 & 0 & 0\\
+0 & 0 & 0 & 0 & 0 & 0 & 0\\
+0 & 0 & 2 & 0 & 0 & 0 & 0\\
+0 & 7 & 0 & 0 & 5 & 0 & 0\\
+\hline
+0 & 0 & 0 & 0 & 0 & 6 & 3\\
+0 & 0 & 0 & 0 & 0 & 1 & 0\\
+\end{array}
+\mright]
+\end{align*}
+\vspace{-.15in}
+
+you can see that it is.
+
+\bigskip
+
+\subsection*{Answers to ``special'' matrix quiz from
+p.~\pageref{specialMatrixQuiz}}
+
+\label{specialMatrixQuizSols}
+
+\begin{multicols}{3}
+\begin{compactenum}
+\item No.
+\item Yes.
+\item No.
+\item No.
+\item Yes.
+\item No.
+\item Yes.
+\item No.
+\item Yes.
+\item Yes.
+\end{compactenum}
+\end{multicols}
+
