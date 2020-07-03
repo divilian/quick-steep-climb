@@ -264,20 +264,158 @@ have the same dimensions. Also just like vectors, we can \textit{subtract} one
 matrix from another just by adding the first matrix to ``$-1$ times the second
 matrix.''
 
-%transpose
-%2x3 transpose gives us 3x2.  (Ai,j = ATj,i)
-%
-%use transpose on a row vector to get a column vector.
-%(Treating the vector as a one-row / one-col matrix when we do this)
-%
-%
-%matrix-vector multiplication. not what you'd expect. not even the kind of
-%result you'd expect.
-%
-%Make A a 4x2, x a column vector 2x1.
-%if mxn matrix, you need a n-dimensional column vector (or "nx1 matrix")
-%weird! # of rows of one must be # of columns of the other.
-%get an mx1 answer!
+\subsection*{Operation \#3: transpose}
+
+\index{transpose}
+
+Now here's kind of a strange one that's more structural than arithmetical. It's
+called the \textbf{transpose} operator. Unlike the previous ones, this is a
+\textbf{unary operator} which means it acts on only one operand (input) instead
+of two. (When we did scalar-matrix multiplication, we needed two things to act
+on: a scalar and a matrix. With matrix addition, we needed two matrices. But
+here, we only need one ``thing'' that we do the transpose to.)
+
+The symbol for this is a superscript ``$\intercal$'' written just after the
+matrix. Its purpose is to \textit{interchange the rows and the columns.} The
+rows of the original matrix become the columns (in the same order) of the
+transposed matrix, and vice versa. So,
+
+\vspace{-.15in}
+\begin{align*}
+\textrm{If } A = 
+\begin{bmatrix}
+4 & 1 \\
+1 & -2 \\
+3 & 18 \\
+\end{bmatrix},
+\ \textrm{then } A^\intercal = 
+\begin{bmatrix}
+4 & 1 & 3 \\
+1 & -2 & 18 \\
+\end{bmatrix}.
+\end{align*}
+
+As you can see, if we start with an $m\times n$ matrix, transposing it gives us
+an $n\times m$ matrix. Fat-and-wide becomes tall-and-skinny, and vice versa.
+And in symbols,
+
+\vspace{-.15in}
+\begin{align*}
+A_{i,j} = A^\intercal_{j,i}
+\end{align*}
+\vspace{-.15in}
+
+for all the rows $i$ and columns $j$ of the $A$ matrix.
+
+\smallskip
+
+\index{row vector}
+\index{column vector}
+
+You can probably also tell that if we transpose a column vector, we get a row
+vector, and vice versa. As I mentioned, there are times that we'll treat a
+vector as just a sequence of elements, and won't care about its ``shape.''
+Other times, though (including the next operation) we'll really be treating it
+as a sort of degenerate matrix with only one row or one column. At those times,
+it makes sense to say things like:
+
+\vspace{-.15in}
+\begin{align*}
+\textrm{If } \overrightarrow{\textbf{x}} = 
+\begin{bmatrix}
+9 \\
+2 \\
+4 \\
+\end{bmatrix},
+\ \textrm{then } \overrightarrow{\textbf{x}}^\intercal = 
+\begin{bmatrix}
+9 & 2 & 4 \\
+\end{bmatrix}.
+\end{align*}
+
+\subsection{Operation \#4: matrix-vector multiplication}
+
+Okay, heads-up. Here's the toughie.
+
+What do you think it would mean to multiply a \textit{matrix} by a
+\textit{vector}? You might think of several plausible ways to define such an
+operation, but I doubt you'll think of the one that's actually in use. It's
+weird for a number of reasons, one of which is that the thing you get back
+often isn't the same dimensions as \textit{either} of the operands!
+
+Let me just do one and see if you can reverse engineer how I got the answer.
+Here goes:
+
+\vspace{-.15in}
+\begin{align*}
+\begin{bmatrix}
+2 & 2 & 7 \\
+1 & 4 & 0 \\
+\end{bmatrix} \cdot
+\begin{bmatrix}
+1 \\ -1 \\ 4 
+\end{bmatrix} = 
+\begin{bmatrix}
+28 \\ -3
+\end{bmatrix}.
+\end{align*}
+
+Surprise number one is that we multiplied a $2\times 3$ matrix by a column
+vector and got back a $2\times 1$ matrix. Ooookay. Surprise number two are the
+contents of that vector. 28 and $-3$, what the...?
+
+Things will get considerably clearer if you remember the \textit{dot product}
+operator from section~\ref{dotProduct} (p.~\pageref{dotProduct}). What we did
+here was \textit{compute \underline{each} row of the matrix dot-product-ed with
+the vector}. A dot product, you'll recall, gives us a single scalar as an
+answer. So, since $[\ 2\ \ 2\ \ 7\ ] \cdot [\ 1\ \ -1\ \ 4\ ]$ is 28, and $[\
+1\ \ 4\ \ 0\ ] \cdot [\ 1\ \ -1\ \ 4\ ]$ is $-3$, our result is a vector
+containing those two results.
+
+This can really trip you up later if you don't master it now, so take a minute
+and master the above calculation. Make sure you understand how the
+\textit{rows} of the matrix are each dot-product-ed with the \textit{column}
+vector to produce an answer. And since there are two such dot products, there
+are two such answers, and the result is a column vector with two entries.
+
+The rules for when matrix-vector multiplication are possible are:
+
+\begin{compactenum}
+\item The vector must be a column vector, or at least treated as such for
+purposes of performing the operation.
+\item The number of \textit{columns} (not rows) in the matrix must be the same
+as the dimension of (or the number of entries in) the vector. If these do not
+match, the game is over.
+\item If 1 and 2 check out, then the operation is permissible, and the result
+is a column vector whose dimension (number of entries) is the same as the
+number of \textit{rows} (not columns) in the matrix.
+\end{compactenum}
+
+For example:
+
+\begin{compactitem}
+\item A wide $5\times 17$ matrix times a 17-dimensional column vector is legal,
+and gives a 5-dimensional vector result.
+\item A tall $18\times 3$ matrix times a 3-dimensional column vector is legal,
+and gives an 18-dimensional vector result.
+\item A wide $5\times 17$ matrix times a 17-dimensional \textit{row} vector is
+illegal.
+\item A wide $5\times 17$ matrix times a \textit{5}-dimensional column vector is
+illegal.
+\end{compactitem}
+
+Sometimes it helps to stretch your neck out a bit before attempting
+matrix-vector multiplication. That's because you have to visualize a
+(potentially long) row of numbers being paired up, one-by-one, with a
+(potentially tall) column of numbers. It's not too hard once you get used to
+it, but it's surprisingly difficult to move across the page with your left
+eyeball at the same time you're moving \textit{down} the page with your right
+eyeball. Like all things, practice.
+
+\subsection{Outer and inner products}
+
+\subsection{Two ways to think about matrix-vector multiplication}
+
 %
 %two different ways to think about this A dot xvector.
 %
