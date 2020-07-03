@@ -1,0 +1,74 @@
+
+\subsection{Outer and inner products}
+
+Because we can treat a vector as a sort of degenerate matrix (with only one
+row, or only one column), it sometimes makes sense to do this matrix-vector
+multiplication with two vectors. Which one is treated as a row vector and which
+one is treated as a column vector makes all the difference.
+
+As an illustration, I'm going to define vectors $\overrightarrow{\textbf{p}}$
+and $\overrightarrow{\textbf{q}}$ this way:
+
+\vspace{-.15in}
+\begin{align*}
+\overrightarrow{\textbf{p}} =
+\begin{bmatrix}
+3 & 1 & 2 \\
+\end{bmatrix}, \quad 
+\overrightarrow{\textbf{q}} =
+\begin{bmatrix}
+5 \\  4 \\ -3 \\
+\end{bmatrix}.
+\end{align*}
+\vspace{-.15in}
+
+So $\overrightarrow{\textbf{p}}$ is a row vector, and
+$\overrightarrow{\textbf{q}}$ is a column vector.
+
+Now, treating $\overrightarrow{\textbf{p}}$ as a $1\times 3$ matrix, we perform
+multiplication and get:
+
+\vspace{-.15in}
+\begin{align*}
+\overrightarrow{\textbf{p}} \cdot \overrightarrow{\textbf{q}} =
+\begin{bmatrix}
+3 & 1 & 2 \\
+\end{bmatrix} \cdot
+\begin{bmatrix}
+5 \\ 4 \\ -3 \\
+\end{bmatrix} = 13.
+\end{align*}
+\vspace{-.15in}
+
+\index{inner product}
+It's just the dot product, of course, calculated in the usual way. Here, for
+reasons that will shortly become clear, we also call it the \textbf{inner
+product} of the two vectors.
+
+Now suppose I swap the order, and compute $\overrightarrow{\textbf{q}}$ times
+$\overrightarrow{\textbf{p}}$ instead. What would I get? The answer will surely
+surprise you:
+
+\vspace{-.15in}
+\begin{align*}
+\overrightarrow{\textbf{q}} \cdot \overrightarrow{\textbf{p}} =
+\begin{bmatrix}
+5 \\ 4 \\ -3 \\
+\end{bmatrix} \cdot
+\begin{bmatrix}
+3 & 1 & 2 \\
+\end{bmatrix} =
+\begin{bmatrix}
+15 & 5 & 10 \\
+12 & 4 & 8 \\
+-9 & -3 & -6 \\
+\end{bmatrix}.
+\end{align*}
+\vspace{-.15in}
+
+Hooooooo...\textit{what?!} $\overrightarrow{\textbf{p}}$ times
+$\overrightarrow{\textbf{q}}$ is the number 13, but
+$\overrightarrow{\textbf{q}}$ times $\overrightarrow{\textbf{p}}$ is an entire
+grid full of numbers?
+
+Yes it is. Here's why. 
