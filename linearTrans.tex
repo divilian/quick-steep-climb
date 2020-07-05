@@ -98,3 +98,186 @@ first example is just pulled from the air. Normally there will be some
 By the way, a linear transformation is sometimes called a \textbf{linear map}
 because it performs this ``mapping'' operation, like a function does. The two
 terms (linear transformation and linear map) are exact synonyms.
+
+\subsection{Meaningful examples}
+
+Before we go any further, let's at least show that this is useful. I'm going to
+create a machine (matrix) $B$ (for ``Body,'' sort of) that transforms certain
+4-dimensional vectors into 2-dimensional ones. Here it is:
+
+\vspace{-.15in}
+\begin{align*}
+B = 
+\begin{bmatrix}
+12 & 1 & 0 & 0 \\
+0 & 0 & 2.2 & 0 \\
+\end{bmatrix}.
+\end{align*}
+\vspace{-.15in}
+
+The kind of input this matrix/function is intended to act on a vector such as
+$\overrightarrow{\textbf{stephen}}$, which is structured like this:
+
+\vspace{-.3in} 
+\begin{align*}
+\begin{matrix*}[r]
+\textrm{\small{height: whole feet}} \rightarrow \\
+\textrm{\small{height: extra inches}} \rightarrow \\
+\textrm{\small{weight: kilograms}} \rightarrow \\
+\textrm{\small{shoe size}} \rightarrow \\
+\end{matrix*}
+\begin{bmatrix}
+6 \\ 2 \\ 95.5 \\ 13 \\
+\end{bmatrix}
+\end{align*}
+\vspace{-.15in}
+
+This rather revealing vector contains some of my vital bodily stats. I'm 6'2"
+tall, and hence don't fit on airplanes; I weigh too much at 95.5 kg; and I wear
+an impossible-to-fit 13 shoe (13AAA, actually; blame my mom's side of the
+family).
+
+Now what happens when we feed this to the $B$ machine?
+
+\vspace{-.15in}
+\begin{align*}
+B \cdot \overrightarrow{\textbf{stephen}} =
+\begin{bmatrix}
+12 & 1 & 0 & 0 \\
+0 & 0 & 2.2 & 0 \\
+\end{bmatrix} \cdot
+\begin{bmatrix}
+6 \\ 2 \\ 95.5 \\ 13 \\
+\end{bmatrix} =
+\begin{bmatrix}
+74 \\ 210 \\
+\end{bmatrix}
+\begin{matrix*}[l]
+\leftarrow \textrm{\small{height in inches}} \\
+\leftarrow \textrm{\small{weight in pounds}} \\
+\end{matrix*}
+\end{align*}
+\vspace{-.15in}
+
+This matrix-vector multiplication produces a 2-element vector, since
+
+\vspace{-.15in}
+\begin{align*}
+B : \mathbb{R}^4 \rightarrow \mathbb{R}^2.
+\end{align*}
+\vspace{-.15in}
+
+The first element is my height in total inches, and the second element is my
+weight in pounds. And it will do so for every person whose 4-dimensional vector
+it's multiplied by. Interestingly, the shoe size of the input vector plays no
+role in the value of the output vector, because there are zero elements at both
+$B_{0,3}$ and $B_{1,3}$. And that's okay.
+
+\smallskip
+\index{BMI (body-mass index)}
+
+By the way, you might think about expanding this example to calculate something
+more complex like a BMI (body-mass index). After all, BMI is a straightforward
+function of a person's weight and height, as you might know:
+
+\vspace{-.15in}
+\begin{align*}
+\textrm{BMI} = 703 \times \frac{\textrm{weights (lbs)}}{\textrm{height (in)}^2}.
+\end{align*}
+\vspace{-.15in}
+
+(Mine's about 27, which puts me in the obese range I'm sorry to inform you.)
+
+However, it turns out this is \textit{impossible} to do with a linear
+transformation. The reason is it's not linear! The only operations that can be
+included in a linear transformation are dot products, because that's what
+matrix-vector multiplication \textit{is}. So for each element of our output
+vector, we can (1) take the elements of the input vector, (2) multiply each of
+them by any constant we like, and (3) add up the results. The BMI formula, by
+contrast, requires us to \textit{divide} one of our inputs by another, and in
+fact requires us to \textit{square} that second input before dividing. These
+are both decidedly non-linear operations that cannot be expressed with a
+matrix.
+
+This may seem limiting, and in a way it is, but keep in mind two things. First,
+there are lots and lots and lots of common operations that \textit{are} linear,
+and all of those come under our power in this book on linear algebra. Second,
+when we do have linear operations, we can take advantage of all kinds of
+computational simplifications and analytical tricks, so concentrating on the
+linear case is most definitely worth our time.
+
+\bigskip
+
+Here's a second example. Suppose I have the following odd-looking matrix $S$
+(for ``stocks,'' sort of):
+
+\vspace{-.15in}
+\begin{align*}
+S =
+\begin{bmatrix}
+0 & 1 & 0 \\
+0 & .69 & 0 \\
+0 & 111.1 & 0 \\
+0 & .88 & 0 \\
+0 & 6.48 & 0 \\
+0 & 17.37 & 0 \\
+\end{bmatrix}
+\end{align*}
+\vspace{-.15in}
+
+What does it do? Well, it's designed for us to feed it vectors representing
+Wall Street stocks, like so:
+
+\vspace{-.3in} 
+\begin{align*}
+\overrightarrow{\textbf{mcdonalds}} =
+\begin{bmatrix}
+1965 \\ 183.52 \\ 2606707 \\
+\end{bmatrix}
+\begin{matrix*}[l]
+\leftarrow\textrm{\small{year founded}} \\
+\leftarrow\textrm{\small{current share price}} \\
+\leftarrow\textrm{\small{trading volume}} \\
+\end{matrix*}
+\end{align*}
+\vspace{-.15in}
+
+The result of multiplying $S$ by this kind of vector is to give us a
+convenient list of the McDonald's current stock price in various currencies:
+
+\vspace{-.3in} 
+\begin{align*}
+S \cdot \overrightarrow{\textbf{mcdonalds}} =
+%\begin{bmatrix}
+%0 & 1 & 0 \\
+%0 & .69 & 0 \\
+%0 & 111.1 & 0 \\
+%0 & .88 & 0 \\
+%0 & 6.48 & 0 \\
+%0 & 17.37 & 0 \\
+%\end{bmatrix} \cdot
+%\begin{bmatrix}
+%1965 \\ 183.52 \\ 2606707 \\
+%\end{bmatrix} =
+\begin{bmatrix}
+183.52 \\ 126.93 \\ 20389.10 \\ 161.50 \\ 1189.21 \\ 3187.74 \\
+\end{bmatrix}
+\begin{matrix*}[l]
+\leftarrow\textrm{\small{\EyesDollar \ (U.S. dollars)}} \\
+\leftarrow\textrm{\small{\pounds \ (British pounds sterling)}} \\
+\leftarrow\textrm{\small{\textyen \ (Japanese Yen)}} \\
+\leftarrow\textrm{\small{\EURtm \ (Euros)}} \\
+\leftarrow\textrm{\small{\textyen \ (Chinese Yuan)}} \\
+\leftarrow\textrm{\small{\textpeso \ (Mexican Pesos)}} \\
+\end{matrix*}
+\end{align*}
+\vspace{-.15in}
+
+Again, the $S$ matrix is simply ignoring the information we don't care about,
+and that's okay. It's still a function:
+
+\vspace{-.15in}
+\begin{align*}
+S : \mathbb{R}^3 \rightarrow \mathbb{R}^6.
+\end{align*}
+\vspace{-.15in}
