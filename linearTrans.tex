@@ -1,0 +1,100 @@
+
+\chapter{Linear transformations}
+
+\index{linear transformation}
+\index{function}
+
+A \textbf{linear transformation} is actually just another spin on matrix-vector
+multiplication. It's also yet another way to view a matrix as a
+\textit{function}. Back on p.~\pageref{matrixIsFunction}, I made the point that
+instead of drawing numbers in a grid, you could view a matrix itself as a
+function, where the input is an ordered pair (row and column numbers) and the
+output is the element at that entry. In this chapter, we explore a deeper and
+richer interpretation of a matrix as a \textit{different} sort of function.
+
+\section{Transforming one vector into another}
+
+Recall how matrix-vector multiplication works. We'll write it notationally as
+$A \cdot \overrightarrow{\textbf{x}} = \overrightarrow{\textbf{y}}$, where
+$\overrightarrow{\textbf{y}}$ is the result of the multiplication. Now we could
+think about the operation like this:
+
+\begin{compactitem}
+\item $A$ is a ``function'' of sorts, which works on vectors to produce other
+vectors.
+\item $\overrightarrow{\textbf{x}}$ is the input vector we give to that
+function.
+\item $\overrightarrow{\textbf{y}}$ is the function's output (result).
+\end{compactitem}
+
+\index{machine}
+We're thinking of $A$ as a long-lasting, reusable thing, whereas
+$\overrightarrow{\textbf{x}}$ and $\overrightarrow{\textbf{y}}$ stand for the
+temporary inputs \& outputs that we give to $A$ and compute on the fly. My
+mental image is of $A$ as a machine, $\overrightarrow{\textbf{x}}$ as the raw
+materials we might feed to the machine, and $\overrightarrow{\textbf{y}}$ as
+the machine's completed work.
+
+One natural question is: ``what is the domain, and the range, of this $A$
+function?'' That depends on $A$'s dimensions. Suppose it's a $3\times 2$
+matrix:
+
+\vspace{-.15in}
+\begin{align*}
+\begin{bmatrix}
+2 & 3 \\
+1 & -4 \\
+0 & 5 \\
+\end{bmatrix} \cdot \textrm{\Large ?} = \textrm{\Large ?}
+\end{align*}
+\vspace{-.15in}
+
+\index{domain}
+\index{codomain}
+We know from the rules of matrix-vector multiplication
+(p.~\pageref{matVecRules}) that the first question mark has to be a
+\textbf{2}-dimensional column vector, else the operation is impossible. And we
+know that the output will be a \textbf{3}-dimensional column vector. This means
+that the domain of the $A$ ``function'' is 2-d vectors and the codomain is 3-d
+vectors. Most commonly, this is written as follows:
+
+\vspace{-.15in}
+\begin{align*}
+A : \mathbb{R}^2 \rightarrow \mathbb{R}^3.
+\end{align*}
+\vspace{-.15in}
+
+Remember from \textit{A Cool, Brisk Walk} that the $\mathbb{R}$ sign means
+``the set of real numbers.'' When we say ``$\mathbb{R}^2$'' we're saying ``the
+set of vectors with two real-numbered entries.'' And $\mathbb{R}^3$ is the set
+of \textit{three}-dimensional real vectors, \textit{etc.}
+
+Put all together, the purpose of our $A$ matrix is to map each two-dimensional
+vector to a particular three-dimensional vector. For instance, it maps the 2-d
+vector $[\ 2 \ \ 1\ ]$ to:
+
+\vspace{-.15in}
+\begin{align*}
+\begin{bmatrix}
+2 & 3 \\
+1 & -4 \\
+0 & 5 \\
+\end{bmatrix} \cdot 
+\begin{bmatrix}
+2 \\ 1 \\
+\end{bmatrix} =
+\begin{bmatrix}
+7 \\ -2 \\ 5 \\
+\end{bmatrix}.
+\end{align*}
+\vspace{-.15in}
+
+The particular vector it chooses seems kind of random so far, and indeed this
+first example is just pulled from the air. Normally there will be some
+``meaning'' to the transformation.
+
+\index{linear map}
+
+By the way, a linear transformation is sometimes called a \textbf{linear map}
+because it performs this ``mapping'' operation, like a function does. The two
+terms (linear transformation and linear map) are exact synonyms.
