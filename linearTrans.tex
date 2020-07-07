@@ -465,6 +465,7 @@ S_{v=2} \cdot \overrightarrow{\textbf{c}} &=
 \label{fig:vertstretchop}
 \end{figure}
 
+\index{stretching}
 Can you see what it did in Figure~\ref{fig:vertstretchop}? It
 \textit{stretched all the points vertically by a factor of 2.} In other words,
 every vector is now pointing at a point twice as far from the $x$-axis. This is
@@ -533,38 +534,289 @@ S_{v=\frac{1}{2},h=2\frac{1}{2}} \cdot \overrightarrow{\textbf{c}} &=
 \end{align*}
 \vspace{-.15in}
 
-\begin{figure}[hb]
+\begin{figure}[ht]
 \centering
 \includegraphics[width=0.44\textwidth]{preoperators.png}
 \includegraphics[width=0.44\textwidth]{stretchSquishOp.png}
 \caption[.]{Three vectors, and their transformations under the linear operator 
 {\scriptsize $\begin{bmatrix} 2\frac{1}{2} & 0 \\ 0 & \frac{1}{2} \\
 \end{bmatrix}$,} which is a bit like being simultaneously sat on by two
-mirror-image giants.}
+mirror-image hippos.}
 \label{fig:stretchSquishOp}
 \end{figure}
-\index{giant butts}
+\index{hippo butts}
 
-Figure~\ref{fig:stretchSquishOp} shows the results. Our vectors have been both
-stretched and squished: stretched wide away horizontally from the $y$-axis, and
-squished towards the $x$-axis. It's like a giant sat down on the $x$-axis --
-and his evil twin giant below him sat ``up'' on the $x$-axis, so that their
-butts nearly met in the middle. All the blades of grass on both sides of the
-axis were nearly smashed under the composite load. (Btw, if this visual image
-isn't doing it for you, by all means disregard it.)
+\index{squishing}
+\index{smooshing}
+
+Figure~\ref{fig:stretchSquishOp} (p.~\pageref{fig:stretchSquishOp}) shows the
+results. Our vectors have been both stretched and squished: stretched wide away
+horizontally from the $y$-axis, and squished towards the $x$-axis. It's like a
+hippo sat down on the $x$-axis -- and his evil twin hippo below him sat ``up''
+on the $x$-axis, so that their butts nearly met in the middle. All the blades
+of grass on both sides of the axis were smooshed under the composite load.
+(Btw, if this visual image isn't doing it for you, by all means disregard it.)
+
+\bigskip
+
+Okay, now some other things than squishing and stretching. Let's investigate
+this smooth operator:
+
+\vspace{-.15in}
+\begin{align*}
+F_{h} =
+\begin{bmatrix}
+-1 & 0 \\
+0 & 1 \\
+\end{bmatrix}.
+\end{align*}
+\vspace{-.15in}
+
+Almost the same as the identity matrix, except for that minus sign. What does
+it do?
+
+\vspace{-.15in}
+\begin{align*}
+F_{h} \cdot \overrightarrow{\textbf{a}} &=
+\begin{bmatrix}
+-1 & 0 \\
+0 & 1 \\
+\end{bmatrix} \cdot
+\begin{bmatrix}
+3 \\ 4 \\
+\end{bmatrix} =
+\begin{bmatrix}
+-3 \\ 4 \\
+\end{bmatrix},
+\end{align*}
+
+\vspace{-.15in}
+\begin{align*}
+F_{h} \cdot \overrightarrow{\textbf{b}} &=
+\begin{bmatrix}
+-1 & 0 \\
+0 & 1 \\
+\end{bmatrix} \cdot
+\begin{bmatrix}
+-6 \\ 2 \\
+\end{bmatrix} =
+\begin{bmatrix}
+6 \\ 2 \\
+\end{bmatrix}.
+\end{align*}
+
+\vspace{-.15in}
+\begin{align*}
+F_{h} \cdot \overrightarrow{\textbf{c}} &=
+\begin{bmatrix}
+-1 & 0 \\
+0 & 1 \\
+\end{bmatrix} \cdot
+\begin{bmatrix}
+0 \\ -7 \\
+\end{bmatrix} =
+\begin{bmatrix}
+0 \\ -7 \\
+\end{bmatrix}.
+\end{align*}
+\vspace{-.15in}
+
+\index{hippo butts}
+\index{squishing}
+\index{smooshing}
+
+As you can see in Figure~\ref{fig:horizFlipOp}, the effect of this operator is
+to flip the vectors horizontally through the $y$ axis, like a mirror. A similar
+effect can be seen in Figure~\ref{fig:vertFlipOp}, which shows the operator
+$F_v$ = {\scriptsize $\begin{bmatrix} 1 & 0 \\ 0 & -1 \\ \end{bmatrix}$}
+flipping the picture vertically, through the $x$ axis.
+
+\begin{figure}[ht]
+\centering
+\vspace{.2in}
+\includegraphics[width=0.44\textwidth]{preoperators.png}
+\includegraphics[width=0.44\textwidth]{horizFlipOp.png}
+\caption[.]{Three vectors, and their transformations under the linear operator 
+{\scriptsize $\begin{bmatrix} -1 & 0 \\ 0 & 1 \\
+\end{bmatrix}$,} which flips everything mirror-image wise across the $y$-axis.
+To the $\overrightarrow{\textbf{c}}$, this was pretty underwhelming.}
+\label{fig:horizFlipOp}
+\end{figure}
+
+\begin{figure}[hb]
+\centering
+\vspace{.2in}
+\includegraphics[width=0.44\textwidth]{preoperators.png}
+\includegraphics[width=0.44\textwidth]{vertFlipOp.png}
+\caption[.]{Three vectors, and their transformations under the linear operator 
+{\scriptsize $\begin{bmatrix} 1 & 0 \\ 0 & -1 \\
+\end{bmatrix}$,} which flips everything mirror-image wise across the $x$-axis.}
+\label{fig:vertFlipOp}
+\end{figure}
+
+\bigskip
+
+Okay, now my favorite ones. Check out this bad boy:
+
+\vspace{-.15in}
+\begin{align*}
+R_{+90\degree} =
+\begin{bmatrix}
+0 & -1 \\
+1 & 0 \\
+\end{bmatrix}.
+\end{align*}
+\vspace{-.15in}
+
+Can you guess why I named it the way I did? Check out its operation, and the
+resulting graph:
+
+\vspace{-.15in}
+\begin{align*}
+R_{+90\degree} \cdot \overrightarrow{\textbf{a}} &=
+\begin{bmatrix}
+0 & -1 \\
+1 & 0 \\
+\end{bmatrix} \cdot
+\begin{bmatrix}
+3 \\ 4 \\
+\end{bmatrix} =
+\begin{bmatrix}
+-4 \\ 3 \\
+\end{bmatrix},
+\end{align*}
+
+\vspace{-.15in}
+\begin{align*}
+R_{+90\degree} \cdot \overrightarrow{\textbf{b}} &=
+\begin{bmatrix}
+0 & -1 \\
+1 & 0 \\
+\end{bmatrix} \cdot
+\begin{bmatrix}
+-6 \\ 2 \\
+\end{bmatrix} =
+\begin{bmatrix}
+-2 \\ -6 \\
+\end{bmatrix}.
+\end{align*}
+
+\vspace{-.15in}
+\begin{align*}
+R_{+90\degree} \cdot \overrightarrow{\textbf{c}} &=
+\begin{bmatrix}
+0 & -1 \\
+1 & 0 \\
+\end{bmatrix} \cdot
+\begin{bmatrix}
+0 \\ -7 \\
+\end{bmatrix} =
+\begin{bmatrix}
+7 \\ 0 \\
+\end{bmatrix}.
+\end{align*}
+\vspace{-.15in}
 
 
+It \textit{rotates} the vectors 90\textdegree\ counter-clockwise. Neato!
 
+\begin{figure}[ht]
+\centering
+\vspace{.2in}
+\includegraphics[width=0.44\textwidth]{preoperators.png}
+\includegraphics[width=0.44\textwidth]{rotate90op.png}
+\caption[.]{Three vectors, and their transformations under the linear operator 
+{\scriptsize $\begin{bmatrix} 0 & -1 \\ 1 & 0 \\
+\end{bmatrix}$,} which rotates them 90\textdegree\ counter-clockwise.}
+\label{fig:rotate90op}
+\end{figure}
 
-% [ -1 0 ; 0 1 ]  maps [ 4 -1 ] to [ -4 -1 ]. reflects horizontally across y-axis
+\pagebreak
+\index{rotation matrix}
 
-% [ 0 -1 ; 1 0 ]  maps [ 4 1 ] to [ -1 4 ], [ 1, -1 ] to [ 1 1 ],
-%                      [ -2 -4 ] to [ 4 -2 ]. Rotation 90 deg CCW.
-%
-% [ sqrt(2)/2  - sqrt(2)/2 ; sqrt(2)/2  sqrt(2)/2 ]
-%                 maps [2 3] to ...    Rotation 45 deg CCW.
+As a matter of fact, we can create a linear operator to rotate vectors
+\textit{any} angle we want. Suppose we want to rotate them 63.4\textdegree\ 
+counter-clockwise (just to pick a random number). The formula for computing the
+rotation matrix is:
 
-% In general, to rotate by theta, use [ cos q   -sin q  ;  sin q   cos q ]
+\vspace{-.15in}
+\begin{align*}
+R_{\theta} =
+\begin{bmatrix}
+\cos \theta & -\sin \theta \\
+\sin \theta & \cos \theta \\
+\end{bmatrix},
+\end{align*}
+\vspace{-.15in}
+
+where $\theta$ is the angle we wish to rotate. We plug in $\theta =
+63.4\degree$ to get:
+
+\vspace{-.15in}
+\begin{align*}
+R_{+63.4\degree} =
+\begin{bmatrix}
+.4478 & -.8942 \\
+.8942 & .4478 \\
+\end{bmatrix}.
+\end{align*}
+\vspace{-.2in}
+
+Applying this linear operator to our three vectors, we get these results and
+the picture in Figure~\ref{fig:rotate634op}.
+
+\vspace{-.2in}
+\begin{align*}
+R_{+63.4\degree} \cdot \overrightarrow{\textbf{a}} &=
+\begin{bmatrix}
+.4478 & -.8942 \\
+.8942 & .4478 \\
+\end{bmatrix} \cdot
+\begin{bmatrix}
+3 \\ 4 \\
+\end{bmatrix} =
+\begin{bmatrix}
+-2.2334 \\ 4.4738 \\
+\end{bmatrix},
+\end{align*}
+
+\vspace{-.2in}
+\begin{align*}
+R_{+63.4\degree} \cdot \overrightarrow{\textbf{b}} &=
+\begin{bmatrix}
+.4478 & -.8942 \\
+.8942 & .4478 \\
+\end{bmatrix} \cdot
+\begin{bmatrix}
+-6 \\ 2 \\
+\end{bmatrix} =
+\begin{bmatrix}
+-4.4752 \\ -4.4696 \\
+\end{bmatrix}.
+\end{align*}
+
+\vspace{-.2in}
+\begin{align*}
+R_{+63.4\degree} \cdot \overrightarrow{\textbf{c}} &=
+\begin{bmatrix}
+.4478 & -.8942 \\
+.8942 & .4478 \\
+\end{bmatrix} \cdot
+\begin{bmatrix}
+0 \\ -7 \\
+\end{bmatrix} =
+\begin{bmatrix}
+6.2594 \\ -3.1346 \\
+\end{bmatrix}.
+\end{align*}
+
+\begin{figure}[hb]
+\centering
+\includegraphics[width=0.40\textwidth]{preoperators.png}
+\includegraphics[width=0.40\textwidth]{rotate634op.png}
+\caption[.]{The vectors under rotation by 63.4\textdegree\ CCW.}
+\label{fig:rotate634op}
+\end{figure}
 
 % Movie CGI, video games, use all of this
 
