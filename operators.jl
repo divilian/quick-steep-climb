@@ -140,3 +140,45 @@ ylims!((-15,15))
 plot!([0,0],[-15,15],color="black",linewidth=1,style=:dot)
 plot!([-15,15],[0,0],color="black",linewidth=1,style=:dot)
 savefig("rotate634op.png")
+
+
+# a vector
+plot([0,5.5],[0,-11],legend=false,xtickfontsize=16,ytickfontsize=16,guidefontsize=22,color="black",linewidth=2,arrow=(1,1),size=(400,400))
+annotate!(6.5,-11,Plots.text("\$\\overrightarrow{a}\$",13))
+
+# b vector
+plot!([0,-1],[0,2],linewidth=2,color="black",arrow=(1,1),linestyle=:dot)
+annotate!(-2,2,Plots.text("\$\\overrightarrow{b}\$",13))
+
+# c vector
+plot!([0,-7],[0,14],legend=false,color="black",linestyle=:dash,linewidth=2,arrow=(1,1))
+annotate!(-8,14,text("\$\\overrightarrow{c}\$",13))
+
+# window dressing
+xlims!((-15,15))
+ylims!((-15,15))
+plot!([0,0],[-15,15],color="black",linewidth=1,style=:dot)
+plot!([-15,15],[0,0],color="black",linewidth=1,style=:dot)
+savefig("bluedominoesop.png")
+
+
+# kernel line
+plot([-20,20],[10,-10],legend=false,color="black",linewidth=2,arrow=(1,1))
+plot!([20,-20],[-10,10],legend=false,color="black",linewidth=2,arrow=(1,1))
+
+# vectors in kernel
+scatter!([-2],[1],markersize=8,markercolor="black",markershape=:circle)
+annotate!(-1.7,3.2,text("[-2 1]",11))
+scatter!([-4],[2],markersize=8,markercolor="black",markershape=:circle)
+annotate!(-6.5,1.7,text("[-4 2]",11))
+scatter!([6],[-3],markersize=8,markercolor="black",markershape=:circle)
+annotate!(6.3,-4.9,text("[6 -3]",11))
+
+# window dressing
+xlims!((-20,20))
+ylims!((-20,20))
+plot!([0,0],[-20,20],color="black",linewidth=1,style=:dot)
+plot!([-20,20],[0,0],color="black",linewidth=1,style=:dot)
+savefig("nullspace1.png")
+
+
