@@ -1,77 +1,247 @@
 
-\subsection{Outer and inner products}
+\chapter{Matrix multiplication}
 
-Because we can treat a vector as a sort of degenerate matrix (with only one
-row, or only one column), it sometimes makes sense to do this matrix-vector
-multiplication with two vectors. Which one is treated as a row vector and which
-one is treated as a column vector makes all the difference.
+So far, we've multiplied scalars by vectors
+(p.~\pageref{scalarVectorMultiplication}), vectors by other vectors
+(p.~\pageref{dotProduct}), scalars by matrices
+(p.~\pageref{scalarMatrixMultiplication}), and even matrices by vectors
+(p.~\pageref{matrixVectorMultiplication}). The only thing we haven't done yet
+is multiply one entire matrix by another. That mysterious operation is the
+subject of this chapter.
 
-As an illustration, I'm going to define vectors $\overrightarrow{\textbf{p}}$
-and $\overrightarrow{\textbf{q}}$ this way:
+Luckily, we've already set ourselves up for success. As it will turn out,
+matrix-matrix multiplication is really just matrix-\textit{vector}
+multiplication ``in a loop''; \textit{i.e.}, repeated several times.
 
-\vspace{-.15in}
-\begin{align*}
-\overrightarrow{\textbf{p}} =
-\begin{bmatrix}
-3 & 1 & 2 \\
-\end{bmatrix}, \quad 
-\overrightarrow{\textbf{q}} =
-\begin{bmatrix}
-5 \\  4 \\ -3 \\
-\end{bmatrix}.
-\end{align*}
-\vspace{-.15in}
+\section{When it's legal and what you get}
 
-So $\overrightarrow{\textbf{p}}$ is a row vector, and
-$\overrightarrow{\textbf{q}}$ is a column vector.
+But let's not get ahead of ourselves. First, let's outline the very curious
+rules for (1) when two matrices \textit{can} be multiplied at all (often they
+can't), and (2) if they can, what the dimensions of the result are. These rules
+will surprise you at first (they certainly did me).
 
-Now, treating $\overrightarrow{\textbf{p}}$ as a $1\times 3$ matrix, we perform
-multiplication and get:
+Let's say we have two matrices called $A$ and $B$. Suppose that $A$ is an
+$m\times n$ matrix ($m$ rows and $n$ columns), and that $B$ is a $p\times q$
+matrix. Visually, here's what we've got:
 
-\vspace{-.15in}
-\begin{align*}
-\overrightarrow{\textbf{p}} \cdot \overrightarrow{\textbf{q}} =
-\begin{bmatrix}
-3 & 1 & 2 \\
-\end{bmatrix} \cdot
-\begin{bmatrix}
-5 \\ 4 \\ -3 \\
-\end{bmatrix} = 13.
-\end{align*}
-\vspace{-.15in}
+\makeatletter
+\newcommand\makebig[2]{%
+  \@xp\newcommand\@xp*\csname#1\endcsname{\bBigg@{#2}}%
+  \@xp\newcommand\@xp*\csname#1l\endcsname{\@xp\mathopen\csname#1\endcsname}%
+  \@xp\newcommand\@xp*\csname#1r\endcsname{\@xp\mathclose\csname#1\endcsname}%
+}
+\makeatother
 
-\index{inner product}
-It's just the dot product, of course, calculated in the usual way. Here, for
-reasons that will shortly become clear, we also call it the \textbf{inner
-product} of the two vectors.
-
-Now suppose I swap the order, and compute $\overrightarrow{\textbf{q}}$ times
-$\overrightarrow{\textbf{p}}$ instead. What would I get? The answer will surely
-surprise you:
+\makebig{Biggg} {3.5}
+\makebig{Bigggg} {4.0}
+\makebig{Biggggg} {4.5}
 
 \vspace{-.15in}
 \begin{align*}
-\overrightarrow{\textbf{q}} \cdot \overrightarrow{\textbf{p}} =
+m \Biggg\{
+\overbrace{
 \begin{bmatrix}
-5 \\ 4 \\ -3 \\
-\end{bmatrix} \cdot
+\smallblacksquare & \smallblacksquare & \cdots & \smallblacksquare \\
+\smallblacksquare & \smallblacksquare & \cdots & \smallblacksquare \\
+\vdots & \vdots & \cdots & \vdots \\
+\smallblacksquare & \smallblacksquare & \cdots & \smallblacksquare \\
+\end{bmatrix}}^n \ \  \smallblackcircle \ \ 
+p \Biggg\{
+\overbrace{
 \begin{bmatrix}
-3 & 1 & 2 \\
-\end{bmatrix} =
-\begin{bmatrix}
-15 & 5 & 10 \\
-12 & 4 & 8 \\
--9 & -3 & -6 \\
-\end{bmatrix}.
+\smallblacksquare & \smallblacksquare & \cdots & \smallblacksquare \\
+\smallblacksquare & \smallblacksquare & \cdots & \smallblacksquare \\
+\vdots & \vdots & \cdots & \vdots \\
+\smallblacksquare & \smallblacksquare & \cdots & \smallblacksquare \\
+\end{bmatrix}}^q
+\ \ = \ \ \text{\LARGE ?}
 \end{align*}
 \vspace{-.15in}
 
-Hooooooo...\textit{what?!} $\overrightarrow{\textbf{p}}$ times
-$\overrightarrow{\textbf{q}}$ is the number 13, but
-$\overrightarrow{\textbf{q}}$ times $\overrightarrow{\textbf{p}}$ is an entire
-grid full of numbers?
+\smallskip
+Here are the rules:
 
-Yes it is. Here's why. 
+\begin{framed}
+\begin{compactenum}
+\item $n$ must be equal to $p$, or you can't multiply the matrices at all.
+\item If $n$ does equal $p$, then you'll get an $m\times q$ matrix when you
+multiply them.
+\end{compactenum}
+\end{framed}
+
+Those rules are so strange and unexpected that it's worth taking a long moment
+to stare at both the matrices and the rules and try to digest them.
+
+\smallskip
+
+Some concrete examples:
+
+\begin{enumerate}
+\itemsep.5em
+
+\item Can we multiply a $3\times 2$ matrix by a $2\times 4$? Yes, since $n=2$
+and $p=2$. And our result will be a $3\times 4$:
+
+\vspace{-.15in}
+\begin{align*}
+3 \Biggg\{
+\overbrace{
+\begin{bmatrix}
+\smallblacksquare & \smallblacksquare \\
+\smallblacksquare & \smallblacksquare \\
+\smallblacksquare & \smallblacksquare \\
+\end{bmatrix}}^2 \ \  \cdot \ \ 
+2 \Bigg\{
+\overbrace{
+\begin{bmatrix}
+\smallblacksquare & \smallblacksquare & \smallblacksquare & \smallblacksquare \\
+\smallblacksquare & \smallblacksquare & \smallblacksquare & \smallblacksquare \\
+\end{bmatrix}}^4
+\ \ = \ \ 
+3 \Biggg\{
+\overbrace{
+\begin{bmatrix}
+\smallblacksquare & \smallblacksquare & \smallblacksquare & \smallblacksquare \\
+\smallblacksquare & \smallblacksquare & \smallblacksquare & \smallblacksquare \\
+\smallblacksquare & \smallblacksquare & \smallblacksquare & \smallblacksquare \\
+\smallblacksquare & \smallblacksquare & \smallblacksquare & \smallblacksquare \\
+\end{bmatrix}}^4.
+\end{align*}
+\vspace{-.15in}
+
+\item Can we multiply a $2\times 5$ matrix by a $5\times 3$? Yes, since $n=5$
+and $p=5$. And we get a $2\times 3$:
+
+\vspace{-.15in}
+\begin{align*}
+2 \Bigg\{
+\overbrace{
+\begin{bmatrix}
+\smallblacksquare & \smallblacksquare& \smallblacksquare& \smallblacksquare& \smallblacksquare \\
+\smallblacksquare & \smallblacksquare& \smallblacksquare& \smallblacksquare& \smallblacksquare \\
+\end{bmatrix}}^5 \ \  \cdot \ \ 
+5 \Biggggg\{
+\overbrace{
+\begin{bmatrix}
+\smallblacksquare & \smallblacksquare & \smallblacksquare \\
+\smallblacksquare & \smallblacksquare & \smallblacksquare \\
+\smallblacksquare & \smallblacksquare & \smallblacksquare \\
+\smallblacksquare & \smallblacksquare & \smallblacksquare \\
+\smallblacksquare & \smallblacksquare & \smallblacksquare \\
+\end{bmatrix}}^3
+\ \ = \ \ 
+2 \Bigg\{
+\overbrace{
+\begin{bmatrix}
+\smallblacksquare & \smallblacksquare & \smallblacksquare \\
+\smallblacksquare & \smallblacksquare & \smallblacksquare \\
+\end{bmatrix}}^3.
+\end{align*}
+\vspace{-.15in}
+
+\item Can we multiply a $4\times 3$ matrix by another $4\times 3$? No, since $n=3$
+but $p=4$. Sorry.
+
+\vspace{-.15in}
+\begin{align*}
+4 \Bigggg\{
+\overbrace{
+\begin{bmatrix}
+\smallblacksquare & \smallblacksquare & \smallblacksquare \\
+\smallblacksquare & \smallblacksquare & \smallblacksquare \\
+\smallblacksquare & \smallblacksquare & \smallblacksquare \\
+\smallblacksquare & \smallblacksquare & \smallblacksquare \\
+\end{bmatrix}}^3 \ \  \smallblackcircle \ \ 
+4 \Bigggg\{
+\overbrace{
+\begin{bmatrix}
+\smallblacksquare & \smallblacksquare & \smallblacksquare \\
+\smallblacksquare & \smallblacksquare & \smallblacksquare \\
+\smallblacksquare & \smallblacksquare & \smallblacksquare \\
+\smallblacksquare & \smallblacksquare & \smallblacksquare \\
+\end{bmatrix}}^3
+\ \ = \ \ \text{NOPE}.
+\end{align*}
+\vspace{-.15in}
+\end{enumerate}
+
+It's sooo bizarre. Sometimes you multiply two biggish matrices together and get
+a small one; sometimes you multiply narrow ones and get a tall one; sometimes
+it seems like you'd get a valid answer and yet there is none.
+
+%\subsection{Outer and inner products}
+%
+%Because we can treat a vector as a sort of degenerate matrix (with only one
+%row, or only one column), it sometimes makes sense to do this matrix-vector
+%multiplication with two vectors. Which one is treated as a row vector and which
+%one is treated as a column vector makes all the difference.
+%
+%As an illustration, I'm going to define vectors $\overrightarrow{\textbf{p}}$
+%and $\overrightarrow{\textbf{q}}$ this way:
+%
+%\vspace{-.15in}
+%\begin{align*}
+%\overrightarrow{\textbf{p}} =
+%\begin{bmatrix}
+%3 & 1 & 2 \\
+%\end{bmatrix}, \quad 
+%\overrightarrow{\textbf{q}} =
+%\begin{bmatrix}
+%5 \\  4 \\ -3 \\
+%\end{bmatrix}.
+%\end{align*}
+%\vspace{-.15in}
+%
+%So $\overrightarrow{\textbf{p}}$ is a row vector, and
+%$\overrightarrow{\textbf{q}}$ is a column vector.
+%
+%Now, treating $\overrightarrow{\textbf{p}}$ as a $1\times 3$ matrix, we perform
+%multiplication and get:
+%
+%\vspace{-.15in}
+%\begin{align*}
+%\overrightarrow{\textbf{p}} \cdot \overrightarrow{\textbf{q}} =
+%\begin{bmatrix}
+%3 & 1 & 2 \\
+%\end{bmatrix} \cdot
+%\begin{bmatrix}
+%5 \\ 4 \\ -3 \\
+%\end{bmatrix} = 13.
+%\end{align*}
+%\vspace{-.15in}
+%
+%\index{inner product}
+%It's just the dot product, of course, calculated in the usual way. Here, for
+%reasons that will shortly become clear, we also call it the \textbf{inner
+%product} of the two vectors.
+%
+%Now suppose I swap the order, and compute $\overrightarrow{\textbf{q}}$ times
+%$\overrightarrow{\textbf{p}}$ instead. What would I get? The answer will surely
+%surprise you:
+%
+%\vspace{-.15in}
+%\begin{align*}
+%\overrightarrow{\textbf{q}} \cdot \overrightarrow{\textbf{p}} =
+%\begin{bmatrix}
+%5 \\ 4 \\ -3 \\
+%\end{bmatrix} \cdot
+%\begin{bmatrix}
+%3 & 1 & 2 \\
+%\end{bmatrix} =
+%\begin{bmatrix}
+%15 & 5 & 10 \\
+%12 & 4 & 8 \\
+%-9 & -3 & -6 \\
+%\end{bmatrix}.
+%\end{align*}
+%\vspace{-.15in}
+%
+%Hooooooo...\textit{what?!} $\overrightarrow{\textbf{p}}$ times
+%$\overrightarrow{\textbf{q}}$ is the number 13, but
+%$\overrightarrow{\textbf{q}}$ times $\overrightarrow{\textbf{p}}$ is an entire
+%grid full of numbers?
+%
+%Yes it is. Here's why. 
 
 
 
