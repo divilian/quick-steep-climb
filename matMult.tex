@@ -1000,3 +1000,64 @@ B_{\text{next}} = T \cdot B =
 
 You gotta admit, that's pretty neat.
 
+% TODO: multiplying two symmetric matrices together does not normally give a
+% symmetric matrix! (Wut?!)  Important for social network analysis.
+
+\pagebreak
+
+\section{The ``identity'' matrix}
+
+\label{identityMatrixExplanation}
+\index{identity matrix}
+\index{diagonal, of a matrix}
+
+Remember back on p.~\pageref{identityMatrix} how we defined ``identity
+matrices?'' They looked like this:
+
+\vspace{-.15in}
+\begin{align*}
+\begin{bmatrix}
+1 & 0 & 0 \\
+0 & 1 & 0 \\
+0 & 0 & 1 \\
+\end{bmatrix}
+\end{align*}
+\vspace{-.15in}
+
+They could be any size, but they were always square, and they always had 1's on
+the diagonal and 0's everywhere else.
+
+I promised to tell you why this kind of matrix was called an ``identity''
+matrix, and now's the time. It's simply because when you multiply it by any
+matrix, you get that same matrix back. Let's try it:
+
+\vspace{-.15in}
+\begin{align*}
+\begin{bmatrix}
+1 & 0 & 0 \\
+0 & 1 & 0 \\
+0 & 0 & 1 \\
+\end{bmatrix} \cdot
+\begin{bmatrix}
+7 & 7 & 9 & 4 \\
+-10 & -5 & 5 & 3 \\
+17 & 16 & 14 & 13 \\
+\end{bmatrix} =
+\begin{bmatrix}
+7 & 7 & 9 & 4 \\
+-10 & -5 & 5 & 3 \\
+17 & 16 & 14 & 13 \\
+\end{bmatrix}.
+\end{align*}
+\vspace{-.15in}
+
+Yep, it works. And you can put the identity matrix on either the left side or
+the right of the multiplication, and it still works.
+
+Because of this property, the identity matrix plays the same role as the number
+zero in addition (0 plus any number is that same number) and the number one in
+multiplication (1 times any number is that same number). Those numbers are
+called the ``identity elements'' for those operations, since you get the
+``identical'' number back when you use them. Same reasoning here.
+
+
