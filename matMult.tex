@@ -64,6 +64,7 @@ Here are the rules:
 \begin{center}
 \begin{framed}
 \begin{compactenum}
+\label{matMultRules}
 \item $n$ must be equal to $p$, or you can't multiply the matrices at all.
 \item If $n$ does equal $p$, then you'll get an $m\times q$ matrix when you
 multiply them.
@@ -171,12 +172,12 @@ It's sooo bizarre. Sometimes you multiply two biggish matrices together and get
 a small one; sometimes you multiply narrow ones and get a tall one; sometimes
 it seems like you'd get a valid answer and yet there is none.
 
-\section{Lather, rinse, repeat}
+Anyway, now that we have the ground rules for what the resulting matrix will be
+shaped like (if there even is one) let's talk about actually calculating the
+entries. I'm going to give you \textit{three} different ways to think about
+this, each of which sheds a different light on the operation.
 
-Now that we have the ground rules for what the resulting matrix will be shaped
-like (if there even is one) let's talk about actually calculating the entries.
-I'm going to give you \textit{three} different ways to think about this, each
-of which sheds a different light on the operation.
+\section{Way \#1: Lather, rinse, repeat}
 
 \index{matrix-vector multiplication}
 
@@ -322,7 +323,7 @@ multiplication is really just repeated matrix-\textit{vector} multiplication.
 This way of thinking about matrix multiplication might be the one that
 resonates most strongly with you. (It did for me.)
 
-\section{All possible dot products}
+\section{Way \#2: All possible dot products}
 
 On the other hand, maybe you'll like this one better. Matrix-matrix
 multiplication can also be viewed as \textbf{all possible dot products} between
@@ -438,7 +439,7 @@ a single matrix multiplication.
 % TODO: explain that we need "Women times TRANSPOSE of men" not "women times
 % men."
 
-\section{Several different linear combinations}
+\section{Way \#3: Several linear combinations}
 
 Our third and final way to think about matrix multiplication is in terms of
 linear combinations. Remember (from p.~\pageref{linearComboOfColumns}) that
@@ -538,81 +539,212 @@ Packaging up all those results again gives us:
 \end{align*}
 \vspace{-.15in}
 
+Same answer no matter which of the three ways we think about it.
 
-%\subsection{Outer and inner products}
-%
-%Because we can treat a vector as a sort of degenerate matrix (with only one
-%row, or only one column), it sometimes makes sense to do this matrix-vector
-%multiplication with two vectors. Which one is treated as a row vector and which
-%one is treated as a column vector makes all the difference.
-%
-%As an illustration, I'm going to define vectors $\overrightarrow{\textbf{p}}$
-%and $\overrightarrow{\textbf{q}}$ this way:
-%
-%\vspace{-.15in}
-%\begin{align*}
-%\overrightarrow{\textbf{p}} =
-%\begin{bmatrix}
-%3 & 1 & 2 \\
-%\end{bmatrix}, \quad 
-%\overrightarrow{\textbf{q}} =
-%\begin{bmatrix}
-%5 \\  4 \\ -3 \\
-%\end{bmatrix}.
-%\end{align*}
-%\vspace{-.15in}
-%
-%So $\overrightarrow{\textbf{p}}$ is a row vector, and
-%$\overrightarrow{\textbf{q}}$ is a column vector.
-%
-%Now, treating $\overrightarrow{\textbf{p}}$ as a $1\times 3$ matrix, we perform
-%multiplication and get:
-%
-%\vspace{-.15in}
-%\begin{align*}
-%\overrightarrow{\textbf{p}} \cdot \overrightarrow{\textbf{q}} =
-%\begin{bmatrix}
-%3 & 1 & 2 \\
-%\end{bmatrix} \cdot
-%\begin{bmatrix}
-%5 \\ 4 \\ -3 \\
-%\end{bmatrix} = 13.
-%\end{align*}
-%\vspace{-.15in}
-%
-%\index{inner product}
-%It's just the dot product, of course, calculated in the usual way. Here, for
-%reasons that will shortly become clear, we also call it the \textbf{inner
-%product} of the two vectors.
-%
-%Now suppose I swap the order, and compute $\overrightarrow{\textbf{q}}$ times
-%$\overrightarrow{\textbf{p}}$ instead. What would I get? The answer will surely
-%surprise you:
-%
-%\vspace{-.15in}
-%\begin{align*}
-%\overrightarrow{\textbf{q}} \cdot \overrightarrow{\textbf{p}} =
-%\begin{bmatrix}
-%5 \\ 4 \\ -3 \\
-%\end{bmatrix} \cdot
-%\begin{bmatrix}
-%3 & 1 & 2 \\
-%\end{bmatrix} =
-%\begin{bmatrix}
-%15 & 5 & 10 \\
-%12 & 4 & 8 \\
-%-9 & -3 & -6 \\
-%\end{bmatrix}.
-%\end{align*}
-%\vspace{-.15in}
-%
-%Hooooooo...\textit{what?!} $\overrightarrow{\textbf{p}}$ times
-%$\overrightarrow{\textbf{q}}$ is the number 13, but
-%$\overrightarrow{\textbf{q}}$ times $\overrightarrow{\textbf{p}}$ is an entire
-%grid full of numbers?
-%
-%Yes it is. Here's why. 
+\section{Outer and inner products}
 
+All right. Now for some surprises.
+
+\index{row vector}
+\index{column vector}
+
+Remember (p.~\pageref{rowAndColVectors}) that we will sometimes want to treat a
+vector as a sort of degenerate matrix: a matrix with only one row, or only one
+column. And we will sometimes want to do this matrix multiplication thing with
+two vectors, treating one of them as a row vector and the other as a column
+vector. Which one is which makes a tremendous difference.
+
+As an illustration, I'm going to define vectors $\overrightarrow{\textbf{x}}$
+and $\overrightarrow{\textbf{y}}$ this way:
+
+\vspace{-.15in}
+\begin{align*}
+\overrightarrow{\textbf{x}} =
+\begin{bmatrix}
+3 & 1 & 2 \\
+\end{bmatrix}, \quad 
+\overrightarrow{\textbf{y}} =
+\begin{bmatrix}
+5 \\  4 \\ -3 \\
+\end{bmatrix}.
+\end{align*}
+\vspace{-.15in}
+
+So $\overrightarrow{\textbf{x}}$ is a row vector, and
+$\overrightarrow{\textbf{y}}$ is a column vector. Put another way,
+$\overrightarrow{\textbf{x}}$ can be thought of as a $1\times 3$ matrix, and
+$\overrightarrow{\textbf{y}}$ as a $3\times 1$ matrix.
+
+Now if we do treat these as matrices, then performing the operation
+$\overrightarrow{\textbf{x}} \cdot \overrightarrow{\textbf{y}}$ gives us:
+
+\vspace{-.15in}
+\begin{align*}
+\overrightarrow{\textbf{x}} \cdot \overrightarrow{\textbf{y}} =
+\begin{bmatrix}
+3 & 1 & 2 \\
+\end{bmatrix} \cdot
+\begin{bmatrix}
+5 \\ 4 \\ -3 \\
+\end{bmatrix} = 13.
+\end{align*}
+\vspace{-.15in}
+
+It's just the dot product, of course, calculated in the usual way.
+
+Now suppose I swap the order, and compute $\overrightarrow{\textbf{y}}$ times
+$\overrightarrow{\textbf{x}}$ instead. What would I get? The answer will surely
+surprise you:
+
+\vspace{-.15in}
+\begin{align*}
+\overrightarrow{\textbf{y}} \cdot \overrightarrow{\textbf{x}} =
+\begin{bmatrix}
+5 \\ 4 \\ -3 \\
+\end{bmatrix} \cdot
+\begin{bmatrix}
+3 & 1 & 2 \\
+\end{bmatrix} =
+\begin{bmatrix}
+15 & 5 & 10 \\
+12 & 4 & 8 \\
+-9 & -3 & -6 \\
+\end{bmatrix}.
+\end{align*}
+\vspace{-.15in}
+
+Hooooooo...wut?! $\overrightarrow{\textbf{x}}$ times
+$\overrightarrow{\textbf{y}}$ is the \textit{number} 13, but
+$\overrightarrow{\textbf{y}}$ times $\overrightarrow{\textbf{x}}$ is an entire
+\textit{grid} full of numbers?
+
+Yes it is. Here's why. 
+
+Remember our rules from p.~\pageref{matMultRules}. First, we can only multiply
+two matrices if $n=p$. And that's true here whether we do
+$\overrightarrow{\textbf{x}} \cdot \overrightarrow{\textbf{y}}$ or
+$\overrightarrow{\textbf{y}} \cdot \overrightarrow{\textbf{x}}$. But the second
+rule tells us that the answer will be a $m\times q$ matrix. If we put
+$\overrightarrow{\textbf{x}}$ on the left, then $\overrightarrow{\textbf{x}}
+\cdot \overrightarrow{\textbf{y}}$ will give us a $1\times 1$ matrix. But if we
+put $\overrightarrow{\textbf{y}}$ on the left, then
+$\overrightarrow{\textbf{y}} \cdot \overrightarrow{\textbf{x}}$ must give us a
+$3\times 3$ matrix. Strange but true.
+
+\index{inner product}
+\index{outer product}
+
+Btw, when we do the first thing -- treat the vector on the left-hand side of
+the multiplication as a row vector, and the other as a column vector -- it's
+called the \textbf{inner product} of the two vectors. The other way is called
+the \textbf{outer product}.
+
+\section{$A\cdot A^\intercal$ vs.~$A^\intercal \cdot A$} 
+
+\index{transpose}
+
+Here's another interesting consequence of our operation. As we've seen, you
+certainly can't multiply a matrix $A$ by just ``any old thing,'' since rule 1
+on p.~\pageref{matMultRules} says that $n$ must equal $p$.
+
+You can, however, \textit{always} perform the operation $A\cdot A^\intercal$,
+no matter what dimensions $A$ is. That's because if $A$ is, say, $17\times 28$,
+then $A^\intercal$ will be $28\times 17$, and $n=p$ (both are 28) as required.
+You'll get a $17\times 17$ matrix if you do that.
+
+You also can \textit{always} perform the operation $A^\intercal \cdot A$.
+Again, if $A$ is $17\times 28$, then $A^\intercal$ will be $28\times 17$, and
+so again $n=p$ (both are 17). You'll get a $28\times 28$ matrix if you do that.
+
+Here's an example, smaller so it fits on the page. Let's say $A$ is
+
+\vspace{-.15in}
+\begin{align*}
+\begin{bmatrix}
+2 & 20 & 3 & -2 & -4 \\
+-5 & 1 & 4 & 1 & 9 \\
+\end{bmatrix}.
+\end{align*}
+\vspace{-.15in}
+
+The two operations give us:
+
+\vspace{-.15in}
+\begin{align*}
+A\cdot A^\intercal = 
+\begin{bmatrix}
+2 & 20 & 3 & -2 & -4 \\
+-5 & 1 & 4 & 1 & 9 \\
+\end{bmatrix} \cdot
+\begin{bmatrix}
+2 & -5 \\
+20 & 1 \\
+3 & 4 \\
+-2 & 1 \\
+-4 & 9 \\
+\end{bmatrix}  =
+\begin{bmatrix}
+433 & -16 \\
+-16 & 124 \\
+\end{bmatrix},
+\end{align*}
+\vspace{-.15in}
+
+and 
+
+\vspace{-.15in}
+\begin{align*}
+A^\intercal \cdot A = 
+\begin{bmatrix}
+2 & -5 \\
+20 & 1 \\
+3 & 4 \\
+-2 & 1 \\
+-4 & 9 \\
+\end{bmatrix} \cdot
+\begin{bmatrix}
+2 & 20 & 3 & -2 & -4 \\
+-5 & 1 & 4 & 1 & 9 \\
+\end{bmatrix} = \\
+\begin{bmatrix}
+29 & 35 & -14 & -9 & -53 \\
+35 & 401 & 64 & -39 & -71 \\
+-14 & 64 & 25 & -2 & 24 \\
+-9 & -39 & -2 & 5 & 17 \\
+-53 & -71 & 24 & 17 & 97 \\
+\end{bmatrix}.
+\end{align*}
+\vspace{-.15in}
+
+\index{symmetric matrix}
+
+Two other intriguing facts are worth noting here, one of which you may have
+noticed. If you run your eyeballs carefully over those two results, you'll see
+that both of them are \textbf{symmetric matrices}. This is always true of a
+matrix times its transpose, and that turns out to be important for some
+applications.
+
+The other fact -- certainly not ascertainable to my eyeballs, at least -- is
+that both of these matrices have only \textit{rank 2}. That's not surprising
+about $A\cdot A^\intercal$, since it's just a $2\times 2$ anyway. But it is
+very surprising about $A^\intercal \cdot A$. That's a $5\times 5$ matrix with
+only \textit{two} linearly independent columns!
+
+And this is always true. When you multiply a matrix by its transpose, either
+way you do it, the rank will only be the \textit{lower} of the two dimensions.
+
+The way I think of it is this. When you take a tall matrix (like our $2\times
+5$, above) and multiply it by a wide one (the $5\times 2$), yes you're going to
+get a result with large dimensions. Sure. But in a way, you only put ``two
+columns' worth'' of information into the operation. The result is a large
+$5\times 5$, but that's misleading, because there just isn't enough information
+present in those 25 entries to represent five independent directions. The
+$5\times 5$ result is brittle, containing only two columns' worth of
+information spread out over a large landscape. It's almost as if I wrote a
+fourteen-sentence paragraph with only three sentences repeated again and again,
+with the words rescrambled a bit each time. Sure, it looks like a long
+paragraph at first glance, but try reading it and you'll recognize how little
+information it really contains.
 
 
 
