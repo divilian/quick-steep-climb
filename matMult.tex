@@ -61,6 +61,7 @@ p \Biggg\{
 \smallskip
 Here are the rules:
 
+\begin{center}
 \begin{framed}
 \begin{compactenum}
 \item $n$ must be equal to $p$, or you can't multiply the matrices at all.
@@ -68,6 +69,7 @@ Here are the rules:
 multiply them.
 \end{compactenum}
 \end{framed}
+\end{center}
 
 Those rules are so strange and unexpected that it's worth taking a long moment
 to stare at both the matrices and the rules and try to digest them.
@@ -139,8 +141,8 @@ and $p=5$. And we get a $2\times 3$:
 \end{align*}
 \vspace{-.15in}
 
-\item Can we multiply a $4\times 3$ matrix by another $4\times 3$? No, since $n=3$
-but $p=4$. Sorry.
+\item Can we multiply a $4\times 3$ matrix by another $4\times 3$? No, since
+$n=3$ but $p=4$. Sorry.
 
 \vspace{-.15in}
 \begin{align*}
@@ -168,6 +170,157 @@ but $p=4$. Sorry.
 It's sooo bizarre. Sometimes you multiply two biggish matrices together and get
 a small one; sometimes you multiply narrow ones and get a tall one; sometimes
 it seems like you'd get a valid answer and yet there is none.
+
+\section{Lather, rinse, repeat}
+
+Now that we have the ground rules for what the resulting matrix will be shaped
+like (if there even is one) let's talk about actually calculating the entries.
+There are several ways to think about this, each of which sheds a different
+light on the operation.
+
+\index{matrix-vector multiplication}
+
+The first way is to view the matrix multiplication $A \cdot B$ as
+\textbf{repeated matrix-vector multiplication}, where the matrix is $A$ and the
+vectors are the \textbf{columns} of $B$. The final answer is formed by
+stitching together the results of the individual matrix-vector multiplications.
+
+Let's see it in action. If you remember the procedure on
+p.~\pageref{matrixVectorMultiplication}, you can confirm that if we perform
+this matrix-vector multiplication:
+
+\vspace{-.15in}
+\begin{align*}
+\begin{bmatrix}
+2 & 1 & 5 \\
+0 & 3 & -2 \\
+\end{bmatrix} \cdot
+\begin{bmatrix}
+0 \\ 0 \\ 7 \\
+\end{bmatrix},
+\end{align*}
+\vspace{-.15in}
+
+we'll get the answer
+
+\vspace{-.15in}
+\begin{align*}
+\begin{bmatrix}
+35 \\ -14 \\
+\end{bmatrix}.
+\end{align*}
+\vspace{-.15in}
+
+\smallskip
+And if we do this:
+
+\vspace{-.15in}
+\begin{align*}
+\begin{bmatrix}
+2 & 1 & 5 \\
+0 & 3 & -2 \\
+\end{bmatrix} \cdot
+\begin{bmatrix}
+9 \\ 99 \\ 999 \\
+\end{bmatrix},
+\end{align*}
+\vspace{-.15in}
+
+we'll get this:
+
+\vspace{-.15in}
+\begin{align*}
+\begin{bmatrix}
+5112 \\ -1701 \\
+\end{bmatrix}.
+\end{align*}
+\vspace{-.15in}
+
+\smallskip
+Finally, if we do this:
+
+\vspace{-.15in}
+\begin{align*}
+\begin{bmatrix}
+2 & 1 & 5 \\
+0 & 3 & -2 \\
+\end{bmatrix} \cdot
+\begin{bmatrix}
+-13 \\ -13 \\ -13 \\
+\end{bmatrix},
+\end{align*}
+\vspace{-.15in}
+
+we'll get this:
+
+\vspace{-.15in}
+\begin{align*}
+\begin{bmatrix}
+-104 \\ -13 \\
+\end{bmatrix}.
+\end{align*}
+\vspace{-.15in}
+
+\smallskip
+
+Notice what I did there. I took the \textit{same} $2\times 3$ matrix each time,
+and multiplied it by some vector -- a weird one, to help jog your memory in a
+moment -- to get an answer.
+
+All right. Now let's see what happens if I perform the following
+matrix-\textit{matrix} multiplication:
+
+\vspace{-.15in}
+\begin{align*}
+\begin{bmatrix}
+2 & 1 & 5 \\
+0 & 3 & -2 \\
+\end{bmatrix} \cdot
+\begin{bmatrix}
+0 & 9 & -13 \\
+0 & 99 & -13 \\
+7 & 999 & -13 \\
+\end{bmatrix} \ = \ {\LARGE ?}
+\end{align*}
+\vspace{-.15in}
+
+Examine the columns of the right-hand matrix: they should ring a bell. Each
+\textit{column} is one of the \textit{vectors} that I just multiplied our
+matrix by to get a columnar answer. The result of this operation is achieved by
+simply putting all those columnar answers together:
+
+\vspace{-.15in}
+\begin{align*}
+\begin{bmatrix}
+2 & 1 & 5 \\
+0 & 3 & -2 \\
+\end{bmatrix} \cdot
+\begin{bmatrix}
+0 & 9 & -13 \\
+0 & 99 & -13 \\
+7 & 999 & -13 \\
+\end{bmatrix} =
+\begin{bmatrix}
+35 & 5112 & -104 \\
+-14 & -1701 & -13 \\
+\end{bmatrix}.
+\end{align*}
+\vspace{-.15in}
+
+\index{Bond, James}
+
+See how that works? The result of the multiplication is just the three
+individual matrix-vector products, all concatenated together in an ``answer
+matrix.'' The left column of our answer is ${\scriptsize \begin{bmatrix} 35 \\
+-14 \\ \end{bmatrix}}$, which is exactly what we got when we multiplied that
+left-hand matrix by James Bond. The right column of our answer is ${\scriptsize
+\begin{bmatrix} -104 \\ -13 \\ \end{bmatrix}}$, which is what we got when we
+multiplied the matrix by triple $-13$'s. And the middle column of the answer is
+the matrix times the stack of nines. So you can see that matrix-\textit{matrix}
+multiplication is really just repeated matrix-\textit{vector} multiplication.
+
+This way of thinking about matrix multiplication might be the one that
+resonates most strongly with you. (It did for me.)
 
 %\subsection{Outer and inner products}
 %
