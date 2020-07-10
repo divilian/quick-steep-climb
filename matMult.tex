@@ -746,8 +746,257 @@ with the words rescrambled a bit each time. Sure, it looks like a long
 paragraph at first glance, but try reading it and you'll recognize how little
 information it really contains.
 
+\section{Associative, but not commutative}
 
+\index{commutative}
+\index{associative (operation)}
 
-% Recall from linear ops chapter. We can have multiple operators all strung together!
-% Scaling [ 4 0 ; 0 4 ]  x  rotation[ sqrt(2) ]  x  flip[ -1 0 ; 0 1 ]
-% associativity means we can compute a combined operator all in advance.
+The next surprising thing I'll point out is that matrix multiplication does
+\textit{not} follow one of the laws of plain-Jane multiplication that you're
+used to counting on. Namely, matrix multiplication is \textit{not} commutative.
+
+You're so accustomed to this being true that it's positively jarring. Ever
+since Mrs.~Jones taught you in second grade, you've safely relied on the fact
+that:
+
+\vspace{-.15in}
+\begin{align*}
+115 \cdot 272 = 272 \cdot 115.
+\end{align*}
+\vspace{-.15in}
+
+It might be a pain to work out the answer, but at least you've know without
+even thinking that it doesn't matter which order you do the multiplication in.
+
+But \textit{oh!}~this totally does not work with matrix multiplication. Taking
+two matrices at random:
+
+\vspace{-.15in}
+\begin{align*}
+A =
+\begin{bmatrix}
+4 & 2 \\
+2 & 3 \\
+\end{bmatrix},
+B =
+\begin{bmatrix}
+1 & -1 \\
+2 & 0 \\
+\end{bmatrix}\\
+\end{align*}
+\vspace{-.55in}
+\begin{align*}
+A \cdot B &=
+\begin{bmatrix}
+8 & -4 \\
+8 & -2 \\
+\end{bmatrix}, \\
+B \cdot A &=
+\begin{bmatrix}
+2 & -1 \\
+8 & 4 \\
+\end{bmatrix}\ {\footnotesize \textit{surprise!}}
+\end{align*}
+\vspace{-.15in}
+
+Not even close to the same thing. And in general, matters are even worse
+because you normally can't even \textit{do} the operation both ways! (If $A$
+were a $2\times 4$, for example, and $B$ a $4\times 3$, then $A \cdot B$ would
+give you a $2\times 3$ matrix but $B \cdot A$ is impossible.) You actually have
+to really work at it to come up with two matrices whose product is the same
+both ways.
+
+Nothing much to say here except to stay on your toes.
+
+Another ``given,'' however, \textit{is} true of matrices, and a good thing,
+too. That's the \textbf{associative} property. This means that if you're
+multiplying together a string of matrices, it doesn't matter which
+multiplication you perform first. In other words, for any three matrices $A$,
+$B$, and $C$:
+
+\vspace{-.15in}
+\begin{align*}
+(A \cdot B) \cdot C =
+A \cdot (B \cdot C).
+\end{align*}
+\vspace{-.15in}
+
+Again, an example to illustrate:
+
+\vspace{-.15in}
+\begin{align*}
+A =
+\begin{bmatrix}
+4 & 2 \\
+2 & 3 \\
+\end{bmatrix},
+B =
+\begin{bmatrix}
+1 & -1 \\
+2 & 0 \\
+\end{bmatrix},
+C =
+\begin{bmatrix}
+3 & 4 \\
+1 & 5 \\
+\end{bmatrix}\\
+\end{align*}
+\vspace{-.55in}
+\begin{align*}
+(A \cdot B) \cdot C =
+\begin{bmatrix}
+8 & -4 \\
+8 & -2 \\
+\end{bmatrix} \cdot
+\begin{bmatrix}
+3 & 4 \\
+1 & 5 \\
+\end{bmatrix} &=
+\begin{bmatrix}
+20 & 12 \\
+22 & 22 \\
+\end{bmatrix}, \\
+A \cdot (B \cdot C) =
+\begin{bmatrix}
+4 & 2 \\
+2 & 3 \\
+\end{bmatrix} \cdot
+\begin{bmatrix}
+2 & -1 \\
+6 & 8 \\
+\end{bmatrix} &=
+\begin{bmatrix}
+20 & 12 \\
+22 & 22 \\
+\end{bmatrix}. \quad \checkmark
+\end{align*}
+\vspace{-.15in}
+
+\index{Cartesian plane}
+
+And this always works.
+
+One reason this is nice has to do with linear operators. Recall from
+section~\ref{linearOps} (pp.~\pageref{linearOps}--\pageref{endLinearOps}) that
+we can create operators to scale, flip, and rotate points in the Cartesian
+plane. To review:
+
+\vspace{-.15in}
+\begin{align*}
+\begin{bmatrix}
+2 & 0 \\
+0 & 2 \\
+\end{bmatrix}
+\quad & \text{stretch points twice as far from the origin}\\
+\begin{bmatrix}
+.866 & -.5 \\
+.5 & .866 \\
+\end{bmatrix}
+\quad & \text{rotate points 30\degree\ counterclockwise}\\
+\begin{bmatrix}
+-1 & 0 \\
+0 & 1 \\
+\end{bmatrix}
+\quad & \text{flip points horizontally across the $y$-axis}\\
+\end{align*}
+\vspace{-.15in}
+
+Multiplying any of these matrices by a vector has the desired effect.
+
+\medskip
+
+Now suppose we wanted to perform \textit{several} of these operations on a
+vector. For example, take a random point $(8.5, 19)$. To stretch, rotate,
+\textit{and} flip it, we'd do this:
+
+\vspace{-.15in}
+\begin{align*}
+\begin{bmatrix}
+2 & 0 \\
+0 & 2 \\
+\end{bmatrix} \cdot
+\begin{bmatrix}
+.866 & -.5 \\
+.5 & .866 \\
+\end{bmatrix} \cdot
+\begin{bmatrix}
+-1 & 0 \\
+0 & 1 \\
+\end{bmatrix} \cdot
+\begin{bmatrix}
+8.5 \\
+19 \\
+\end{bmatrix}.
+\end{align*}
+\vspace{-.15in}
+
+This works out to ${\scriptsize \begin{bmatrix} -33.722 \\ 24.408 \\
+\end{bmatrix}}$ if you're keeping score at home.
+
+\index{Bowser}
+
+Now often instead of transforming a single point, we want to transform an
+entire image, which contains multiple points. Imagine calculating every pixel
+of Bowser as his Kart trips over a green shell and spins towards the side of
+the screen. We can take advantage of the associativity of matrix multiplication
+to pre-compute a \textit{single} matrix that will
+stretch/flip/rotate/squish/whatever any point we care to multiply it by:
+
+\vspace{-.15in}
+\begin{align*}
+T = 
+\begin{bmatrix}
+2 & 0 \\
+0 & 2 \\
+\end{bmatrix} \cdot
+\begin{bmatrix}
+.866 & -.5 \\
+.5 & .866 \\
+\end{bmatrix} \cdot
+\begin{bmatrix}
+-1 & 0 \\
+0 & 1 \\
+\end{bmatrix} =
+\begin{bmatrix}
+-1.732 & -1 \\
+-1 & 1.732 \\
+\end{bmatrix}.
+\end{align*}
+\vspace{-.15in}
+
+This makes our game engine run a lot faster, since we don't have to do all
+those calculations separately for every point in the image. Instead, we
+calculate our $T$ matrix (for \textbf{t}ransformation) just once, and then
+multiply it by every point.
+
+In fact, if we have all of Bowser's pixels in a $2\times 1000$ matrix:
+
+\vspace{-.15in}
+\begin{align*}
+B =
+\begin{bmatrix}
+18 & 19 & 22 & 32 & 34 & \cdots & 195 \\
+9 & 9 & 11 & 14 & 19 & \cdots & 212 \\
+\end{bmatrix},
+\end{align*}
+\vspace{-.15in}
+
+then we can compute what pixels to draw in the next frame with just one
+operation: $T \cdot B$!
+
+\vspace{-.15in}
+\begin{align*}
+B_{\text{next}} = T \cdot B =
+\begin{bmatrix}
+-1.732 & -1 \\
+-1 & 1.732 \\
+\end{bmatrix} \cdot
+\begin{bmatrix}
+18 & 19 & 22 & 32 & 34 & \cdots & 195 \\
+9 & 9 & 11 & 14 & 19 & \cdots & 212 \\
+\end{bmatrix}.
+\end{align*}
+\vspace{-.15in}
+
+You gotta admit, that's pretty neat.
+
