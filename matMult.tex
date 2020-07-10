@@ -175,8 +175,8 @@ it seems like you'd get a valid answer and yet there is none.
 
 Now that we have the ground rules for what the resulting matrix will be shaped
 like (if there even is one) let's talk about actually calculating the entries.
-There are several ways to think about this, each of which sheds a different
-light on the operation.
+I'm going to give you \textit{three} different ways to think about this, each
+of which sheds a different light on the operation.
 
 \index{matrix-vector multiplication}
 
@@ -285,7 +285,7 @@ matrix-\textit{matrix} multiplication:
 \vspace{-.15in}
 
 Examine the columns of the right-hand matrix: they should ring a bell. Each
-\textit{column} is one of the \textit{vectors} that I just multiplied our
+\textit{column} is one of the \textit{vectors} that we just multiplied our
 matrix by to get a columnar answer. The result of this operation is achieved by
 simply putting all those columnar answers together:
 
@@ -321,6 +321,223 @@ multiplication is really just repeated matrix-\textit{vector} multiplication.
 
 This way of thinking about matrix multiplication might be the one that
 resonates most strongly with you. (It did for me.)
+
+\section{All possible dot products}
+
+On the other hand, maybe you'll like this one better. Matrix-matrix
+multiplication can also be viewed as \textbf{all possible dot products} between
+the \textbf{rows} of $A$ and the \textbf{columns} of $B$.
+
+Flash back for a moment to \textit{A Cool, Brisk Walk} chapter 6, and the
+Fundamental Theorem of Counting. Answer this question: ``You have two choices
+of appetizer, and three choices of entr\'{e}e. How many different dinner
+combinations are possible?''
+
+The answer is six, since each of the two appetizers can go with any of the
+three entr\'{e}es. So you could choose:
+
+\begin{compactenum}
+\item shrimp cocktail, filet mignon
+\item shrimp cocktail, chicken pesto
+\item shrimp cocktail, eggplant parmigiana
+\item artichoke dip, filet mignon
+\item artichoke dip, chicken pesto
+\item artichoke dip, eggplant parmigiana
+\end{compactenum}
+
+Now back to matrices. If I multiply these two matrices together:
+
+\vspace{-.15in}
+\begin{align*}
+\begin{bmatrix}
+2 & 1 & 5 \\
+0 & 3 & -2 \\
+\end{bmatrix} \ \text{and} \ 
+\begin{bmatrix}
+0 & 9 & -13 \\
+0 & 99 & -13 \\
+7 & 999 & -13 \\
+\end{bmatrix},
+\end{align*}
+\vspace{-.15in}
+
+how many possible dot products are there between \textit{rows} of $A$ and
+\textit{columns} of $B$?
+
+The answer is six, since each of the two $A$ rows can go with any of the three
+$B$ rows. The possibilities are:
+
+\begin{compactenum}
+\item $[\ 2\ \ 1\ \ 5\ ]$ and $[\ 0\ \ 0\ \ 7\ ]$
+\item $[\ 2\ \ 1\ \ 5\ ]$ and $[\ 9\ \ 99\ \ 999\ ]$
+\item $[\ 2\ \ 1\ \ 5\ ]$ and $[\ -13\ \ -13\ \ -13\ ]$
+\item $[\ 0\ \ 3\ \ -2\ ]$ and $[\ 0\ \ 0\ \ 7\ ]$
+\item $[\ 0\ \ 3\ \ -2\ ]$ and $[\ 9\ \ 99\ \ 999\ ]$
+\item $[\ 0\ \ 3\ \ -2\ ]$ and $[\ -13\ \ -13\ \ -13\ ]$
+\end{compactenum}
+
+(Note \textit{very} carefully that we use the \textit{columns} of $B$, not the
+rows!)
+
+\smallskip
+Very well. Let's compute all those dot products then:
+
+\begin{compactitem}
+\item $[\ 2\ \ 1\ \ 5\ ] \cdot [\ 0\ \ 0\ \ 7\ ] = 35$
+\item $[\ 2\ \ 1\ \ 5\ ] \cdot [\ 9\ \ 99\ \ 999\ ] = 5112$
+\item $[\ 2\ \ 1\ \ 5\ ] \cdot [\ -13\ \ -13\ \ -13\ ] = -104$
+\item $[\ 0\ \ 3\ \ -2\ ] \cdot [\ 0\ \ 0\ \ 7\ ] = -14$
+\item $[\ 0\ \ 3\ \ -2\ ] \cdot [\ 9\ \ 99\ \ 999\ ] = -1701$
+\item $[\ 0\ \ 3\ \ -2\ ] \cdot [\ -13\ \ -13\ \ -13\ ] = -13$
+\end{compactitem}
+
+\smallskip
+Those six dot products are precisely the entries in our answer matrix:
+
+\vspace{-.15in}
+\begin{align*}
+\begin{bmatrix}
+35 & 5112 & -104 \\
+-14 & -1701 & -13 \\
+\end{bmatrix}.
+\end{align*}
+\vspace{-.15in}
+
+The only thing you have to be careful of is which answer goes in which place.
+The rule is:
+
+\begin{framed}
+The dot product of row $i$ of $A$ and column $j$ of $B$ goes in
+row $i$, column $j$ of the answer.
+\end{framed}
+
+A sensible arrangement, I think you'll agree. Multiplying row 0 with column 0
+will give us the entry in row 0, column 0 of our answer. Multiplying row 14
+with column 9 will give us the entry in row 14, column 9 of our answer. And so
+forth.
+
+In terms of our current example, the reason that the number 5112 goes in the
+\textit{top middle} of our answer (as opposed to the bottom left, or anywhere
+else) is that 5112 is the dot product of the \textit{top} row of $A$ ($[\ 2\ \
+1\ \ 5\ ]$) with the \textit{middle} column of $B$ ($[\ 9\ \ 99\ \ 999\ ]$).
+Be sure to practice with this so you don't get numbers out of place.
+
+\smallskip
+
+\index{matchmaker@\texttt{matchmaker.com}}
+
+It might help to keep in mind possible applications here. Why would we ever
+want to compute ``all possible dot products?'' Well, think back to our
+matchmaker example. Let's say we have 4 women and 5 men, each of whom has
+completed a survey. Finding all the compatibilities -- \textit{i.e.},
+predicting the dating success of all possible pairings -- is precisely
+computing the dot product of every gal with every guy (assuming
+heterosexuality). That's 20 possible dot products, which we can calculate with
+a single matrix multiplication.
+
+% TODO: explain that we need "Women times TRANSPOSE of men" not "women times
+% men."
+
+\section{Several different linear combinations}
+
+Our third and final way to think about matrix multiplication is in terms of
+linear combinations. Remember (from p.~\pageref{linearComboOfColumns}) that
+every matrix-\textit{vector} multiplication $A \cdot
+\overrightarrow{\textbf{x}}$ is essentially specifying some linear combination
+of $A$'s \textit{columns}. If we multiply $A$ by the vector ${\scriptsize
+\begin{bmatrix} 3 \\ 5 \\ \end{bmatrix}}$, we're saying ``I'd like 3 copies of
+$A$'s first column, plus 5 copies of its second column, please.''
+
+Matrix multiplication is simply asking for several \textit{different} linear
+combinations. If we multiply a matrix $A$ by this one:
+
+\vspace{-.15in}
+\begin{align*}
+\begin{bmatrix}
+0 & 9 & -13 \\
+0 & 99 & -13 \\
+7 & 999 & -13 \\
+\end{bmatrix},
+\end{align*}
+\vspace{-.15in}
+
+we're requesting the following:
+
+\begin{quote}
+\index{credit card}
+\textit{
+``Hello, I'd like to put in an order for three things. First, I'd like 7 copies
+of $A$'s third column (ignore the first two). Additionally, I'd like 9 copies
+of its first column, 99 copies of its second column, and 999 copies of its
+third column, all added together. Finally, please give me $-13$ copies of each
+of its columns, again added together. Thanks! You should have my credit card
+number on file.''
+}
+\end{quote}
+
+To fulfill this order, we compute each of the three linear combinations
+requested. Using the same $A$ matrix we've been using (${\scriptsize
+\begin{bmatrix} 2 & 1 & 5 \\ 0 & 3 & -2 \end{bmatrix}}$) this amounts to:
+
+\vspace{-.15in}
+\begin{align*}
+\text{First combination: } &7
+\begin{bmatrix}
+5 \\
+-2 \\
+\end{bmatrix} =
+\begin{bmatrix}
+35 \\
+-14 \\
+\end{bmatrix} \\
+\text{Second combination: } &9
+\begin{bmatrix}
+2 \\
+0 \\
+\end{bmatrix} + 99
+\begin{bmatrix}
+1 \\
+3 \\
+\end{bmatrix} + 999
+\begin{bmatrix}
+5 \\
+-2 \\
+\end{bmatrix} =
+\begin{bmatrix}
+5112 \\
+-1701 \\
+\end{bmatrix} \\
+\text{Third combination: } &-13
+\begin{bmatrix}
+2 \\
+0 \\
+\end{bmatrix} -13
+\begin{bmatrix}
+1 \\
+3 \\
+\end{bmatrix} -13
+\begin{bmatrix}
+5 \\
+-2 \\
+\end{bmatrix} =
+\begin{bmatrix}
+-104 \\
+-13 \\
+\end{bmatrix}
+\end{align*}
+\vspace{-.15in}
+
+Packaging up all those results again gives us:
+
+\vspace{-.15in}
+\begin{align*}
+\begin{bmatrix}
+35 & 5112 & -104 \\
+-14 & -1701 & -13 \\
+\end{bmatrix}.
+\end{align*}
+\vspace{-.15in}
+
 
 %\subsection{Outer and inner products}
 %
