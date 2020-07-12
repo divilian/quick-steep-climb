@@ -1123,7 +1123,7 @@ since that one's the right size.
 
 \smallskip
 Incidentally, the notation we use for $A$'s inverse is not $\frac{1}{A}$, as
-you might expect, but $A^{-1}$.
+you might expect, but $A^{-1}$. It's pronounced ``$A$ inverse.''
 \smallskip
 
 Now it's not at all obvious that (1) there even \textit{is} an inverse matrix
@@ -1134,13 +1134,328 @@ there is exactly one, as it turns out. And that will be good news.
 
 Why good news? Why do we care?
 
-\section{Simultaneous equations}
+\subsection{Simultaneous equations}
 
 There are several important reasons why we care, as it happens. In this section
 I'm going to talk about only one of them, and it'll seem at first as if I've
 veered off-topic into something that has nothing to do with linear algebra at
 all. But stay with me.
 
+\index{simultaneous equations}
 
+From your pre-college days, you undoubtedly remember solving
+\textbf{simultaneous equations}. For example, faced with this:
 
+\vspace{-.25in}
+\begin{align*}
+2x - 3y &= 1 \\
+3x + y &= 7,
+\end{align*}
+\vspace{-.25in}
 
+\label{hellaciousAlgebra}
+
+you could use a variety of different techniques to work out that $x=2$ and
+$y=1$. For me, the least hateful way of solving those problems was to use
+substitution: get one variable in terms of the other (like fiddling with that
+first equation to get $x = \frac{1+3y}{2}$, then plugging $\frac{1+3y}{2}$ in
+for $x$ in the second equation). But you may have done the thing where you
+multiply one of the entire equations by some number and add it to the other
+one, or maybe you learned yet another way. As long as you don't screw up any of
+your math, you'll get the same answer regardless of technique.
+
+The reason these are called ``simultaneous equations,'' by the way, is that
+you're looking for values of $x$ and $y$ that \textit{simultaneously} make both
+equations true. It's easy to just eyeball it and find an $x$ and a $y$ that
+make just one of the equations true. But getting values that satisfy both
+equations simultaneously is the trick.
+
+\smallskip
+
+You may have done more than just ``two equations, two unknowns'' in high
+school, like this problem that has three of each:
+
+\vspace{-.25in}
+\begin{align*}
+6x + 2y - 4z &= -4 \\
+x + y + 2z &= 8 \\
+2x - 2y + 8z &= 4.
+\end{align*}
+\vspace{-.25in}
+
+(*Shudder*) With enough laborious steps, and enough caffeine, you'll manage to
+crank out the correct answer which is $x=-1$, $y=5$, $z=2$.
+
+It probably won't surprise you to learn that it's also possible to solve five
+equations in five unknowns, or a hundred equations in a hundred unknowns,
+\textit{etc.} It may surprise you to learn that there are situations where we
+actually need to \textit{do} that, because the equations stand for real
+relationships between real quantities and solving simultaneous equations is how
+we figure out the real values.
+
+Luckily for the human race, all that error-prone algebraic manipulation
+required to solve a hundred simultaneous equations this way (or even a few
+thousand) is utterly unnecessary. Matrices come brilliantly to our rescue.
+
+Let me recast the first problem above,
+
+\vspace{-.25in}
+\begin{align}
+\label{ordEq1}
+2x - 3y &= 1 \\
+\label{ordEq2}
+3x + y &= 7,
+\end{align}
+\vspace{-.25in}
+
+in the following way:
+
+\vspace{-.15in}
+\begin{align}
+\label{matEq}
+\begin{bmatrix}
+2 & -3 \\
+3 & 1 \\
+\end{bmatrix} \cdot
+\begin{bmatrix}
+x \\ y \\
+\end{bmatrix} =
+\begin{bmatrix}
+1 \\ 7 \\
+\end{bmatrix}.
+\end{align}
+\vspace{-.15in}
+
+Whoa. Sudden leap from high school back to college. But do you see the
+connection? Stare hard at the matrices in equation \ref{matEq} and compare them
+with the original equations \ref{ordEq1} and \ref{ordEq2}. You'll realize that
+the matrix entries are the \textit{coefficients} of the equations, and the
+right-most vector has the values from the equations' right-hand-sides.
+
+\index{matrix-vector multiplication}
+
+A light bulb will go on for you as soon as you realize that the matrix equation
+is \textit{exactly the same} as the two ordinary equations! That's because when
+we do matrix-vector multiplication, we do two separate things: (1) take the dot
+product of the top matrix row and the ${\scriptsize \begin{bmatrix} x \\ y
+\end{bmatrix}}$ vector, and (2) take the dot product of the \textit{bottom}
+matrix row and the ${\scriptsize \begin{bmatrix} x \\ y \end{bmatrix}}$ vector.
+When we do this, we get:
+
+\vspace{-.15in}
+\begin{align*}
+\begin{bmatrix}
+2x - 3y \\
+3x + 1 \\
+\end{bmatrix} =
+\begin{bmatrix}
+1 \\ 7 \\
+\end{bmatrix}.
+\end{align*}
+\vspace{-.15in}
+
+This is just another way of saying \textit{exactly} the same thing that
+\ref{ordEq1} and \ref{ordEq2} do.
+
+\smallskip
+
+Okay, so why is this important? Here's why. Suppose we could find the
+\textit{inverse} of the left matrix in equation \ref{matEq}. We'll call it
+$A^{-1}$. Now if we multiply both sides of that equation by $A^{-1}$ we'd get:
+
+\vspace{-.15in}
+\begin{align*}
+A^{-1} \cdot
+\begin{bmatrix}
+2 & -3 \\
+3 & 1 \\
+\end{bmatrix} \cdot
+\begin{bmatrix}
+x \\ y \\
+\end{bmatrix} &=
+A^{-1} \cdot
+\begin{bmatrix}
+1 \\ 7 \\
+\end{bmatrix} \\
+\begin{bmatrix}
+1 & 0 \\
+0 & 1 \\
+\end{bmatrix} \cdot
+\begin{bmatrix}
+x \\ y \\
+\end{bmatrix} &=
+A^{-1} \cdot
+\begin{bmatrix}
+1 \\ 7 \\
+\end{bmatrix} \\
+\begin{bmatrix}
+x \\ y \\
+\end{bmatrix} &=
+A^{-1} \cdot
+\begin{bmatrix}
+1 \\ 7 \\
+\end{bmatrix}
+\end{align*}
+\vspace{-.15in}
+
+See how that works? Multiplying the matrix by its inverse makes it disappear
+entirely from the left-hand side. That's because a matrix times its inverse is
+the identity matrix, and the identity matrix times any vector is just that
+vector. So we've reduced the problem of solving these simultaneous equations
+the high school way to just (1) finding $A$'s inverse and (2) multiplying it by
+our ${\scriptsize \begin{bmatrix} 1 \\ 7 \end{bmatrix}}$ vector.
+
+\smallskip
+
+Great, so how do we compute $A^{-1}$? Answer: ask a computer. Any programming
+language worth its salt (including Python) can figure it out lickety-split with
+one line of code. Here, I'm just going to tell you the answer I got, and see if
+you can verify it:
+
+\vspace{-.15in}
+\begin{align*}
+\text{Stephen asserts that } A^{-1} =
+\begingroup
+\renewcommand*{\arraystretch}{1.5}
+\begin{bmatrix}
+\frac{1}{11} & \frac{3}{11} \\
+-\frac{3}{11} & \frac{2}{11} \\
+\end{bmatrix}.
+\endgroup
+\end{align*}
+\vspace{-.15in}
+
+Crazy, right? Yeah. Let's multiply it out to be sure:
+
+\vspace{-.15in}
+\begin{align*}
+A \cdot A^{-1} =
+\begin{bmatrix}
+2 & -3 \\
+3 & 1 \\
+\end{bmatrix} \cdot
+\begin{bmatrix}
+\frac{1}{11} & \frac{3}{11} \\
+-\frac{3}{11} & \frac{2}{11} \\
+\end{bmatrix} = \\
+\begingroup
+\renewcommand*{\arraystretch}{1.5}
+\begin{bmatrix}
+2\cdot\frac{1}{11} - 3\cdot(-\frac{3}{11}) &
+2\cdot\frac{3}{11} - 3\cdot\frac{2}{11} \\
+3\cdot\frac{1}{11} + 1\cdot(-\frac{3}{11}) &
+3\cdot\frac{3}{11} + 1\cdot\frac{2}{11} \\
+\end{bmatrix} =
+\endgroup
+\begin{bmatrix}
+1 & 0 \\
+0 & 1 \\
+\end{bmatrix} \quad \checkmark
+\end{align*}
+\vspace{-.15in}
+
+Remarkable. Our answer to the simultaneous equations, then, is:
+
+\vspace{-.15in}
+\begin{align*}
+\begin{bmatrix}
+x \\ y \\
+\end{bmatrix} =
+\begingroup
+\renewcommand*{\arraystretch}{1.5}
+\begin{bmatrix}
+\frac{1}{11} & \frac{3}{11} \\
+-\frac{3}{11} & \frac{2}{11} \\
+\end{bmatrix}
+\endgroup
+\cdot
+\begin{bmatrix}
+1 \\ 7 \\
+\end{bmatrix} =
+\begin{bmatrix}
+2 \\ 1 \\
+\end{bmatrix}.
+\end{align*}
+\vspace{-.15in}
+
+So we confirm that $x=2$ and $y=1$, just as whatever hellacious algebra you
+used on p.~\pageref{hellaciousAlgebra} told you.
+
+\smallskip
+
+The deal is, this approach is scalable to any number of equations and unknowns
+you like, with no algebraic manipulation required. As long as you have a
+programming language to compute the inverse for you, you can crank out your
+answer in no time. Here's the answer to the three-equation example I showed
+earlier:
+
+\vspace{-.25in}
+\begin{align*}
+6x + 2y - 4z &= -4 \\
+x + y + 2z &= 8 \\
+2x - 2y + 8z &= 4, \\
+\end{align*}
+\vspace{-.65in}
+\begin{center}
+\textit{so} \\
+\end{center}
+\vspace{-.25in}
+\begin{align*}
+\begin{bmatrix}
+6 & 2 & -4 \\
+1 & 1 & 2 \\
+2 & -2 & 8 \\
+\end{bmatrix} \cdot 
+\begin{bmatrix}
+x \\ y \\ z \\
+\end{bmatrix} =
+\begin{bmatrix}
+-4 \\ 8 \\ 4 \\
+\end{bmatrix}.
+\end{align*}
+\vspace{-.25in}
+
+\begin{center}
+\textit{Ask Python, ``what's the inverse of \
+${\footnotesize \begin{bmatrix}
+6 & 2 & -4 \\
+1 & 1 & 2 \\
+2 & -2 & 8 \\
+\end{bmatrix}}$?''
+}
+
+\textit{Python replies: ``
+${\small
+\begingroup
+\renewcommand*{\arraystretch}{1.5}
+\begin{bmatrix}
+\frac{3}{20} & -\frac{1}{10} & \frac{1}{10} \\
+-\frac{1}{20} & \frac{7}{10} & -\frac{1}{5} \\
+-\frac{1}{20} & \frac{1}{5} & \frac{1}{20} \\
+\end{bmatrix}
+\endgroup}$!''
+}
+
+\smallskip
+\textit{Therefore: }
+$\begin{bmatrix}
+x \\ y \\ z \\
+\end{bmatrix} =
+{\small
+\begingroup
+\renewcommand*{\arraystretch}{1.5}
+\begin{bmatrix}
+\frac{3}{20} & -\frac{1}{10} & \frac{1}{10} \\
+-\frac{1}{20} & \frac{7}{10} & -\frac{1}{5} \\
+-\frac{1}{20} & \frac{1}{5} & \frac{1}{20} \\
+\end{bmatrix}
+\endgroup} \cdot
+\begin{bmatrix}
+-4 \\ 8 \\ 4 \\
+\end{bmatrix} =
+\begin{bmatrix}
+-1 \\ 5 \\ 2 \\
+\end{bmatrix}.$
+\end{center}
+
+Problem solved.
