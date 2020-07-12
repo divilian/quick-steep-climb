@@ -1617,5 +1617,54 @@ That's right: those columns are \textit{blue dominoes.}
 
 \medskip
 
-It turns out that the definition of \textbf{singular} is a matrix in which the
-columns are not linearly independent.
+It turns out that the definition of \textbf{singular} is \textit{a matrix in
+which the columns are not linearly independent}. Such a matrix is ``broken'' in
+exactly the same way that blue dominoes are broken: its columns don't each
+branch out in a brand new direction, and so no matter what linear combination
+of them you try to take, you can't reach most points.
+
+If you think about it, that's exactly what we're trying to do here. The above
+matrix equation is essentially saying ``find me a linear combination of
+${\scriptsize \begin{bmatrix} 2 \\ 4 \end{bmatrix}}$ and ${\scriptsize
+\begin{bmatrix} 3 \\ 6 \end{bmatrix}}$ that will land me at the point
+${\scriptsize \begin{bmatrix} 8 \\ 11 \end{bmatrix}}$.'' But there is no such
+linear combination. I can't take $x$ copies of the first vector and $y$ copies
+of the second and get to ${\scriptsize \begin{bmatrix} 8 \\ 11 \end{bmatrix}}$,
+because those vectors point in the same dog-gone direction.
+
+\medskip
+
+By the way, it might have occurred to you that it's possible to get extremely
+lucky. If we tweak the second of our equations ever so slightly:
+
+\vspace{-.25in}
+\begin{align*}
+2x + 3y &= 8 \\
+4x + 6y &= \textbf{16},
+\end{align*}
+\vspace{-.25in}
+
+suddenly it's not only possible to get \textit{a} solution, but
+\textit{zillions} of different solutions. All of these work:
+
+\begin{center}
+\setlength{\tabcolsep}{13pt}
+\renewcommand{\arraystretch}{.8}
+\begin{tabular}{cccccc}
+$x=1$ & $x=4$ & $x=-2$ & $x=3$ & $x=16$ & \textit{...} \\
+\scriptsize and &
+\scriptsize and &
+\scriptsize and &
+\scriptsize and &
+\scriptsize and &
+\scriptsize and\\
+$y=2$ & $y=0$ & $y=4$ & $y=\frac{2}{3}$ & $y=-8$ & \textit{...} \\
+\end{tabular}
+\end{center}
+
+That's because any pair of numbers that work in the first equation are
+automatically going to also work in the second. So it's not quite correct to
+say ``a singular matrix means there are no solutions,'' since in very rare
+cases it can instead mean ``\textit{too many} solutions.''
+
+\section{The Central Dogma of linear algebra}
