@@ -1459,3 +1459,163 @@ x \\ y \\ z \\
 \end{center}
 
 Problem solved.
+
+\section{``Singular'' matrices}
+
+\index{reciprocal}
+
+All right. Time for the last concept in what has been a hefty chapter.
+
+Rewind for a moment and think about reciprocals of ordinary numbers again. The
+reciprocal of $4$ is $\frac{1}{4}$, the reciprocal of $-\frac{3}{7}$ is
+$-\frac{7}{3}$, yadda yadda. A number's reciprocal is simply the number you can
+multiply it by to get 1.
+
+No matter what the number is, you can get its reciprocal just by taking ``one
+over'' it. Right?
+
+\index{multiplicative inverse}
+
+\textit{Almost} right. But there's one number for which that doesn't work. And
+that's the number zero. Quick: what can you multiply \textit{zero} by and get
+1? Answer: nothing. It's the one and only number that has no multiplicative
+inverse.
+
+Now we've been drawing this parallel between regular old numbers and square
+matrices. The analog of ``reciprocal'' in Numbers Land is ``matrix inverse'' in
+Linear Algebra Land. So what's the analog to the number zero, then?
+
+\index{singular matrix}
+
+The answer is a \textbf{singular matrix.} ``Singular'' is a word I mostly
+associate with Sir Arthur Conan Doyle's original Sherlock Holmes mysteries:
+Holmes was always saying, ``what a singular discovery, Watson!'' That word
+struck me as so odd in Doyle's short stories that I had to look it up. Turns
+out, it basically means ``incredibly weird, so much so that it's practically
+one-of-a-kind.''\footnote{The word singular is \textit{not} a synonym for the
+word ``single,'' as many a college student has mistakenly supposed.}
+
+Very well, then: a ``singular matrix'' is essentially a ``weird matrix.'' But
+what does that mean? Simply this: \textit{it has no inverse.} Just like the
+number zero, you can't take the reciprocal of it.
+
+A few observations about this. First of all, as in Number Land, the ``normal
+case'' is for a matrix to \textit{not} be singular. If you pick a number at
+random, the odds are incredibly high that it \textit{will} have a reciprocal.
+The only way to get unlucky is to draw the number 0 exactly. Similarly, if you
+pick a matrix at random, it will almost certainly not be a singular one.
+
+However, unlike in Number Land, there's not just \textit{one} singular matrix,
+either. And there's not just one of each size, either. In fact, for any size
+you like (say, $4\times 4$) there are infinitely many different singular
+matrices. It might seem like a contradiction to say ``there are infinitely many
+of them, yet there's a very low probability you'll get one at random,'' but
+it's really not. It's no more of a contradiction than saying ``there are
+infinitely many integers, but if you choose a real number at random there's a
+very low probability it'll be an integer.''\footnote{This is really the same
+sort of difference as ``countably infinite'' vs.~``uncountably infinite'' sets
+that I alluded to in Chapter 2 of \textit{Cool Brisk Walk}.}
+
+Now by this point, a question might have occurred to you. Above, I outlined a
+very simple procedure for solving simultaneous equations: convert the equations
+to an equivalent matrix, take the inverse of it, and multiply it by the
+constants on the right-hand side. But what if it's a singular matrix, you ask?
+How then can we find the solution?
+
+The important answer is: \textit{you can't}. And this isn't because the linear
+algebra shortcut broke down. It's because a singular matrix implies that
+\textit{there is no solution}.
+
+Here's an example. Suppose I gave you these two simultaneous equations:
+
+\vspace{-.25in}
+\begin{align*}
+2x + 3y &= 8 \\
+4x + 6y &= 11.
+\end{align*}
+\vspace{-.25in}
+
+At first glance, nothing looks out of the ordinary. But look closer and you'll
+see the fatal flaw. The first equation says ``$2x+3y$ equals something.'' The
+second one says ``$4x+6y$ equals something else.'' But wait a minute! No matter
+what the right-hand sides may say, $4x+6y$ has to be \textit{exactly double}
+what $2x+3y$ is. (Think about it: multiply $2x+3y$ by 2 and you get $4x+6y$.)
+So if $2x+3y$ is 8 -- as the first equation claims -- then $4x+6y$ \textit{has}
+to be 16. It can't possibly be 11 or anything else, or the wheels would fall
+off the universe.
+
+You'll notice that if you try to solve this using your high school tools, you
+will also fall into a pit:
+
+\vspace{-.25in}
+\begin{align*}
+2x &= 8 - 3y \ \text{(subtract $3y$ from both sides of 1st equation)} \\
+x &= \frac{8 - 3y}{2} \ \text{(divide both sides by 2)} \\
+\end{align*}
+\vspace{-.55in}
+\begin{align*}
+4(\frac{8-3y}{2}) + 6y &= 11 \ \text{(plug expression for $x$ into 2nd equation)} \\
+2(8-3y) + 6y &= 11 \ \text{(divide 4 by 2)} \\
+16 - 6y + 6y &= 11 \ \text{(multiply out the 2)} \\
+16 &= 11 \textit{\textbf{??!}}
+\end{align*}
+\vspace{-.25in}
+
+Don't worry, 16 doesn't really equal 11. We just tried to solve two equations
+which were mutually contradictory, and it predictably produced nonsense.
+
+\smallskip
+
+In Linear Algebra Land, the above equations correspond to this:
+
+\vspace{-.15in}
+\begin{align*}
+\begin{bmatrix}
+2 & 3 \\
+4 & 6 \\
+\end{bmatrix} \cdot
+\begin{bmatrix}
+x \\ y \\
+\end{bmatrix} =
+\begin{bmatrix}
+8 \\ 11 \\
+\end{bmatrix},
+\end{align*}
+\vspace{-.15in}
+
+which of course is fatally flawed in exactly the same way. The fatal flaw is
+that this matrix:
+
+\vspace{-.15in}
+\begin{align*}
+\begin{bmatrix}
+2 & 3 \\
+4 & 6 \\
+\end{bmatrix}
+\end{align*}
+\vspace{-.15in}
+
+is \textit{singular}.
+
+\smallskip
+
+Now I want you to look carefully at that matrix and make a discovery. Consider
+the matrix's \textit{columns}. Does anything strike you as unusual about them?
+
+\medskip
+
+If you can't spot the weirdness, let me redraw them this way:
+
+\begin{center}
+$\left[\
+\raisebox{-0.4\height}{\includegraphics[width=0.05\textwidth]{darkgray2_4v.png}}
+\ \ 
+\raisebox{-0.4\height}{\includegraphics[width=0.05\textwidth]{darkgray3_6v.png}}\ \right]$
+\end{center}
+
+That's right: those columns are \textit{blue dominoes.}
+
+\medskip
+
+It turns out that the definition of \textbf{singular} is a matrix in which the
+columns are not linearly independent.
