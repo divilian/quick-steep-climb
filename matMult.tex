@@ -1644,7 +1644,7 @@ lucky. If we tweak the second of our equations ever so slightly:
 \end{align*}
 \vspace{-.25in}
 
-suddenly it's not only possible to get \textit{a} solution, but
+then suddenly it's not only possible to get \textit{a} solution, but
 \textit{zillions} of different solutions. All of these work:
 
 \begin{center}
@@ -1667,4 +1667,60 @@ automatically going to also work in the second. So it's not quite correct to
 say ``a singular matrix means there are no solutions,'' since in very rare
 cases it can instead mean ``\textit{too many} solutions.''
 
-\section{The Central Dogma of linear algebra}
+\section[The Central Dogma of square matrices]{\large The Central Dogma of square matrices}
+
+I've mentioned several times how all of these different ideas are tied
+together. Let me now be explicit and complete about that.
+
+\index{yellow matrix}
+\index{blue matrix}
+
+Suppose you have a square matrix $A$. There are two possibilities: either its
+columns are all linearly independent of each other, or else they aren't. Which
+of those two things are true puts $A$ in one of two big categories. I'm going
+to call the first type of matrix a ``yellow matrix'' and the second type a
+``blue matrix,'' to match our definitions about the linear independence (or
+lack thereof) of dominoes.
+
+The following things are all true for yellow matrices:
+
+\index{linear independence}
+\index{inverse}
+\index{kernel}
+\index{nullity}
+\index{full-rank matrix}
+
+\begin{framed}
+\begin{compactitem}
+\item $A$ is a \textbf{non-singular} square matrix.
+\item $A$ has \textit{all linearly independent} columns (yellow dominoes).
+\item $A$ is ``full rank.'' (The rank is equal to the dimension of the matrix.)
+\item The kernel of $A$ has only the zero vector in it.
+\item The nullity of $A$ is 0.
+\item $A$ has an \textbf{inverse} matrix, which we can call $A^{-1}$.
+\item $A$ represents a system of equations which can be solved (and which has
+exactly one solution.)
+\end{compactitem}
+\end{framed}
+
+\index{singular matrix}
+
+On the flip side, the following are all true for blue matrices:
+
+\begin{framed}
+\begin{compactitem}
+\item $A$ is a \textbf{singular} square matrix.
+\item A's columns are \textit{not} linearly independent (blue dominoes).
+\index{rank-deficient}
+\item $A$ is ``rank-deficient.'' (The rank is less than the dimension of the
+matrix.)
+\item The kernel of $A$ has \textit{more} than just the zero vector in it.
+\item The nullity of $A$ is greater than 0.
+\item There is \textit{no} inverse matrix of A.
+\item $A$ represents a system of equations which either can't be solved, or
+which has infinitely many solutions.
+\end{compactitem}
+\end{framed}
+
+Either all the stuff in the first box is true, or all the stuff in the second
+box. There is no in between.
