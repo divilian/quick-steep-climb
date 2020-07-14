@@ -10,3 +10,437 @@ This chapter doesn't begin to cover \textit{all} the applications of linear
 algebra! Those are vast, and probably innumerable. But here are a few of my
 favorites presented in capsule form so you can get a taste for why it's useful
 to do all this stuff.
+
+\section{Leslie matrices}
+
+\index{zombie}
+\index{butterfly}
+\index{fern}
+
+Our first example will deal with modeling population growth in communities of
+organisms, whether butterflies, ferns, zombies (okay, maybe not zombies), or
+people. In these cases, we have a system whose properties evolve over time, and
+our interest is in predicting how those properties will change in the future.
+
+\subsection{``Systems'' and ``states''}
+
+\index{system}
+
+The word ``\textbf{system}'' is kind of vague, but really all we mean by it is
+some complex phenomenon whose rules of behavior are at least partly known.
+Examples of systems are natural habitats, economies, schools, rocket engines,
+and sports leagues. Each of these examples contains interacting parts that
+influence each other in complicated ways, and has various things about them we
+could measure through time.
+
+\index{state (of a system)}
+
+We'll often talk about the \textbf{state} of a system, which is a pretty vague
+word too. You can think of a system's state as a collection of all the relevant
+things that characterize its situation at a moment in time. If our system is an
+economy, this would include things like the number of workers in different job
+sectors, the average wage of those workers, and the total amount of inventory
+in all warehouses and stores. If our system is a habitat, it would include the
+number of each different type of animal currently living in it, possibly
+together with its sex and age.
+
+\index{chess}
+\index{Monopoly}
+\index{Get Out Of Jail Free card}
+
+I think of a system's state as ``all the things you'd have to write down and
+remember if you wanted to pause the system and restart it later.'' Think of a
+game. If you're playing chess, and get interrupted, you and your opponent will
+need to write down the current locations of all the pieces on the board, plus
+whose turn it is. If you're playing Monopoly, there's a whole lot more to
+remember: how much money every player has, who owns which properties, what
+board space each token is on, who has a Get Out Of Jail Free card, and whether 
+the current player has already rolled doubles (and if so, whether once or
+twice).
+
+\index{state vector}
+
+Interestingly, we most often use a \textit{vector} to model the current state
+of a system. Just imagine a vector in which the first element was the number of
+Monopoly dollars that player 1 has, the second through fourth elements are
+player 2's through 4's money, the fifth element is the space number of player
+1's token, and so forth. Or, imagine an economy with five different industries,
+whose state is represented by a ten-dimensional vector giving the current
+number of workers and current demand for products in each industry.
+
+\index{discrete-time system}
+
+Systems are often studied as though time marched forwards in fixed intervals.
+(Sometimes these are called ``discrete-time systems.'') Each ``time step''
+marks the evolution from one system state to another, as a result of that
+amount of time elapsing. In our Monopoly example, the time step would be one
+player's turn: each time a player rolls and moves, the state of the system
+changes slightly. For the economy, we might measure it in time steps of one
+week, in which every industry gains or loses employees and/or inventory each
+week.
+
+\index{simulation}
+
+Starting from an initial state and working out how future states will unfold is
+called ``simulating'' the system, and a computer program that does this is
+called a \textbf{simulation}.
+
+\subsection{The Markov property}
+
+One interesting type of system that arises -- and the one we'll study here --
+is one in which \textit{the state at the next time step depends
+\underline{only} on the state at the current time step}. This is accurate for,
+say, the game of chess. When you're considering your move, all you need to know
+is the \textit{current} state; \textit{i.e.}, where all the pieces currently
+are. You don't need to know what happened in the past to get the game to the
+current position. Questions like ``how did the black queen \textit{get} to
+square e7, anyway?'' and ``which piece was the one that captured the missing
+white knight?'' are irrelevant.
+
+\index{Markov property}
+
+A system whose next state depends only on its current state is said to have the
+\textbf{Markov property}, named after Andrey Markov, a Russian mathematical
+genius who made immense contributions to probability theory and statistics. We
+call the evolution of one state to another, when this property holds, a
+\textbf{Markov chain}.
+
+\subsection{The bunny rabbit state vector}
+
+\index{bunny rabbit}
+\index{rabbit}
+\index{lifespan}
+
+Let's say we'd like to study a local population of bunny rabbits. For reasons
+that will become clear later, we're only going to count \textit{female}
+rabbits. We'll make our time step be one year, and say that in each year, there
+are some number of baby girl rabbits (0 years old), some number of 1-year-old
+girl rabbits, some number of 2-year-old girl rabbits, and some number of
+3-year-old girl rabbits. To keep things manageable, we'll also say that the
+maximum lifespan of a rabbit is 3 years, after which all rabbits go to heaven.
+
+Thus our state vector will be a four-dimensional vector of four numbers:
+namely, the total population of female rabbits of each of the four ages.
+Perhaps at ``time 0'' (the current year, say) our state vector is:
+
+\vspace{-.15in}
+\begin{align*}
+\overrightarrow{\textbf{pop}_0} =
+\begin{bmatrix}
+67 \\ 115 \\ 23 \\ 5 \\
+\end{bmatrix}
+\end{align*}
+\vspace{-.15in}
+
+This indicates that when we begin our study, there are 67 baby rabbits, 115
+one-year-olds, 23 two-year-olds, and only 5 three-year-olds. We call this
+vector $\overrightarrow{\textbf{pop}_0}$ because it contains the rabbit
+populations at year number 0.
+
+\subsection{The Leslie matrix for population prediction}
+
+\index{Leslie matrix}
+
+We're now going to define a matrix, traditionally named $L$, called a
+\textbf{Leslie Matrix} after ecologist Patrick Leslie. Leslie matrices have the
+following very strict form, so study it carefully:
+
+\vspace{-.15in}
+\begin{align*}
+L =
+\begin{bmatrix}
+f_0 & f_1 & f_2 & f_3 \\
+s_0 & 0 & 0 & 0 \\
+0 & s_1 & 0 & 0 \\
+0 & 0 & s_2 & 0 \\
+\end{bmatrix}.
+\end{align*}
+\vspace{-.15in}
+
+Leslie matrices can be any (square) size. Here I've chosen $4\times 4$ because
+we're keeping track of four different age brackets of bunny rabbits.
+
+\index{subdiagonal}
+
+Notice that most of the entries are zero. The only ones that can be nonzero are
+(1) the top row, and (2) the first ``subdiagonal'' -- meaning, the diagonal
+going from row 1, column 0 down to row 4, column 3. (Or, in a general $n\times
+n$ Leslie matrix, from row 1, column 0 down to row $n$, column $n-1$.)
+
+\medskip
+So what's the method to this madness? Here's what:
+
+
+\begin{itemize}
+\itemsep.1em
+
+\index{fecundity}
+
+\item ``f'' stands for \textbf{fecundity}. That's a fancy ecology word for
+``fertility.'' The $f$ entries stand for -- get this -- the number of babies on
+average that each female rabbit of a certain age will give birth to. So if
+$f_2$ is .9, for instance, that means that every two-year-old mommy rabbit
+will, on average, give birth to .9 baby rabbits. Obviously some two-year-old
+females will have fewer babies than others, but $f_2=.9$ means that on average
+each mom will produce .9 of them.
+
+Now you can see why I said we only need to keep track of the female rabbit
+population. Females -- the child-bearers -- are the limiting factor. As long as
+there are a few males (or even one) running around the population to perform
+the fertilization task, the number of males won't really matter to the
+long-term survival of the species.
+
+By the way, if any of the $f$ entries are 0, that simply means that female
+rabbits of that age are infertile. (In many species, of course, only females
+within a certain age range can bear children.)
+
+\index{survival rate}
+
+\item ``s'' stands for \textbf{survival}. These $s$ entries represent the
+probabilities that a rabbit of each age will survive another year. For example,
+if $s_0$ is .8, that means that every (female) baby rabbit has an 80\% chance
+of surviving to become a one-year-old. If $s_2=.5$, then only half of the
+two-year-olds will survive to become three-year-olds. Notice that there is no
+$s_3$ in the matrix; that's because we assumed that 3 years is the maximum age
+of a rabbit, and so none of the three-year-olds will survive anyway.
+
+\end{itemize}
+
+All the other entries in $L$ have to be zero, and I think you can see the
+reason. If you're a one-year-old rabbit, there's only two possibilities for
+you: you can either survive to become a two-year-old next year, or else you can
+die. There's no possibility that you'll jump over age 2 and become a
+three-year-old next year, nor is there a chance that you'll ``fail'' grade 1
+and have to be a one-year-old again next year.
+
+Notice also that the $s$ entries must be between 0 and 1 (they're survival
+\textit{probabilities}, after all), although the $f$ entries need not be. (Some
+species have very high birth rates, and a female of child-bearing age can
+easily produce more than just one offspring per year on average.)
+
+To be concrete, let's whip up a random Leslie matrix and look at it:
+
+\vspace{-.15in}
+\begin{align*}
+L =
+\begin{bmatrix}
+.1 & .6 & .4 & .2 \\
+.4 & 0 & 0 & 0 \\
+0 & .8 & 0 & 0 \\
+0 & 0 & .6 & 0 \\
+\end{bmatrix}.
+\end{align*}
+\vspace{-.15in}
+
+Upon inspection, we can see that in this population, the following things are
+true:
+
+\begin{compactitem}
+\item Baby rabbits rarely -- but sometimes -- have offspring. On average, for
+every ten baby rabbits in our population in a given year, they'll produce one
+new baby rabbit the next year.
+\item Rabbits reach peak fertility as one-year-olds ($\frac{6}{10}$ babies per
+mother). This fertility then declines each year thereafter until death.
+\item Baby rabbits have a hard time surviving: less than half of them (40\%)
+survive their inaugural year.
+\item Both one-year-old and two-year-old rabbits have better than even odds of
+survival, though this survival rate does decline from year two to year three.
+\end{compactitem}
+
+
+\subsection{Projecting forwards: matrix multiplication}
+
+Now let's look at our Leslie matrix in action. Earlier, we started out our
+hypothetical female rabbit population with these values:
+
+\vspace{-.15in}
+\begin{align*}
+\overrightarrow{\textbf{pop}_0} =
+\begin{bmatrix}
+67 \\ 115 \\ 23 \\ 5 \\
+\end{bmatrix}
+\end{align*}
+\vspace{-.15in}
+
+Now how many rabbits can we expect in each of these age groups next year?
+
+\pagebreak
+
+That might seem like a complicated question, but the answer is actually staring
+you in the face. It's just matrix multiplication:
+
+\vspace{-.15in}
+\begin{align*}
+\overrightarrow{\textbf{pop}_1} =
+L \cdot \overrightarrow{\textbf{pop}_0}.
+\end{align*}
+\vspace{-.15in}
+
+Wow! Really? Why does that work?
+
+\smallskip
+
+Well, think about what matrix multiplication actually does. First, each of our
+female rabbits, regardless of age, will contribute something to the expected
+number of newborn rabbits next year. Our current babies will contribute on
+average only .1 of a newborn each, while one-year-olds will produce .6 newborns
+each, two-year-olds .4 newborns each, and three-year-olds .2 newborns each.
+That's \textit{exactly} the dot product of the top row of $L$ (the fecundity
+row) times the current population vector!
+
+Then, for each of the other age groups, the number of rabbits next year will
+simply be the number of rabbits \textit{one year younger} this year, multiplied
+by the survival rate of that age group. For example, 67 babies this year will
+result in about 26.8 one-year-olds next year, since only 40\% of them will
+survive. This, too, turns out to be a dot product: the survival row for that
+age times the number of rabbits of that age.
+
+\smallskip
+
+Check it out:
+
+\vspace{-.25in}
+\begin{align*}
+\small
+\begin{bmatrix}
+.1 & .6 & .4 & .2 \\
+.4 & 0 & 0 & 0 \\
+0 & .8 & 0 & 0 \\
+0 & 0 & .6 & 0 \\
+\end{bmatrix} \cdot
+\begin{bmatrix}
+67 \\ 115 \\ 23 \\ 5 \\
+\end{bmatrix} =
+\begin{bmatrix}
+.1\cdot 67 + .6 \cdot 115 + .4 \cdot 23 + .2 \cdot 5 \\
+.4\cdot 67 \\
+.8\cdot 115 \\
+.6\cdot 23 \\
+\end{bmatrix} =
+\begin{bmatrix}
+85.9 \\ 26.8 \\ 92.0 \\ 13.8 \\
+\end{bmatrix}.
+\end{align*}
+\vspace{-.25in}
+\normalsize
+
+Don't get too freaked out by the idea of ``85.9 baby rabbits.'' These are just
+averages based on the various probabilities. In real life, there would of
+course not be any partial rabbits out there.
+
+\pagebreak
+
+Once you see the previous calculation, it won't surprise you that
+
+\vspace{-.15in}
+\begin{align*}
+\overrightarrow{\textbf{pop}_2} =
+L \cdot \overrightarrow{\textbf{pop}_1}, \\
+\overrightarrow{\textbf{pop}_3} =
+L \cdot \overrightarrow{\textbf{pop}_2}, \\
+\overrightarrow{\textbf{pop}_4} =
+L \cdot \overrightarrow{\textbf{pop}_3}, \\
+\end{align*}
+\vspace{-.75in}
+\begin{center}
+\textit{etc.}
+\end{center}
+
+\smallskip
+These work out to:
+
+\vspace{-.15in}
+\begin{align*}
+\overrightarrow{\textbf{pop}_2} =
+\begin{bmatrix}
+.1 & .6 & .4 & .2 \\
+.4 & 0 & 0 & 0 \\
+0 & .8 & 0 & 0 \\
+0 & 0 & .6 & 0 \\
+\end{bmatrix} \cdot
+\begin{bmatrix}
+85.9 \\ 26.8 \\ 92.0 \\ 13.8 \\
+\end{bmatrix} &=
+\begin{bmatrix}
+64.23 \\ 34.36 \\ 21.44 \\ 55.2 \\
+\end{bmatrix}, \\
+\overrightarrow{\textbf{pop}_3} =
+\begin{bmatrix}
+.1 & .6 & .4 & .2 \\
+.4 & 0 & 0 & 0 \\
+0 & .8 & 0 & 0 \\
+0 & 0 & .6 & 0 \\
+\end{bmatrix} \cdot
+\begin{bmatrix}
+64.23 \\ 34.36 \\ 21.44 \\ 55.2 \\
+\end{bmatrix} &=
+\begin{bmatrix}
+46.66 \\ 25.69 \\ 27.5 \\ 12.86 \\
+\end{bmatrix}, \\
+\overrightarrow{\textbf{pop}_4} =
+\begin{bmatrix}
+.1 & .6 & .4 & .2 \\
+.4 & 0 & 0 & 0 \\
+0 & .8 & 0 & 0 \\
+0 & 0 & .6 & 0 \\
+\end{bmatrix} \cdot
+\begin{bmatrix}
+46.66 \\ 25.69 \\ 27.5 \\ 12.86 \\
+\end{bmatrix} &=
+\begin{bmatrix}
+33.65 \\ 18.67 \\ 20.55 \\ 16.49 \\
+\end{bmatrix},
+\end{align*}
+\vspace{-.15in}
+
+and so on out to eternity.
+
+\smallskip
+
+\index{commutative}
+
+Also, since matrix multiplication is commutative, we can carry out the products
+in any order. We can start at the beginning (year 0) and multiply $L$ by itself
+the requisite number of times to compute any future year. So, computing the
+fourth generation after the starting state can be written as:
+
+\vspace{-.15in}
+\begin{align*}
+\overrightarrow{\textbf{pop}_4} = L \cdot L \cdot L \cdot L \cdot
+\overrightarrow{\textbf{pop}_0}, \\
+\end{align*}
+\vspace{-.15in}
+
+and the thirtieth generation as:
+
+\vspace{-.15in}
+\begin{align*}
+\overrightarrow{\textbf{pop}_{30}} = L^{30} \cdot
+\overrightarrow{\textbf{pop}_0},\\
+\end{align*}
+\vspace{-.15in}
+
+(where $L^{30}$ means ``$L$ times itself 30 times,'' of course).
+
+\medskip
+
+Sadly for the rabbits, this works out to:
+
+\vspace{-.15in}
+\begin{align*}
+\overrightarrow{\textbf{pop}_{30}} = 
+\begin{bmatrix}
+0.0123 \\ 0.0066 \\ 0.0071 \\ 0.0057 \\
+\end{bmatrix},\\
+\end{align*}
+\vspace{-.25in}
+
+\index{Hazel}
+\index{Fiver}
+\index{Watership Down@\textit{Watership Down}}
+\index{survival rate}
+
+which means that in their present environment, this rabbit colony's days are
+numbered. Maybe Hazel and Fiver will come up with a migration plan that
+increases their survival rates...
+
