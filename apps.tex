@@ -1,4 +1,15 @@
 
+\setsecnumdepth{subsection}
+
+\titleformat{\section}%
+  [hang]% <shape>
+  {\normalfont\bfseries\Large}% <format>
+  {}% <label>
+  {0pt}% <sep>
+  {}% <before code>
+\renewcommand{\thesection}{}% Remove section references...
+\renewcommand{\thesubsection}{L\arabic{subsection}.}%... from subsections
+
 \chapter{Applications}
 
 I was going to make this chapter the finale of the book, but found I just
@@ -10,6 +21,8 @@ This chapter doesn't begin to cover \textit{all} the applications of linear
 algebra! Those are vast, and probably innumerable. But here are a few of my
 favorites presented in capsule form so you can get a taste for why it's useful
 to do all this stuff.
+
+\pagebreak
 
 \section{Leslie matrices}
 
@@ -264,8 +277,6 @@ hypothetical female rabbit population with these values:
 
 Now how many rabbits can we expect in each of these age groups next year?
 
-\pagebreak
-
 That might seem like a complicated question, but the answer is actually staring
 you in the face. It's just matrix multiplication:
 
@@ -295,7 +306,7 @@ result in about 26.8 one-year-olds next year, since only 40\% of them will
 survive. This, too, turns out to be a dot product: the survival row for that
 age times the number of rabbits of that age.
 
-\smallskip
+\pagebreak
 
 Check it out:
 
@@ -321,14 +332,15 @@ Check it out:
 85.9 \\ 26.8 \\ 92.0 \\ 13.8 \\
 \end{bmatrix}.
 \end{align*}
-\vspace{-.25in}
+\vspace{-.15in}
+
 \normalsize
 
 Don't get too freaked out by the idea of ``85.9 baby rabbits.'' These are just
 averages based on the various probabilities. In real life, there would of
 course not be any partial rabbits out there.
 
-\pagebreak
+\smallskip
 
 Once you see the previous calculation, it won't surprise you that
 
@@ -409,7 +421,7 @@ fourth generation after the starting state can be written as:
 \overrightarrow{\textbf{pop}_4} = L \cdot L \cdot L \cdot L \cdot
 \overrightarrow{\textbf{pop}_0}, \\
 \end{align*}
-\vspace{-.15in}
+\vspace{-.45in}
 
 and the thirtieth generation as:
 
@@ -418,11 +430,11 @@ and the thirtieth generation as:
 \overrightarrow{\textbf{pop}_{30}} = L^{30} \cdot
 \overrightarrow{\textbf{pop}_0},\\
 \end{align*}
-\vspace{-.15in}
+\vspace{-.45in}
 
-(where $L^{30}$ means ``$L$ times itself 30 times,'' of course).
+(where $L^{30}$ means ``$L$ multiplied by itself 30 times,'' of course).
 
-\medskip
+\bigskip
 
 Sadly for the rabbits, this works out to:
 
@@ -433,7 +445,7 @@ Sadly for the rabbits, this works out to:
 0.0123 \\ 0.0066 \\ 0.0071 \\ 0.0057 \\
 \end{bmatrix},\\
 \end{align*}
-\vspace{-.25in}
+\vspace{-.45in}
 
 \index{Hazel}
 \index{Fiver}
@@ -443,4 +455,16 @@ Sadly for the rabbits, this works out to:
 which means that in their present environment, this rabbit colony's days are
 numbered. Maybe Hazel and Fiver will come up with a migration plan that
 increases their survival rates...
+
+\vfill
+
+\pagebreak
+
+\section{Hamming codes}
+
+\index{Hamming code}
+\index{error-correcting code}
+
+Our next example is about \textbf{error-correcting codes}, extremely useful in
+the transfer of electronic data.
 
