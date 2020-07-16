@@ -627,9 +627,9 @@ without the receiver even needing to asking the sender to repeat himself.
 The overall scene is shown in Figure~\ref{fig:hammingCode}. Study it carefully.
 Here are the key points:
 
-\begin{compactenum}
+\begin{enumerate}
 
-\item Each of the gray boxes -- mysteriously labeled $G^T$, $H$, and $R$ in the
+\item Each of the gray boxes -- mysteriously labeled $G^\intercal$, $H$, and $R$ in the
 figure -- is a \textit{linear transformation}.
 
 \index{nibble}
@@ -642,7 +642,7 @@ single nibble. (Longer messages simply repeat the whole process once per
 nibble.) This 4 bits of information that the sender is trying to communicate is
 called the \textbf{signal}.
 
-\item The sender begins by running those 4 signal bits through the $G^T$ linear
+\item The sender begins by running those 4 signal bits through the $G^\intercal$ linear
 transformation, which maps them to a \textit{7}-dimensional vector. Those 7
 bits are called a \textbf{code word}. The code word is what's actually sent
 through the noisy channel, not the original signal.
@@ -673,6 +673,75 @@ bit of the received message.
 on the error syndrome -- and runs them through the $R$ linear transformation.
 This produces the 4-bit nibble that the sender originally sent.
 
-\end{compactenum}
+\end{enumerate}
+
+\bigskip
+
+The reason all this works is that Hamming carefully designed the $G^\intercal$,
+$H$, and $R$ linear transformations so that everything works out as described.
+I'm sure you'd like to look at those now. Remember, every linear transformation
+is a matrix. You already know something about these three matrices, because of
+the number of bits they take as inputs and outputs:
+
+\begin{compactitem}
+\item $G^\intercal$ must be a $7\times 4$ matrix, since it maps a 4-bit vector to a
+7-bit vector.
+\item $H$ must be a $3\times 7$ matrix, since it transforms each 7-bit vector
+into a 3-bit vector.
+\item Finally, $R$ must be a $4\times 7$ matrix, since it maps a 7-bit vector
+to a 4-bit vector.
+\end{compactitem}
+
+\pagebreak
+
+Here they are in all their glory:\footnote{Incidentally, in Hamming's original
+\index{transpose} design all of these matrices had seven columns, including
+``$G$'', which was a $4\times 7$. However, since we always use the
+transposed-version-of-$G$ when we multiply a vector by it, the accepted
+convention has become to just call it ``$G^\intercal$'' and treat it as a
+$7\times 4$ matrix, as I'm doing here.}
+
+\vspace{-.15in}
+\begin{align*}
+G^\intercal &=
+\begin{bmatrix}
+1 & 0 & 1 & 1\\
+1 & 1 & 0 & 1\\
+0 & 0 & 0 & 1\\
+1 & 1 & 1 & 0\\
+0 & 0 & 1 & 0\\
+0 & 1 & 0 & 0\\
+1 & 0 & 0 & 0\\
+\end{bmatrix} \\
+\medskip
+H &=
+\begin{bmatrix}
+0 & 0 & 0 & 1 & 1 & 1 & 1 \\
+0 & 1 & 1 & 0 & 0 & 1 & 1 \\
+1 & 0 & 1 & 0 & 1 & 0 & 1 \\
+\end{bmatrix} \\
+\medskip
+R &=
+\begin{bmatrix}
+0 & 0 & 0 & 0 & 0 & 0 & 1 \\
+0 & 0 & 0 & 0 & 0 & 1 & 0 \\
+0 & 0 & 0 & 0 & 1 & 0 & 0 \\
+0 & 0 & 1 & 0 & 0 & 0 & 0 \\
+\end{bmatrix}
+\end{align*}
+\vspace{-.15in}
+
+You can stare at these for a while if you want, and try to figure out the
+method in the madness. I confess, it seems like a lot of voodoo magic to me,
+especially $G^\intercal$. The $H$ matrix actually has a very reliable pattern:
+if you look at the columns, you'll recognize that from left to right they are
+the binary numbers 1 through 7!
+
+\subsection{Examples}
+
+All right, let's work through this scheme for a couple of actual examples.
+
+\subsubsection{Example 1: no corruption}
 
 
+multi-bit errors!
