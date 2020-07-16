@@ -531,6 +531,43 @@ Everything else is what you learned in elementary school. But remember that in
 only want to keep the least-significant bit of the answer, we throw away the
 $1$ in $10_2$ which leaves us with $0_2$.
 
+To test your understanding, compute this dot product mod 2:
+
+\vspace{-.15in}
+\begin{align*}
+\begin{bmatrix}
+1 & 1 & 0 & 1 & 0 & 1 & 1
+\end{bmatrix} \cdot
+\begin{bmatrix}
+0 \\ 1 \\ 0 \\ 1 \\ 1 \\ 1 \\ 0 \\
+\end{bmatrix}
+\end{align*}
+\vspace{-.15in}
+
+The answer should turn out to be:
+
+\vspace{-.15in}
+\begin{align*}
+1\cdot 0 + 
+1\cdot 1 + 
+0\cdot 0 + 
+1\cdot 1 + 
+0\cdot 1 + 
+1\cdot 1 + 
+1\cdot 0 &= \\
+0 + 
+1 + 
+0 + 
+1 + 
+0 + 
+1 + 
+0 &= 1.
+\end{align*}
+\vspace{-.15in}
+
+There are an odd number of 1--1 pairs when lining up those vectors element by
+element, and therefore the dot product is 1.
+
 \subsection{Noisy channels}
 
 \index{noisy channel@``noisy channel''}
@@ -551,8 +588,8 @@ bits were transmitted and received correctly.}
 \label{fig:noisyChannel}
 \end{figure}
 
-This setting is depicted in Figure~\ref{fig:noisyChannel}. The sender in the picture
-tried to transmit an eight-bit digital message to the receiver, and was
+This setting is depicted in Figure~\ref{fig:noisyChannel}. The sender in the
+picture tried to transmit an eight-bit digital message to the receiver, and was
 successful in doing so...almost. That fifth bit is the problem: the sender sent
 a 1, but the receiver got a 0. This is life on a noisy channel.
 
@@ -562,3 +599,80 @@ cell phone getting bad service or your radio getting bad reception. That's the
 information getting slightly (or perhaps majorly) corrupted in transmission, to
 the point where you get a garbled version of what the cell tower transmitted or
 the radio station broadcast.
+
+And of course the frustrating thing is not merely that some bits were
+corrupted, but that the receiver doesn't \textit{know} whether any were
+corrupted. She received a string of bits, most of which are probably correct,
+but a few of which might not be. The bad ones are indistinguishable from the
+good ones, so she doesn't have any way of knowing which ones to trust.
+
+Or does she?
+
+\subsection{The Hamming code scheme}
+
+Enter the Hamming code. The sender and receiver will cooperate in an amazing
+way such that -- within certain limits -- bits that are corrupted in-transit
+can be \textit{detected} as such by the receiver, and then \textit{corrected}
+without the receiver even needing to asking the sender to repeat himself.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=1\textwidth]{hammingCode.pdf}
+\vspace{-.4in}
+\caption{The Hamming code error-correction scheme.}
+\label{fig:hammingCode}
+\end{figure}
+\smallskip
+
+The overall scene is shown in Figure~\ref{fig:hammingCode}. Study it carefully.
+Here are the key points:
+
+\begin{compactenum}
+
+\item Each of the gray boxes -- mysteriously labeled $G^T$, $H$, and $R$ in the
+figure -- is a \textit{linear transformation}.
+
+\index{nibble}
+\index{signal}
+\item The sender begins by carving up his message into consecutive 4-bit pieces.
+ As you may remember from \textit{Cool Brisk Walk}, these 4-bit chunks are
+called \textbf{nibbles}. Each nibble is sent separately. For purposes of
+understanding this system, we'll just consider ``the entire message'' to be a
+single nibble. (Longer messages simply repeat the whole process once per
+nibble.) This 4 bits of information that the sender is trying to communicate is
+called the \textbf{signal}.
+
+\item The sender begins by running those 4 signal bits through the $G^T$ linear
+transformation, which maps them to a \textit{7}-dimensional vector. Those 7
+bits are called a \textbf{code word}. The code word is what's actually sent
+through the noisy channel, not the original signal.
+
+\index{error syndrome}
+
+\item On the other end of the wire, the receiver gets 7 bits of information.
+These \textit{may} be identical to the code word that was sent, but of course
+they may instead contain one or more corrupted bits.
+
+\item The receiver proceeds to do two things with these 7 bits. First, she runs
+them through the $H$ linear transformation to produce a 3-bit string called the
+\textbf{error syndrome}. This is the key to the whole scheme. \textit{If the
+error syndrome is exactly \texttt{000}, that means that the 7 bits were
+uncorrupted and can be trusted}. In this case, she proceeds to the next step.
+If the error syndrome is anything \textit{other} than \texttt{000}, then
+amazingly it will spell out a binary number telling her \textit{exactly which
+bit was corrupted!}
+
+For instance, if the error syndrome is \texttt{110}, which is the binary number
+six, then she knows bit number 6 (out of 7) was corrupted, and she needs to
+flip it from a 0 to a 1 or from a 1 to a 0. If the error syndrome is
+\texttt{001}, which is a binary one, then she knows to flip the \textit{first}
+bit of the received message.
+
+\smallskip
+\item Finally, the receiver takes the 7 bits -- corrected if necessary, based
+on the error syndrome -- and runs them through the $R$ linear transformation.
+This produces the 4-bit nibble that the sender originally sent.
+
+\end{compactenum}
+
+
