@@ -896,6 +896,53 @@ to yield:
 
 which is exactly the signal our sender intended. Amazing!
 
-\subsection{One fly in the ointment}
+\subsection{The one fly in the ointment}
 
-multi-bit errors!
+Some things are too good to be true. That's not the case with the Hamming code:
+it is good, and it is true. But it does have a limitation, which I alluded to
+earlier and will now spell out.
+
+\index{single-bit error}
+
+The Hamming code can only deal with \textbf{single-bit errors}. As long as only
+\textit{one} of the 7 bits transmitted as a code word is corrupted, the
+receiver can intelligently detect the error and even figure out which bit to
+correct. But if more than one bit is corrupted in a single batch-of-seven, all
+bets are off.
+
+The reason is this. Hamming designed the $G^\intercal$ matrix (and its
+counterpart, $R$) so that \textit{any two code words are at least two bits
+apart}. This calls for some explanation.
+
+Remember from \textit{Cool Brisk Walk} that there are $2^{4}$, or 16, possible
+4-bit patterns. This is our vocabulary when using the Hamming code: we can say
+any of sixteen different ``things'' each time we send a message. Now the
+$G^\intercal$ matrix transforms those 4 bits into 7 bits. How many possible
+7-bit sequences are there? Answer: $2^7$, or \textit{128.}
+
+Think about that for a minute. There are 128 different 7-bit strings, yet only
+16 of them are valid code words. That means that if you picked a random 7-bit
+string out of a hat, the probability is pretty small that you'd actually hit
+upon a code word: $\frac{16}{128} = \frac{1}{8} = .125$, to be precise. This is
+what gives the Hamming code its detective power: you have to get pretty
+``lucky'' to fool it. Over $87\%$ of the time, your choice of 7-bits is
+instantly exposed as a fraud by the $H$ matrix.
+
+And if we consider only the 16 valid code words out of those 128, you'll see
+that Hamming designed it so that you can't get to any one of them from any of
+the others without changing at least \textit{two} bits. This means that two
+separate, independent errors would have to occur in order for one valid code
+word (representing a particular 4-bit signal) to be corrupted into another
+valid code word (representing a \textit{different} 4-bit signal). As long as
+only one bit gets flipped, you're guaranteed that the code word will be
+corrupted into a \textit{non}-code word, and thus be exposed to the light.
+
+There are actually whole families of error correcting codes with various
+properties, some of which are more intricate and can detect and even correct
+multi-bit errors. The Hamming code was just the first, and what a great insight
+it gave us.
+
+% TODO: mention that the code words are the kernel of H.
+
+% TODO: make clear that when interpreting the error syndrome, you start
+% counting the bits at 1.
