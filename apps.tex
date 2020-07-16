@@ -460,11 +460,69 @@ increases their survival rates...
 
 \pagebreak
 
+\renewcommand{\thesubsection}{H\arabic{subsection}.}%... from subsections
 \section{Hamming codes}
 
 \index{Hamming code}
 \index{error-correcting code}
 
 Our next example is about \textbf{error-correcting codes}, extremely useful in
-the transfer of electronic data.
+the transfer of electronic data. These ``codes,'' by the way, have nothing to
+do with the \textit{secret} codes used in cryptography, which conceal and
+reveal hidden messages. (Those are a different application, which also rely on
+linear algebra, by the way!)
+
+The particular error-correcting code we'll learn is called the \textbf{Hamming
+code}, invented by mathematician Richard Hamming. I hope you find it as amazing
+as I do.
+
+\subsection{Doing ``arithmetic mod 2''}
+
+\index{binary}
+
+One thing we need to get out of the way first is a little bookkeeping thing. 
+With Hamming codes, we're going to be dealing exclusively with \textbf{binary}
+data. As you'll remember from \textit{Cool Brisk Walk} chapter 7, binary
+numbers are base 2, with only 0 and 1 as the digits.
+
+\index{modulo operator (mod)}
+
+That part's not that weird. What's slightly more weird is doing our arithmetic
+modulo 2. What this means is that every time we perform an addition or a
+multiplication operation, we're only going to keep \textit{the
+least-significant bit of the answer.} Mathematically, this amounts to taking
+our result modulo 2 -- which means ``divide the answer by 2 and take the
+remainder.'' You'll quickly see that this means all we care about is whether
+our answer is even or odd; if it's even, our result is 0, and if it's odd, our
+result is 1.
+
+Here are the complete addition and multiplication tables for one-bit binary
+numbers. There's only one surprise, and that's in the lower left:
+
+\vspace{-.15in}
+\begin{center}
+\setlength{\tabcolsep}{40pt}
+\begin{tabular}{cc}
+$0+0 = 0$ & $0\cdot 0 = 0$ \\
+$0+1 = 1$ & $0\cdot 1 = 0$ \\
+$1+0 = 1$ & $1\cdot 0 = 0$ \\
+$1+1 = \textbf{0}$ & $1\cdot 1 = 1$ \\
+\end{tabular}
+\end{center}
+\vspace{-.15in}
+
+Everything else is what you learned in elementary school. But remember that in
+``arithmetic mod 2,'' one plus one equals \textit{zero}. In terms of
+\textit{Cool Brisk Walk} chapter 7, we have $1_2 + 1_2 = 10_2$, but since we
+only want to keep the least-significant bit of the answer, we throw away the
+$1$ in $10_2$ which leaves us with $0_2$.
+
+\subsection{Noisy channels}
+
+\index{noisy channel@``noisy channel''}
+
+Okay, down to business. The setting for the Hamming Code is the sending of
+information over a so-called \textbf{noisy channel}. A noisy channel is a
+transmission path through which data can be sent, but because it is ``noisy,''
+some of the information is likely to be \textbf{corrupted} along the way.
 
