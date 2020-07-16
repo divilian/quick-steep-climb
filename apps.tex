@@ -642,10 +642,11 @@ single nibble. (Longer messages simply repeat the whole process once per
 nibble.) This 4 bits of information that the sender is trying to communicate is
 called the \textbf{signal}.
 
-\item The sender begins by running those 4 signal bits through the $G^\intercal$ linear
-transformation, which maps them to a \textit{7}-dimensional vector. Those 7
-bits are called a \textbf{code word}. The code word is what's actually sent
-through the noisy channel, not the original signal.
+\item The sender begins by running those 4 signal bits through the
+$G^\intercal$ linear transformation, which maps them to a
+\textit{7}-dimensional vector. Those 7 bits are called a \textbf{code word}.
+The code word is what's actually sent through the noisy channel, not the
+original signal.
 
 \index{error syndrome}
 
@@ -658,9 +659,12 @@ them through the $H$ linear transformation to produce a 3-bit string called the
 \textbf{error syndrome}. This is the key to the whole scheme. \textit{If the
 error syndrome is exactly \texttt{000}, that means that the 7 bits were
 uncorrupted and can be trusted}. In this case, she proceeds to the next step.
-If the error syndrome is anything \textit{other} than \texttt{000}, then
-amazingly it will spell out a binary number telling her \textit{exactly which
-bit was corrupted!}
+If the error syndrome is anything \textit{other} than \texttt{000}, this means
+that the 7 received bits are \textit{not a valid code word}. We know, then, that
+they could not have come from running \textit{any} 4-bit signal through the
+$G^\intercal$ message. But perhaps the most amazing thing of all is that in
+this case -- when the error syndrome is not \texttt{000} -- it will incredibly
+spell out a binary number telling her \textit{exactly which bit was corrupted!}
 
 For instance, if the error syndrome is \texttt{110}, which is the binary number
 six, then she knows bit number 6 (out of 7) was corrupted, and she needs to
@@ -668,31 +672,24 @@ flip it from a 0 to a 1 or from a 1 to a 0. If the error syndrome is
 \texttt{001}, which is a binary one, then she knows to flip the \textit{first}
 bit of the received message.
 
-\smallskip
 \item Finally, the receiver takes the 7 bits -- corrected if necessary, based
 on the error syndrome -- and runs them through the $R$ linear transformation.
 This produces the 4-bit nibble that the sender originally sent.
 
 \end{enumerate}
 
-\bigskip
-
 The reason all this works is that Hamming carefully designed the $G^\intercal$,
 $H$, and $R$ linear transformations so that everything works out as described.
-I'm sure you'd like to look at those now. Remember, every linear transformation
-is a matrix. You already know something about these three matrices, because of
-the number of bits they take as inputs and outputs:
+I'm sure you'd like to look at those now. You already know something about
+them, because of the number of bits they take as inputs and outputs:
 
 \begin{compactitem}
 \item $G^\intercal$ must be a $7\times 4$ matrix, since it maps a 4-bit vector to a
 7-bit vector.
 \item $H$ must be a $3\times 7$ matrix, since it transforms each 7-bit vector
 into a 3-bit vector.
-\item Finally, $R$ must be a $4\times 7$ matrix, since it maps a 7-bit vector
-to a 4-bit vector.
+\item Finally, $R$ must be a $4\times 7$, since it maps 7 bits into 4 bits.
 \end{compactitem}
-
-\pagebreak
 
 Here they are in all their glory:\footnote{Incidentally, in Hamming's original
 \index{transpose} design all of these matrices had seven columns, including
@@ -743,5 +740,162 @@ All right, let's work through this scheme for a couple of actual examples.
 
 \subsubsection{Example 1: no corruption}
 
+Our sender desires to transmit the 4-bit message \texttt{1110} to the receiver.
+So \texttt{1110} is the signal. He multiplies $G^\intercal$ by it to get:
+
+\vspace{-.15in}
+\begin{align*}
+\begin{bmatrix}
+1 & 0 & 1 & 1\\
+1 & 1 & 0 & 1\\
+0 & 0 & 0 & 1\\
+1 & 1 & 1 & 0\\
+0 & 0 & 1 & 0\\
+0 & 1 & 0 & 0\\
+1 & 0 & 0 & 0\\
+\end{bmatrix} \cdot
+\begin{bmatrix}
+1 \\ 1 \\ 1 \\ 0
+\end{bmatrix} = 
+\begin{bmatrix}
+0 \\ 0 \\ 0 \\ 1 \\ 1 \\ 1 \\ 1
+\end{bmatrix}.
+\end{align*}
+\vspace{-.15in}
+
+So he sends \texttt{0001111} into the noisy channel.
+
+\textit{(Time passes.)}
+
+\index{code word}
+
+On the other side of the world, the receiver picks up a 7-bit message:
+\texttt{0001111}. She first asks herself: ``is this message legit? Is it a
+valid code word?'' To find out, she multiplies it by $H$:
+
+\vspace{-.15in}
+\begin{align*}
+\begin{bmatrix}
+0 & 0 & 0 & 1 & 1 & 1 & 1 \\
+0 & 1 & 1 & 0 & 0 & 1 & 1 \\
+1 & 0 & 1 & 0 & 1 & 0 & 1 \\
+\end{bmatrix} \cdot
+\begin{bmatrix}
+0 \\ 0 \\ 0 \\ 1 \\ 1 \\ 1 \\ 1
+\end{bmatrix} =
+\begin{bmatrix}
+0 \\ 0 \\ 0 \\
+\end{bmatrix}.
+\end{align*}
+\vspace{-.15in}
+
+Good news: the error syndrome is all zeroes! This means that the 7 bits she
+received are in fact what was sent. All that remains is to run them through the
+$R$ transformation to uncover the original message:
+
+\vspace{-.15in}
+\begin{align*}
+\begin{bmatrix}
+0 & 0 & 0 & 0 & 0 & 0 & 1 \\
+0 & 0 & 0 & 0 & 0 & 1 & 0 \\
+0 & 0 & 0 & 0 & 1 & 0 & 0 \\
+0 & 0 & 1 & 0 & 0 & 0 & 0 \\
+\end{bmatrix} \cdot
+\begin{bmatrix}
+0 \\ 0 \\ 0 \\ 1 \\ 1 \\ 1 \\ 1
+\end{bmatrix} =
+\begin{bmatrix}
+1 \\ 1 \\ 1 \\ 0 \\
+\end{bmatrix}.
+\end{align*}
+\vspace{-.15in}
+
+Ta da!
+
+\subsubsection{Example 2: one-bit corruption}
+
+Our sender desires to transmit \texttt{0011} to the receiver.
+He transforms it using $G^\intercal$ by it to get:
+
+\vspace{-.15in}
+\begin{align*}
+\begin{bmatrix}
+1 & 0 & 1 & 1\\
+1 & 1 & 0 & 1\\
+0 & 0 & 0 & 1\\
+1 & 1 & 1 & 0\\
+0 & 0 & 1 & 0\\
+0 & 1 & 0 & 0\\
+1 & 0 & 0 & 0\\
+\end{bmatrix} \cdot
+\begin{bmatrix}
+0 \\ 0 \\ 1 \\ 1
+\end{bmatrix} = 
+\begin{bmatrix}
+0 \\ 1 \\ 1 \\ 1 \\ 1 \\ 0 \\ 0
+\end{bmatrix}.
+\end{align*}
+\vspace{-.15in}
+
+The sender thus puts the code word \texttt{0111100} into the noisy channel.
+
+\textit{(Time passes...but something goes wrong! Little do the sender or
+receiver know, but the fourth bit of this code word hits a glitch and is
+flipped to a 0!)}
+
+\index{code word}
+
+On the other side of the world, the receiver picks up a 7-bit message:
+\texttt{011\textbf{0}100}. She first asks herself: ``is this message legit? Is
+it a valid code word?'' To find out, she multiplies it by $H$:
+
+\vspace{-.15in}
+\begin{align*}
+\begin{bmatrix}
+0 & 0 & 0 & 1 & 1 & 1 & 1 \\
+0 & 1 & 1 & 0 & 0 & 1 & 1 \\
+1 & 0 & 1 & 0 & 1 & 0 & 1 \\
+\end{bmatrix} \cdot
+\begin{bmatrix}
+0 \\ 1 \\ 1 \\ 0 \\ 1 \\ 0 \\ 0
+\end{bmatrix} =
+\begin{bmatrix}
+1 \\ 0 \\ 0 \\
+\end{bmatrix}.
+\end{align*}
+\vspace{-.15in}
+
+Egads! Our error syndrome raises a red flag. It's not all zeroes, so something
+must have gone amiss.
+
+But all is not lost, since Hamming magic tells us exactly \textit{what} went
+amiss. The error syndrome \texttt{100} corresponds to the binary number 4.
+Therefore, bit number 4 of the received message is what was corrupted. Our
+friend must not have sent \texttt{011\textit{0}100}, but rather
+\texttt{011\textit{1}100}!
+
+The receiver thus confidently plugs this corrected vector into the $R$ matrix
+to yield:
+
+\vspace{-.15in}
+\begin{align*}
+\begin{bmatrix}
+0 & 0 & 0 & 0 & 0 & 0 & 1 \\
+0 & 0 & 0 & 0 & 0 & 1 & 0 \\
+0 & 0 & 0 & 0 & 1 & 0 & 0 \\
+0 & 0 & 1 & 0 & 0 & 0 & 0 \\
+\end{bmatrix} \cdot
+\begin{bmatrix}
+0 \\ 1 \\ 1 \\ 1 \\ 1 \\ 0 \\ 0
+\end{bmatrix} =
+\begin{bmatrix}
+0 \\ 0 \\ 1 \\ 1 \\
+\end{bmatrix},
+\end{align*}
+\vspace{-.15in}
+
+which is exactly the signal our sender intended. Amazing!
+
+\subsection{One fly in the ointment}
 
 multi-bit errors!
