@@ -480,21 +480,35 @@ as I do.
 
 \index{binary}
 
-One thing we need to get out of the way first is a little bookkeeping thing. 
+One thing we need to get out of the way first is a little bookkeeping matter.
 With Hamming codes, we're going to be dealing exclusively with \textbf{binary}
 data. As you'll remember from \textit{Cool Brisk Walk} chapter 7, binary
 numbers are base 2, with only 0 and 1 as the digits.
 
+\index{MP3 file}
+\index{GIF file}
+\index{JPG file}
+\index{video file}
+
+Although this may sound like a limitation, it's not: every single piece of
+information that's transferred between computers or is stored on one
+\textit{must} be represented in binary form anyway. This is true not only of
+numeric data, but also text documents, MP3 audio files, GIF or JPG image files,
+and even videos. Representing every kind of information as a long sequence of
+0's and 1's is a solved problem, so it's no big deal for our error-correcting
+scheme to assume that the messages it works with are in binary. It could hardly
+be any other way.
+
 \index{modulo operator (mod)}
 
-That part's not that weird. What's slightly more weird is doing our arithmetic
-modulo 2. What this means is that every time we perform an addition or a
-multiplication operation, we're only going to keep \textit{the
-least-significant bit of the answer.} Mathematically, this amounts to taking
-our result modulo 2 -- which means ``divide the answer by 2 and take the
-remainder.'' You'll quickly see that this means all we care about is whether
-our answer is even or odd; if it's even, our result is 0, and if it's odd, our
-result is 1.
+Binary digits thus really aren't that weird. What's slightly more weird is
+doing our arithmetic ``modulo 2,'' which the Hamming code will require. What
+this means is that every time we perform an addition or a multiplication
+operation, we're only going to keep \textit{the least-significant bit of the
+answer.} Mathematically, this amounts to taking our result modulo 2 -- which
+means ``divide the answer by 2 and take the remainder.'' You'll quickly see
+that this means all we care about is whether our answer is even or odd; if it's
+even, our result is 0, and if it's odd, our result is 1.
 
 Here are the complete addition and multiplication tables for one-bit binary
 numbers. There's only one surprise, and that's in the lower left:
@@ -520,9 +534,31 @@ $1$ in $10_2$ which leaves us with $0_2$.
 \subsection{Noisy channels}
 
 \index{noisy channel@``noisy channel''}
+\index{corrupted data}
 
 Okay, down to business. The setting for the Hamming Code is the sending of
 information over a so-called \textbf{noisy channel}. A noisy channel is a
 transmission path through which data can be sent, but because it is ``noisy,''
-some of the information is likely to be \textbf{corrupted} along the way.
+some of the information is likely to be \textbf{corrupted} along the way. A
+corrupted bit is simply one that is transmitted incorrectly: the sender tried
+to send a 0 but the receiver erroneously got a 1, or vice versa.
 
+\begin{figure}[ht]
+\centering
+\includegraphics[width=1\textwidth]{noisyChannel.pdf}
+\caption{A binary message sent through a noisy channel. Seven out of the eight
+bits were transmitted and received correctly.}
+\label{fig:noisyChannel}
+\end{figure}
+
+This setting is depicted in Figure~\ref{fig:noisyChannel}. The sender in the picture
+tried to transmit an eight-bit digital message to the receiver, and was
+successful in doing so...almost. That fifth bit is the problem: the sender sent
+a 1, but the receiver got a 0. This is life on a noisy channel.
+
+Why would this happen? Interference, distortion, literal ``noise'': these all
+play a role in our big chaotic imperfect world. You've all experienced your
+cell phone getting bad service or your radio getting bad reception. That's the
+information getting slightly (or perhaps majorly) corrupted in transmission, to
+the point where you get a garbled version of what the cell tower transmitted or
+the radio station broadcast.
