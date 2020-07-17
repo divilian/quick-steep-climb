@@ -1100,3 +1100,64 @@ indicates that one item must be completed before another can begin, there must
 be no cycles or else the project could never be completed!
 
 \end{description}
+
+\subsection{The adjacency matrix}
+
+Okay, so that's a bunch of stuff about graphs. Now let's talk about how to
+\textit{represent} a graph in a computer program. Clearly, it would be a poor
+choice to store an image file with a bunch of circles and lines. We need
+something much simpler and more flexible, which will capture the essence of
+what the graph \textit{is}, not how it is drawn.
+
+One very common way to do this is with an \textbf{adjacency matrix}. A graph's
+adjacency matrix is simply a square matrix where every row (and column)
+corresponds to one vertex. A ``1'' in an entry $(i,j)$ means ``yes, vertex $i$
+and vertex $j$ are adjacent.'' Otherwise, they're not.
+
+\pagebreak
+We often use the letter $A$ to denote the adjacency matrix. Here's the
+adjacency matrix for Figure~\ref{fig:directedGraph}:
+
+\[
+A_{7.3} = 
+\begin{blockarray}{cccccc}
+& {\footnotesize\textrm{A}} & {\footnotesize\textrm{B}} & {\footnotesize\textrm{C}} & {\footnotesize\textrm{D}} & {\footnotesize\textrm{E}} \\
+\begin{block}{c[ccccc]}
+{\footnotesize\textrm{A}} & 0 & 1 & 1 & 0 & 0 \\
+{\footnotesize\textrm{B}} & 1 & 0 & 1 & 0 & 1 \\
+{\footnotesize\textrm{C}} & 0 & 1 & 0 & 0 & 1 \\
+{\footnotesize\textrm{D}} & 1 & 0 & 0 & 0 & 1 \\
+{\footnotesize\textrm{E}} & 0 & 0 & 0 & 0 & 0 \\
+\end{block}
+\end{blockarray}
+\]
+
+Stick your finger back in p.~\pageref{fig:directedGraph} and flip back and
+forth between the graph and the matrix to ensure it's correct. The top row is
+$[\ 0\ 1\ 1\ 0\ 0\ ]$, because vertex A has an outgoing edge to B and to C, but
+not to D or to E. Also, vertex A has \textit{incoming} edges from B and D (but
+neither from C nor E), which is why its left column is ${\scriptsize
+\begin{bmatrix} 0 \\ 1 \\ 0 \\ 1 \\ 0 \end{bmatrix}}$.
+\smallskip
+
+Notice that the diagonal terms are zero, which means that none of the vertices
+has ``an edge to itself,'' which is what we normally do.
+
+When you've convinced yourself that you understand that adjacency matrix, test
+your skills by verifying this one as well, for the undirected graph in 
+Figure~\ref{fig:undirectedGraph}:
+
+\[
+A_{7.4} = 
+\begin{blockarray}{ccccccc}
+& {\footnotesize\textrm{F}} & {\footnotesize\textrm{G}} & {\footnotesize\textrm{H}} & {\footnotesize\textrm{I}} & {\footnotesize\textrm{J}} & {\footnotesize\textrm{K}} \\
+\begin{block}{c[cccccc]}
+{\footnotesize\textrm{F}} & 0 & 1 & 1 & 0 & 0 & 0 \\
+{\footnotesize\textrm{G}} & 1 & 0 & 0 & 1 & 0 & 0 \\
+{\footnotesize\textrm{H}} & 1 & 0 & 0 & 1 & 0 & 0 \\
+{\footnotesize\textrm{I}} & 0 & 1 & 1 & 0 & 0 & 0 \\
+{\footnotesize\textrm{J}} & 0 & 0 & 0 & 0 & 0 & 1 \\
+{\footnotesize\textrm{K}} & 0 & 0 & 0 & 0 & 1 & 0 \\
+\end{block}
+\end{blockarray}
+\]
