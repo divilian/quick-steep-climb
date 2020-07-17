@@ -949,5 +949,154 @@ it gave us.
 
 \pagebreak
 
+\renewcommand{\thesubsection}{G\arabic{subsection}.}%... from subsections
 \section{Graph analysis}
 
+\index{graph}
+\index{network-based data}
+
+The last application I'll present in this chapter deals with
+\textbf{graph-based} data. We covered this extensively in Chapter 5 of
+\textit{Cool Brisk Walk}, but now we'll bring our matrix skills to bear on our
+analysis, and with striking effect.
+
+\index{vertex (graph)}
+\index{edge (graph)}
+
+Recall that a \textbf{graph}, in discrete math terms, is not an x-y plot,
+which is what most people think of when they hear the term. Instead, it's a
+special kind of data structure for organizing data. A graph consists of
+\textbf{vertices} (singular: \textbf{vertex}) connected by \textbf{edges}.
+Here's an example:
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.8\textwidth]{directedGraph.pdf}
+\caption{A directed graph.}
+\label{fig:directedGraph}
+\end{figure}
+
+Each vertex represents some entity (say, a computer on a network, or a user on
+social media) and the edges represent relationships between them (network
+connections, for example, or ``followings''). As graphs go, this one is
+minuscule; the Facebook graph, in which vertices are users and edges are
+friendships, has well over a billion vertices. But it will serve our purposes
+for illustration.
+
+
+\subsection{Graph terms}
+
+Here's a refresher on some important graph terms, most of which are repeats
+from \textit{Cool Brisk Walk} Chapter 5:
+
+\begin{description}
+
+\index{order (of a graph)}
+\index{size (of a graph)}
+
+\item[order/size.] Colloquially, researchers sometimes refer to the number
+of vertices in a graph as its \textbf{order}, and the number of its edges as
+its \textbf{size}. (The ratio of these quantities becomes a subject of interest
+as well.) Figure~\ref{fig:directedGraph} has order 5 and size 9.
+
+\index{adjacent (vertices)}
+
+\item[adjacent.] If two vertices have an edge directly connecting them, they
+are called ``adjacent.'' In Figure~\ref{fig:directedGraph}, vertices A and D are
+adjacent, but \textit{not} A and E. (Even though you can get from A to E, you
+must do so indirectly, through D.)
+
+\index{directed graph}
+\index{undirected graph}
+\index{Facebook}
+\index{Twitter}
+
+\item[directed/undirected.] In Figure~\ref{fig:directedGraph}, the edges have
+arrowheads. This is called a \textbf{directed} graph, and means that there is a
+meaningful directionality to the edges: the information that A points to C does
+not imply that C also points to A.
+
+Sometimes, though, we don't care about which ``way'' the edge goes, and so we
+draw the graph with lines only, no arrowheads. This is true of
+Figure~\ref{fig:undirectedGraph} on p.~\pageref{fig:undirectedGraph}, which is
+thus an \textbf{undirected} graph.
+
+Facebook is real-life example of an undirected graph (if I'm friends with you,
+then you're friends with me, always) but Twitter is a directed graph (if I
+follow you, that doesn't necessarily mean you also follow me).
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.8\textwidth]{undirectedGraph.pdf}
+\caption{An undirected graph.}
+\label{fig:undirectedGraph}
+\end{figure}
+
+\item[path.] A \textbf{path} is a sequence of consecutive edges that takes you
+from one vertex to the other. In Figure~\ref{fig:directedGraph}, there is a
+path from A to E, which goes through C. By contrast, there is no path at all
+from G to J in Figure~\ref{fig:undirectedGraph}.
+
+\index{traversing (a graph)}
+
+\item[traverse.] We use the verb ``\textbf{traverse}'' to mean ``follow an edge
+from one vertex to another.'' This often comes up in the context of searching
+for data in the graph, or finding a path through the graph with certain
+features.
+
+\index{weighted graph}
+
+\item [weighted.] Sometimes, the edges in the graph are unlabeled. But we
+frequently want to associate a \textit{number} with each edge, in order to
+represent the length of a road between cities, say, or the relative importance
+of a friendship. This number is called the \textbf{weight} of the edge, and a
+graph with such weights is called a \textbf{weighted graph}.
+
+\index{degree (of a graph vertex)}
+\index{in-degree}
+\index{out-degree}
+
+\item [degree.] A vertex's ``\textbf{degree}'' is simply the number of other
+vertices that are adjacent to it. In Figure~\ref{fig:undirectedGraph}, vertices J
+and K have degree 1, and the others have degree 2. For a directed graph, we
+distinguish between the number of incoming edges, called the
+``\textbf{in-degree},'' and the number of outgoing edges, or
+``\textbf{out-degree}.'' So vertex B in Figure~\ref{fig:directedGraph} has an
+in-degree of 2 and an out-degree of 3, while D has an in-degree of 0 and an
+out-degree of 2.
+
+\index{connected (graph)}
+\index{reachable@``reachable'' vertex (graph)}
+\index{directed graph}
+\index{weakly connected (graph)}
+\index{strongly connected (graph)}
+
+\item[connected.] A graph is \textbf{connected} (sometimes called
+``\textbf{fully connected},'' which means the same thing) if every vertex is
+``reachable'' from every other vertex by traversing its edges.
+Figure~\ref{fig:undirectedGraph} is clearly not connected, since we can't get
+to J/K from the others. What about Figure~\ref{fig:directedGraph}? Well, that
+depends on how we define the term ``connected.'' If we say a directed graph is
+\textbf{strongly connected}, that means that every vertex can be reached from
+every other even if you only follow the arrows' directions. If it's merely
+\textbf{weakly connected} if you can reach every vertex when \textit{ignoring}
+the edge directions. So the A-B-C-D-E graph is weakly connected, but not
+strongly connected.
+
+\index{cycle}
+
+\item[cycle.] In a graph, a \textbf{cycle} is a group of nodes that are
+connected in a ring: you can start at one, traverse edges to the others, and
+then return to where you started. A$\rightarrow$B$\rightarrow$A is a cycle in
+our first graph, and F--H--I--G is a cycle in the second graph.
+
+\index{DAG (directed, acyclic graph)}
+
+\item[DAG.] Finally, if a graph is directed and contains \textit{no} cycles, we
+called it a ``\textbf{DAG},'' or ``directed, acyclic graph.'' Certain kinds of
+directed graphs must inherently be cycle-free to even make sense. For instance,
+if each vertex represents an action item in a project plan, and a directed edge
+indicates that one item must be completed before another can begin, there must
+be no cycles or else the project could never be completed!
+
+\end{description}
