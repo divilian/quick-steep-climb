@@ -1085,7 +1085,7 @@ strongly connected.
 
 \index{cycle}
 
-\item[cycle.] In a graph, a \textbf{cycle} is a group of nodes that are
+\item[cycle.] In a graph, a \textbf{cycle} is a group of vertices that are
 connected in a ring: you can start at one, traverse edges to the others, and
 then return to where you started. A$\rightarrow$B$\rightarrow$A is a cycle in
 our first graph, and F--H--I--G is a cycle in the second graph.
@@ -1118,6 +1118,7 @@ and vertex $j$ are adjacent.'' Otherwise, they're not.
 We often use the letter $A$ to denote the adjacency matrix. Here's the
 adjacency matrix for Figure~\ref{fig:directedGraph}:
 
+\label{firstAdjacencyMatrix}
 \[
 A_{7.3} = 
 \begin{blockarray}{cccccc}
@@ -1132,13 +1133,12 @@ A_{7.3} =
 \end{blockarray}
 \]
 
-Stick your finger back in p.~\pageref{fig:directedGraph} and flip back and
-forth between the graph and the matrix to ensure it's correct. The top row is
-$[\ 0\ 1\ 1\ 0\ 0\ ]$, because vertex A has an outgoing edge to B and to C, but
-not to D or to E. Also, vertex A has \textit{incoming} edges from B and D (but
-neither from C nor E), which is why its left column is ${\scriptsize
-\begin{bmatrix} 0 \\ 1 \\ 0 \\ 1 \\ 0 \end{bmatrix}}$.
-\smallskip
+Stick your finger in p.~\pageref{fig:directedGraph} and flip back and forth
+between the graph and the matrix to ensure it's correct. The top row is $[\ 0\
+1\ 1\ 0\ 0\ ]$, because vertex A has an outgoing edge to B and to C, but not to
+D or to E. Also, vertex A has \textit{incoming} edges from B and D (but neither
+from C nor E), which is why its left column is ${\scriptsize \begin{bmatrix} 0
+\\ 1 \\ 0 \\ 1 \\ 0 \end{bmatrix}}$. \smallskip
 
 Notice that the diagonal terms are zero, which means that none of the vertices
 has ``an edge to itself,'' which is what we normally do.
@@ -1161,3 +1161,33 @@ A_{7.4} =
 \end{block}
 \end{blockarray}
 \]
+
+
+\subsection{Adjacency matrix properties}
+
+In this section we're going to make some deep connections between the
+properties of any graph (we'll call it $G$) and its adjacency matrix $A$. This
+is just the tip of the iceberg, believe me; more is coming in Chapter 9 when we
+cover eigenvalues.
+
+\subsubsection{Undirected $G$ $\Leftrightarrow$ symmetric $A$}
+
+\index{diagonal, of a matrix}
+\index{symmetric matrix}
+\index{directed graph}
+\index{undirected graph}
+
+The first one you might already have noticed from your study of
+p.~\pageref{firstAdjacencyMatrix}. And that is that if the graph is
+\textit{un}directed, its adjacency matrix will be \textit{symmetric}. If you
+didn't see this before, run your eyeballs over those two matrices again, and
+notice how the F--G--H--I--J--K matrix is a mirror image of itself across the
+main diagonal, whereas the A--B--C--D--E matrix is not.
+
+This is, of course, a natural consequence of what ``undirected'' means. If a
+graph has no arrowheads, then every time you can go from X to Y, you can also
+go from Y to X. So if $A$'s entry at row X and column Y is a 1, then the entry
+at row Y and column X must also be a 1. And that's what makes a matrix
+symmetric.
+
+
