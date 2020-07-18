@@ -1027,7 +1027,7 @@ follow you, that doesn't necessarily mean you also follow me).
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=0.8\textwidth]{undirectedGraph.pdf}
+\includegraphics[width=0.7\textwidth]{undirectedGraph.pdf}
 \caption{An undirected graph.}
 \label{fig:undirectedGraph}
 \end{figure}
@@ -1099,6 +1099,24 @@ if each vertex represents an action item in a project plan, and a directed edge
 indicates that one item must be completed before another can begin, there must
 be no cycles or else the project could never be completed!
 
+\index{prerequisite}
+\index{CPSC 284}
+
+An example DAG is given in Figure~\ref{fig:dag} (p.~\pageref{fig:dag}), which
+shows part of the computer science curriculum at UMW. Each vertex is a required
+course -- CPSC 284, in fact, is our Applied Discrete Mathematics course, which
+you are currently reading the book for. The directed edges represent
+prerequisites: you must complete CPSC 110 before beginning CPSC 284, for
+instance. You should take a moment and verify that there are no cycles in this
+graph, because if there are, it would spell doom for computer science majors.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.8\textwidth]{dag.pdf}
+\caption{A DAG (directed, acyclic graph).}
+\label{fig:dag}
+\end{figure}
+
 \end{description}
 
 \subsection{The adjacency matrix}
@@ -1111,12 +1129,12 @@ what the graph \textit{is}, not how it is drawn.
 
 One very common way to do this is with an \textbf{adjacency matrix}. A graph's
 adjacency matrix is simply a square matrix where every row (and column)
-corresponds to one vertex. A ``1'' in an entry $(i,j)$ means ``yes, vertex $i$
-and vertex $j$ are adjacent.'' Otherwise, they're not.
+corresponds to one vertex. A ``1'' in row $i$, column $j$ means ``yes, vertex
+$i$ and vertex $j$ are adjacent.'' Otherwise, they're not.
 
-\pagebreak
 We often use the letter $A$ to denote the adjacency matrix. Here's the
-adjacency matrix for Figure~\ref{fig:directedGraph}:
+adjacency matrix for Figure~\ref{fig:directedGraph}
+(p.~\pageref{fig:directedGraph}):
 
 \label{firstAdjacencyMatrix}
 \[
@@ -1137,15 +1155,20 @@ Stick your finger in p.~\pageref{fig:directedGraph} and flip back and forth
 between the graph and the matrix to ensure it's correct. The top row is $[\ 0\
 1\ 1\ 0\ 0\ ]$, because vertex A has an outgoing edge to B and to C, but not to
 D or to E. Also, vertex A has \textit{incoming} edges from B and D (but neither
-from C nor E), which is why its left column is ${\scriptsize \begin{bmatrix} 0
-\\ 1 \\ 0 \\ 1 \\ 0 \end{bmatrix}}$. \smallskip
+from C nor E), which is why its left column is:
+
+\vspace{-.15in}
+\begin{center}
+${\scriptsize \begin{bmatrix} 0
+\\ 1 \\ 0 \\ 1 \\ 0 \end{bmatrix}}$.
+\end{center}
 
 Notice that the diagonal terms are zero, which means that none of the vertices
 has ``an edge to itself,'' which is what we normally do.
 
 When you've convinced yourself that you understand that adjacency matrix, test
 your skills by verifying this one as well, for the undirected graph in 
-Figure~\ref{fig:undirectedGraph}:
+Figure~\ref{fig:undirectedGraph} (p.~\pageref{fig:undirectedGraph}):
 
 \[
 A_{7.4} = 
@@ -1191,3 +1214,93 @@ at row Y and column X must also be a 1. And that's what makes a matrix
 symmetric.
 
 
+\subsubsection{DAG $G$ $\Leftarrow$ upper-triangular $A$}
+
+I haven't yet given you an adjacency matrix for the DAG in Figure~\ref{fig:dag}
+(p.~\pageref{fig:dag}). Here you go:
+
+\[
+A_{\textrm{DAG}} = 
+\begin{blockarray}{ccccccccc}
+& {\footnotesize\textrm{110}}
+& {\footnotesize\textrm{220}}
+& {\footnotesize\textrm{240}}
+& {\footnotesize\textrm{340}}
+& {\footnotesize\textrm{284}}
+& {\footnotesize\textrm{350}}
+& {\footnotesize\textrm{326}}
+& {\footnotesize\textrm{430}} \\
+\begin{block}{c[cccccccc]}
+{\footnotesize\textrm{110}} & 0 & 1 & 0 & 0 & 1 & 0 & 0 & 0 \\
+{\footnotesize\textrm{220}} & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 \\
+{\footnotesize\textrm{240}} & 0 & 0 & 0 & 1 & 0 & 1 & 1 & 0 \\
+{\footnotesize\textrm{340}} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 \\
+{\footnotesize\textrm{284}} & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 \\
+{\footnotesize\textrm{350}} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 \\
+{\footnotesize\textrm{326}} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+{\footnotesize\textrm{430}} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+\end{block}
+\end{blockarray}.
+\]
+
+\index{upper-triangular}
+\index{prerequisite}
+
+As always, take a minute to verify the entries. And then, recognize that this
+matrix is \textit{upper-triangular}.
+
+Why should that be? Think of it this way. The graph is a DAG, which means it
+has no cycles, which in turn means that there must be \textit{some} order in
+which a student could complete the courses in the curriculum and not violate
+any prerequisites. One such ordering is:
+
+\begin{center}
+CPSC 110, 220, 240, 340, 284, 250, 326, 430.
+\end{center}
+
+(That's not the only such ordering; 110, 284, 220, 240, 350, 340, 430, 326
+would work just as well.)
+
+Now suppose I create the adjacency matrix with the rows (and columns) in that
+order. The first column \textit{must} have all zeroes, because by definition
+the first course you take in the sequence must have no prerequisites. The
+second column must also have all zeroes...with the possible exception of the
+first row, because the first course (and \textit{only} the first course) might
+be required in order to take the second course. This goes on down the line:
+each course we take may have as prerequisites any of the previous courses, but
+none of the future courses. And so the matrix will have all zeroes below the
+main diagonal, which is the definition of ``upper-triangular.'' Ka-ching.
+
+The order of the rows (and columns) is of course the key. It's easy to make a
+\textit{non}-upper-triangular adjacency matrix for a DAG, just by shuffling the
+rows and columns in a different order. Here's one:
+
+\[
+A_{\textrm{DAG}_2} = 
+\begin{blockarray}{ccccccccc}
+& {\footnotesize\textrm{326}}
+& {\footnotesize\textrm{350}}
+& {\footnotesize\textrm{284}}
+& {\footnotesize\textrm{340}}
+& {\footnotesize\textrm{240}}
+& {\footnotesize\textrm{430}}
+& {\footnotesize\textrm{110}}
+& {\footnotesize\textrm{220}}\\
+\begin{block}{c[cccccccc]}
+{\footnotesize\textrm{326}} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+{\footnotesize\textrm{350}} & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 \\
+{\footnotesize\textrm{284}} & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+{\footnotesize\textrm{340}} & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 \\
+{\footnotesize\textrm{240}} & 1 & 1 & 0 & 1 & 0 & 0 & 0 & 0 \\
+{\footnotesize\textrm{430}} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+{\footnotesize\textrm{110}} & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 1 \\
+{\footnotesize\textrm{220}} & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 \\
+\end{block}
+\end{blockarray}.
+\]
+
+Nothing upper-triangular about that one. So the implication only holds in one
+direction: if your adjacency matrix is upper-triangular, this implies that the
+graph will be a DAG, but not necessarily vice versa. There will, however,
+always be \textit{some} way to get an upper-triangular $A$ from a DAG, if you
+order the rows in the ``correct'' way.
