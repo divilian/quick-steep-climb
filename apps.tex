@@ -1066,22 +1066,23 @@ in-degree of 2 and an out-degree of 3, while D has an in-degree of 0 and an
 out-degree of 2.
 
 \index{connected (graph)}
+\index{disconnected (graph)}
 \index{reachable@``reachable'' vertex (graph)}
 \index{directed graph}
 \index{weakly connected (graph)}
 \index{strongly connected (graph)}
 
-\item[connected.] A graph is \textbf{connected} (sometimes called
+\item[connected/disconnected.] A graph is \textbf{connected} (sometimes called
 ``\textbf{fully connected},'' which means the same thing) if every vertex is
-``reachable'' from every other vertex by traversing its edges.
-Figure~\ref{fig:undirectedGraph} is clearly not connected, since we can't get
-to J/K from the others. What about Figure~\ref{fig:directedGraph}? Well, that
-depends on how we define the term ``connected.'' If we say a directed graph is
-\textbf{strongly connected}, that means that every vertex can be reached from
-every other even if you only follow the arrows' directions. If it's merely
-\textbf{weakly connected} if you can reach every vertex when \textit{ignoring}
-the edge directions. So the A-B-C-D-E graph is weakly connected, but not
-strongly connected.
+``reachable'' from every other vertex by traversing its edges. Otherwise, it's
+\textbf{disconnected}. Figure~\ref{fig:undirectedGraph} is clearly not
+connected, since we can't get to J/K from the others. What about
+Figure~\ref{fig:directedGraph}? Well, that depends on how we define the term
+``connected.'' If we say a directed graph is \textbf{strongly connected}, that
+means that every vertex can be reached from every other even if you only follow
+the arrows' directions. If it's merely \textbf{weakly connected} if you can
+reach every vertex when \textit{ignoring} the edge directions. So the A-B-C-D-E
+graph is weakly connected, but not strongly connected.
 
 \index{cycle}
 
@@ -1188,10 +1189,14 @@ A_{7.4} =
 
 \subsection{Adjacency matrix properties}
 
-In this section we're going to make some deep connections between the
-properties of any graph (we'll call it $G$) and its adjacency matrix $A$. This
-is just the tip of the iceberg, believe me; more is coming in Chapter 9 when we
-cover eigenvalues.
+\index{stupid dog tricks}
+\index{Letterman, David}
+
+I almost named this section ``stupid adjacency matrix tricks'' (after David
+Letterman's ``stupid dog tricks'' skit) but I decided to play it straight. In
+it, we're going to make some deep connections between the properties of any
+graph (we'll call it $G$) and its adjacency matrix $A$. This is just the tip of
+the iceberg, believe me; more is coming in Chapter 9 when we cover eigenvalues.
 
 \subsubsection{Undirected $G$ $\Leftrightarrow$ symmetric $A$}
 
@@ -1304,3 +1309,42 @@ direction: if your adjacency matrix is upper-triangular, this implies that the
 graph will be a DAG, but not necessarily vice versa. There will, however,
 always be \textit{some} way to get an upper-triangular $A$ from a DAG, if you
 order the rows in the ``correct'' way.
+
+
+\subsubsection{Disconnected $G$ $\Leftarrow$ block diagonal $A$}
+
+\index{block diagonal matrix}
+
+Lastly, here's kind of a mind-blowing one. Suppose we have a disconnected
+graph, like the one in Figure~\ref{fig:undirectedGraph}
+(p.~\pageref{fig:undirectedGraph}). This disconnectedness is apparent from the
+adjacency matrix, because it is -- get this -- block diagonal!
+
+\vspace{-.15in}
+\begin{align*}
+A_{7.4} = 
+\mleft[
+\begin{array}{cccc|cc}
+0 & 1 & 1 & 0 & 0 & 0  \\
+1 & 0 & 0 & 1 & 0 & 0  \\
+1 & 0 & 0 & 1 & 0 & 0  \\
+0 & 1 & 1 & 0 & 0 & 0  \\
+\hline
+0 & 0 & 0 & 0 & 0 & 1  \\
+0 & 0 & 0 & 0 & 1 & 0  \\
+\end{array}
+\mright]
+\end{align*}
+\vspace{-.15in}
+
+
+The ordering-of-the-adjacency-matrix-rows thing comes into play here, just as
+it did with upper-triangular matrices and DAGs. We would clearly shuffle the
+order around and get a non-block-diagonal matrix. But there will be some
+ordering that gives us a block diagonal, and here's why: a disconnected graph
+is separable into isolated subgraphs.\footnote{\index{partition} This is a
+\textbf{partition}, if you remember your set theory from \textit{Cool Brisk
+Walk}.} None of the subgraphs have any connections to any of the others. So, if
+we order our adjacency matrix rows (and columns) such that we list all the
+vertices in one subgraph, then the next, then the next, we \textit{must} have
+zeroes everywhere except the blocks on the diagonal. Neat!
