@@ -1032,6 +1032,8 @@ follow you, that doesn't necessarily mean you also follow me).
 \label{fig:undirectedGraph}
 \end{figure}
 
+\index{path (through a graph)}
+
 \item[path.] A \textbf{path} is a sequence of consecutive edges that takes you
 from one vertex to the other. In Figure~\ref{fig:directedGraph}, there is a
 path from A to E, which goes through C. By contrast, there is no path at all
@@ -1337,7 +1339,6 @@ A_{7.4} =
 \end{align*}
 \vspace{-.15in}
 
-
 The ordering-of-the-adjacency-matrix-rows thing comes into play here, just as
 it did with upper-triangular matrices and DAGs. We would clearly shuffle the
 order around and get a non-block-diagonal matrix. But there will be some
@@ -1348,3 +1349,429 @@ Walk}.} None of the subgraphs have any connections to any of the others. So, if
 we order our adjacency matrix rows (and columns) such that we list all the
 vertices in one subgraph, then the next, then the next, we \textit{must} have
 zeroes everywhere except the blocks on the diagonal. Neat!
+
+
+\subsection{Using the adjacency matrix}
+
+The adjacency matrix view of a graph lets us calculate a number of insightful
+properties. Some of these we won't get to until Chapter 9, but some we can look
+at now.
+
+\index{matrix-vector multiplication}
+
+Here's a simple one. Suppose we multiply the adjacency matrix by a vector of
+all 1's?
+
+\[
+\begin{blockarray}{cccccc}
+& {\scriptsize\textrm{A}} & {\scriptsize\textrm{B}} & {\scriptsize\textrm{C}} & {\scriptsize\textrm{D}} & {\scriptsize\textrm{E}} \\
+\begin{block}{c[ccccc]}
+{\scriptsize\textrm{A}} & 0 & 1 & 1 & 0 & 0 \\
+{\scriptsize\textrm{B}} & 1 & 0 & 1 & 0 & 1 \\
+{\scriptsize\textrm{C}} & 0 & 1 & 0 & 0 & 1 \\
+{\scriptsize\textrm{D}} & 1 & 0 & 0 & 0 & 1 \\
+{\scriptsize\textrm{E}} & 0 & 0 & 0 & 0 & 0 \\
+\end{block}
+\end{blockarray} \cdot
+\begin{bmatrix}
+1 \\ 1 \\ 1 \\ 1 \\ 1 \\
+\end{bmatrix} \ = \
+\begin{blockarray}{cc}
+\\
+\begin{block}{[c]c}
+2 & {\scriptsize\textrm{A}} \\
+3 & {\scriptsize\textrm{B}} \\
+2 & {\scriptsize\textrm{C}} \\
+2 & {\scriptsize\textrm{D}} \\
+0 & {\scriptsize\textrm{E}} \\
+\end{block}
+\end{blockarray}
+\]
+
+\index{out-degree}
+
+That might seem like a mindless operation, until you realize what it produced.
+The result is a vector of the \textit{out-degrees} of each vertex! Double
+check it with p.~\pageref{fig:directedGraph} if you don't believe me. Vertex A
+has two outgoing arrows, B has three, C and D each have two, and E has none.
+
+A similar trick can be performed by \textit{left}-multiplying the adjacency
+matrix by a \textit{row} of 1's:
+
+\[
+\begin{bmatrix}
+1 & 1 & 1 & 1 & 1 \\
+\end{bmatrix} \cdot
+\begin{blockarray}{cccccc}
+& {\scriptsize\textrm{A}} & {\scriptsize\textrm{B}} & {\scriptsize\textrm{C}} & {\scriptsize\textrm{D}} & {\scriptsize\textrm{E}} \\
+\begin{block}{c[ccccc]}
+{\scriptsize\textrm{A}} & 0 & 1 & 1 & 0 & 0 \\
+{\scriptsize\textrm{B}} & 1 & 0 & 1 & 0 & 1 \\
+{\scriptsize\textrm{C}} & 0 & 1 & 0 & 0 & 1 \\
+{\scriptsize\textrm{D}} & 1 & 0 & 0 & 0 & 1 \\
+{\scriptsize\textrm{E}} & 0 & 0 & 0 & 0 & 0 \\
+\end{block}
+\end{blockarray} \ =
+\hspace*{-.1in}
+\begin{blockarray}{cccccc}
+& {\scriptsize\textrm{A}} & {\scriptsize\textrm{B}} & {\scriptsize\textrm{C}} & {\scriptsize\textrm{D}} & {\scriptsize\textrm{E}} \\
+\begin{block}{c[ccccc]}
+ & 2 & 2 & 2 & 0 & 3 \\
+\end{block}
+\end{blockarray}.
+\]
+
+\index{in-degree}
+
+This gives us the in-degrees. Of course, for an undirected graph -- and a
+symmetric matrix -- these two results will be the same.
+
+
+\subsubsection{Path counting}
+
+\index{path (through a graph)}
+
+One thing that turns out to be very important about graphs is the number of
+paths between various nodes. In fact, the whole Google search engine (and all
+its imitators) are essentially based on this principle, which we will further
+unpack in Chapter 9. If vertices are Web pages and edges are hyperlinks between
+them, then the ``importance'' of a page is intimately related to \textit{how
+many other pages have paths to it}.\footnote{I'm slightly oversimplifying
+things, but only a bit. The main principle is bedrock, and this explanation
+will hold us over until we get to the PageRank algorithm itself near the end of
+the book.}
+
+We could take a first, very rough cut at this just by looking at the in-degrees
+we computed in the previous section. Which of our A--B--C--D--E pages is the
+``most important?'' Well, I guess we'd say that E is. Its in-degree is 3, more
+than any other vertex, which means that three of the other pages in our
+mini-web link to it. No other page is so popular.
+
+\index{1-path@``1-path''}
+
+A more sophisticated analysis involves looking at paths, not just single edges.
+If you think about it, the adjacency matrix itself gives us the number of
+``paths of length 1'' between each pair of vertices. For short, we use the term
+``1-path.'' Our p.~\pageref{fig:directedGraph} graph has one 1-path between B
+and C, but no 1-paths between D and B, which is why the adjacency matrix has a
+1 in one place but a 0 in another.
+
+Now what if we wanted to count the number of 2-paths? Glancing back at
+p.~\pageref{fig:directedGraph}, you can see that it's certainly possible to
+count these, but it's kind of a pain in the neck. There's \textit{one} 2-path
+between A and B (A$\rightarrow$C$\rightarrow$B), but \textit{two} 2-paths
+between A and E (A$\rightarrow$B$\rightarrow$E and
+A$\rightarrow$C$\rightarrow$E). Clearly this is error-prone, as well as
+tedious, to count manually. And if I asked you to stare at that graph and tell
+me how many \textit{50}-paths there were from A to C, you'd tell me to jump in
+the lake.
+
+Is there a way to automate such computations? Of course, or I wouldn't be
+telling you all this. It's amazingly elegant, too. Would you believe that the
+number of 2-paths \textit{from} every vertex \textit{to} every vertex is just:
+
+\vspace{-.15in}
+\begin{align*}
+A \cdot A
+\end{align*}
+\vspace{-.25in}
+
+\textit{?!!}
+
+\smallskip
+Holy smokes, that actually \textit{works}? Yes! Check it out:
+
+\vspace{-.15in}
+\label{adjacencySquared}
+\begin{align*}
+A^2 =
+\begin{bmatrix}
+0 & 1 & 1 & 0 & 0 \\
+1 & 0 & 1 & 0 & 1 \\
+0 & 1 & 0 & 0 & 1 \\
+1 & 0 & 0 & 0 & 1 \\
+0 & 0 & 0 & 0 & 0 \\
+\end{bmatrix} \cdot
+\begin{bmatrix}
+0 & 1 & 1 & 0 & 0 \\
+1 & 0 & 1 & 0 & 1 \\
+0 & 1 & 0 & 0 & 1 \\
+1 & 0 & 0 & 0 & 1 \\
+0 & 0 & 0 & 0 & 0 \\
+\end{bmatrix} =
+\begin{bmatrix}
+1 & 1 & 1 & 0 & 2 \\
+1 & 2 & 1 & 0 & 1 \\
+1 & 0 & 1 & 0 & 1 \\
+0 & 1 & 1 & 0 & 0 \\
+0 & 0 & 0 & 0 & 0 \\
+\end{bmatrix}.
+\end{align*}
+\vspace{-.15in}
+
+Spot check that result. It says that there is one 2-path from A to C, and two
+2-paths from A to E, both of which we already figured out. It also says that
+there's \textit{no} 2-path from B to A, even though there was a 1-path from B
+to A. Examining Figure~\ref{fig:directedGraph}, we see that's true as well. And
+of course the fourth column and fifth row of $A\cdot A$ have all zeroes, just
+as $A$ itself did, since there's no 2-path (or any length path) that starts at
+E nor that terminates at D.
+
+Even more amazingly, by repeatedly multiplying $A$ by itself like this, we can
+repeat this result to get the number of paths of \textit{any} length: 3-paths,
+4-paths, 5-paths...
+
+\vspace{-.15in}
+\begin{align*}
+A^3 = 
+\begin{bmatrix}
+0 & 1 & 1 & 0 & 0 \\
+1 & 0 & 1 & 0 & 1 \\
+0 & 1 & 0 & 0 & 1 \\
+1 & 0 & 0 & 0 & 1 \\
+0 & 0 & 0 & 0 & 0 \\
+\end{bmatrix}^3 =
+\begin{bmatrix}
+ 1 &  2 &  2 &  0 &  2 \\
+ 2 &  1 &  2 &  0 &  3 \\
+ 0 &  2 &  1 &  0 &  1 \\
+ 1 &  1 &  1 &  0 &  2 \\
+ 0 &  0 &  0 &  0 &  0 \\
+\end{bmatrix},\\
+\end{align*}
+\begin{align*}
+A^4 = 
+\begin{bmatrix}
+0 & 1 & 1 & 0 & 0 \\
+1 & 0 & 1 & 0 & 1 \\
+0 & 1 & 0 & 0 & 1 \\
+1 & 0 & 0 & 0 & 1 \\
+0 & 0 & 0 & 0 & 0 \\
+\end{bmatrix}^4 =
+\begin{bmatrix}
+ 2 &  3 &  3 &  0 &  4 \\
+ 1 &  4 &  3 &  0 &  3 \\
+ 2 &  1 &  2 &  0 &  3 \\
+ 1 &  2 &  2 &  0 &  2 \\
+ 0 &  0 &  0 &  0 &  0 \\
+\end{bmatrix},\\
+\end{align*}
+\begin{align*}
+A^5 = 
+\begin{bmatrix}
+0 & 1 & 1 & 0 & 0 \\
+1 & 0 & 1 & 0 & 1 \\
+0 & 1 & 0 & 0 & 1 \\
+1 & 0 & 0 & 0 & 1 \\
+0 & 0 & 0 & 0 & 0 \\
+\end{bmatrix}^5 =
+\begin{bmatrix}
+ 3 &  5 &  5 &  0 &  6 \\
+ 4 &  4 &  5 &  0 &  7 \\
+ 1 &  4 &  3 &  0 &  3 \\
+ 2 &  3 &  3 &  0 &  4 \\
+ 0 &  0 &  0 &  0 &  0 \\
+\end{bmatrix} \cdots
+\end{align*}
+\vspace{-.15in}
+
+Truly amazing. That last result, for instance, has a 3 in the upper-left. That
+means that there must be exactly three 5-paths from A back to A. Can you spot
+them in Figure~\ref{fig:directedGraph}?\footnote{The solutions are:
+A$\rightarrow$C$\rightarrow$B$\rightarrow$A$\rightarrow$B$\rightarrow$A,
+A$\rightarrow$B$\rightarrow$A$\rightarrow$C$\rightarrow$B$\rightarrow$A, and
+A$\rightarrow$C$\rightarrow$B$\rightarrow$C$\rightarrow$B$\rightarrow$A.}
+And how about the 6 in the upper-right? Can you find all six 5-paths from A to
+E?\footnote{
+I believe they are 
+A$\rightarrow$B$\rightarrow$A$\rightarrow$B$\rightarrow$C$\rightarrow$E,
+A$\rightarrow$B$\rightarrow$A$\rightarrow$C$\rightarrow$B$\rightarrow$E,
+A$\rightarrow$B$\rightarrow$C$\rightarrow$B$\rightarrow$C$\rightarrow$E,
+A$\rightarrow$C$\rightarrow$B$\rightarrow$A$\rightarrow$B$\rightarrow$E,
+A$\rightarrow$C$\rightarrow$B$\rightarrow$A$\rightarrow$C$\rightarrow$E, and
+A$\rightarrow$C$\rightarrow$B$\rightarrow$C$\rightarrow$B$\rightarrow$E. Whew!}
+
+Oh, and the number of 50-paths? No sweat:
+
+\vspace{-.20in}
+\begin{align*}
+\footnotesize
+A^{50} = 
+\begin{bmatrix}
+ \num{7778742049} & \num{12586269025} &\num{12586269025} & 0 & \num{15557484098} \\
+ \num{7778742048} & \num{12586269026} & \num{12586269025} & 0 & \num{15557484097} \\
+ \num{4807526977} & \num{7778742048} & \num{7778742049} & 0 &  \num{9615053953} \\
+ \num{4807526976} & \num{7778742049} & \num{7778742049} & 0 &  \num{9615053952} \\
+          0      &               0 &                0 & 0 &                0 \\
+\end{bmatrix}.
+\end{align*}
+\vspace{-.15in}
+
+So apparently there are exactly $\num{12586269025}$ different paths of length
+50 between vertices A and B, and just one more ($\num{12586269026}$, to be
+exact) from B back to itself. Don't worry, I won't make you figure out all 12
+billion in either case.
+
+\smallskip
+
+Okay, but why does any of this work? What possible connection could there be
+between multiplying an adjacency matrix by itself repeatedly and counting the
+number of paths in the graph?
+
+Well, consider first the 2-path question. To find the number of 2-paths from
+(say) A to E, we need the following two things to be true:
+
+\begin{compactenum}
+\item We need an edge from A to ``something else.''
+\item We need an edge from that ``something else'' to E.
+\end{compactenum}
+
+% WARNING: refers to "top of page"
+Now the way we got the number ``2'' in the upper-right corner of $A^2$ (top of
+p.~\pageref{adjacencySquared}) was by taking the dot product of the top row
+(vertex A's row) with the right column (E's column):
+
+\[
+\begin{blockarray}{ccccc}
+{\scriptsize\textrm{A}} & {\scriptsize\textrm{B}} & {\scriptsize\textrm{C}} & {\scriptsize\textrm{D}} & {\scriptsize\textrm{E}} \\
+\begin{block}{[ccccc]}
+ 0 & 1 & 1 & 0 & 0 \\
+\end{block}
+\end{blockarray} \cdot
+\begin{blockarray}{cc}
+\begin{block}{c[c]}
+{\scriptsize\textrm{A}} & 0 \\
+{\scriptsize\textrm{B}} & 1 \\
+{\scriptsize\textrm{C}} & 1 \\
+{\scriptsize\textrm{D}} & 1 \\
+{\scriptsize\textrm{E}} & 0 \\
+\end{block}
+\end{blockarray} = 0\cdot 0 + 1\cdot 1 + 1\cdot 1 + 0\cdot 1 + 0\cdot 0 = 2.
+\]
+
+Look at that calculation and see the magic. To get from A to E, there are two
+possible ``something elses'': B, and C. Each one can serve as a waystation on
+your two-step journey from A to E. Accordingly, the two terms in our dot
+product that multiplied to 1 were the B and C entries. Putting it all together:
+since there's one way to get from A to B, and one way to get from B to E,
+that's one possible 2-path; and since there's one way to get from A to C, and
+one way to get from C to E, that's the other possible 2-path.
+
+\smallskip
+
+For larger numbers, it's just more of the same. Let's say we've figured out the
+number of 9-paths from each vertex to each other one:
+
+\vspace{-.15in}
+\begin{align*}
+A^9 = 
+\begin{bmatrix}
+0 & 1 & 1 & 0 & 0 \\
+1 & 0 & 1 & 0 & 1 \\
+0 & 1 & 0 & 0 & 1 \\
+1 & 0 & 0 & 0 & 1 \\
+0 & 0 & 0 & 0 & 0 \\
+\end{bmatrix}^9 =
+\begin{bmatrix}
+ 21 & 34 & 34 &  0 & 42 \\
+ 22 & 33 & 34 &  0 & 43 \\
+ 12 & 22 & 21 &  0 & 25 \\
+ 13 & 21 & 21 &  0 & 26 \\
+ 0 &  0 &  0 &  0 &  0 \\
+\end{bmatrix}.
+\end{align*}
+\vspace{-.15in}
+
+Now we want to know how many 10-paths there are. All we need to do is multiply
+by $A$ one more time:
+
+\vspace{-.15in}
+\begin{align*}
+A^{10} = 
+A^9 \cdot A = 
+\begin{bmatrix}
+ 21 & 34 & 34 &  0 & 42 \\
+ 22 & 33 & 34 &  0 & 43 \\
+ 12 & 22 & 21 &  0 & 25 \\
+ 13 & 21 & 21 &  0 & 26 \\
+ 0 &  0 &  0 &  0 &  0 \\
+\end{bmatrix} \cdot
+\begin{bmatrix}
+0 & 1 & 1 & 0 & 0 \\
+1 & 0 & 1 & 0 & 1 \\
+0 & 1 & 0 & 0 & 1 \\
+1 & 0 & 0 & 0 & 1 \\
+0 & 0 & 0 & 0 & 0 \\
+\end{bmatrix}.
+\end{align*}
+\vspace{-.15in}
+
+Let's again consider the upper-right entry, with paths from A to E. To get the
+number of 10-paths, we take the dot product of A's row with E's column:
+
+\[
+\begin{blockarray}{ccccc}
+{\scriptsize\textrm{A}} & {\scriptsize\textrm{B}} & {\scriptsize\textrm{C}} & {\scriptsize\textrm{D}} & {\scriptsize\textrm{E}} \\
+\begin{block}{[ccccc]}
+ 21 & 34 & 34 & 0 & 42 \\
+\end{block}
+\end{blockarray} \cdot
+\begin{blockarray}{cc}
+\begin{block}{c[c]}
+{\scriptsize\textrm{A}} & 0 \\
+{\scriptsize\textrm{B}} & 1 \\
+{\scriptsize\textrm{C}} & 1 \\
+{\scriptsize\textrm{D}} & 1 \\
+{\scriptsize\textrm{E}} & 0 \\
+\end{block}
+\end{blockarray} = 21\cdot 0 + 34\cdot 1 + 34\cdot 1 + 0\cdot 1 + 42\cdot 0 =
+68.
+\]
+\vspace{-.20in}
+
+Here's the rationale. We can get from B directly to E. That means that any
+9-path from A to B will give us a 10-path from A to E! And since there are 34
+such paths, that's 34 possible A-to-E paths with B as their second-to-last
+step. Similar reasoning for C as the penultimate vertex gives us our total. The
+entire answer for 10-paths, if you're curious, works out to:
+
+\vspace{-.25in}
+\begin{align*}
+A^{10} =
+\begin{bmatrix}
+34 & 55 & 55 &  0 & \textbf{68} \\
+33 & 56 & 55 &  0 & 67 \\
+22 & 33 & 34 &  0 & 43 \\
+21 & 34 & 34 &  0 & 42 \\
+ 0 &  0 &  0 &  0 &  0 \\
+\end{bmatrix}.
+\end{align*}
+\vspace{-.15in}
+
+\bigskip
+
+One final thing before I go. What if we wanted to know not how many paths of
+\textit{exactly} length 7, but how many paths of \textit{length 7 or less}?
+Easy. Any such path has 7 or fewer edges. So we can just add the number of
+1-paths, the number of 2-paths, the number of 3-paths...all the way up to the
+number of 7-paths. Simple matrix addition gives us that answer:
+
+\vspace{-.25in}
+\begin{align*}
+A + A^2 + A^3 + A^4 + A^5 + A^6 + A^7 = 
+\sum_{i=1}^7 A^i = 
+\begin{bmatrix}
+20 & 33 & 33 &  0 & 40 \\
+21 & 32 & 33 &  0 & 41 \\
+12 & 21 & 20 &  0 & 25 \\
+13 & 20 & 20 &  0 & 25 \\
+ 0 &  0 &  0 &  0 &  0 \\
+\end{bmatrix}.
+\end{align*}
+\vspace{-.15in}
+
+So exactly 33 paths of 7 edges or fewer from B to C. This tells us that there's
+quite a bit of information-travel potential between these two vertices, whether
+they represent computers or people or something else. Applying such logic to a
+social network can tell us a great deal about who the movers and shakers are in
+an online community. Stay tuned for more.
