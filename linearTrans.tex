@@ -168,10 +168,11 @@ B : \mathbb{R}^4 \rightarrow \mathbb{R}^2.
 \vspace{-.15in}
 
 The first element is my height in total inches, and the second element is my
-weight in pounds. And it will do so for every person whose 4-dimensional vector
-it's multiplied by. Interestingly, the shoe size of the input vector plays no
-role in the value of the output vector, because there are zero elements at both
-$B_{0,3}$ and $B_{1,3}$. And that's okay.
+weight in pounds. $B$ will produce a 2-dimensional vector like this for every
+person whose 4-dimensional vector it's multiplied by. Interestingly, the shoe
+size of the input vector plays no role in the value of the output vector,
+because there are zero elements at both $B_{0,3}$ and $B_{1,3}$. And that's
+okay.
 
 \smallskip
 \index{BMI (body-mass index)}
@@ -244,8 +245,8 @@ Wall Street stocks, like so:
 \end{align*}
 \vspace{-.15in}
 
-The result of multiplying $S$ by this kind of vector is to give us a
-convenient list of the McDonald's current stock price in various currencies:
+The result of multiplying $S$ by this vector is to give us a convenient list of
+the McDonald's current stock price in various currencies:
 
 \vspace{-.3in} 
 \begin{align*}
@@ -384,11 +385,12 @@ I_2 \cdot \overrightarrow{\textbf{c}} &=
 
 The effect, you'll agree, is underwhelming. Double-check my math, and convince
 yourself that \textit{the function of the identity matrix is to convert a
-vector into itself!} This is why it's called the ``identity'' matrix, in fact.
+vector into itself.} This is why it's called the ``identity'' matrix, in fact.
 The ``identity element'' of addition is 0, which means if you add anything to
 zero, you get your number back as an answer. The identity element of
-multiplication is 1, of course. And fun fact, the identity \textit{matrix} is
-the matrix {\tiny $\begin{bmatrix} 1 & 0 \\ 0 & 1 \\ \end{bmatrix}$}.
+multiplication is 1, of course. And the identity \textit{matrix} (in two
+dimensions) is the matrix {\tiny $\begin{bmatrix} 1 & 0 \\ 0 & 1 \\
+\end{bmatrix}$}.
 
 The right half of Figure~\ref{fig:identityOp} illustrates this boring fact:
 under the identity matrix's linear operator, all three vectors look exactly the
@@ -489,7 +491,7 @@ S_{v=\frac{1}{2},h=2\frac{1}{2}} =
 \end{align*}
 \vspace{-.15in}
 
-Let's see what this bad boy does to our vectors:
+Let's see what this does to our vectors:
 
 \vspace{-.15in}
 \begin{align*}
@@ -639,8 +641,8 @@ flipping the picture vertically, through the $x$ axis.
 \includegraphics[width=0.44\textwidth]{horizFlipOp.png}
 \caption[.]{The action of the linear operator 
 {\scriptsize $\begin{bmatrix} -1 & 0 \\ 0 & 1 \\
-\end{bmatrix}$,} which flips everything mirror-image wise across the $y$-axis.
-To the $\overrightarrow{\textbf{c}}$ vector, this was pretty underwhelming.}
+\end{bmatrix}$,} which flips everything mirror-image-wise across the $y$-axis.
+To the $\overrightarrow{\textbf{c}}$ vector, this had no effect.}
 \label{fig:horizFlipOp}
 \end{figure}
 
@@ -651,7 +653,7 @@ To the $\overrightarrow{\textbf{c}}$ vector, this was pretty underwhelming.}
 \includegraphics[width=0.44\textwidth]{vertFlipOp.png}
 \caption[.]{The action of the linear operator 
 {\scriptsize $\begin{bmatrix} 1 & 0 \\ 0 & -1 \\
-\end{bmatrix}$,} which flips everything mirror-image wise across the $x$-axis.}
+\end{bmatrix}$,} which flips everything mirror-image-wise across the $x$-axis.}
 \label{fig:vertFlipOp}
 \end{figure}
 
@@ -735,9 +737,9 @@ It \textit{rotates} the vectors 90\textdegree\ counter-clockwise. Neato!
 \index{rotation matrix}
 
 As a matter of fact, we can create a linear operator to rotate vectors
-\textit{any} angle we want. Suppose we want to rotate them 63.4\textdegree\ 
-counter-clockwise (just to pick a random number). The formula for computing the
-rotation matrix is:
+\textit{any} angle we want. Suppose we want to rotate them 63.4\textdegree\
+counter-clockwise (just to pick an angle at random). The formula for computing
+the rotation matrix is:
 
 \vspace{-.15in}
 \begin{align*}
@@ -888,7 +890,7 @@ vector $[\ -4\ \ -1\ ]$ was mapped to $[\ 4\ \ -1\ ]$; and the like. Each input
 was mapped to its mirror image.
 
 Now consider the kernel question. What is the complete set of vectors which,
-when subjected to the operation of $F_{h}$, would turn into $[\ 0\ \ 0\ ]$. I
+when subjected to the operation of $F_{h}$, would turn into $[\ 0\ \ 0\ ]$? I
 think you'll see in a moment's thought that there is only one such vector;
 namely, $[\ 0\ \ 0\ ]$ itself. Only if you're already \textit{on} the origin is
 your mirror image in the $y$-axis also going to be the origin. Hence, the
@@ -917,7 +919,7 @@ Now do you remember way back on p.~\pageref{trivialSolution} when we spoke of
 the ``trivial solution'' of a pair of dominoes? You might want to flip back to
 that page and refresh your memory. The subject under discussion was how to get
 to the \textit{origin} via a linear transformation of a set of dominoes. In
-true Domino Game fashion, you could add any multiple of the first domino to any
+Domino Game fashion, you could add any multiple of the first domino to any
 multiple of the second, and in this case the goal was to get the domino
 \raisebox{-0.25\height}{\includegraphics[width=0.07\textwidth]{white0_0.png}}.
 The conclusion we came to was that if the dominoes were \textit{yellow}
@@ -927,9 +929,9 @@ zero of the second.
 
 You should immediately see the tie-in with the kernel concept. Since every
 matrix-vector multiplication is a linear combination of the matrix's columns
-(interpretation 2 on p.~\pageref{twoInterpretations}), asking what vectors get
-mapped to the zero vector is the same as asking what linear combinations take
-you to the origin. And the fact of the matter is that if your matrix has
+(interpretation \#2 on p.~\pageref{twoInterpretations}), asking which vectors
+get mapped to the zero vector is the same as asking which linear combinations
+take you to the origin. And the fact of the matter is that if your matrix has
 linearly independent columns (yellow dominoes) then there is only one such
 linear combination: zero of the first, and zero of the second.
 
@@ -1003,7 +1005,7 @@ B =
 \end{align*}
 \vspace{-.15in}
 
-First, convince yourself that the columns are indeed linearly independent. If
+First, convince yourself that the columns are indeed linearly dependent. If
 you took the left column, $[\ \frac{1}{2} \ \ -1\ ]$, and you multiplied that
 column by 2, you would get $[\ 1\ \ -2\ ]$, which is the right column. So yes,
 they are.
@@ -1195,8 +1197,8 @@ one-dimensional kernel.}
 Okay, so with $B$, we had one degree of freedom in constructing a vector in the
 kernel. Now with our other linear operators from this chapter -- like $F_{h}$,
 $R_{63.4\degree}$, and friends -- we actually had \textit{zero} degrees of
-freedom! There simply weren't any free choices to make at all: we simply had to
-say ``uh, the only vector in the kernel is ${\scriptsize \begin{bmatrix} 0 \\ 0
+freedom! There simply weren't any free choices to make at all: we had to say
+``uh, the only vector in the kernel is ${\scriptsize \begin{bmatrix} 0 \\ 0
 \end{bmatrix}}$ itself. Nothin' much we can do about that.''
 
 \index{dimension}
@@ -1238,12 +1240,12 @@ This in turn is related to yet another new term: the \textbf{rank} of a matrix.
 A square matrix's rank is \textit{the number of linearly independent columns it
 has.} That's a relatively simple idea. If I give you a $3\times 3$ matrix, you
 know the rank can't be possibly greater than 3, because there are only three
-columns in it, \textit{period.} The question, then, is how many of those
-columns can be arrived at by linear combinations of the others? If none of them
-can, then you have a fully healthy yellow domino matrix with three fresh
-columns that each point in totally different directions. It's a rank 3 matrix.
-Since it's rank 3 and there are three total columns, it's also sometimes called
-a \textbf{full-rank} matrix.
+columns in it, period. The question, then, is how many of those columns can be
+arrived at by linear combinations of the others? If none of them can, then you
+have a fully healthy yellow domino matrix with three fresh columns that each
+point in totally different directions. It's a rank 3 matrix. Since it's rank 3
+and there are three total columns, it's also sometimes called a
+\textbf{full-rank} matrix.
 
 \index{rank-deficient}
 
@@ -1257,9 +1259,8 @@ for obvious reasons.
 
 \section{The Rank-Nullity Theorem}
 
-And now we can wrap this chapter up with a bow. It turns out that the concepts
-of rank and nullity are intimately bound up together, and in a very simple way;
-namely,
+It turns out that the concepts of rank and nullity are intimately bound up
+together, and in a very simple way; namely,
 
 \vspace{-.15in}
 \begin{center}
@@ -1268,19 +1269,20 @@ rank $A$ + null $A$ = number of columns of $A$,
 \vspace{-.15in}
 
 \index{rank-nullity theorem}
+\index{Wal-Mart}
 
 for any square matrix $A$. This is called the \textbf{rank-nullity theorem},
 and you can take it to the bank.
 
 Let's think about what it means. If you just grab a random square matrix off
-the shelf at Wal-Mart, it's going to be full rank. If you grab a $3\times 3$
-matrix, you'd have to have awful bad luck for one of the columns to be an exact
-linear combination of the two others. In this case, then, it'll be a full-rank
-matrix; or put another way, its rank will be 3. And as we've seen in the above
-examples, the only vector it will map to the origin will be the zero vector
-itself. That's a zero-dimensional ``space,'' and hence the nullity is 0. And so
-the formula holds: a rank of 3, plus a nullity of 0, equals 3 columns in our
-matrix.
+the shelf at Wal-Mart, it's going to be full rank. For example, if you grab a
+$3\times 3$ matrix, you'd have to have awfully bad luck for one of the columns
+to be an exact linear combination of the two others. In this case, then, it'll
+be a full-rank matrix; or put another way, its rank will be 3. And as we've
+seen in the above examples, the only vector it will map to the origin will be
+the zero vector itself. That's a zero-dimensional ``space,'' and hence the
+nullity is 0. And so the formula holds: a rank of 3, plus a nullity of 0,
+equals 3 columns in our matrix.
 
 If we're unlucky, and we get one column being linearly dependent on the other
 two, then we have a rank-deficient matrix with blue columns. Since only two of
@@ -1324,3 +1326,5 @@ holds: a rank of 1 plus a nullity of 2 equals 3 columns in the matrix.
 This deep relationship holds in any number of dimensions and even in
 non-real-valued matrices. It's a beautifully descriptive way to capture exactly
 how much power a matrix has to perform linear transformations.
+
+
