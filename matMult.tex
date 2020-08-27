@@ -1667,7 +1667,35 @@ automatically going to also work in the second. So it's not quite correct to
 say ``a singular matrix means there are no solutions,'' since in very rare
 cases it can instead mean ``\textit{too many} solutions.''
 
-\section[The Central Dogma of square matrices]{\large The Central Dogma of square matrices}
+\medskip
+\pagebreak
+
+\index{injective function}
+\index{surjective function}
+\index{bijective function}
+
+Lastly, let's complete the connection from section~\ref{sec:functionProps}
+(p.~\pageref{sec:functionProps}). You'll recall that if a square matrix is
+full-rank, then its linear transformation will be both injective and surjective
+(and hence, bijective). Every input vector will be mapped to its \textit{own}
+output vector (not sharing that output with any other input vector), and every
+possible output vector will have an input that maps to it.
+
+\index{reversible}
+
+This is precisely true for \textit{non-singular} matrices. And here's why: only
+non-singular matrices have inverses. A bijective function is reversible: not
+only is there a unique output for every input, but there's a unique input for
+every output. And so it makes sense that there would be an inverse matrix that
+``undoes'' the mapping from input to output. Singular matrices, on the other
+hand, do not correspond to bijective transformations at all. Many inputs will
+map to the same output, and some outputs won't have any input mapping to them
+at all. Thus it's perfectly expected that there be no inverse for such
+matrices, because the presence of an inverse implies that we can do the mapping
+in both directions.
+
+%\section[The Central Dogma of square matrices]{\large The Central Dogma of square matrices}
+\section{The Central Dogma of square matrices}
 
 I've mentioned several times how all of these different ideas are tied
 together. Let me now be explicit and complete about that.
@@ -1682,7 +1710,8 @@ to call the first type of matrix a ``yellow matrix'' and the second type a
 ``blue matrix,'' to match our definitions about the linear independence (or
 lack thereof) of dominoes.
 
-The following things are all true for yellow matrices:
+\pagebreak
+The following things are all true for \textbf{yellow} matrices:
 
 \index{linear independence}
 \index{inverse}
@@ -1700,17 +1729,18 @@ The following things are all true for yellow matrices:
 \item $A$ has an \textbf{inverse} matrix, which we can call $A^{-1}$.
 \item $A$ represents a system of equations which can be solved (and which has
 exactly one solution.)
+\item $A$ represents a linear transformation that is bijective.
 \end{compactitem}
 \end{framed}
 
 \index{singular matrix}
 
-On the flip side, the following are all true for blue matrices:
+On the flip side, the following are all true for \textbf{blue} matrices:
 
 \begin{framed}
 \begin{compactitem}
 \item $A$ is a \textbf{singular} square matrix.
-\item A's columns are \textit{not} linearly independent (blue dominoes).
+\item $A$'s columns are \textit{not} linearly independent (blue dominoes).
 \index{rank-deficient}
 \item $A$ is ``rank-deficient.'' (The rank is less than the dimension of the
 matrix.)
@@ -1719,6 +1749,8 @@ matrix.)
 \item There is \textit{no} inverse matrix of A.
 \item $A$ represents a system of equations which either can't be solved, or
 which has infinitely many solutions.
+\item $A$ represents a linear transformation that is neither injective nor
+surjective.
 \end{compactitem}
 \end{framed}
 

@@ -1327,4 +1327,153 @@ This deep relationship holds in any number of dimensions and even in
 non-real-valued matrices. It's a beautifully descriptive way to capture exactly
 how much power a matrix has to perform linear transformations.
 
+\section[Function properties]{\large Function properties and linear transformations}
 
+\label{sec:functionProps}
+
+I'll wrap up this chapter by drawing a connection between linear
+transformations and the ordinary functions we learned about in \textit{A Cool,
+Brisk Walk}. Let's review two properties from that book that every function
+might, or might not, have:
+
+\index{injective function}
+\index{surjective function}
+\index{bijective function}
+\index{domain}
+\index{codomain}
+
+\begin{compactenum}
+\item \textbf{injective} (a.k.a.~``one-to-one''): no two elements of the domain
+map to the same element of the codomain.
+\item \textbf{surjective} (a.k.a.~``onto''): every element of the codomain has
+at least one element of the domain that maps to it.
+\end{compactenum}
+
+\index{Social Security Number}
+
+For example, consider the function that maps Social Security Numbers (the
+domain) to the people they belong to (the codomain). This is an injective
+function, because no two SSNs go with the same person. It's not surjective,
+though, because there are lots of people in the world that don't have SSNs.
+
+By contrast, consider the function that maps college students to the schools
+they're enrolled in. This is surjective, since every college has at least
+\textit{some} students in it. But it's not injective, because of course many
+students go to the same college.
+
+\index{horses}
+\index{racehorses}
+
+A function can have both properties, of course, in which case it's called
+\textbf{bijective}. In a twelve-horse race, we might map each horse to its
+finishing place, which will be an integer from 1 to 12. This function will be
+injective because no two horses will map to the same number: you can't have two
+winners, or two sixth-place finishers, for instance. It's also surjective
+because every number will be mapped to by some horse: we're guaranteed to have
+a winner, a runner-up, a twelfth-place finisher, and everything in between.
+
+\medskip
+
+Now what does this all have to do with matrices? Well, if every matrix can be
+looked at as a linear transformation -- which is a function from input vectors
+to output vectors -- we might well ask how its injective-ness and
+surjective-ness relate to its matrix properties.
+
+Consider first an easy case. Let's say our matrix has more columns than rows.
+It's tall and skinny, like a $3\times 2$. Whatever else may be true, we know
+that the linear transformation corresponding to such a matrix cannot possibly
+be surjective. That's because its input vectors are only 2-dimensional, while
+its output vectors are 3-dimensional. We can't possibly have every single
+3-dimensional vector ``spoken for'' by some 2-dimensional vector: there aren't
+nearly enough of them. We can map $[\ 4\ \ 9\ ]$ to $[\ 1\ \ 2\ \ 3\ ]$ and $[\
+6\ \ 3\ ]$ to $[\ 4\ \ 5\ \ 6\ ]$, \textit{etc.}...but we're going to run out
+of 2-dimensional vectors way before we run out of the 3-dimensional outputs we
+have to map them to. (See Figure~\ref{fig:notSurjective}.)
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.8\textwidth]{notSurjective.pdf}
+\caption{A $3\times 2$ matrix can't represent a surjective linear
+transformation -- there are far more elements in the codomain than the domain.}
+\label{fig:notSurjective}
+\end{figure}
+
+Next think of the opposite case: a fat matrix, like a $2\times 3$. Whatever
+else might be true, we know it can't possibly be \textit{in}jective. It's the
+mirror image of the previous example. If the outputs are only 2-dimensional,
+then we can't possibly have every single 3-dimensional input mapped to its very
+own exclusive output. There just aren't enough of those outputs to go around;
+some will have to be shared by many different inputs.
+(Figure~\ref{fig:notInjective}.)
+
+\begin{figure}[hb]
+\centering
+\includegraphics[width=0.8\textwidth]{notInjective.pdf}
+\caption{A $2\times 3$ matrix can't represent an injective linear
+transformation -- there aren't nearly enough elements in the codomain for each
+element of the domain to get its own.}
+\label{fig:notInjective}
+\end{figure}
+
+\index{reversible}
+
+Okay, let's imagine a square matrix then, like a $3\times 3$. What can we say
+about its injective-ness and surjective-ness? The answer turns out to be that
+\textit{if it's full-rank, its linear transformation will be both injective and
+surjective (i.e., bijective).} Every 3-dimensional input will get mapped to its
+very own 3-dimensional output, which it exclusively ``owns.'' Furthermore,
+every possible 3-dimensional output will be accounted for by exactly one input.
+
+The implication is that the linear transformation is \textbf{reversible}, like
+our horse-racing function was. If you ask me for the finishing place of
+\textit{Sir Winston}, and I tell you ``third place,'' you could then ask me
+``which horse was in third place?''~and I'd be sure to tell you ``\textit{Sir
+Winston}.'' This is possible because unlike SSNs and college attendance, every
+input goes with its own output in perfect one-to-one fashion.
+
+In the same way, suppose you ask me what a full-rank matrix times $[\ 4\ \ 6\ \
+-2\ ]$ is, and I answer ``$[\ 9\ \ 4\ \ 1\ ]$.'' Then, you could ask me ``which
+vector maps to $[\ 9\ \ 4\ \ 1\ ]$?''~and I'd be guaranteed to say ``$[\ 4\ \
+6\ \ -2\ ]$, and \textit{only} $[\ 4\ \ 6\ \ -2\ ]$.'' (See
+Figure~\ref{fig:bijective}.)
+
+\begin{figure}[hb]
+\centering
+\includegraphics[width=0.8\textwidth]{bijective.pdf}
+\caption{A non-singular $3\times 3$ matrix's linear transformation. It's both
+injective and surjective: the domain and codomain are the same size, and every
+element of the codomain has only \textit{one} incoming arrow. This includes the
+zero vector, which is mapped to by \textit{only} the zero vector.}
+\label{fig:bijective}
+\end{figure}
+
+Note that this is only true of \textit{full-rank} matrices. If a matrix has
+some blue dominoes among its columns, this whole guarantee breaks down badly.
+For one thing, many output vectors won't be reachable at all; if you ask me
+what vector maps to $[\ 9\ \ 4\ \ 1\ ]$, I may very well reply,
+``uh...nothing does.'' And for another, those output vectors that \textit{are}
+reachable from some input will be reachable from \textit{many} inputs. (See
+Figure~\ref{fig:singular}.)
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.8\textwidth]{singular.pdf}
+\caption{A \textit{singular} $3\times 3$ matrix's linear transformation. It's a
+hot mess. Many points in the codomain won't be reachable at all, and the few
+that are reachable (including the zero vector) will be reachable from a myriad
+of different inputs.}
+\label{fig:singular}
+\end{figure}
+
+\index{kernel}
+
+You can also see this easily in terms of the kernel. A singular matrix's kernel
+will be larger than just the zero vector, which means that more than one vector
+in the domain will be mapped to $[\ 0\ \ 0\ \ 0\ ]$ in the codomain. That
+outright kills any hope of injective-ness, of course.
+
+\index{inverse}
+
+Such linear transformations -- and matrices -- are non-reversible, and as we'll
+see in the next chapter, they have no \textbf{inverse} matrix at all. Stay
+tuned.
