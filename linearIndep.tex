@@ -706,6 +706,9 @@ To be concrete:
 \}, on the other hand, is merely \textbf{the line through the origin with slope
 $\frac{3}{2}$} (``rise over run'').
 
+
+% TODO: *Do* we actually show how to verify a set of vectors is linearly indep?
+
 \item The span of \{ $[2 \ 3 \ 1],\  [0 \ -9 \ 0], \ [0 \ 1 \ 1]$ \} is
 \textbf{the whole three-dimensional $x$-$y$-$z$ space}, since that set is
 linearly independent. (You can believe me or not, but it is. We'll figure out
@@ -733,14 +736,14 @@ Important fact: if you have a basis, then every vector in the entire vector
 space can be expressed as a linear combination of the basis vectors in exactly
 one way.
 
-For example, we saw that \{ $[1\ \ 2\ ]$, $[\ 4 \ \ 4]$ \} was a basis for the
-$x$-$y$ plane. Therefore, every point on the $x$-$y$ plane can be formed by a
-unique linear combination of those vectors:
+For example, we saw that \{ $[\ 1\ \ 2\ ]$, $[\ 4 \ \ 4\ ]$ \} was a basis for
+the $x$-$y$ plane. Therefore, every point on the $x$-$y$ plane can be formed by
+a unique linear combination of those vectors:
 
 \begin{align*}
-[\ 6 \ \ 8\ ] &= 2 [\ 1 \ \ 2\ ] + 1 [\ 4 \ \ 4\ ] \\
-[\ 0 \ \ 4\ ] &= 4 [\ 1 \ \ 2\ ] - 1 [\ 4 \ \ 4\ ] \\
-[\ 4 \ \ -4\ ] &= -8 [\ 1 \ \ 2\ ] + 3 [\ 4 \ \ 4\ ] \\
+[\ 6 \ \ 8\ ]\ &=\ 2\ [\ 1 \ \ 2\ ] \ + \ 1\ [\ 4 \ \ 4\ ] \\
+[\ 0 \ \ 4\ ]\ &=\ 4\ [\ 1 \ \ 2\ ] \ - \ 1\ [\ 4 \ \ 4\ ] \\
+[\ 4 \ \ -4\ ]\ &=\ -8\ [\ 1 \ \ 2\ ] \ + \ 3\ [\ 4 \ \ 4\ ] \\
 \end{align*}
 \vspace{-.7in}
 \begin{center}
@@ -758,7 +761,7 @@ basis. Dude, that's mind-blowing.
 \index{basis}
 \index{standard basis}
 \begin{framed}
-The ``\textbf{standard basis}'' is a basis whose vectors have norm 1 and that
+The ``\textbf{standard basis}'' is a basis whose vectors have norm 1 and which
 point in each axis direction.
 \end{framed}
 
@@ -784,17 +787,18 @@ Note that in the standard basis, we have:
 
 \vspace{-.3in}
 \begin{align*}
-[\ 6 \ \ 8\ ] &= 6 [\ 1 \ \ 0\ ] + 8 [\ 0 \ \ 1\ ] \\
-[\ 0 \ \ 4\ ] &= 0 [\ 1 \ \ 0\ ] + 4 [\ 0 \ \ 1\ ] \\
-[\ 4 \ \ -4\ ] &= 4 [\ 1 \ \ 0\ ] - 4 [\ 0 \ \ 1\ ] \\
+[\ 6 \ \ 8\ ]\ &=\ 6\ [\ 1 \ \ 0\ ] \ + \ 8\ [\ 0 \ \ 1\ ] \\
+[\ 0 \ \ 4\ ]\ &=\ 0\ [\ 1 \ \ 0\ ] \ + \ 4\ [\ 0 \ \ 1\ ] \\
+[\ 4 \ \ -4\ ]\ &=\ 4\ [\ 1 \ \ 0\ ] \ - \ 4\ [\ 0 \ \ 1\ ] \\
 \end{align*}
-\vspace{-.6in}
+\vspace{-.7in}
 \begin{center}
 \textit{etc.}
 \end{center}
 
-Thus the standard basis is sort of the ``natural'' coordinate system, if you
-will. 
+Thus in some ways, the standard basis is sort of the ``natural'' coordinate
+system. (Hang on to your hats in Chapter~\ref{ch:eigen}, though, when we
+consider a different ``natural'' one.)
 
 Fact: all possible bases for a vector space have the \textit{same} number of
 vectors in them. Why? Well, you can't span the space with any fewer. And you
@@ -802,6 +806,8 @@ can't be linearly independent if you have any more. So no matter what basis you
 tell me you have for the $x$-$y$ plane, I know it'd better have exactly two
 vectors in it or you're a liar. If you tell me you have a basis for 
 $x$-$y$-$z$ space, it'd better have three vectors in it: no more, and no fewer.
+
+\medskip
 
 Last one, which you might already be able to guess:
 
