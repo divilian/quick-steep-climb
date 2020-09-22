@@ -1,14 +1,9 @@
 
 \setsecnumdepth{subsection}
 
-\titleformat{\section}%
-  [hang]% <shape>
-  {\normalfont\bfseries\Large}% <format>
-  {}% <label>
-  {0pt}% <sep>
-  {}% <before code>
-\renewcommand{\thesection}{}% Remove section references...
-\renewcommand{\thesubsection}{L\arabic{subsection}.}%... from subsections
+\titleformat{\section}[hang]{\normalfont\bfseries\Large}{}{0pt}{}
+\renewcommand{\thesection}{}% Remove section references.
+\renewcommand{\thesubsection}{L\arabic{subsection}.}% Relabel subsections.
 
 \chapter{Applications}
 
@@ -1775,3 +1770,9 @@ quite a bit of information-travel potential between these two vertices, whether
 they represent computers or people or something else. Applying such logic to a
 social network can tell us a great deal about who the movers and shakers are in
 an online community. Stay tuned for more.
+
+
+% TODO: least-squares approximation (linear regression)
+% (A'A)^-1 * A' is the "pseudo-inverse" of (non-square) A
+% (A'A)^-1 * A' * gives the best fit parameters 
+
