@@ -1,4 +1,6 @@
 
+\setsecnumdepth{section}
+
 \chapter{Eigenanalysis}
 \label{ch:eigen}
 
@@ -7,19 +9,22 @@ might be thinking, ``even if I could pronounce this, would I want to?''
 
 In German, the root \textit{eigen} (pronounced EYE-gun) means something like
 ``one's own, inherent thing.'' As we'll see, in studying the eigenvectors and
-eigenvalues of a matrix -- which is called eigen-analysis -- we're looking at
+eigenvalues of a matrix -- which is called eigen-analysis -- we're examining
 its deepest, innermost properties. We're peering deep within all the flesh to
 see its skeleton. And it turns out this is the key to the most profound
-understanding of what a matrix is and does.
+understanding of what a given matrix is and does.
 
-\section{Hitting the resonant frequency}
+% TODO: nifty words: eigenvalue eigenvector eigendecomposition eigenbasis
+
+\section{The resonant frequency}
 
 \index{resonant frequency}
 \index{frequency, resonant}
 
 We could come at this subject in a bunch of different ways, but let me start
-with the first thing that clicked for me. At the time, I was reminded of the
-phenomenon of a ``resonant frequency'' that some systems exhibit.
+with the first thing that clicked for me when I learned it. At the time, I was
+reminded of the phenomenon of a ``resonant frequency'' that some systems
+exhibit.
 
 \index{playground}
 \index{swing}
@@ -29,10 +34,10 @@ somebody pushes you (or when you pump your legs to ``push'' yourself) you have
 to do it at the right time and at the right pace. The swing has a natural
 frequency of oscillation, and it resists being pushed faster or slower than
 that. If you find you're swinging from back to front every two seconds, you'll
-have to pump your legs every two seconds. Even if you have thighs like Dwayne
-Johnson, trying to pump every 1.5 seconds or every second will do you no good.
-But timing it so you pump your legs at exactly the string's resonant frequency
-will make you go higher and higher.
+have to pump your legs every two seconds. Period. Even if you have thighs like
+Dwayne Johnson, trying to pump once every 1.5 seconds --  or even furiously at
+5 times a second -- will do you no good. Timing it so you pump your legs at
+exactly the swing's resonant frequency is the only way to go higher and higher.
 
 \index{Tacoma Narrows Bridge}
 \index{bridge}
@@ -50,9 +55,9 @@ vibrations. It looked like a 3,000-foot-long undulating Slinky.\footnote{The
 classic ``Slinky'' toy, by the way, is another example of a system that has a
 resonant frequency. You can't make it go down the stairs any faster or slower
 than it wants to go.} Moments later, the concrete cracked and split and the
-entire bridge completely collapsed and fell into the Puget Sound. Luckily,
-drivers had wisely stopped crossing it minutes before, and the only actual
-casualty was a cocker spaniel.
+entire bridge completely collapsed and fell into the water. Luckily, drivers
+had wisely stopped crossing it minutes before, and the only actual casualty was
+a cocker spaniel.
 
 \begin{center}
 \label{tacoma}
@@ -64,19 +69,23 @@ casualty was a cocker spaniel.
 The reasons for the Tacoma Bridge catastrophe are a bit complex, but a key
 contributing factor was that a very specific rate of oscillation -- a ``sweet
 spot,'' though it was hardly sweet for those involved -- caused the
-fluctuations to build on each other instead of being dampened. It's like the
+fluctuations to build on each other instead of being dampened. It's as if the
 Tacoma Bridge \textit{wanted} to vibrate at a certain frequency, just like a
 playground swing has an intrinsic rhythm that the child can't speed up or slow
 down.
 
-Yet another example: this is basically how every non-percussive musical
-instrument works. A piano or guitar string tuned to middle~C has a certain
-length and tension, which causes it to resist vibrations at any frequency other
-than exactly 262 per second. Thus, when you strike it, only the 262
-Hz\footnote{``Hz,'' pronounced ``hertz,'' is a unit meaning ``cycles
-(backs-and-forths) per second.'' Every musical note is defined by a particular
-frequency. The lowest key on the piano is 27.5 Hz, and the highest is 4,186
-Hz.} tone gains any traction, and the instrument sounds a clear, pure note.
+\index{guitar}
+\index{piano}
+\index{middle C}
+
+Yet another example: every non-percussive musical instrument. A piano or guitar
+string tuned to middle~C has a certain length and tension, which causes it to
+resist vibrations at any frequency other than exactly 262 per second. Thus,
+when you strike it, only the 262~Hz\footnote{``Hz,'' pronounced ``hertz,'' is a
+unit meaning ``cycles (backs-and-forths) per second.'' Every musical note is
+defined by a particular frequency. The lowest key on the piano is 27.5~Hz, and
+the highest is 4,186~Hz.} tone gains any traction, and the instrument sounds a
+clear, pure note.
 
 \begin{center}
 \label{slinky}
@@ -89,4 +98,211 @@ Hz.} tone gains any traction, and the instrument sounds a clear, pure note.
 
 \index{linear operator}
 
-Okay, so what does all this have to do with linear algebra?
+Okay, so what does all this have to do with linear algebra? Well, consider the
+linear operators we learned about in Section~\ref{linearOps}
+(p.~\pageref{linearOps}). Remember that a linear operator is a square matrix
+that transforms one vector into another one of the same dimension when you
+left-multiply that vector by the matrix. Let's look at this one:
+
+\begin{align*}
+\renewcommand*{\arraystretch}{1.4}
+M =
+\begin{bmatrix} 
+1\frac{1}{2} & -1 \\
+\smallskip
+-\frac{1}{2} & 1 \\
+\end{bmatrix},
+\end{align*}
+
+and take it for a spin. If we multiply it by, say, {\footnotesize $\begin{bmatrix} 1
+\\ 2 \end{bmatrix}$}, we get:
+
+\begin{align*}
+\renewcommand*{\arraystretch}{1.4}
+\small
+\begin{bmatrix} 
+1\frac{1}{2} & -1 \\
+\smallskip
+-\frac{1}{2} & 1 \\
+\end{bmatrix} \cdot
+\begin{bmatrix}
+1 \\ 2 \\
+\end{bmatrix} =
+\begin{bmatrix}
+-\frac{1}{2} \\ 1\frac{1}{2} \\
+\end{bmatrix}, \normalsize \quad \textrm{so}\ 
+\boldmath
+\begin{bmatrix}
+1 \\ 2 \\
+\end{bmatrix} \rightarrow
+\begin{bmatrix}
+-\frac{1}{2} \\ 1\frac{1}{2} \\
+\end{bmatrix}.
+\unboldmath
+\end{align*}
+
+For the input {\footnotesize $\begin{bmatrix} 2 \\ 1 \end{bmatrix}$}, we get:
+
+\vspace{-.2in}
+\begin{align*}
+\renewcommand*{\arraystretch}{1.4}
+\small
+\begin{bmatrix} 
+1\frac{1}{2} & -1 \\
+\smallskip
+-\frac{1}{2} & 1 \\
+\end{bmatrix} \cdot
+\begin{bmatrix}
+2 \\ 1 \\
+\end{bmatrix} =
+\begin{bmatrix}
+2 \\ 0 \\
+\end{bmatrix}, \normalsize \quad \textrm{so}\ 
+\boldmath
+\begin{bmatrix}
+2 \\ 1 \\
+\end{bmatrix} \rightarrow
+\begin{bmatrix}
+2 \\ 0 \\
+\end{bmatrix}.
+\unboldmath
+\end{align*}
+
+And it maps {\footnotesize $\begin{bmatrix} -3 \\ 5 \end{bmatrix}$} to:
+
+\vspace{-.2in}
+\begin{align*}
+\renewcommand*{\arraystretch}{1.4}
+\small
+\begin{bmatrix} 
+1\frac{1}{2} & -1 \\
+\smallskip
+-\frac{1}{2} & 1 \\
+\end{bmatrix} \cdot
+\begin{bmatrix}
+-3 \\ 5 \\
+\end{bmatrix} =
+\begin{bmatrix}
+-9\frac{1}{2} \\ 6\frac{1}{2} \\
+\end{bmatrix}, \normalsize \quad \textrm{so}\ 
+\boldmath
+\begin{bmatrix}
+-3 \\ 5 \\
+\end{bmatrix} \rightarrow
+\begin{bmatrix}
+-9\frac{1}{2} \\ 6\frac{1}{2} \\
+\end{bmatrix}.
+\unboldmath
+\end{align*}
+
+See a pattern? Me neither. It seems to be all over the place, mapping each
+input to some random output with no real rhyme or reason. All of these mappings
+are depicted in Figure~\ref{nonEigenvec} (p.~\pageref{nonEigenvec}).
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.4\textwidth]{crazytrans1.png} \quad
+\includegraphics[width=0.4\textwidth]{crazytrans2.png} \\
+\smallskip
+\includegraphics[width=0.4\textwidth]{crazytrans3.png}
+\caption{The $M$ matrix's operation. Three randomly-chosen input vectors
+(solid) are mapped to crazy output vectors (dashed).}
+\label{nonEigenvec}
+\end{figure}
+
+
+\subsection{Hitting a matrix's resonant frequency}
+
+None of that was very special. Random-looking stuff gets mapped to other
+random-looking stuff. But now here comes the plot twist. Let's strike this bad
+boy at its \textit{resonant frequency}.
+
+% [ 1 1 ], [ -2 1 ]
+
+\vspace{-.2in}
+\begin{align*}
+\renewcommand*{\arraystretch}{1.4}
+\small
+\begin{bmatrix} 
+1\frac{1}{2} & -1 \\
+\smallskip
+-\frac{1}{2} & 1 \\
+\end{bmatrix} \cdot
+\begin{bmatrix}
+-2 \\ 1 \\
+\end{bmatrix} =
+\begin{bmatrix}
+-4 \\ 2 \\
+\end{bmatrix}, \normalsize \quad \textrm{so}\ 
+\boldmath
+\begin{bmatrix}
+-2 \\ 1 \\
+\end{bmatrix} \rightarrow
+\begin{bmatrix}
+-4 \\ 2 \\
+\end{bmatrix}.
+\unboldmath
+\end{align*}
+
+It's easy to miss the significance of that, so if nothing jumped out at you,
+look again. What we just discovered is that the vector {\footnotesize
+$\begin{bmatrix} -2 \\ 1 \end{bmatrix}$} is sort of magic: if we feed it as
+input to $M$, the output is \textit{a scaled version of the same vector}. In
+fact, it exactly doubled in size.
+
+\smallskip
+
+Let's try that again, with the {\footnotesize $\begin{bmatrix} -4 \\ 2
+\end{bmatrix}$} we just got:
+
+\vspace{-.2in}
+\begin{align*}
+\renewcommand*{\arraystretch}{1.4}
+\small
+\begin{bmatrix} 
+1\frac{1}{2} & -1 \\
+\smallskip
+-\frac{1}{2} & 1 \\
+\end{bmatrix} \cdot
+\begin{bmatrix}
+-4 \\ 2 \\
+\end{bmatrix} =
+\begin{bmatrix}
+-8 \\ 4 \\
+\end{bmatrix}, \normalsize \quad \textrm{so}\ 
+\boldmath
+\begin{bmatrix}
+-4 \\ 2 \\
+\end{bmatrix} \rightarrow
+\begin{bmatrix}
+-8 \\ 4 \\
+\end{bmatrix}.
+\unboldmath
+\end{align*}
+
+\index{piano}
+\index{middle C}
+
+Boom. It exactly doubled again. This is very intriguing. Vectors in this one
+particular direction aren't ``jumping around'' like the other ones did when $M$
+acted on them. Instead, the matrix just plays them back for us (at twice the
+volume) like a pure middle C singing out from a piano. Figure~\ref{eigenvec1}
+(p.~\pageref{eigenvec1}) shows the illustration.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.4\textwidth]{eigentrans1.png} \quad
+\includegraphics[width=0.4\textwidth]{eigentrans2.png}
+\caption{The $M$ matrix's operation when applied to one of its eigenvectors.
+The input (solid) is mapped to the \textit{same} vector, but scaled (dashed).}
+\label{eigenvec1}
+\end{figure}
+
+% change of basis
+
+% eigenbasis: the natural basis
+
+% decomposition
+
+% spectral theorem
+
