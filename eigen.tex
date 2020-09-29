@@ -14,7 +14,16 @@ its deepest, innermost properties. We're peering deep within all the flesh to
 see its skeleton. And it turns out this is the key to the most profound
 understanding of what a given matrix is and does.
 
-% TODO: nifty words: eigenvalue eigenvector eigendecomposition eigenbasis
+Just look at all the nifty words we'll learn:
+
+\begin{compactitem}
+\item \textbf{eigenvector}
+\item \textbf{eigenvalue}
+\item \textbf{eigendecomposition}
+\item \textbf{eigenbasis}
+\end{compactitem}
+
+These are all involved in the \textbf{eigenanalysis} of a matrix.
 
 \section{The resonant frequency}
 
@@ -39,6 +48,13 @@ Dwayne Johnson, trying to pump once every 1.5 seconds --  or even furiously at
 5 times a second -- will do you no good. Timing it so you pump your legs at
 exactly the swing's resonant frequency is the only way to go higher and higher.
 
+\begin{center}
+\label{tacoma}
+\includegraphics[width=0.45\textwidth]{swing.png}
+\quad
+\includegraphics[width=0.45\textwidth]{tacoma.jpg}
+\end{center}
+
 \index{Tacoma Narrows Bridge}
 \index{bridge}
 \index{Slinky}
@@ -58,13 +74,6 @@ than it wants to go.} Moments later, the concrete cracked and split and the
 entire bridge completely collapsed and fell into the water. Luckily, drivers
 had wisely stopped crossing it minutes before, and the only actual casualty was
 a cocker spaniel.
-
-\begin{center}
-\label{tacoma}
-\includegraphics[width=0.45\textwidth]{swing.png}
-\quad
-\includegraphics[width=0.45\textwidth]{tacoma.jpg}
-\end{center}
 
 The reasons for the Tacoma Bridge catastrophe are a bit complex, but a key
 contributing factor was that a very specific rate of oscillation -- a ``sweet
@@ -134,7 +143,7 @@ and take it for a spin. If we multiply it by, say, {\footnotesize $\begin{bmatri
 \boldmath
 \begin{bmatrix}
 1 \\ 2 \\
-\end{bmatrix} \rightarrow
+\end{bmatrix} \rightarrow \textrm{\textbf{\footnotesize maps to}} \rightarrow
 \begin{bmatrix}
 -\frac{1}{2} \\ 1\frac{1}{2} \\
 \end{bmatrix}.
@@ -168,7 +177,7 @@ For the input {\footnotesize $\begin{bmatrix} 2 \\ 1 \end{bmatrix}$}, we get:
 \unboldmath
 \end{align*}
 
-And it maps {\footnotesize $\begin{bmatrix} -3 \\ 5 \end{bmatrix}$} to:
+And $M$ maps the input {\footnotesize $\begin{bmatrix} -3 \\ 5 \end{bmatrix}$} to:
 
 \vspace{-.2in}
 \begin{align*}
@@ -229,6 +238,42 @@ boy at its \textit{resonant frequency}.
 -\frac{1}{2} & 1 \\
 \end{bmatrix} \cdot
 \begin{bmatrix}
+-1 \\ \frac{1}{2} \\
+\end{bmatrix} =
+\begin{bmatrix}
+-2 \\ 1 \\
+\end{bmatrix}, \normalsize \quad \textrm{so}\ 
+\boldmath
+\begin{bmatrix}
+-1 \\ \frac{1}{2} \\
+\end{bmatrix} \rightarrow
+\begin{bmatrix}
+-2 \\ 1 \\
+\end{bmatrix}.
+\unboldmath
+\end{align*}
+
+It's easy to miss the significance of that, so if nothing jumped out at you,
+look again. What we just discovered is that the vector {\footnotesize
+$\begin{bmatrix} -1 \\ \frac{1}{2} \end{bmatrix}$} is sort of magic: if we feed
+it as input to $M$, the output is \textit{a scaled version of the same vector}.
+In fact, it exactly doubled in size.
+
+\smallskip
+
+Let's try that again, with the {\footnotesize $\begin{bmatrix} -2 \\ 1
+\end{bmatrix}$} we just got back:
+
+\vspace{-.2in}
+\begin{align*}
+\renewcommand*{\arraystretch}{1.4}
+\small
+\begin{bmatrix} 
+1\frac{1}{2} & -1 \\
+\smallskip
+-\frac{1}{2} & 1 \\
+\end{bmatrix} \cdot
+\begin{bmatrix}
 -2 \\ 1 \\
 \end{bmatrix} =
 \begin{bmatrix}
@@ -244,16 +289,8 @@ boy at its \textit{resonant frequency}.
 \unboldmath
 \end{align*}
 
-It's easy to miss the significance of that, so if nothing jumped out at you,
-look again. What we just discovered is that the vector {\footnotesize
-$\begin{bmatrix} -2 \\ 1 \end{bmatrix}$} is sort of magic: if we feed it as
-input to $M$, the output is \textit{a scaled version of the same vector}. In
-fact, it exactly doubled in size.
-
-\smallskip
-
-Let's try that again, with the {\footnotesize $\begin{bmatrix} -4 \\ 2
-\end{bmatrix}$} we just got:
+Boom. It exactly doubled again. And if we then feed it {\footnotesize
+$\begin{bmatrix} -4 \\ 2 \end{bmatrix}$}:
 
 \vspace{-.2in}
 \begin{align*}
@@ -292,7 +329,9 @@ volume) like a pure middle C singing out from a piano. Figure~\ref{eigenvec1}
 \begin{figure}[ht]
 \centering
 \includegraphics[width=0.4\textwidth]{eigentrans1.png} \quad
-\includegraphics[width=0.4\textwidth]{eigentrans2.png}
+\includegraphics[width=0.4\textwidth]{eigentrans2.png} \\
+\smallskip
+\includegraphics[width=0.4\textwidth]{eigentrans3.png}
 \caption{The $M$ matrix's operation when applied to one of its eigenvectors.
 The input (solid) is mapped to the \textit{same} vector, but scaled (dashed).}
 \label{eigenvec1}
