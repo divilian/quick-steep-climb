@@ -337,6 +337,119 @@ The input (solid) is mapped to the \textit{same} vector, but scaled (dashed).}
 \label{eigenvec1}
 \end{figure}
 
+\pagebreak
+\index{eigenvector}
+\index{eigenvalue}
+
+Big concept: the vector {\footnotesize $\begin{bmatrix} -1 \\ \frac{1}{2}
+\end{bmatrix}$} (and all its multiples, like {\footnotesize $\begin{bmatrix} -2
+\\ 1 \end{bmatrix}$}, {\footnotesize $\begin{bmatrix} -4 \\ 2 \end{bmatrix}$},
+$\dots$) is called an \textbf{eigenvector} of $M$. Here's what that means:
+
+\begin{framed}
+An \textbf{eigenvector} of a matrix $A$ is any vector that gets mapped to a
+scaled version of \textit{itself} -- \textit{i.e.}, to a vector in the same
+direction -- when muliplied by $A$. In symbols, for an eigenvector
+$\overrightarrow{\textbf{x}}$:
+
+{\centering
+$ \displaystyle
+A \overrightarrow{\textbf{x}} = \lambda \overrightarrow{\textbf{x}}$ \\
+}
+
+for some number $\lambda$. And that number $\lambda$ is called an
+\textbf{eigenvalue} of $A$.
+\end{framed}
+
+In this case, the eigenvalue $\lambda$ is 2, since any vector in the
+{\footnotesize $\begin{bmatrix} -1 \\ \frac{1}{2} \end{bmatrix}$} direction
+gets multiplied by 2.
+
+\subsection{Alternate resonant frequencies}
+
+Just curious, are there any \textit{other} ``magic'' vectors for our $M$
+matrix? It turns out there are. Try {\footnotesize $\begin{bmatrix} 4 \\ 4
+\end{bmatrix}$}:
+
+\vspace{-.2in}
+\begin{align*}
+\renewcommand*{\arraystretch}{1.4}
+\small
+\begin{bmatrix} 
+1\frac{1}{2} & -1 \\
+\smallskip
+-\frac{1}{2} & 1 \\
+\end{bmatrix} \cdot
+\begin{bmatrix}
+4 \\ 4 \\
+\end{bmatrix} =
+\begin{bmatrix}
+2 \\ 2 \\
+\end{bmatrix}, \normalsize \quad \textrm{so}\ 
+\boldmath
+\begin{bmatrix}
+4 \\ 4 \\
+\end{bmatrix} \rightarrow
+\begin{bmatrix}
+2 \\ 2 \\
+\end{bmatrix}.
+\unboldmath
+\end{align*}
+
+So giving {\footnotesize $\begin{bmatrix} 4 \\ 4 \end{bmatrix}$} to the $M$
+linear operator produces a \textit{shrunken} version of the input: exactly half
+as long. And of course this pattern repeats for any vector in the
+{\footnotesize $\begin{bmatrix} 4 \\ 4 \end{bmatrix}$} direction:
+
+\vspace{-.2in}
+\begin{align*}
+\renewcommand*{\arraystretch}{1.4}
+\small
+\begin{bmatrix} 
+1\frac{1}{2} & -1 \\
+\smallskip
+-\frac{1}{2} & 1 \\
+\end{bmatrix} \cdot
+\begin{bmatrix}
+2 \\ 2 \\
+\end{bmatrix} =
+\begin{bmatrix}
+1 \\ 1 \\
+\end{bmatrix}, \normalsize \quad \textrm{so}\ 
+\boldmath
+\begin{bmatrix}
+2 \\ 2 \\
+\end{bmatrix} \rightarrow
+\begin{bmatrix}
+1 \\ 1 \\
+\end{bmatrix},
+\unboldmath
+\end{align*}
+
+and so forth. This means that {\footnotesize $\begin{bmatrix} 4 \\ 4
+\end{bmatrix}$} (and every other vector in the same direction) is also an
+eigenvector of $M$, this time with eigenvalue $\lambda=\frac{1}{2}$.
+
+\bigskip
+
+Wow, okay. And does $M$ have still other eigenvectors in store for us as well?
+The answer turns out to be \textbf{\textit{no.}} A $2\times 2$ matrix can only
+have two eigenvectors, a fact which turns out to be a pretty big deal in
+itself. But that's foreshadowing.
+
+\medskip
+
+\index{dominant eigenvector}
+
+To recap, then, our matrix $M$ has two eigenvectors: {\scriptsize
+$\begin{bmatrix} -1 \\ \frac{1}{2} \end{bmatrix}$} (and any multiple of it) and
+{\scriptsize $\begin{bmatrix} 4 \\ 4 \end{bmatrix}$} (and any multiple of it).
+The first of these has eigenvalue 2, and the second has eigenvalue
+$\frac{1}{2}$. Also, we have a special name for the {\scriptsize
+$\begin{bmatrix} -1 \\ \frac{1}{2} \end{bmatrix}$} vector: it's called the
+\textbf{dominant eigenvector}, for reasons you'll see in a moment. A matrix's
+dominant eigenvector is simply the eigenvector with the highest eigenvalue.
+
 % change of basis
 
 % eigenbasis: the natural basis
