@@ -433,9 +433,8 @@ eigenvector of $M$, this time with eigenvalue $\lambda=\frac{1}{2}$.
 \bigskip
 
 Wow, okay. And does $M$ have still other eigenvectors in store for us as well?
-The answer turns out to be \textbf{\textit{no.}} A $2\times 2$ matrix can only
-have two eigenvectors, a fact which turns out to be a pretty big deal in
-itself. But that's foreshadowing.
+The answer turns out to be \textbf{\textit{no,}} an important fact we'll return
+to in a moment.
 
 \medskip
 
@@ -449,6 +448,125 @@ $\frac{1}{2}$. Also, we have a special name for the {\scriptsize
 $\begin{bmatrix} -1 \\ \frac{1}{2} \end{bmatrix}$} vector: it's called the
 \textbf{dominant eigenvector}, for reasons you'll see in a moment. A matrix's
 dominant eigenvector is simply the eigenvector with the highest eigenvalue.
+
+\section{Magnetic pull}
+
+Now if you followed all that, \textit{this} is sure to absolutely blow your
+mind. I know it did mine. I'm going to feed a random vector in as an input to
+our $M$ matrix, and then repeatedly put its output back in to $M$ and see where
+it goes. Remember that if I do this with an \textit{eigenvector}, I'll keep
+getting back progressively scaled copies of the input vector. But let's see
+what happens when we pass in an ordinary, non-special, non-eigen vector.
+
+I'll choose {\footnotesize $\begin{bmatrix} 1 \\ 2\frac{1}{2} \end{bmatrix}$}
+just for giggles, and call it $\overrightarrow{\textbf{r}}$ for ``random.'' If
+I keep multiplying $\overrightarrow{\textbf{r}}$ by $M$, here's what I get:
+
+\vspace{-.2in}
+\begin{align*}
+\renewcommand*{\arraystretch}{1.4}
+\small
+\overrightarrow{\textbf{r}} &=
+\boldmath
+\begin{bmatrix}
+1 \\ 2\frac{1}{2} \\
+\end{bmatrix}, \quad \textrm{ \ding{182}} \\
+\unboldmath
+\begin{bmatrix} 
+1\frac{1}{2} & -1 \\
+\smallskip
+-\frac{1}{2} & 1 \\
+\end{bmatrix} \cdot
+\begin{bmatrix}
+1 \\ 2\frac{1}{2} \\
+\end{bmatrix} &=
+\boldmath
+\begin{bmatrix}
+-1 \\ 2 \\
+\end{bmatrix}, \quad \textrm{ \ding{183}} \\
+\unboldmath
+\begin{bmatrix} 
+1\frac{1}{2} & -1 \\
+\smallskip
+-\frac{1}{2} & 1 \\
+\end{bmatrix} \cdot
+\begin{bmatrix}
+-1 \\ 2 \\
+\end{bmatrix} &=
+\boldmath
+\begin{bmatrix}
+-3\frac{1}{2} \\ 2\frac{1}{2} \\
+\end{bmatrix}, \quad \textrm{ \ding{184}} \\
+\unboldmath
+\begin{bmatrix} 
+1\frac{1}{2} & -1 \\
+\smallskip
+-\frac{1}{2} & 1 \\
+\end{bmatrix} \cdot
+\begin{bmatrix}
+-3\frac{1}{2} \\ 2\frac{1}{2} \\
+\end{bmatrix} &=
+\boldmath
+\begin{bmatrix}
+-7\frac{3}{4} \\ 4\frac{1}{4} \\
+\end{bmatrix}... \quad \textrm{ \ding{185}} \\
+\unboldmath
+\end{align*}
+
+You might say ``big deal'' until you look at the upper left of
+Figure~\ref{converge1}, where I've plotted this sequence of vectors with the
+circled numbers \ding{182}, \ding{183}, \ding{184}, and \ding{185}. I've also
+plotted \textit{the dominant eigenvector as a dotted line} on this plot. Look
+at what happens: every time we multiply by $M$, that random old vector is
+pulled towards $M$'s dominant eigenvector (which was in the direction
+{\footnotesize $\begin{bmatrix} -1 \\ \frac{1}{2} \end{bmatrix}$}, as you
+recall) like a magnet! And incredibly, this happens with \textit{any} vector I
+start with. The other panes of Figure~\ref{converge1} shows what happens when I
+start with {\footnotesize $\begin{bmatrix} -2 \\ -1 \end{bmatrix}$},
+{\footnotesize $\begin{bmatrix} -1 \\ -2 \end{bmatrix}$},
+and {\footnotesize $\begin{bmatrix} 2 \\ \frac{1}{2} \end{bmatrix}$}. Resonant
+frequency indeed!
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.4\textwidth]{converge1.png} \quad
+\includegraphics[width=0.4\textwidth]{converge2.png} \\
+\includegraphics[width=0.4\textwidth]{converge3.png} \quad
+\includegraphics[width=0.4\textwidth]{converge4.png}
+\caption{Holy cow -- repeatedly applying the $M$ operator by any vector at all
+drags it progressively to the dominant eigenvector!}
+\label{converge1}
+\end{figure}
+
+So we see that the dominant eigenvector is dominant indeed. The matrix somehow
+\textit{wants} to map its inputs to the direction of the dominant eigenvector,
+and if you keep pushing its button, it'll always be drawn there. And that's
+true \textit{no matter where you started.} This fact will have immense
+repercussions when we look at things like Markov chains and the PageRank
+algorithm in the next chapter.
+
+In fact, the only vector I can start with and not get dragged to the dominant
+eigenvector is one that is \textit{exactly} in the direction of the
+\textit{other} eigenvector. As noted previously, if we give $M$ the input
+{\footnotesize $\begin{bmatrix} 4 \\ 4 \end{bmatrix}$} (or anything in that
+direction), it will stay locked in that direction (a 45\textdegree~angle
+counterclockwise from the x-axis) and shrink by half each time. But if we nudge
+that vector even slightly away from that other eigenvector -- say,
+{\footnotesize $\begin{bmatrix} 4 \\ 4.0001 \end{bmatrix}$} -- it'll get pulled
+to the dominant eigenvector's direction ({\footnotesize $\begin{bmatrix} -1 \\
+\frac{1}{2} \end{bmatrix}$}) instead.
+
+\bigskip
+
+In terms of our previous analogy, we're witnessing an even stronger sort of
+``resonant frequency.'' With a playground swing, if we pump our legs at the
+wrong pace, nothing much happens -- the swing just deadens. But imagine if
+pumping our legs at the wrong pace got automatically \textit{converted} to the
+right pace? In real life, if an operatic soprano sings just the right piercing
+note, she can shatter a nearby glass. But what if no matter what note she sang,
+it was automatically adjusted by the glass to \textit{be} just the perfect tone
+to shatter the glass? What we have here is not only a resonant frequency, but a
+magnet pulling every vector \textit{towards} the resonant frequency. Amazing.
 
 % change of basis
 
