@@ -113,6 +113,8 @@ linear operators we learned about in Section~\ref{linearOps}
 that transforms one vector into another one of the same dimension when you
 left-multiply that vector by the matrix. Let's look at this one:
 
+\label{mmatrix}
+
 \begin{align*}
 \renewcommand*{\arraystretch}{1.4}
 M =
@@ -552,8 +554,8 @@ eigenvector is one that is \textit{exactly} in the direction of the
 direction), it will stay locked in that direction (a 45\textdegree~angle
 counterclockwise from the x-axis) and shrink by half each time. But if we nudge
 that vector even slightly away from that other eigenvector -- say,
-{\footnotesize $\begin{bmatrix} 4 \\ 4.0001 \end{bmatrix}$} -- it'll get pulled
-to the dominant eigenvector's direction ({\footnotesize $\begin{bmatrix} -1 \\
+{\scriptsize $\begin{bmatrix} 4 \\ 4.0001 \end{bmatrix}$} -- it'll get pulled
+to the dominant eigenvector's direction ({\scriptsize $\begin{bmatrix} -1 \\
 \frac{1}{2} \end{bmatrix}$}) instead.
 
 \bigskip
@@ -567,6 +569,78 @@ note, she can shatter a nearby glass. But what if no matter what note she sang,
 it was automatically adjusted by the glass to \textit{be} just the perfect tone
 to shatter the glass? What we have here is not only a resonant frequency, but a
 magnet pulling every vector \textit{towards} the resonant frequency. Amazing.
+
+\section{Basic principles}
+
+All right, now let me give you the scoop. First, I'll tell you what's true
+99.99\% of the time. Then, I'll say a few words about the other 0.01\%.
+
+\index{dominant eigenvector}
+\index{scalar-vector multiplication}
+
+In 99.99\% of cases, \textbf{an $n\times n$ matrix has $n$ different
+eigenvectors.} Each of these has its own eigenvalue, and the eigenvector with
+the highest eigenvalue is called the matrix's dominant eigenvector. This is
+exactly what we saw with the $M$ matrix we've been using since
+p.~\pageref{mmatrix}: it was $2\times 2$, and had two eigenvectors
+({\scriptsize $\begin{bmatrix} -1 \\ \frac{1}{2} \end{bmatrix}$} and
+{\scriptsize $\begin{bmatrix} 4 \\ 4 \end{bmatrix}$}) with eigenvalues
+$\lambda=2$ and $\lambda=\frac{1}{2}$, respectively. So ({\scriptsize
+$\begin{bmatrix} -1 \\ \frac{1}{2} \end{bmatrix}$} is the dominant
+one.\footnote{Note that when specifying the eigenvectors, we could use
+\textit{any} vectors that point in the same directions as these. For instance,
+it would also be correct to say that $M$'s two eigenvectors are {\scriptsize
+$\begin{bmatrix} -2 \\ 1 \end{bmatrix}$} and {\scriptsize $\begin{bmatrix} 1 \\
+1 \end{bmatrix}$}, or even {\scriptsize $\begin{bmatrix} -50 \\ 25
+\end{bmatrix}$} and {\scriptsize $\begin{bmatrix} -17 \\ -17 \end{bmatrix}$}.
+Multiplying a vector by any constant, remember, doesn't change its direction.
+And the eigen\textit{value} of a scaled eigenvector doesn't change; the
+eigenvalues here are still 2 and $\frac{1}{2}$ no matter how we might scale the
+vectors.}
+
+\medskip
+\index{blue matrix}
+
+It's almost this simple. The 0.01\% cases occur in one of two rare situations.
+One is when we're dealing with a blue matrix (\textit{i.e.}, a matrix whose
+columns are blue dominoes, \textit{i.e.}, a matrix some of whose columns are
+exact linear combinations of the others). As we've seen, blue matrices are
+strange and deficient and wreck all the rules, so this shouldn't surprise us.
+The good news is you're pretty unlikely to encounter a blue matrix out in the
+wild.
+
+The second rare case is when we have a ``repeated eigenvalue'' and thus a
+``duplicate eigenvector.'' For example, the innocent-looking but ultimately
+weird matrix
+
+\vspace{-.15in}
+\begin{align*}
+W = \begin{bmatrix} -2 & 1 \\ -1 & 0 \end{bmatrix},
+\end{align*}
+\vspace{-.15in} 
+
+turns out to have ``two eigenvectors,'' but they're the same: {\scriptsize
+$\begin{bmatrix} 1 \\ 1 \end{bmatrix}$}. And each one of them turns out to have
+eigenvalue -1. (Multiply out {\scriptsize $W\cdot \begin{bmatrix} 1 \\ 1
+\end{bmatrix}$} to verify this produces {\scriptsize $\begin{bmatrix} -1
+\\ -1 \end{bmatrix}$}.) This is also quite rare, and is akin to having a
+polynomial with a ``double root,'' as discussed below.
+
+\medskip
+
+The previous two paragraphs aren't crucial to understand. What's important is
+the big takeaway I mentioned first: except in certain diabolically
+choreographed cases, the number of eigenvectors is the width/height of the
+matrix, and each of them has its own eigenvalue.
+
+\section{Finding the eigenvectors by hand}
+
+So far I've simply stated to you what the eigenvectors are, and you might
+wonder how I figured that out. The answer is that I turned to Python and gave
+it the matrix and asked it for the eigenvectors and eigenvalues. This is how
+you'll always do it in practice. But so you're aware of how to calculate them
+by hand, let me show you.
+
 
 % change of basis
 
