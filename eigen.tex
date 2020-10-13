@@ -1,4 +1,6 @@
 
+% TODO: appendix with Python
+
 \setsecnumdepth{section}
 
 \chapter{Eigenanalysis}
@@ -9,7 +11,7 @@ might be thinking, ``even if I could pronounce this, would I want to?''
 
 In German, the root \textit{eigen} (pronounced EYE-gun) means something like
 ``one's own, inherent thing.'' As we'll see, in studying the eigenvectors and
-eigenvalues of a matrix -- which is called eigen-analysis -- we're examining
+eigenvalues of a matrix -- a process called eigen-analysis -- we're examining
 its deepest, innermost properties. We're peering deep within all the flesh to
 see its skeleton. And it turns out this is the key to the most profound
 understanding of what a given matrix is and does.
@@ -347,13 +349,15 @@ The input (solid) is mapped to the \textit{same} vector, but scaled (dashed).}
 Big concept: the vector {\footnotesize $\begin{bmatrix} -1 \\ \frac{1}{2}
 \end{bmatrix}$} (and all its multiples, like {\footnotesize $\begin{bmatrix} -2
 \\ 1 \end{bmatrix}$}, {\footnotesize $\begin{bmatrix} -4 \\ 2 \end{bmatrix}$},
+{\footnotesize $\begin{bmatrix} -8 \\ 4 \end{bmatrix}$},
 $\dots$) is called an \textbf{eigenvector} of $M$. Here's what that means:
 
 \begin{framed}
+
 An \textbf{eigenvector} of a matrix $A$ is any vector that gets mapped to a
 scaled version of \textit{itself} -- \textit{i.e.}, to a vector in the same
-direction -- when muliplied by $A$. In symbols, for an eigenvector
-$\overrightarrow{\textbf{x}}$:
+direction -- when muliplied by $A$. In symbols, if
+$\overrightarrow{\textbf{x}}$ is an eigenvector of $A$, then
 
 {\centering
 $ \displaystyle
@@ -370,8 +374,8 @@ gets multiplied by 2.
 
 \subsection{Alternate resonant frequencies}
 
-Just curious, are there any \textit{other} ``magic'' vectors for our $M$
-matrix? It turns out there are. Try {\footnotesize $\begin{bmatrix} 4 \\ 4
+You might be curious: are there any \textit{other} ``magic'' vectors for our
+$M$ matrix? It turns out there are. Try {\footnotesize $\begin{bmatrix} 4 \\ 4
 \end{bmatrix}$}:
 
 \vspace{-.2in}
@@ -544,7 +548,7 @@ drags it progressively to the dominant eigenvector!}
 
 So we see that ``dominant'' eigenvector is an apt term. The matrix somehow
 \textit{wants} to map its inputs to the direction of the dominant eigenvector,
-and if you keep pushing its button, it'll always be drawn there. And that's
+and if you keep multiplying by it, it'll always be drawn there. And that's
 true \textit{no matter where you started.} This fact will have immense
 repercussions when we look at things like Markov chains and the PageRank
 algorithm in the next chapter.
@@ -568,11 +572,12 @@ wrong pace, nothing much happens -- the swing just deadens. But imagine if
 pumping our legs at the wrong pace got automatically \textit{converted} to the
 right pace?
 
-In real life, if an operatic soprano sings just the right piercing note, she
-can shatter a nearby glass. But what if no matter what note she sang, it was
-automatically adjusted by the glass to \textit{be} just the perfect tone to
-shatter the glass? What we have here is not only a resonant frequency, but a
-magnet pulling every vector \textit{towards} the resonant frequency. Amazing.
+Or take another example. In real life, if an operatic soprano sings just the
+right piercing note, she can shatter a nearby glass. But what if no matter what
+note she sang, it was automatically adjusted by the glass to \textit{be} just
+the perfect tone to shatter the glass? What we have here is not only a resonant
+frequency, but a magnet pulling every vector \textit{towards} the resonant
+frequency. Amazing.
 
 \section{Basic principles}
 
