@@ -326,7 +326,8 @@ Boom. It exactly doubled again. This is very intriguing. Vectors in this one
 particular direction aren't ``jumping around'' like the other ones did when $M$
 acted on them. Instead, the matrix just plays them back for us (at twice the
 volume) like a pure middle C singing out from a piano. Figure~\ref{eigenvec1}
-(p.~\pageref{eigenvec1}) shows the illustration.
+%(p.~\pageref{eigenvec1})
+shows the illustration.
 
 \begin{figure}[ht]
 \centering
@@ -453,12 +454,13 @@ dominant eigenvector is simply the eigenvector with the highest eigenvalue.
 
 \section{Magnetic pull}
 
-Now if you followed all that, \textit{this} is sure to absolutely blow your
-mind. I know it did mine. I'm going to feed a random vector in as an input to
-our $M$ matrix, and then repeatedly put its output back in to $M$ and see where
-it goes. Remember that if I do this with an \textit{eigenvector}, I'll keep
-getting back progressively scaled copies of the input vector. But let's see
-what happens when we pass in an ordinary, non-special, non-eigen vector.
+Now assuming you followed all that, this next thing is sure to absolutely blow
+your mind. I know it did mine. I'm going to feed a \textit{random} vector in as
+an input to our $M$ matrix, and then repeatedly put its output back in to $M$
+and see where it goes. Remember that if I do this with an \textit{eigenvector},
+I'll keep getting back progressively scaled copies of the input vector. But
+let's see what happens when I pass in just an ordinary, non-special, non-eigen
+vector.
 
 I'll choose {\footnotesize $\begin{bmatrix} 1 \\ 2\frac{1}{2} \end{bmatrix}$}
 just for giggles, and call it $\overrightarrow{\textbf{r}}$ for ``random.'' If
@@ -518,15 +520,15 @@ I keep multiplying $\overrightarrow{\textbf{r}}$ by $M$, here's what I get:
 You might say ``big deal'' until you look at the upper left of
 Figure~\ref{converge1}, where I've plotted this sequence of vectors with the
 circled numbers \ding{182}, \ding{183}, \ding{184}, and \ding{185}. I've also
-plotted \textit{the dominant eigenvector as a dotted line} on this plot. Look
-at what happens: every time we multiply by $M$, that random old vector is
-pulled towards $M$'s dominant eigenvector (which was in the direction
+plotted \textit{the dominant eigenvector} (which was in the direction
 {\footnotesize $\begin{bmatrix} -1 \\ \frac{1}{2} \end{bmatrix}$}, as you
-recall) like a magnet! And incredibly, this happens with \textit{any} vector I
-start with. The other panes of Figure~\ref{converge1} shows what happens when I
-start with {\footnotesize $\begin{bmatrix} -2 \\ -1 \end{bmatrix}$},
-{\footnotesize $\begin{bmatrix} -1 \\ -2 \end{bmatrix}$},
-and {\footnotesize $\begin{bmatrix} 2 \\ \frac{1}{2} \end{bmatrix}$}. Resonant
+recall) \textit{as a dotted line} on this plot. Look at what happens: every
+time we multiply by $M$, that random old vector is pulled towards $M$'s
+dominant eigenvector like a magnet! And incredibly, this happens with
+\textit{any} vector I start with. The other panes of Figure~\ref{converge1}
+shows what happens when I start with {\footnotesize $\begin{bmatrix} -2 \\ -1
+\end{bmatrix}$}, {\footnotesize $\begin{bmatrix} -1 \\ -2 \end{bmatrix}$}, and
+{\footnotesize $\begin{bmatrix} 2 \\ \frac{1}{2} \end{bmatrix}$}. Resonant
 frequency indeed!
 
 \begin{figure}[ht]
@@ -540,7 +542,7 @@ drags it progressively to the dominant eigenvector!}
 \label{converge1}
 \end{figure}
 
-So we see that the dominant eigenvector is dominant indeed. The matrix somehow
+So we see that ``dominant'' eigenvector is an apt term. The matrix somehow
 \textit{wants} to map its inputs to the direction of the dominant eigenvector,
 and if you keep pushing its button, it'll always be drawn there. And that's
 true \textit{no matter where you started.} This fact will have immense
@@ -553,7 +555,7 @@ eigenvector is one that is \textit{exactly} in the direction of the
 {\footnotesize $\begin{bmatrix} 4 \\ 4 \end{bmatrix}$} (or anything in that
 direction), it will stay locked in that direction (a 45\textdegree~angle
 counterclockwise from the x-axis) and shrink by half each time. But if we nudge
-that vector even slightly away from that other eigenvector -- say,
+that vector even slightly away from that other eigenvector -- say, to
 {\scriptsize $\begin{bmatrix} 4 \\ 4.0001 \end{bmatrix}$} -- it'll get pulled
 to the dominant eigenvector's direction ({\scriptsize $\begin{bmatrix} -1 \\
 \frac{1}{2} \end{bmatrix}$}) instead.
@@ -564,10 +566,12 @@ In terms of our previous analogy, we're witnessing an even stronger sort of
 ``resonant frequency.'' With a playground swing, if we pump our legs at the
 wrong pace, nothing much happens -- the swing just deadens. But imagine if
 pumping our legs at the wrong pace got automatically \textit{converted} to the
-right pace? In real life, if an operatic soprano sings just the right piercing
-note, she can shatter a nearby glass. But what if no matter what note she sang,
-it was automatically adjusted by the glass to \textit{be} just the perfect tone
-to shatter the glass? What we have here is not only a resonant frequency, but a
+right pace?
+
+In real life, if an operatic soprano sings just the right piercing note, she
+can shatter a nearby glass. But what if no matter what note she sang, it was
+automatically adjusted by the glass to \textit{be} just the perfect tone to
+shatter the glass? What we have here is not only a resonant frequency, but a
 magnet pulling every vector \textit{towards} the resonant frequency. Amazing.
 
 \section{Basic principles}
@@ -579,35 +583,35 @@ All right, now let me give you the scoop. First, I'll tell you what's true
 \index{scalar-vector multiplication}
 
 In 99.99\% of cases, \textbf{an $n\times n$ matrix has $n$ different
-eigenvectors.} Each of these has its own eigenvalue, and the eigenvector with
-the highest eigenvalue is called the matrix's dominant eigenvector. This is
-exactly what we saw with the $M$ matrix we've been using since
-p.~\pageref{mmatrix}: it was $2\times 2$, and had two eigenvectors
-({\scriptsize $\begin{bmatrix} -1 \\ \frac{1}{2} \end{bmatrix}$} and
-{\scriptsize $\begin{bmatrix} 4 \\ 4 \end{bmatrix}$}) with eigenvalues
-$\lambda=2$ and $\lambda=\frac{1}{2}$, respectively. So ({\scriptsize
-$\begin{bmatrix} -1 \\ \frac{1}{2} \end{bmatrix}$} is the dominant
-one.\footnote{Note that when specifying the eigenvectors, we could use
-\textit{any} vectors that point in the same directions as these. For instance,
-it would also be correct to say that $M$'s two eigenvectors are {\scriptsize
-$\begin{bmatrix} -2 \\ 1 \end{bmatrix}$} and {\scriptsize $\begin{bmatrix} 1 \\
-1 \end{bmatrix}$}, or even {\scriptsize $\begin{bmatrix} -50 \\ 25
-\end{bmatrix}$} and {\scriptsize $\begin{bmatrix} -17 \\ -17 \end{bmatrix}$}.
-Multiplying a vector by any constant, remember, doesn't change its direction.
-And the eigen\textit{value} of a scaled eigenvector doesn't change; the
-eigenvalues here are still 2 and $\frac{1}{2}$ no matter how we might scale the
-vectors.}
+eigenvectors.} Furthermore, each eigenvector will be linearly independent of
+all the others. Each one has its own eigenvalue, and the eigenvector with the
+highest eigenvalue is called the matrix's dominant eigenvector. This is exactly
+what we saw with the $M$ matrix we've been using since p.~\pageref{mmatrix}: it
+was $2\times 2$, and had two eigenvectors ({\scriptsize $\begin{bmatrix} -1 \\
+\frac{1}{2} \end{bmatrix}$} and {\scriptsize $\begin{bmatrix} 4 \\ 4
+\end{bmatrix}$}) with eigenvalues $\lambda=2$ and $\lambda=\frac{1}{2}$,
+respectively. So {\scriptsize $\begin{bmatrix} -1 \\ \frac{1}{2}
+\end{bmatrix}$} is the dominant one.\footnote{Note that when specifying the
+eigenvectors, we could use \textit{any} vectors that point in the same
+directions as these. For instance, it would also be correct to say that $M$'s
+two eigenvectors are {\scriptsize $\begin{bmatrix} -2 \\ 1 \end{bmatrix}$} and
+{\scriptsize $\begin{bmatrix} 1 \\ 1 \end{bmatrix}$}, or even {\scriptsize
+$\begin{bmatrix} -50 \\ 25 \end{bmatrix}$} and {\scriptsize $\begin{bmatrix}
+-1.73 \\ -1.73 \end{bmatrix}$}. Multiplying a vector by any constant, remember,
+doesn't change its direction. And the eigen\textit{value} of a scaled
+eigenvector doesn't change; the eigenvalues here are still 2 and $\frac{1}{2}$
+no matter how we might scale the vectors.}
 
-\medskip
+\smallskip
 \index{blue matrix}
 
-It's almost this simple. The 0.01\% cases occur in one of two rare situations.
-One is when we're dealing with a blue matrix (\textit{i.e.}, a matrix whose
-columns are blue dominoes, \textit{i.e.}, a matrix some of whose columns are
-exact linear combinations of the others). As we've seen, blue matrices are
-strange and deficient and wreck all the rules, so this shouldn't surprise us.
-The good news is you're pretty unlikely to encounter a blue matrix out in the
-wild.
+It's almost always this simple. The 0.01\% cases occur in one of two rare
+situations. One is when we're dealing with a blue matrix (\textit{i.e.}, a
+matrix whose columns are blue dominoes, \textit{i.e.}, a matrix some of whose
+columns are exact linear combinations of the others). As we've seen, blue
+matrices are strange and deficient and wreck all the rules, so this shouldn't
+surprise us. The good news is you're pretty unlikely to encounter a blue matrix
+out in the wild.
 
 The second rare case is when we have a ``repeated eigenvalue'' and thus a
 ``duplicate eigenvector.'' For example, the innocent-looking but ultimately
