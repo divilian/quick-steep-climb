@@ -608,55 +608,278 @@ doesn't change its direction. And the eigen\textit{value} of a scaled
 eigenvector doesn't change; the eigenvalues here are still 2 and $\frac{1}{2}$
 no matter how we might scale the vectors.}
 
-\smallskip
-\index{blue matrix}
+\medskip
 
-It's almost always this simple. The 0.01\% cases occur in one of two rare
-situations. One is when we're dealing with a blue matrix (\textit{i.e.}, a
-matrix whose columns are blue dominoes, \textit{i.e.}, a matrix some of whose
-columns are exact linear combinations of the others). As we've seen, blue
-matrices are strange and deficient and wreck all the rules, so this shouldn't
-surprise us. The good news is you're pretty unlikely to encounter a blue matrix
-out in the wild.
+% This is old text: it turns out, as Dave M proved to Stephen on 10/13/2020,
+% that singular matrices actually do have a full set of eigenvectors and do
+% satisfy the spectral theorem.
 
-The second rare case is when we have a ``repeated eigenvalue'' and thus a
-``duplicate eigenvector.'' For example, the innocent-looking but ultimately
-weird matrix
+%It's almost always this simple. The 0.01\% cases occur in one of two rare
+%situations. One is when we're dealing with a blue matrix (\textit{i.e.}, a
+%matrix whose columns are blue dominoes, \textit{i.e.}, a matrix some of whose
+%columns are exact linear combinations of the others). As we've seen, blue
+%matrices are strange and deficient and wreck all the rules, so this shouldn't
+%surprise us. The good news is you're pretty unlikely to encounter a blue matrix
+%out in the wild.
+%
+%The second rare case is
 
+It's almost always this simple. The 0.01\% cases occur only in the weird
+situation when we have a ``repeated eigenvalue'' and thus a ``duplicate
+eigenvector.'' For example, the innocent-looking but ultimately weird matrix
+
+\label{repeatedEigenvalue}
 \vspace{-.15in}
 \begin{align*}
 W = \begin{bmatrix} -2 & 1 \\ -1 & 0 \end{bmatrix},
 \end{align*}
-\vspace{-.15in} 
+\vspace{-.15in}
 
-turns out to have ``two eigenvectors,'' but they're the same: {\scriptsize
-$\begin{bmatrix} 1 \\ 1 \end{bmatrix}$}. And each one of them turns out to have
-eigenvalue -1. (Multiply out {\scriptsize $W\cdot \begin{bmatrix} 1 \\ 1
-\end{bmatrix}$} to verify this produces {\scriptsize $\begin{bmatrix} -1
-\\ -1 \end{bmatrix}$}.) This is also quite rare, and is akin to having a
-polynomial with a ``double root,'' as discussed below.
+is an example of this. Its ``two eigenvectors'' turn out to be the
+\textit{same}: {\scriptsize $\begin{bmatrix} 1 \\ 1 \end{bmatrix}$}. And each
+one of them has eigenvalue -1. (Multiply out {\scriptsize $W\cdot
+\begin{bmatrix} 1 \\ 1 \end{bmatrix}$} to verify that this produces
+{\scriptsize $\begin{bmatrix} -1 \\ -1 \end{bmatrix}$}.) This scenario is 
+very uncommon, and is unlikely to come up for you in practical situations.
+
+%, and is akin to having a polynomial with a ``double root,'' as discussed
+%below.
 
 \medskip
 
-The previous two paragraphs aren't crucial to understand. What's important is
-the big takeaway I mentioned first: except in certain diabolically
-choreographed cases, the number of eigenvectors is the width/height of the
-matrix, and each of them has its own eigenvalue.
+While you're building your understanding of this stuff, my advice is to just
+blow off the previous paragraph. What's important is the big takeaway: except
+in certain diabolically choreographed cases, the number of eigenvectors is the
+width/height of the matrix, and each of them has its own eigenvalue.
 
-\section{Finding the eigenvectors by hand}
+\subsection{Finding the eigenvectors/eigenvalues}
 
-So far I've simply stated to you what the eigenvectors are, and you might
-wonder how I figured that out. The answer is that I turned to Python and gave
-it the matrix and asked it for the eigenvectors and eigenvalues. This is how
-you'll always do it in practice. But so you're aware of how to calculate them
-by hand, let me show you.
+By the way, so far I've just stated to you what the eigenvectors are, and you
+might wonder how I figured that out. The answer is that I simply gave the
+matrix to Python and asked it for the eigenvectors and eigenvalues. We'll see
+the code to do that at the end of the chapter. This is how you'll always do it
+in practice.
 
+% TODO: add "Instructions for doing this are given at the end of the chapter."
 
-% change of basis
+\section{The Spectral Theorem}
 
-% eigenbasis: the natural basis
+\index{diagonalize (a matrix)}
+\index{Spectral Theorem}
 
-% decomposition
+And now I present to you a fundamental eigenvalue equation that has $E=mc^2$
+level significance. It goes by several names: \textbf{The Spectral Theorem},
+the \textbf{eigendecomposition}, and \textbf{diagonalizing} a matrix. It forms
+the foundation of much of the advanced math that all this eigenstuff is based
+on.
 
-% spectral theorem
+\smallskip
+Here it is:
+\vspace{-.15in}
 
+\begin{framed}
+\index{norm (of a vector)}
+
+If $A$ is a $n\times n$ matrix, it can almost always\footnotemark~be decomposed
+into the product of three other $n\times n$ matrices: $V\cdot \Lambda \cdot
+V^{-1}$, where $V$ has the (normalized) eigenvectors of $A$ as its columns, and
+$\Lambda$ is a diagonal matrix with the corresponding eigenvalues on the
+diagonal. For example, for a $4\times 4$:
+
+\vspace{-.15in}
+\begin{align*}
+A &=
+\begin{bmatrix}
+| & | & | & | \\[6pt]
+\overrightarrow{\textbf{x}_{1}} &
+\overrightarrow{\textbf{x}_{2}} &
+\overrightarrow{\textbf{x}_{3}} &
+\overrightarrow{\textbf{x}_{4}} \\
+| & | & | & | \\[6pt]
+\end{bmatrix} \
+\begin{bmatrix}
+\lambda_1 & 0 & 0 & 0 \\
+0 & \lambda_2 & 0 & 0 \\
+0 & 0 & \lambda_3 & 0 \\
+0 & 0 & 0 & \lambda_4 \\
+\end{bmatrix} \
+\begin{bmatrix}
+| & | & | & | \\[6pt]
+\overrightarrow{\textbf{x}_{1}} &
+\overrightarrow{\textbf{x}_{2}} &
+\overrightarrow{\textbf{x}_{3}} &
+\overrightarrow{\textbf{x}_{4}} \\
+| & | & | & | \\[6pt]
+\end{bmatrix}^{-1} \
+\end{align*}
+where the $\overrightarrow{\textbf{x}_k}$'s are the eigenvectors and the
+$\lambda_k$'s are the corresponding eigenvalues.
+%\vspace{-.15in}
+\end{framed}
+
+\footnotetext{99.99\% of the time. (See p.~\pageref{repeatedEigenvalue}.)}
+
+\index{diagonalize (a matrix)}
+\index{Spectral Theorem}
+\index{eigendecomposition (of a matrix)}
+
+Terminology: decomposing a matrix $A$ into these three matrices -- the first of
+which has the eigenvectors and the second of which has the eigenvalues -- is
+called the \textbf{eigendecomposition} of the matrix. We also say that we have
+``\textbf{diagonalized}'' $A$ because the middle matrix of the three (called
+$\Lambda$, which is an upper case $\lambda$ ``lambda'') is a diagonal matrix.
+Finally, this whole fact is also sometimes called \textbf{the Spectral Theorem}
+for square matrices.
+
+\subsection{Example}
+
+Let's verify the Spectral Theorem for our $M$ matrix from p.~\pageref{mmatrix}.
+I told you that the eigenvectors were {\footnotesize $\begin{bmatrix} -1 \\
+\frac{1}{2} \end{bmatrix}$} and {\footnotesize $\begin{bmatrix} 4 \\ 4
+\end{bmatrix}$}, but for the eigendecomposition we need them to have Euclidean
+norm 1. So we normalize them (recall p.~\pageref{normalizing}) to get:
+
+\index{normalizing (a vector)}
+
+\vspace{-.15in}
+\begin{align*}
+\overrightarrow{x_1} =
+\dfrac{\begin{bmatrix} -1 \\ \frac{1}{2} \end{bmatrix}}
+{\left\lVert{\begin{bmatrix} -1 \\ \frac{1}{2} \end{bmatrix}}\right\rVert_2} =
+\dfrac{\begin{bmatrix} -1 \\ \frac{1}{2} \end{bmatrix}}
+{\sqrt{(-1)^2 + (\frac{1}{2})^2}} &=
+\begin{bmatrix} -.894 \\ .447 \end{bmatrix}\\
+\medskip\\
+\overrightarrow{x_2} =
+\dfrac{\begin{bmatrix} 4 \\ 4 \end{bmatrix}}
+{\left\lVert{\begin{bmatrix} 4 \\ 4 \end{bmatrix}}\right\rVert_2} =
+\dfrac{\begin{bmatrix} 4 \\ 4 \end{bmatrix}}
+{\sqrt{(4)^2 + (4)^2}} &=
+\begin{bmatrix} .707 \\ .707 \end{bmatrix}\\
+\end{align*}
+\vspace{-.25in}
+
+It's important to note that these normalized versions of our eigenvectors point
+in the \textit{same} directions that the original ones did ({\footnotesize
+$\begin{bmatrix} -1 \\ \frac{1}{2} \end{bmatrix}$} and {\footnotesize
+$\begin{bmatrix} 4 \\ 4 \end{bmatrix}$}). We just scaled them so that they have
+length 1 (according to the Euclidean norm). But they're still the same
+eigenvectors.
+
+\medskip
+
+Okay. Now if the Spectral Theorem is correct, $M$ should be equal to its
+eigendecomposition. First, let's put together our $V$ matrix (with eigenvectors
+as columns):
+
+\vspace{-.15in}
+\begin{align*}
+V =
+\begin{bmatrix}
+-.894 & .707 \\
+.447 & .707 \\
+\end{bmatrix}
+\end{align*}
+\vspace{-.15in}
+
+Then, let's find its inverse (using Python):
+
+\vspace{-.15in}
+\begin{align*}
+V^{-1} =
+\begin{bmatrix}
+-.746 & .746 \\
+.471 & .943 \\
+\end{bmatrix}
+\end{align*}
+\vspace{-.15in}
+
+Next, stick the eigenvalues on the diagonal of an otherwise-all-zeroes matrix:
+
+\vspace{-.15in}
+\begin{align*}
+\Lambda =
+\begin{bmatrix}
+2 & 0 \\
+0 & \frac{1}{2} \\
+\end{bmatrix}
+\end{align*}
+\vspace{-.15in}
+
+and finally, multiply it all out:
+
+\medskip
+\begin{tabular}{CCCCCCC}
+V & \cdot & \Lambda & \cdot & V^{-1} & = &M? \\
+\smallskip \\
+\begin{bmatrix}
+-.894 & .707 \\
+.447 & .707 \\
+\end{bmatrix}
+& \cdot &
+\begin{bmatrix}
+2 & 0 \\
+0 & \frac{1}{2} \\
+\end{bmatrix}
+& \cdot &
+\begin{bmatrix}
+-.746 & .746 \\
+.471 & .943 \\
+\end{bmatrix}
+& = &
+\begin{bmatrix}
+-1.5 & -1 \\
+-.5 & 1 \\
+\end{bmatrix}
+\quad \checkmark
+\end{tabular}
+\smallskip
+
+which indeed equals our $M$ from p.~\pageref{mmatrix}.
+
+\section{The ``natural'' basis}
+
+\index{basis}
+
+Now think back all the way to p.~\pageref{basis} when we talked about the
+notion of a \textbf{basis}: a linearly independent set of vectors that spans
+some space. Importantly, if you have a basis, every vector in the space can be
+expressed as a linear combination of the basis vectors in exactly one way.
+%
+%% change of basis
+%
+%% eigenbasis: the natural basis
+%
+%% decomposition
+%
+%
+%
+%% orthonormal matrix: inverse = transpose
+%
+%%\begin{align*}
+%%A &=
+%%\begin{bmatrix}
+%%| & | & | & | \\[6pt]
+%%\overrightarrow{\textbf{x}_{1}} &
+%%\overrightarrow{\textbf{x}_{2}} &
+%%\overrightarrow{\textbf{x}_{3}} &
+%%\overrightarrow{\textbf{x}_{4}} \\
+%%| & | & | & | \\[6pt]
+%%\end{bmatrix} \
+%%\begin{bmatrix}
+%%\lambda_1 & 0 & 0 & 0 \\
+%%0 & \lambda_2 & 0 & 0 \\
+%%0 & 0 & \lambda_3 & 0 \\
+%%0 & 0 & 0 & \lambda_4 \\
+%%\end{bmatrix} \
+%%\begin{bmatrix}
+%%- & \overrightarrow{\textbf{x}_{1}} & - \\
+%%- & \overrightarrow{\textbf{x}_{2}} & - \\
+%%- & \overrightarrow{\textbf{x}_{3}} & - \\
+%%- & \overrightarrow{\textbf{x}_{4}} & - \\
+%%\end{bmatrix}
+%%\end{align*}
+%%where the $\overrightarrow{\textbf{x}_k}$'s are the eigenvectors and the
+%%$\lambda_k$'s are the corresponding eigenvalues.
+%%%\vspace{-.15in}
+%%\end{framed}
