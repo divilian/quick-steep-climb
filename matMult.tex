@@ -1066,6 +1066,7 @@ called the ``identity elements'' for those operations, since you get the
 
 \section{The ``inverse'' of a matrix}
 
+\label{matrixInverse}
 \index{reciprocal}
 
 In high school (or maybe middle school) you learned what the
@@ -1461,6 +1462,92 @@ x \\ y \\ z \\
 \end{center}
 
 Problem solved.
+
+\section[Change-of-basis matrices]{\large Change-of-basis matrices (\textit{from} standard)}
+
+\label{changeOfBasisOtherWayFinally}
+
+\index{basis}
+\index{change of basis}
+\index{standard basis}
+\index{domino basis}
+\index{Ron}
+\index{Hermione}
+\index{inverse}
+
+I left you hanging back on p.~\pageref{changeOfBasisOtherWayCliffhanger} when
+we converted Ron's $\overrightarrow{\textbf{r}}$ vector from the ``domino
+basis'' to the standard basis, but couldn't go in the reverse direction with
+Hermione's $\overrightarrow{\textbf{h}}$ vector. Now we can.
+
+\smallskip
+You can probably guess how to do this: all we have to do is compute the
+\textit{inverse} of the $\textrm{COB}_{B_d \rightarrow B_s}$ change-of-basis
+matrix, and we'll get the corresponding $\textrm{COB}_{B_s \rightarrow B_d}$
+change-of-basis matrix.
+
+\begin{center}
+\textit{Hey Python, ``what's the inverse of \
+${\footnotesize \begin{bmatrix}
+1 & 4 \\
+2 & 4 \\
+\end{bmatrix}}$?''
+}
+
+\textit{Python replies: ``
+${\small
+\begingroup
+\begin{bmatrix}
+-1 & 1 \\
+\frac{1}{2} & -\frac{1}{4} \\
+\end{bmatrix}
+\endgroup}$!''
+}
+\end{center}
+
+So:
+
+\vspace{-.15in}
+\begin{align*}
+\textrm{COB}_{B_s \rightarrow B_d} =
+\begin{bmatrix}
+-1 & 1 \\
+\frac{1}{2} & -\frac{1}{4} \\
+\end{bmatrix},
+\end{align*}
+\vspace{-.15in}
+
+and since Hermione was {\scriptsize $\begin{bmatrix} 5\\2 \end{bmatrix}$} in standard coordinates, we convert her
+to the domino basis as follows:
+
+\vspace{-.15in}
+\begin{align*}
+\overrightarrow{h_{B_d}} =
+\begin{bmatrix}
+-1 & 1 \\
+\frac{1}{2} & -\frac{1}{4} \\
+\end{bmatrix} \cdot
+\overrightarrow{h_{B_s}} =
+\begin{bmatrix}
+-1 & 1 \\
+\frac{1}{2} & -\frac{1}{4} \\
+\end{bmatrix} \cdot
+\begin{bmatrix} 5 \\ 2 \end{bmatrix}_{B_s} =
+\begin{bmatrix} -3 \\ 2 \end{bmatrix}_{B_d}.
+\end{align*}
+\vspace{-.15in}
+
+This means that Hermione, in addition to being expressible as ``five
+{\scriptsize $\begin{bmatrix} 1 \\ 0 \end{bmatrix}$}'s and two {\scriptsize
+$\begin{bmatrix} 0 \\ 1 \end{bmatrix}$}'s,'' is equally expressible as
+``negative three {\scriptsize $\begin{bmatrix} 1 \\ 2 \end{bmatrix}$}'s and two
+{\scriptsize $\begin{bmatrix} 4 \\ 4 \end{bmatrix}$}'s.'' Multiply it out if
+you doubt me.
+
+\bigskip
+\bigskip
+.
+\pagebreak
 
 \section{``Singular'' matrices}
 

@@ -540,7 +540,7 @@ same direction.
 \small
 \hspace{-.2in}
 \begin{tabular}{l|r}
-Yellow dominos \ 
+Yellow dominoes \ 
 \raisebox{-0.25\height}{\includegraphics[width=0.07\textwidth]{gray1_2.png}} 
 \raisebox{-0.25\height}{\includegraphics[width=0.07\textwidth]{gray4_4.png}} &
 \raisebox{-0.25\height}{\includegraphics[width=0.07\textwidth]{darkgray2_3.png}} 
@@ -825,6 +825,152 @@ vector space. The dimension of a vector space is how many vectors are required
 to get everywhere in it. And that in turn is simply the dimension of the
 vectors that live in it. It's no accident that for \textit{three}-dimensional
 space, a basis has \textit{three} vectors with \textit{three} elements each.
+
+
+\section{Changing bases}
+
+If each basis is merely a new coordinate system in which to express vectors, we
+ought to be able to change between bases at will. And in fact we can. Let's see
+how.
+
+\subsection{Changing \textit{to} the standard basis}
+
+\label{changeOfBasis}
+\index{Ron}
+\index{domino basis}
+
+Ron has a two-dimensional vector called $\overrightarrow{\textbf{r}}$. I'll
+tell you that its coordinates are $2$ and $-1$, but before you try to visualize
+it, there's a catch: these coordinates are \textit{not} expressed in the
+standard basis, but in the ``\textit{domino basis}'' we've used several times
+in this chapter:
+\raisebox{-0.25\height}{\includegraphics[width=0.07\textwidth]{gray1_2.png}}
+{\Large /}
+\raisebox{-0.25\height}{\includegraphics[width=0.07\textwidth]{gray4_4.png}}.
+
+This is the first time I've used the phrase ``expressed as coordinates in a
+certain basis,'' because up until now, we've always been implicitly assuming
+the standard basis. If I said a vector had components ``3'' and ``4,'' it has
+gone without saying that I meant ``3 units in the $[\ 1\ \ 0\ ]$ direction, and
+4 units in the $[\ 0\ \ 1\ ]$ direction.'' Viewed in this way, a vector with
+coordinates 3 and 4 is really a linear combination of the two (standard) basis
+vectors:
+
+\vspace{-.15in}
+\begin{align*}
+3 \cdot \begin{bmatrix} 1 \\ 0 \\ \end{bmatrix} +
+4 \cdot \begin{bmatrix} 0 \\ 1 \\ \end{bmatrix} = 
+\begin{bmatrix} 3 \\ 4 \\ \end{bmatrix}.
+\end{align*}
+\vspace{-.15in}
+
+\index{standard basis}
+\index{basis}
+
+Sometimes we need to be explicit about which basis is being used to express a
+vector's components. To do that, we'll put a subscript on our vector notation,
+labeled with the basis it uses. We'll use the symbol ``$B_s$'' to mean the
+standard basis; $B_s$ thus equals $\{ [\ 1\ \ 0\ ], [\ 0\ \ 1\ ] \}$. So we
+would write down this example vector as follows:
+
+\vspace{-.25in}
+\begin{align*}
+\begin{bmatrix} 3 \\ 4 \\ \end{bmatrix}_{B_s}.
+\end{align*}
+\vspace{-.15in}
+
+Now Ron, on the other hand, insists on using the domino basis
+\raisebox{-0.25\height}{\includegraphics[width=0.07\textwidth]{gray1_2.png}} 
+{\Large /}
+\raisebox{-0.25\height}{\includegraphics[width=0.07\textwidth]{gray4_4.png}}.
+We'll call it ``$B_d$'' ($d$ for
+``dominoes.'') Thus $B_d = \{ [\ 1\ \ 2\ ], [\ 4\ \ 4\ ] \}$, and we write
+Ron's vector like this:
+
+\vspace{-.15in}
+\begin{align*}
+\overrightarrow{r} = \begin{bmatrix} 2 \\ -1 \\ \end{bmatrix}_{B_d}.
+\end{align*}
+\vspace{-.15in}
+
+Our question is one of translation: what are Ron's coordinates in the
+\textit{standard} basis?
+
+If you think about it, that's a pretty easy question to answer. When Ron says
+his coordinates are ``2'' and ``$-1$,'' he merely means ``I've got two
+\raisebox{-0.25\height}{\includegraphics[width=0.07\textwidth]{gray1_2.png}}'s
+and negative one
+\raisebox{-0.25\height}{\includegraphics[width=0.07\textwidth]{gray4_4.png}}'s.''
+Computing his standard-basis coordinates is just a matter of taking that linear
+combination:
+
+\vspace{-.15in}
+\begin{align*}
+\overrightarrow{r} =
+2 \cdot \begin{bmatrix} 1 \\ 2 \end{bmatrix} +
+(-1) \cdot \begin{bmatrix} 4 \\ 4 \end{bmatrix} =
+\begin{bmatrix} -2 \\ 0 \end{bmatrix}_{B_s}.
+\end{align*}
+\vspace{-.15in}
+
+\index{change of basis}
+
+This is called a \textbf{change of basis} operation. It's important to
+understand that Ron's vector \textit{itself} did not change: only the
+coordinate system in which we expressed it. In other words, these two vector
+representations are exactly equal:
+
+\vspace{-.15in}
+\begin{align*}
+\begin{bmatrix} 2 \\ -1 \end{bmatrix}_{B_d} =
+\begin{bmatrix} -2 \\ 0 \end{bmatrix}_{B_s}.
+\end{align*}
+\vspace{-.15in}
+
+You can see in Figure~\ref{basis} that whether we say ``two 
+{\scriptsize $\begin{bmatrix} 1 \\ 2 \end{bmatrix}$}'s and
+negative one {\scriptsize $\begin{bmatrix} 4 \\ 4 \end{bmatrix}$},'' or
+``negative two 
+{\scriptsize $\begin{bmatrix} 1 \\ 0 \end{bmatrix}$}'s and
+zero {\scriptsize $\begin{bmatrix} 0 \\ 1 \end{bmatrix}$},'' we get the same
+vector $\overrightarrow{\textbf{r}}$.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.6\textwidth]{basis.png}
+\caption{In either the domino basis or the standard basis, Ron's vector is the
+same.}
+\label{basis}
+\end{figure}
+
+
+\subsection{Changing \textit{from} the standard basis}
+
+\index{Hermione}
+
+By the way, what if we want to go the other way? Suppose Hermione has a vector
+$\overrightarrow{\textbf{h}}$ which, expressed as coordinates in the
+\textit{standard} basis, is $[\ 5\ \ 2\ ]$. Again, this means that her vector
+is a linear combination of the two standard basis vectors:
+
+\vspace{-.15in}
+\begin{align*}
+\overrightarrow{h} = 5 \cdot \begin{bmatrix} 1 \\ 0 \\ \end{bmatrix} +
+2 \cdot \begin{bmatrix} 0 \\ 1 \\ \end{bmatrix} = 
+\begin{bmatrix} 5 \\ 2 \\ \end{bmatrix}_{B_s}.
+\end{align*}
+\vspace{-.15in}
+
+What are her coordinates in the domino basis?
+
+\index{inverse}
+
+I'm going to need to put you off on this all the way to
+p.~\pageref{changeOfBasisOtherWayFinally}, since it will involve a few concepts
+we haven't covered yet. I promise we'll return to it, though!
+
+\vspace{.6in}
+.
 
 \pagebreak
 \subsection*{Answers to Domino Game puzzles from
