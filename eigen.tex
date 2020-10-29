@@ -522,7 +522,7 @@ I keep multiplying $\overrightarrow{\textbf{r}}$ by $M$, here's what I get:
 \unboldmath
 \end{align*}
 
-You might say ``big deal'' until you look at the upper left of
+You might ask ``what's the big deal?'' until you look at the upper left of
 Figure~\ref{converge1}, where I've plotted this sequence of vectors with the
 circled numbers \ding{182}, \ding{183}, \ding{184}, and \ding{185}. I've also
 plotted \textit{the dominant eigenvector} (which was in the direction
@@ -608,7 +608,7 @@ doesn't change its direction. And the eigen\textit{value} of a scaled
 eigenvector doesn't change; the eigenvalues here are still 2 and $\frac{1}{2}$
 no matter how we might scale the vectors.}
 
-\medskip
+\smallskip
 
 % This is old text: it turns out, as Dave M proved to Stephen on 10/13/2020,
 % that singular matrices actually do have a full set of eigenvectors and do
@@ -629,7 +629,7 @@ situation when we have a ``repeated eigenvalue'' and thus a ``duplicate
 eigenvector.'' For example, the innocent-looking but ultimately weird matrix
 
 \label{repeatedEigenvalue}
-\vspace{-.15in}
+\vspace{-.25in}
 \begin{align*}
 W = \begin{bmatrix} -2 & 1 \\ -1 & 0 \end{bmatrix},
 \end{align*}
@@ -645,12 +645,13 @@ very uncommon, and is unlikely to come up for you in practical situations.
 %, and is akin to having a polynomial with a ``double root,'' as discussed
 %below.
 
-\medskip
+\smallskip
 
-While you're building your understanding of this stuff, my advice is to just
-blow off the previous paragraph. What's important is the big takeaway: except
-in certain diabolically choreographed cases, the number of eigenvectors is the
-width/height of the matrix, and each of them has its own eigenvalue.
+While you're building your understanding of this material, my advice is to
+simply blow off the 0.01\% stuff. It's just a footnote. What's important is the
+big takeaway: except in certain diabolically choreographed cases, the number of
+eigenvectors is the width/height of the matrix, and each of them has its own
+eigenvalue.
 
 \subsection{Finding the eigenvectors/eigenvalues}
 
@@ -659,6 +660,10 @@ might wonder how I figured that out. The answer is that I simply gave the
 matrix to Python and asked it for the eigenvectors and eigenvalues. We'll see
 the code to do that at the end of the chapter. This is how you'll always do it
 in practice.
+
+\smallskip
+\phantom{.}
+\pagebreak
 
 % TODO: add "Instructions for doing this are given at the end of the chapter."
 
@@ -839,13 +844,191 @@ which indeed equals our $M$ from p.~\pageref{mmatrix}.
 
 \section{The ``natural'' basis}
 
+\index{Ron}
+\index{Hermione}
 \index{basis}
 
 Now think back all the way to p.~\pageref{basis} when we talked about the
 notion of a \textbf{basis}: a linearly independent set of vectors that spans
-some space. Importantly, if you have a basis, every vector in the space can be
-expressed as a linear combination of the basis vectors in exactly one way.
-%
+some space. You'll recall our friends Ron and Hermione, whose vectors
+$\overrightarrow{\textbf{r}}$ and $\overrightarrow{\textbf{h}}$ we expressed in
+both the standard basis $\{[\ 1\ \ 0\ ], [\ 0\ \ 1\ ]\}$, and in a ``domino
+basis'' $\{[\ 1\ \ 2\ ], [\ 4\ \ 4\ ]\}$. Importantly, if you have a basis,
+every vector in the space can be expressed as a linear combination of the basis
+vectors in exactly one way.
+
+\index{eigenbasis}
+
+I'm now going to argue that in an important sense, the eigenvectors of a linear
+operator matrix form the most ``natural'' basis for it. We call this set of
+eigenvectors the \textbf{eigenbasis} of the matrix. Let me explain why it's the
+most natural one.
+
+First of all, realize that multiplying any matrix by a \textit{diagonal} one is
+super easy. All you're doing is taking multiples of each column.
+
+\pagebreak
+
+\index{scattershot}
+
+To illustrate, consider the following scattershot matrix, which I chose at
+random and will call $S$:
+
+\vspace{-.15in}
+\begin{align*}
+S = \begin{bmatrix}
+3 & 4 & 2 & 1 \\
+5 & 5 & -7 & 8 \\
+1 & 1 & 1 & 2 \\
+3 & 4 & 6 & 8 \\
+\end{bmatrix}.
+\end{align*}
+\vspace{-.15in}
+
+Now think about this. If I told you to multiply (by hand) $S$ times the matrix
+below, you'd probably cry:
+
+\vspace{-.15in}
+\begin{align*}
+\begin{bmatrix}
+3 & 4 & 2 & 1 \\
+5 & 5 & -7 & 8 \\
+1 & 1 & 1 & 2 \\
+3 & 4 & 6 & 8 \\
+\end{bmatrix} \cdot
+\begin{bmatrix}
+3 & 2 & 1 & 9 \\
+6 & 2 & -2 & 9 \\
+1 & 9 & -3 & 9 \\
+7 & 9 & 4 & 9 \\
+\end{bmatrix} = \textbf{HARD} = \ ?? \ \frownie{}
+\end{align*}
+\vspace{-.05in}
+
+But if I told you to compute \textit{this} operation by hand, you wouldn't cry:
+
+\vspace{-.25in}
+\begin{align*}
+\begin{bmatrix}
+3 & 4 & 2 & 1 \\
+5 & 5 & -7 & 8 \\
+1 & 1 & 1 & 2 \\
+3 & 4 & 6 & 8 \\
+\end{bmatrix} \cdot
+\begin{bmatrix}
+3 & 0 & 0 & 0 \\
+0 & 2 & 0 & 0 \\
+0 & 0 & -3 & 0 \\
+0 & 0 & 0 & 9 \\
+\end{bmatrix} = \textbf{easy!} =
+\begin{bmatrix}
+9 & 8 & -6 & 9 \\
+15 & 10 & 21 & 72 \\
+3 & 2 & -3 & 18 \\
+9 & 8 & -18 & 72 \\
+\end{bmatrix}\textrm{!}
+\end{align*}
+\vspace{-.15in}
+
+The reason this operation is easy is that each column of the right-hand-side
+matrix has all zero entries but one. Consider its first column, $[\ 3\ \ 0\ \
+0\ \ 0\ ]^\intercal$. That says, ``for the first column of my answer, I'd like
+three of $S$'s first column, and none of the others.'' So the first column of
+our answer is simply $[\ 9\ \ 15\ \ 3\ \ 9\ ]^\intercal$: we just multiply each
+entry by 3. Its second column is $[\ 0\ \ 2\ \ 0\ \ 0\ ]^\intercal$, which
+means ``for the second column of my answer, I'd like two of $S$'s second
+column, and none of the others.'' So the second column of the answer is $[\ 8\
+\ 10\ \ 2\ \ 8\ ]^\intercal$. And so on.
+
+In fact, if you think of the columns of the $S$ matrix as a \textit{basis}, the
+diagonal matrix is doing nothing more than telling us how much of each basis
+direction we want. It's scaling each basis vector by a certain amount, and
+adding them all together. And that's the key to seeing the eigenbasis'
+``naturalness.''
+
+\index{standard basis}
+\index{change of basis}
+\index{inverse}
+
+Recall (from p.\pageref{changeOfBasisMatrix}) that if we have a vector
+expressed in some basis $B$, and we want to convert it to the \textit{standard}
+basis, we can multiply it by the appropriate change-of-basis matrix. And that
+matrix simply has the basis vectors of $B$ as its columns.
+
+Recall further (from p.\pageref{changeOfBasisOtherWayFinally}) that if we want
+to go the other way -- if we have a vector expressed in the standard basis, and
+we want to convert it to some other basis -- our change-of-basis matrix is the
+\textit{inverse} of the one from the previous paragraph.
+
+Now, let's put it all together. Suppose we wanted to take a linear operator
+$A$ for a spin; that is, we want to multiply a square matrix $A$ by some vector
+$\overrightarrow{\textbf{x}}$ to perform a linear transformation $A \cdot
+\overrightarrow{\textbf{x}}$.
+
+Look carefully at the spectral theorem formula again:
+
+\vspace{-.15in}
+\begin{align*}
+A = V \cdot \Lambda \cdot V^{-1}.
+\end{align*}
+\vspace{-.15in}
+
+This tells us that multiplying $\overrightarrow{\textbf{x}}$ by $A$ is the same
+as multiplying it by those three matrices:
+
+\vspace{-.15in}
+\begin{align*}
+A \cdot \overrightarrow{x} = V \cdot \Lambda \cdot V^{-1} \cdot
+\overrightarrow{x}.
+\end{align*}
+\vspace{-.15in}
+
+\index{associative (operation)}
+
+Let's take these multiplications one at a time from the right.\footnote{We're
+free to do it in this order if we want, because as you remember from
+p.~\pageref{associative}, matrix multiplication is associative.} Consider what
+each of them does:
+
+\begin{compactenum}
+
+\item Multiplying $\overrightarrow{x}$ by $V^{-1}$ converts
+$\overrightarrow{x}$ from the standard basis to the eigenbasis. (!)
+
+\item Then, multiplying by $\Lambda$ is a trivial operation which gives us ``a
+certain amount'' of each eigenvector. (The ``amount'' is the eigenvalue
+corresponding to that eigenvector, which effectively tells us how ``important''
+the eigenbasis vector in that direction is to the result.)
+
+\item Finally, multiplying $\overrightarrow{x}$ by $V$ converts
+our answer from the eigenbasis back to the standard basis. (!)
+
+\end{compactenum}
+
+Dissected in this way, we get a super deep insight into what linear operators
+fundamentally \textit{do}. Yes, you can think of them as matrix
+multiplications. But under the hood, what we're really doing is converting our
+input vector to a particular basis (the matrix's eigenbasis). Then, in that
+space, ``matrix-vector multiplication'' is a simple scaling operation. We then
+pop back into the standard basis for our final answer.
+
+\smallskip
+\index{orchard}
+
+This is seriously one of the most beautiful things I've seen in all of
+mathematics. It reminds me of an apple tree orchard. When you're wandering
+through the grounds, it seems like you're in the middle of a chaotic maze of
+trees planted in random positions. But when you happen upon a certain special
+spot, boom! All the trees suddenly line up and a perfectly symmetric pattern
+emerges. In a similar way, multiplying by a matrix looks like a jumble of
+random numbers, but seen from one special perspective -- the eigenbasis -- the
+operation suddenly becomes astonishingly simple and elegant.
+
+\label{orchard}
+\begin{center}
+\includegraphics[width=0.8\textwidth]{orchard.jpg}
+\end{center}
+
 %% change of basis
 %
 %% eigenbasis: the natural basis
