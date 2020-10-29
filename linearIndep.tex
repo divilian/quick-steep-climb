@@ -840,7 +840,7 @@ how.
 \index{domino basis}
 
 Ron has a two-dimensional vector called $\overrightarrow{\textbf{r}}$. I'll
-tell you that its coordinates are $2$ and $-1$, but before you try to visualize
+tell you that its coordinates are $3$ and $-1$, BUT before you try to visualize
 it, there's a catch: these coordinates are \textit{not} expressed in the
 standard basis, but in the ``\textit{domino basis}'' we've used several times
 in this chapter:
@@ -850,17 +850,17 @@ in this chapter:
 
 This is the first time I've used the phrase ``expressed as coordinates in a
 certain basis,'' because up until now, we've always been implicitly assuming
-the standard basis. If I said a vector had components ``3'' and ``4,'' it has
-gone without saying that I meant ``3 units in the $[\ 1\ \ 0\ ]$ direction, and
+the standard basis. If I said a vector had components ``7'' and ``4,'' it has
+gone without saying that I meant ``7 units in the $[\ 1\ \ 0\ ]$ direction, and
 4 units in the $[\ 0\ \ 1\ ]$ direction.'' Viewed in this way, a vector with
-coordinates 3 and 4 is really a linear combination of the two (standard) basis
+coordinates 7 and 4 is really a linear combination of the two (standard) basis
 vectors:
 
 \vspace{-.15in}
 \begin{align*}
-3 \cdot \begin{bmatrix} 1 \\ 0 \\ \end{bmatrix} +
+7 \cdot \begin{bmatrix} 1 \\ 0 \\ \end{bmatrix} +
 4 \cdot \begin{bmatrix} 0 \\ 1 \\ \end{bmatrix} = 
-\begin{bmatrix} 3 \\ 4 \\ \end{bmatrix}.
+\begin{bmatrix} 7 \\ 4 \\ \end{bmatrix}.
 \end{align*}
 \vspace{-.15in}
 
@@ -875,7 +875,7 @@ would write down this example vector as follows:
 
 \vspace{-.25in}
 \begin{align*}
-\begin{bmatrix} 3 \\ 4 \\ \end{bmatrix}_{B_s}.
+\begin{bmatrix} 7 \\ 4 \\ \end{bmatrix}_{B_s}.
 \end{align*}
 \vspace{-.15in}
 
@@ -889,7 +889,7 @@ Ron's vector like this:
 
 \vspace{-.15in}
 \begin{align*}
-\overrightarrow{r} = \begin{bmatrix} 2 \\ -1 \\ \end{bmatrix}_{B_d}.
+\overrightarrow{r} = \begin{bmatrix} 3 \\ -1 \\ \end{bmatrix}_{B_d}.
 \end{align*}
 \vspace{-.15in}
 
@@ -897,7 +897,7 @@ Our question is one of translation: what are Ron's coordinates in the
 \textit{standard} basis?
 
 If you think about it, that's a pretty easy question to answer. When Ron says
-his coordinates are ``2'' and ``$-1$,'' he merely means ``I've got two
+his coordinates are ``3'' and ``$-1$,'' he merely means ``I've got three
 \raisebox{-0.25\height}{\includegraphics[width=0.07\textwidth]{gray1_2.png}}'s
 and negative one
 \raisebox{-0.25\height}{\includegraphics[width=0.07\textwidth]{gray4_4.png}}'s.''
@@ -907,9 +907,9 @@ combination:
 \vspace{-.15in}
 \begin{align*}
 \overrightarrow{r} =
-2 \cdot \begin{bmatrix} 1 \\ 2 \end{bmatrix} +
+3 \cdot \begin{bmatrix} 1 \\ 2 \end{bmatrix} +
 (-1) \cdot \begin{bmatrix} 4 \\ 4 \end{bmatrix} =
-\begin{bmatrix} -2 \\ 0 \end{bmatrix}_{B_s}.
+\begin{bmatrix} -1 \\ 2 \end{bmatrix}_{B_s}.
 \end{align*}
 \vspace{-.15in}
 
@@ -922,25 +922,25 @@ representations are exactly equal:
 
 \vspace{-.15in}
 \begin{align*}
-\begin{bmatrix} 2 \\ -1 \end{bmatrix}_{B_d} =
-\begin{bmatrix} -2 \\ 0 \end{bmatrix}_{B_s}.
+\begin{bmatrix} 3 \\ -1 \end{bmatrix}_{B_d} =
+\begin{bmatrix} -1 \\ 2 \end{bmatrix}_{B_s}.
 \end{align*}
 \vspace{-.15in}
 
-You can see in Figure~\ref{basis} that whether we say ``two 
+You can see in Figure~\ref{fig:basis} that whether we say ``three
 {\scriptsize $\begin{bmatrix} 1 \\ 2 \end{bmatrix}$}'s and
 negative one {\scriptsize $\begin{bmatrix} 4 \\ 4 \end{bmatrix}$},'' or
-``negative two 
+``negative one
 {\scriptsize $\begin{bmatrix} 1 \\ 0 \end{bmatrix}$}'s and
-zero {\scriptsize $\begin{bmatrix} 0 \\ 1 \end{bmatrix}$},'' we get the same
+two {\scriptsize $\begin{bmatrix} 0 \\ 1 \end{bmatrix}$}'s,'' we get the same
 vector $\overrightarrow{\textbf{r}}$.
 
 \begin{figure}[ht]
 \centering
 \includegraphics[width=0.6\textwidth]{basis.png}
-\caption{In either the domino basis or the standard basis, Ron's vector is the
-same.}
-\label{basis}
+\caption{In either the domino basis (dashed lines) or the standard basis (thin
+solid lines), Ron's vector (thick solid line) is the same.}
+\label{fig:basis}
 \end{figure}
 
 
@@ -961,13 +961,13 @@ is a linear combination of the two standard basis vectors:
 \end{align*}
 \vspace{-.15in}
 
-What are her coordinates in the domino basis?
+But what are her coordinates in the domino basis?
 
 \index{inverse}
 
 I'm going to need to put you off on this all the way to
 p.~\pageref{changeOfBasisOtherWayFinally}, since it will involve a few concepts
-we haven't covered yet. I promise we'll return to it, though!
+we haven't covered yet. I promise we'll return to Hermione, though!
 
 \vspace{.6in}
 .
