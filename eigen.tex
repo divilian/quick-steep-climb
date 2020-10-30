@@ -155,6 +155,7 @@ and take it for a spin. If we multiply it by, say, {\footnotesize $\begin{bmatri
 \unboldmath
 \end{align*}
 
+\label{thatExample}
 For the input {\footnotesize $\begin{bmatrix} 2 \\ 1 \end{bmatrix}$}, we get:
 
 \vspace{-.2in}
@@ -738,6 +739,7 @@ for square matrices.
 
 \subsection{Example}
 
+
 Let's verify the Spectral Theorem for our $M$ matrix from p.~\pageref{mmatrix}.
 I told you that the eigenvectors were {\footnotesize $\begin{bmatrix} -1 \\
 \frac{1}{2} \end{bmatrix}$} and {\footnotesize $\begin{bmatrix} 4 \\ 4
@@ -776,6 +778,8 @@ eigenvectors.
 Okay. Now if the Spectral Theorem is correct, $M$ should be equal to its
 eigendecomposition. First, let's put together our $V$ matrix (with eigenvectors
 as columns):
+
+\label{mmatrixST}
 
 \vspace{-.15in}
 \begin{align*}
@@ -1013,7 +1017,178 @@ space, ``matrix-vector multiplication'' is a simple scaling operation. We then
 pop back into the standard basis for our final answer.
 
 \smallskip
-\index{orchard}
+
+Just to make this concrete, let's work out an example using our $M$ matrix from
+before (p.~\pageref{mmatrix}). From p.~\pageref{mmatrixST}, we learned that
+$V$, the matrix with normalized eigenvectors as columns, was
+
+\vspace{-.15in}
+\begin{align*}
+V = \begin{bmatrix}
+-.894 & .707 \\
+.447 & .707 \\
+\end{bmatrix}.
+\end{align*}
+\vspace{-.15in}
+
+As I explained above, this is really none other than the change-of-basis matrix
+from $M$'s eigenbasis (we'll call it $B_\lambda$) to the standard basis $B_s$.
+And if we take its inverse, we get the change-of-basis matrix going the other
+way: from $B_s$ to $B_\lambda$. So,
+
+\vspace{-.15in}
+\begin{align*}
+\textrm{COB}_{B_\lambda \rightarrow B_s} =
+\begin{bmatrix}
+-.894 & .707 \\
+.447 & .707 \\
+\end{bmatrix},\ 
+\textrm{COB}_{B_s \rightarrow B_\lambda} =
+\begin{bmatrix}
+-.746 & .746 \\
+.471 & .943 \\
+\end{bmatrix}, 
+\end{align*}
+\vspace{-.15in}
+
+where
+
+\vspace{-.15in}
+\begin{align*}
+B_\lambda = \Bigg\{
+\begin{bmatrix}
+-.894 \\
+.447 \\
+\end{bmatrix}, 
+\begin{bmatrix}
+.707 \\
+.707 \\
+\end{bmatrix} \Bigg\}, \ \textrm{and}\ \ 
+B_s = \Bigg\{
+\begin{bmatrix}
+1 \\
+0 \\
+\end{bmatrix}, 
+\begin{bmatrix}
+0 \\
+1 \\
+\end{bmatrix} \Bigg\}.
+\end{align*}
+\vspace{-.15in}
+
+One of our example inputs to the $M$ linear transformation from
+p.~\pageref{thatExample} was {\footnotesize $\begin{bmatrix} 2 \\ 1
+\end{bmatrix}$}, which we saw $M$ map to {\footnotesize $\begin{bmatrix} 2 \\ 0
+\end{bmatrix}$}. So let's run {\footnotesize $\begin{bmatrix} 2 \\ 1
+\end{bmatrix}$} through the assembly line:
+
+\smallskip
+\begin{center}
+\begin{tabular}{CCCCCCC}
+\textrm{COB}_{B_\lambda \rightarrow B_s} & \cdot & \Lambda & \cdot &
+\textrm{COB}_{B_s \rightarrow B_\lambda} & \cdot &
+\begin{bmatrix} 2 \\ 1 \end{bmatrix}
+\\
+\\
+\begin{bmatrix}
+-.894 & .707 \\
+.447 & .707 \\
+\end{bmatrix}
+& \cdot &
+\begin{bmatrix}
+2 & 0 \\
+0 & \frac{1}{2} \\
+\end{bmatrix}
+& \cdot &
+\begin{bmatrix}
+-.746 & .746 \\
+.471 & .943 \\
+\end{bmatrix}
+& \cdot &
+\begin{bmatrix}
+2 \\
+1 \\
+\end{bmatrix}
+\end{tabular}
+\end{center}
+\smallskip
+
+\begin{enumerate}
+\itemsep1.5em
+
+\item Multiplying our input vector {\footnotesize $\begin{bmatrix} 2 \\ 1
+\end{bmatrix}$} -- whose coordinates are in the standard basis -- by $V^{-1}$
+converts it to the eigenbasis.
+
+\begin{center}
+\begin{tabular}{CCCCC}
+\textrm{COB}_{B_\lambda \rightarrow B_s} & \cdot & \Lambda & \cdot & \downarrow \\
+\begin{bmatrix}
+-.894 & .707 \\
+.447 & .707 \\
+\end{bmatrix}
+& \cdot &
+\begin{bmatrix}
+2 & 0 \\
+0 & \frac{1}{2} \\
+\end{bmatrix}
+& \cdot &
+\begin{bmatrix}
+-.746 \\
+1.886 \\
+\end{bmatrix}
+\end{tabular}
+\end{center}
+\smallskip
+
+So {\footnotesize $\begin{bmatrix} 2 \\ 1 \end{bmatrix}_{B_s}$} is the same as
+{\footnotesize $\begin{bmatrix} -.746 \\ 1.886 \end{bmatrix}_{B_\lambda}$}, and
+we're now in the ``eigenrealm,'' ready for the next step.
+
+\item We now take that eigenbasis-version of our input and multiply it by
+our diagonal matrix of eigenvalues.
+
+\vspace{-.1in}
+\begin{center}
+\begin{tabular}{CCC}
+\textrm{COB}_{B_\lambda \rightarrow B_s} & \cdot & \downarrow \\
+\begin{bmatrix}
+-.894 & .707 \\
+.447 & .707 \\
+\end{bmatrix}
+& \cdot &
+\begin{bmatrix}
+-1.492 \\
+.943 \\
+\end{bmatrix}
+\end{tabular}
+\end{center}
+\smallskip
+
+We've merely scaled the eigenbasis-form of our input: the first element got
+doubled from -.746 to -1.492 (since the first eigenvalue is 2) and the second
+one got halved from 1.886 to .943 (since the second eigenvalue is
+$\frac{1}{2}$). This was actually the only ``transformation'' work to do!
+
+\item Now we merely translate our vector out of eigenspace back to standard
+basis language, by multiplying by the change-of-basis matrix back the other way:
+
+\vspace{-.15in}
+\begin{align*}
+& \ \downarrow \\
+=
+& \begin{bmatrix}
+2 \\
+0 \\
+\end{bmatrix}\ !
+\end{align*}
+\vspace{-.15in}
+
+Exactly as we predicted.
+
+\end{enumerate}
+
+\pagebreak
 
 This is seriously one of the most beautiful things I've seen in all of
 mathematics. It reminds me of an apple tree orchard. When you're wandering
@@ -1029,40 +1204,5 @@ operation suddenly becomes astonishingly simple and elegant.
 \includegraphics[width=0.8\textwidth]{orchard.jpg}
 \end{center}
 
-%% change of basis
-%
-%% eigenbasis: the natural basis
-%
-%% decomposition
-%
-%
-%
 %% orthonormal matrix: inverse = transpose
 %
-%%\begin{align*}
-%%A &=
-%%\begin{bmatrix}
-%%| & | & | & | \\[6pt]
-%%\overrightarrow{\textbf{x}_{1}} &
-%%\overrightarrow{\textbf{x}_{2}} &
-%%\overrightarrow{\textbf{x}_{3}} &
-%%\overrightarrow{\textbf{x}_{4}} \\
-%%| & | & | & | \\[6pt]
-%%\end{bmatrix} \
-%%\begin{bmatrix}
-%%\lambda_1 & 0 & 0 & 0 \\
-%%0 & \lambda_2 & 0 & 0 \\
-%%0 & 0 & \lambda_3 & 0 \\
-%%0 & 0 & 0 & \lambda_4 \\
-%%\end{bmatrix} \
-%%\begin{bmatrix}
-%%- & \overrightarrow{\textbf{x}_{1}} & - \\
-%%- & \overrightarrow{\textbf{x}_{2}} & - \\
-%%- & \overrightarrow{\textbf{x}_{3}} & - \\
-%%- & \overrightarrow{\textbf{x}_{4}} & - \\
-%%\end{bmatrix}
-%%\end{align*}
-%%where the $\overrightarrow{\textbf{x}_k}$'s are the eigenvectors and the
-%%$\lambda_k$'s are the corresponding eigenvalues.
-%%%\vspace{-.15in}
-%%\end{framed}
