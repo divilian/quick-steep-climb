@@ -458,7 +458,7 @@ $\begin{bmatrix} -1 \\ \frac{1}{2} \end{bmatrix}$} vector: it's called the
 \textbf{dominant eigenvector}, for reasons you'll see in a moment. A matrix's
 dominant eigenvector is simply the eigenvector with the highest eigenvalue.
 
-\section{Magnetic pull}
+\subsection{Magnetic pull}
 
 Now assuming you followed all that, this next thing is sure to absolutely blow
 your mind. I know it did mine. I'm going to feed a \textit{random} vector in as
@@ -946,8 +946,8 @@ column, and none of the others.'' So the second column of the answer is $[\ 8\
 
 In fact, if you think of the columns of the $S$ matrix as a \textit{basis}, the
 diagonal matrix is doing nothing more than telling us how much of each basis
-direction we want. It's scaling each basis vector by a certain amount, and
-adding them all together. And that's the key to seeing the eigenbasis'
+vector we want. It's scaling each basis vector by a certain amount, and adding
+them all together. And that's the key to seeing the eigenbasis'
 ``naturalness.''
 
 \index{standard basis}
@@ -1204,5 +1204,43 @@ operation suddenly becomes astonishingly simple and elegant.
 \includegraphics[width=0.8\textwidth]{orchard.jpg}
 \end{center}
 
-%% orthonormal matrix: inverse = transpose
-%
+\subsection{Postlude: symmetric matrices and their eigenbases}
+
+\index{symmetric matrix}
+\index{orthonormal basis}
+\index{covariance matrix}
+
+One last little thing before we end this theoretical chapter and commence with
+some exciting ``eigenapplications'' in the next one. It turns out that in many
+situations, the square matrix $A$ that we're interested in will be
+\textit{symmetric}. This is true if we're dealing with the adjacency matrix of
+an undirected graph, for instance (recall the graph applications section
+beginning on p.~\pageref{sec:graphs}). In statistical applications, we work
+with something called a \textbf{covariance matrix} a lot, which shows how much
+each pair of several random variables are correlated with each other. This,
+too, will be a symmetric matrix.
+
+\index{Spectral Theorem}
+
+It turns out that the eigenvectors of a \textit{symmetric} matrix will always
+form an \textbf{orthonormal basis}. This turns out to be convenient, because of
+the lesson we learned on p.~\pageref{orthoInverseTranspose}: there we
+discovered that if a matrix is orthogonal, its inverse is simply the same thing
+as its transpose. And that means in turn that the Spectral Theorem for such
+matrices reduces from this:
+
+\begin{center}
+$A = V\cdot \Lambda \cdot V^{-1}$
+\end{center}
+
+to simply this:
+
+\begin{center}
+$A = V\cdot \Lambda \cdot V^\intercal$.
+\end{center}
+
+The symmetric matrix $A$ itself is nothing more than its eigenvectors,
+eigenvalues, and eigenvectors back-to-back-to-back.
+
+Crisp and elegant, and as sweet smelling as an apple orchard. In our next and
+final chapter, we'll eat a few of these juicy apples.
