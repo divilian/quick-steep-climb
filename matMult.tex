@@ -327,6 +327,8 @@ resonates most strongly with you. (It did for me.)
 
 \section{Way \#2: All possible dot products}
 
+\label{matMultWay2}
+
 On the other hand, maybe you'll like this one better. Matrix-matrix
 multiplication can also be viewed as \textbf{all possible dot products} between
 the \textbf{rows} of $A$ and the \textbf{columns} of $B$.
@@ -1464,6 +1466,124 @@ x \\ y \\ z \\
 \end{center}
 
 Problem solved.
+
+\section{An amazing (and useful) fact}
+
+\index{Stephen, King of the World}
+\index{King of the World}
+\index{orthogonal matrix}
+\index{inverse}
+\index{transpose}
+
+Recall our friends the ``orthogonal matrices'' from
+p.~\pageref{orthogonalMatrices}. (And remember that Stephen thought they should
+be named ``orthonormal matrices'' instead, but that he was not yet -- and still
+isn't -- King of the World.) An orthogonal matrix is one whose columns are all
+orthogonal to each other, and all have a norm of 1.
+
+Now here's an incredible fact about orthogonal matrices which blew my mind when
+I first heard it. If $O$ is an orthogonal matrix, then \textit{its inverse is
+the same as its transpose}; namely, $O^\intercal = O^{-1}$.
+
+\textit{What?!}
+
+When we learned the \textit{transpose} operation on p.~\pageref{transpose}, it
+was so simple a kindergartner could do it. All you do is turn the matrix on its
+side: the rows become the columns and the columns become the rows. It's
+trivial.
+
+But the \textit{inverse} operation is a horse of an entirely different color.
+It's messy enough that I haven't even told you how to calculate it: I've just
+said, ``ask Python.'' and when you looked at the inverses of some pretty simple
+matrices (like on the previous page), you've probably shaken your head and said
+``geez, how did Python ever come up with \textit{that?}''
+
+So it's truly astonishing that a quick and painless operation like transpose
+could ever coincide with a gnarly and perplexing one like inverse. But they do,
+if the matrix is orthogonal. And you can see why, if you think about matrix
+multiplication in ``Way \#2'' (p.~\pageref{matMultWay2}).
+
+Suppose I take the transpose of a matrix $O$ and multiply that by $O$ itself.
+So I'm computing $O^\intercal \cdot O$. Then, I'll get \textit{every column of
+$O$ dot-product-ed with every column of $O$}. See how that works? Taking the
+transpose of the matrix on the left-hand side flips the rows and columns. So
+when we take the dot product of the first row of $O^\intercal$ with the first
+column of $O$, we're really doing the dot product of $O^\intercal$'s first
+column \textit{with itself}. And when we multiply the first row of
+$O^\intercal$ by the \textit{second} column of $O$, we're really multiplying
+the first column of $O$ by the second column of $O$. And so forth. Every entry
+in our final $O^\intercal \cdot O$ answer will be the result of multiplying
+some column of $O$ by some other column of $O$.
+
+Now consider what we know about orthogonal matrices:
+
+\begin{itemize}
+\itemsep.1em
+
+\item If $O$ is orthogonal, then each of its columns has a norm of 1. That
+means that multiplying any column of $O$ by itself will give a dot product of
+1. (If you have trouble seeing this, you might peek back to
+p.~\pageref{cosineDotProduct} where we thought about the dot product in terms
+of the cosine of the angle between vectors. A vector times itself has an angle
+$\theta$ of 0, of course, and so $\cos 0 = 1$. If the vector itself is already
+of length 1, then $1 \cdot 1 = 1$, duh.)
+
+\item If $O$ is orthogonal, then each of its columns is orthogonal to all the
+others. Which in turn means that each column has a \textit{zero} dot product
+with any of the others.
+
+\end{itemize}
+
+So if $O$ is a $3 \times 3$, say, computing $O^\intercal \cdot O$ gives us
+this:
+
+\vspace{-.35in}
+\begin{center}
+\[
+O^\intercal \cdot O =
+\]
+\[
+\begin{bmatrix}
+\scriptsize
+\textrm{column 1} \cdot \textrm{column 1} &
+\scriptsize
+\textrm{column 1} \cdot \textrm{column 2} &
+\scriptsize
+\textrm{column 1} \cdot \textrm{column 3} \\
+\scriptsize
+\textrm{column 2} \cdot \textrm{column 1} &
+\scriptsize
+\textrm{column 2} \cdot \textrm{column 2} &
+\scriptsize
+\textrm{column 2} \cdot \textrm{column 3} \\
+\scriptsize
+\textrm{column 3} \cdot \textrm{column 1} &
+\scriptsize
+\textrm{column 3} \cdot \textrm{column 2} &
+\scriptsize
+\textrm{column 3} \cdot \textrm{column 3} \\
+\end{bmatrix}
+\]
+\[
+= \begin{bmatrix}
+1 & 0 & 0 \\
+0 & 1 & 0 \\
+0 & 0 & 1 \\
+\end{bmatrix} \quad \textrm{!}
+\]
+\end{center}
+\vspace{-.1in}
+
+\index{identity matrix}
+
+Look at that! Multiplying $O$ times its transpose gave us \textit{the identity
+matrix}. And that, of course, is the definition of ``inverse'': ``the matrix
+you can multiply by to get the identity matrix.'' And so we've just proven that
+for orthogonal matrices, the inverse is the same as the transpose.
+
+This will save us a lot of work in the future, when working with
+\textbf{orthonormal bases}. So file this useful tip away.
+
 
 \section[Change-of-basis matrices]{\large Change-of-basis matrices (\textit{from} standard)}
 
