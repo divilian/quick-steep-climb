@@ -1013,11 +1013,12 @@ The answers are at the end of the chapter (p.~\pageref{specialMatrixQuizSols}).
 \bigskip
 
 \index{block diagonal matrix}
-Finally, one more special matrix type that's a bit different from the previous
-ones. It's called a \textbf{block diagonal matrix}. A matrix is block diagonal
-if it can be partitioned into rectangular chunks (called ``blocks'') such that
-each chunk on the diagonal is square, and all entries in the non-diagonal
-chunks must be all zeros.
+
+Rounding out our list, I'll mention two more types of ``special'' matrices that
+are a bit different from the previous ones. The first is called a \textbf{block
+diagonal matrix}. A matrix is block diagonal if it can be partitioned into
+rectangular chunks (called ``blocks'') such that each chunk on the diagonal is
+square, and all entries in the non-diagonal chunks must be all zeros.
 
 Whoa, that's hard to visualize. Let's look at some examples:
 
@@ -1056,8 +1057,7 @@ we can see that it satisfies the conditions. The two blocks on the diagonal
 
 Sometimes it can take a little fiddling around to find the right partition. Try
 this one:
-
-\vspace{-.15in}
+\pagebreak
 \begin{align*}
 \mleft[
 \begin{array}{cccc}
@@ -1131,8 +1131,133 @@ fool you, but if you partition it this way:
 
 you can see that it is.
 
+\bigskip
+
+\index{orthogonal}
+\index{orthogonal (orthonormal) matrix}
+
+Finally finally, let me introduce the concept of an ``\textbf{orthogonal}
+matrix.'' A matrix must meet two criteria in order to deserve the title
+``orthogonal'':
+
+\begin{compactenum}
+\itemsep.1em
+
+\item Each of its \textit{columns} must be orthogonal to each of the other
+columns. (Recall from p.~\pageref{orthogonalMeansZeroDotProduct} that two
+vectors are orthogonal if their dot product is zero.)
+
+\item The (Euclidean) norm of each of its columns must be equal to 1. (Recall
+that to compute the Euclidean norm of a vector, you just take the
+square-root-of-the-sum-of-its-elements-squared, a.k.a. the Pythagorean Theorem.
+See p.~\pageref{Euclideannorm}.)
+
+\end{compactenum}
+
+Okay, that seemed kind of random. But it actually has important implications,
+which will come up later in the book. For now, let me just show some examples
+of each:
+
+\vspace{-.15in}
+\begingroup
+\renewcommand*{\arraystretch}{1.5}
+\begin{align*}
+A =
+\begin{bmatrix}
+2 & 1 \\
+-2 & 1 \\
+\end{bmatrix},\quad
+B =
+\begin{bmatrix}
+\frac{\sqrt{2}}{2} & 1 \\
+\frac{\sqrt{2}}{2} & 0 \\
+\end{bmatrix},\quad
+C =
+\begin{bmatrix}
+\frac{2}{5} & \frac{3}{5} \\
+\frac{3}{5} & -\frac{2}{5} \\
+\end{bmatrix},\quad
+D =
+\begin{bmatrix}
+1 & 0 \\
+0 & 1 \\
+\end{bmatrix}.
+\end{align*}
+\endgroup
+
+\smallskip
+Question: which of these matrices are orthogonal? Answers:
+
+\vspace{-.1in}
+\begin{itemize}
+\itemsep.9em
+
+\item $A$ is \textit{not}. It passes the first criterion, since
+${\scriptsize \begin{bmatrix} 2 \\ -1 \end{bmatrix}} \cdot
+{\scriptsize \begin{bmatrix} 1 \\ 1 \end{bmatrix}}$ does equal zero (check my
+math!) but the two columns don't have Euclidean length 1. (The norm of the
+left column for instance, is $\sqrt{2^2 + (-2)^2} = 2.828\dots$) Next!
+
+\item $B$ is \textit{not}. It passes the second criterion (the Euclidean norms of both
+columns are 0 -- double-check that) but not the first, since the dot product of
+the two columns is $\frac{\sqrt{2}}{2} = .707\dots$ (Double-check that, too.)
+Next!
+
+\item Matrix $C$, on the other hand, \textit{is} orthogonal. The dot product of
+its two columns is zero:
+
+\vspace{-.15in}
+\begin{align*}
+\frac{2}{5} \cdot \frac{3}{5} + 
+\frac{3}{5} \cdot \Big(-\frac{2}{5}\Big) = \frac{6}{25} - \frac{6}{25} = 0,
+\end{align*}
+\vspace{-.15in}
+
+and each column has norm 1:
+
+\vspace{-.15in}
+\begin{align*}
+\Bigg(\sqrt{\frac{2}{5}}\Bigg)^2 &+ \Bigg(\sqrt{\frac{3}{5}}\Bigg)^2 = 1,
+\textrm{and} \\
+\Bigg(\sqrt{\frac{3}{5}}\Bigg)^2 &+ \Bigg(-\sqrt{\frac{2}{5}}\Bigg)^2 = 1.
+\end{align*}
+\vspace{-.15in}
+
+Yay!
+
+\item And lastly, realize that the identity matrix $D$ is also orthogonal! Both
+criteria are satisfied by inspection. This is true of any identity matrix,
+you'll realize as soon as you consider it.
+
+\end{itemize}
+
+\index{orthonormal}
+
+I haven't yet told you why orthogonal matrices are important, but we'll return
+to this in future chapters.
+
+\index{King of the World}
+\index{Stephen, King of the World}
+
+By the way, if I were King of the World, I wouldn't have called these
+``orthogonal matrices.'' I would have called them ``\textbf{orthonormal}
+matrices.'' That's because two vectors which are both perpendicular to each
+other (with zero dot product, and therefore orthogonal) \textit{and} which also
+each have Euclidean norm 1 (and thus are ``normalized'' in length) are called
+\textbf{orthonormal vectors}.
+
+When I'm King, I'll redefine these terms so that ``orthogonal matrix'' means
+any matrix that satisfies criterion \#1, above (but not necessarily \#2), and
+reserve the new term ``orthonormal matrix'' for any matrix that satisfies
+\textit{both} criteria. Until then, we'll have to keep using the misleading
+term ``orthogonal matrix.'' (Keep a watch on your news feed for that
+Stephen-becomes-King-of-the-World thing -- I'm still working on it.)
+
 \vfill
+
 \pagebreak
+
+
 
 \subsection*{Answers to ``special'' matrix quiz from
 p.~\pageref{specialMatrixQuiz}}
