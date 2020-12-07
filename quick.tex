@@ -82,6 +82,13 @@
 \newenvironment{custommargins}[2]%
   {\addtolength{\leftskip}{#1}\addtolength{\rightskip}{#2}}{\par}
 
+% https://tex.stackexchange.com/questions/69025/how-to-save-and-restore-chapters-heading-format
+\newenvironment{alttitles}{
+\titleformat{\section}[hang]{\normalfont\bfseries\Large}{}{0pt}{}
+\renewcommand{\thesection}{}% Remove section references.
+\renewcommand{\thesubsection}{L\arabic{subsection}.}% Relabel subsections.
+}
+
 %% Set left margin - The default is 1 inch, so the following
 %% command sets a 2-inch left margin.
 %\setlength{\oddsidemargin}{1in}
