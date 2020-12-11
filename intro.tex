@@ -252,3 +252,209 @@ hourly rates come up very, very often, and when they do, there's a lot of
 amazingly useful things we can do with them. Join us on our hike and you'll
 see.
 
+\bigskip
+\hrulefill \\
+
+\pagebreak
+
+\section*{\faPython \ \ \textit{Appendix: Python}}
+
+\index{Python}
+\index{programming}
+\index{calculator, glorified}
+
+Each chapter of this book comes equipped with an appendix showing how to carry
+out the various linear algebra calculations in a programming language called
+Python. Here's the first one!
+
+\medskip
+
+Most readers will have done at least a little bit of computer programming
+before making it to this book. If you haven't, don't worry about it. We're not
+really going to be programming \textit{per se}, but rather using the Python
+language as a glorified calculator.
+
+Python is of course a fully-functional, feature-rich programming language that
+can be used for just about any program you want to write, whether that's a PC
+or smartphone app, a data analysis program, or a dynamic website. It's a great
+and very readable language, and I highly recommend adding it to your quiver as
+you assimilate various high-tech tools.
+
+\subsection*{Installing and navigating Python}
+\index{NumPy}
+\index{Anaconda}
+\index{Spyder}
+\index{code}
+\index{debug}
+\index{console window}
+\index{editor window}
+
+For this book, all you'll need to do is download a Python IDE\footnote{IDE
+stands for ``Integrated Development Environment'' and just means ``a
+point-and-click interface that lets you write programs, edit them, run them,
+and debug (find and remove errors) them.''} and the ``package'' (bundle of
+software) called ``\textbf{numpy}.'' NumPy\footnote{NumPy can be pronounced
+either ``NUM-PIE'' or ``NUM-pee.'' I've heard both.} stands for ``numerical
+Python,'' and has the various cogs and gears to create vectors and matrices,
+the mainstays of this book. The easiest way I know of to do this is to download
+the \textbf{Anaconda} Python distribution from \url{www.anaconda.com}, and then
+start the \textbf{Spyder} application that automatically comes with it.
+
+Whether you use Spyder or a different IDE (IDLE, Eclipse, and PyCharm are some
+other popular ones), the main thing to focus on -- and the only thing I'll
+describe in this book -- is the Python code itself, which you'll type in an
+\textbf{editor} window that sorta resembles Microsoft Word or Google Docs.
+
+After you type in some code and want to try running it, you'll execute whatever
+the ``run/execute'' operation is in your IDE (in Spyder it's a little green
+``run'' arrow). The output of the code will then appear in some kind of
+\textbf{console} window (normally another pane on the screen; in Spyder it's on
+the lower-right by default). Just think of this like a calculator: you first
+type in something like ``\texttt{258 $\times$ 312}'' and then when you press
+the equals sign (\texttt{=}) the answer \texttt{80496} appears.
+
+That's more or less all we'll be doing in this book. The code you write in the
+editor window will be like the ``\texttt{258 $\times$ 312}'' part (except it
+will involve vectors and matrices), and the \texttt{80496} is what Python will
+print to the console window. Our ``programs'' won't even really deserve the
+name.
+
+From now on, whenever I give example Python code in this book, I'll write it in
+a box like this:
+
+% TODO: update year from 2021 to whatever. (See several places below where
+% values are referenced.)
+
+\label{firstPython}
+
+\vspace{-.15in}
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+# Our first code example!
+from numpy import *
+
+founding = 1776
+usa_age = 2021 - founding
+print("Our country is {} years old!".format(usa_age))
+\end{Verbatim}
+\vspace{-.15in}
+
+That box means ``this stuff goes in the editor window.''
+
+\medskip
+
+When I write the corresponding output (\textit{i.e.}, what gets printed to the
+console when you run the code) I'll write it like this:
+
+\vspace{-.1in}
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+Our country is 245 years old!
+\end{Verbatim}
+\vspace{-.1in}
+
+That vertical bar means ``this stuff is the printed result of executing that
+code.''
+
+\medskip
+
+\subsection*{First steps}
+
+And actually, before we end this first appendix, let's talk briefly about the
+code in that very first box and what it means.
+
+\index{hashtag}
+\index{commenting out code}
+
+First off, you'll see that the first line of that code snippet begins with a
+hashtag (``\texttt{\#}''). This tells Python to \textit{ignore} that line
+entirely. It doesn't contain Python code, after all, but English text, which
+Python can't understand. This is called a \textbf{comment}. Comments are used
+quite often as ``notes to oneself,'' to organize a program, or to narrate
+non-obvious sections of code.
+
+Another use of the hashtag (perhaps even more common) is to temporarily
+``comment out'' lines of code that you don't want to run for the time being.
+Instead of outright deleting things you want Python to ignore for the moment,
+it's convenient to stick hashtags on the far-left of such lines, since you can
+easily remove the hashtags whenever you want to get Python to recognize those
+lines again.
+
+\smallskip
+
+Moving on, the very first (non-commented) line of code you'll put in every
+Python program is this one:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+from numpy import *
+\end{Verbatim}
+
+which just means ``I'd like to use the NumPy package, please.''\footnote{You
+may see other ways of importing NumPy, particularly this one:
+
+\medskip
+\quad\quad\texttt{import numpy as np}
+\medskip
+
+This is actually slightly better practice, but it also means that any time
+you'd want to use NumPy stuff -- like the \texttt{array()} function we'll talk
+about in Chapter~\ref{ch:vectors} -- you'd have to prefix it with
+``\texttt{np.}'' It's slightly more convenient to avoid that for our
+Python-as-quick-calculator approach.}
+
+\smallskip
+
+\index{variable (Python)}
+\index{assignment (Python)}
+
+The next two lines of code create \textbf{variable}s, which are named
+containers that hold values. In this case, the values in question are simply
+integers, although later in the book we'll be using variables to store vectors
+and matrices and other goodies.
+
+To create a new variable (or change the current value of an existing variable),
+you simply give the variable a name (with no spaces or funky characters) and
+use the equals sign to \textbf{assign} that variable a value, as in
+``\texttt{founding = 1776}''. Unlike in math, a program variable's value can
+change throughout the program any time the code assigns it a new value.
+
+The following line is only slightly more complicated: it performs a subtraction
+operation to \textbf{calculate} a value for the \texttt{usa\_age}
+variable.\footnote{Underscores are commonly used in variable names to split up
+multiple words. Underscores are \textit{not} considered ``funky.''} Some of the
+symbols used for common mathematical operations are obvious, and some are not:
+
+\begin{compactitem}
+\item[\texttt{\large +}]-- addition
+\item[\texttt{\large -}]-- subtraction
+\item[\texttt{\large *}]-- multiplication
+\item[\texttt{\large /}]-- division
+\item[\texttt{\large \%}]-- modulus (``remainder when dividing by'')
+\item[\texttt{\large **}]-- exponentiation (``to the power of'')
+\end{compactitem}
+
+\medskip
+
+Finally, the last line (with \texttt{print()}) is used for displaying output to
+the console. Inside the parentheses, you put a quoted piece of text that you
+want to display. You put a pair of back-to-back curly braces
+(``\texttt{\{\}}'') to create a placeholder for a variable's value to be
+inserted. Then, following the final quotation mark, you put
+``\texttt{.format()}'' (notice the leading dot) and inside \textit{its} parens
+you list the variables (separated by commas if they're more than one) that you
+want Python to substitute in the placeholders. Make sure you get the syntax
+right, character-for-character, because like most programming things it's
+error-prone and unforgiving.
+
+\medskip
+
+Code in a Python program executes line-by-line, top-to-bottom. So after the
+NumPy library is imported, and the \texttt{founding} variable is given the
+value 1776, the next line subtracts 1776 from 2021 and sets \texttt{usa\_age}
+to 245. The print statement then sticks that value in for the placeholder in
+its message, and outputs the complete message to the screen: ``\texttt{Our
+country is 245 years old!}''
+
+\bigskip
+
+That's it! After you've typed this example program into Spyder's (or your
+IDE's) editor, and run it to see the output shown above in the console, I
+hereby declare you Python-ready for the rest of the book.
