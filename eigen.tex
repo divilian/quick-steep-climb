@@ -442,8 +442,8 @@ eigenvector of $M$, this time with eigenvalue $\lambda=\frac{1}{2}$.
 \bigskip
 
 Wow, okay. And does $M$ have still other eigenvectors in store for us as well?
-The answer turns out to be \textbf{\textit{no,}} an important fact we'll return
-to in a moment.
+The somewhat surprising answer turns out to be \textbf{\textit{no}}. There's
+only those two. This is an important fact we'll return to in a moment.
 
 \medskip
 
@@ -523,7 +523,7 @@ I keep multiplying $\overrightarrow{\textbf{r}}$ by $M$, here's what I get:
 \unboldmath
 \end{align*}
 
-You might ask ``what's the big deal?'' until you look at the upper left of
+You might ask ``what's the big deal?''~until you look at the upper left of
 Figure~\ref{converge1}, where I've plotted this sequence of vectors with the
 circled numbers \ding{182}, \ding{183}, \ding{184}, and \ding{185}. I've also
 plotted \textit{the dominant eigenvector} (which was in the direction
@@ -549,11 +549,11 @@ drags it progressively to the dominant eigenvector!}
 \end{figure}
 
 So we see that ``dominant'' eigenvector is an apt term. The matrix somehow
-\textit{wants} to map its inputs to the direction of the dominant eigenvector,
-and if you keep multiplying by it, it'll always be drawn there. And that's
-true \textit{no matter where you started.} This fact will have immense
-repercussions when we look at things like Markov chains and the PageRank
-algorithm in the next chapter.
+\textit{wants} to map its inputs to the direction of the dominant eigenvector.
+If you keep multiplying by that matrix, you'll always be drawn there. And
+that's true \textit{no matter what vector you started with.} This fact will
+have immense repercussions when we look at things like Markov chains and the
+PageRank algorithm in the next chapter.
 
 In fact, the only vector I can start with and not get dragged to the dominant
 eigenvector is one that is \textit{exactly} in the direction of the
@@ -662,9 +662,9 @@ matrix to Python and asked it for the eigenvectors and eigenvalues. We'll see
 the code to do that at the end of the chapter. This is how you'll always do it
 in practice.
 
-\smallskip
-\phantom{.}
-\pagebreak
+%\smallskip
+%\phantom{.}
+%\pagebreak
 
 % TODO: add "Instructions for doing this are given at the end of the chapter."
 
@@ -935,18 +935,18 @@ But if I told you to compute \textit{this} operation by hand, you wouldn't cry:
 \vspace{-.15in}
 
 The reason this operation is easy is that each column of the right-hand-side
-matrix has all zero entries but one. Consider its first column, $[\ 3\ \ 0\ \
-0\ \ 0\ ]^\intercal$. That says, ``for the first column of my answer, I'd like
-three of $S$'s first column, and none of the others.'' So the first column of
-our answer is simply $[\ 9\ \ 15\ \ 3\ \ 9\ ]^\intercal$: we just multiply each
-entry by 3. Its second column is $[\ 0\ \ 2\ \ 0\ \ 0\ ]^\intercal$, which
-means ``for the second column of my answer, I'd like two of $S$'s second
-column, and none of the others.'' So the second column of the answer is $[\ 8\
-\ 10\ \ 2\ \ 8\ ]^\intercal$. And so on.
+matrix has all zero entries but one. Consider its first (leftmost) column, $[\
+3\ \ 0\ \ 0\ \ 0\ ]^\intercal$. That says, ``for the first column of my answer,
+I'd like three of $S$'s first column, and none of the others.'' So the first
+column of our answer is simply $[\ 9\ \ 15\ \ 3\ \ 9\ ]^\intercal$: we just
+multiply each entry by 3. Its second column is $[\ 0\ \ 2\ \ 0\ \ 0\
+]^\intercal$, which means ``for the second column of my answer, I'd like two of
+$S$'s second column, and none of the others.'' So the second column of the
+answer is $[\ 8\ \ 10\ \ 2\ \ 8\ ]^\intercal$. And so on.
 
-In fact, if you think of the columns of the $S$ matrix as a \textit{basis}, the
-diagonal matrix is doing nothing more than telling us how much of each basis
-vector we want. It's scaling each basis vector by a certain amount, and adding
+In fact, if you think of the columns of the $S$ matrix as a basis, the diagonal
+matrix is doing nothing more than telling us \textit{how much of each basis
+vector we want.} It's scaling each basis vector by a certain amount, and adding
 them all together. And that's the key to seeing the eigenbasis'
 ``naturalness.''
 
@@ -1001,8 +1001,8 @@ $\overrightarrow{x}$ from the standard basis to the eigenbasis. (!)
 
 \item Then, multiplying by $\Lambda$ is a trivial operation which gives us ``a
 certain amount'' of each eigenvector. (The ``amount'' is the eigenvalue
-corresponding to that eigenvector, which effectively tells us how ``important''
-the eigenbasis vector in that direction is to the result.)
+corresponding to that eigenvector, which effectively tells us how important
+that eigenvector is to the result.)
 
 \item Finally, multiplying $\overrightarrow{x}$ by $V$ converts
 our answer from the eigenbasis back to the standard basis. (!)
@@ -1076,7 +1076,7 @@ B_s = \Bigg\{
 \end{align*}
 \vspace{-.15in}
 
-One of our example inputs to the $M$ linear transformation from
+Now one of our example inputs to the $M$ linear transformation from
 p.~\pageref{thatExample} was {\footnotesize $\begin{bmatrix} 2 \\ 1
 \end{bmatrix}$}, which we saw $M$ map to {\footnotesize $\begin{bmatrix} 2 \\ 0
 \end{bmatrix}$}. So let's run {\footnotesize $\begin{bmatrix} 2 \\ 1
