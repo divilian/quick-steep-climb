@@ -13,9 +13,238 @@ structure will enable us to do things we could only dream about before.
 
 \pagebreak
 
-\section{Low-rank approximations}
+\renewcommand{\thesubsection}{V\arabic{subsection}.}%... from subsections
+\section{Video compression}
 
-% closest low-rank approximation
+Imagine you owned a business, and you needed to send a $7\times 7$ matrix over
+the Internet to one of your customers. Say, this matrix:
+
+\vspace{-.15in}
+\begin{align*}
+M_1 = 
+\begingroup
+\renewcommand*{\arraystretch}{1.2}
+\begin{bmatrix}
+5 & -1 & 45 & 16 & 16 & 3 & 37 \\
+3 & -9 & 9  & 27 & -100 & 24 & 601 \\
+13 & 0 & 2  & 13 & -18 & 21 & 11 \\
+-4 & 33 & 9  & 1 & 4 & 14 & 50 \\
+-21 & 51 & 9  & 17 & 5 & 73 & -5 \\
+31 & -5 & 9  & -99 & -22 & 1 & 7 \\
+6 & 8 & 9  & 24 & 8 & 8 & 8 \\
+\end{bmatrix}.
+\endgroup
+\end{align*}
+\vspace{-.15in}
+
+How many numbers would you have to send your customer to communicate this
+information?
+
+Easy question. There are 49 entries in this matrix, so to send it you need to
+send 49 numbers. Duh.
+
+\medskip
+
+Now suppose you wanted to send this one instead:
+
+\vspace{-.15in}
+\begin{align*}
+M_2 = 
+\begingroup
+\renewcommand*{\arraystretch}{1.2}
+\begin{bmatrix}
+5 & 5 & 10 & -5 & 20 & 500 & 2\frac{1}{2} \\
+3 & 3 & 6 & -3 & 12 & 300 & 1\frac{1}{2} \\
+13 & 13 & 26 & -13 & 52 & 1300 & 6\frac{1}{2} \\
+-4 & -4 & -8 & 4 & -16 & -400 & -2 \\
+-21 & -21 & -42 & 21 & -84 & -2100 & -10\frac{1}{2} \\
+31 & 31 & 62 & -31 & 124 & 3100 & 15\frac{1}{2} \\
+6 & 6 & 12 & -6 & 24 & 600 & 3 \\
+\end{bmatrix}.
+\endgroup
+\end{align*}
+\vspace{-.15in}
+
+How many numbers would you have to send?
+
+If you answered, ``again, 49,'' take another look. $M_2$ is way different than
+$M_1$, because it has a very regular structure. Look at $M_2$'s first
+(leftmost) column. Then realize that its second column is identical to the
+first. Then realize that its third column is \textit{twice} the first. Its
+fourth column is \textit{negative} the first. And its last three columns are
+four times, a hundred times, and one-half times the first column, respectively.
+
+So if your customer knew the matrix would have this type of structure, I claim
+you could send them all the information necessary information in just
+\textit{14} numbers instead of 42. Here's how:
+
+\begin{compactenum}
+\item First, send them the first column: $[\ 5\ \ 3\ \ 13\ \ -4\ \ -21\ \ 31\ \
+6\ ]$. That's seven numbers.
+\item Then, send them the multiplier for each of the other columns. Namely, $[\
+1\ \ 1\ \ 2\ \ -1\ \ 4\ \ 100\ \ \frac{1}{2}\ ]$. That, too, is seven
+numbers.\footnote{Yeah, yeah, I know we could omit the first ``1'' in this
+second set of seven, because the customer will know that the first column
+should be multiplied by 1 without us having to tell them. That's a detail, and
+it's actually messier to take advantage of that.}
+
+\end{compactenum}
+
+\index{outer product}
+
+From these fourteen numbers alone, the customer can reconstruct the original
+matrix. All they have to do is compute the outer product (recall
+p.~\pageref{outerProduct}) of the two 7-element vectors they received:
+
+\vspace{-.15in}
+\begin{gather*}
+\begin{bmatrix}
+5 \\ 3 \\ 13 \\ -4 \\ -21 \\ 31 \\ 6 \\
+\end{bmatrix} \cdot
+\begin{bmatrix}
+1 & 1 & 2 & -1 & 4 & 100 & \frac{1}{2} \\
+\end{bmatrix} =\\
+\begingroup
+\renewcommand*{\arraystretch}{1.2}
+\begin{bmatrix}
+5 & 5 & 10 & -5 & 20 & 500 & 2\frac{1}{2} \\
+3 & 3 & 6 & -3 & 12 & 300 & 1\frac{1}{2} \\
+13 & 13 & 26 & -13 & 52 & 1300 & 6\frac{1}{2} \\
+-4 & -4 & -8 & 4 & -16 & -400 & -2 \\
+-21 & -21 & -42 & 21 & -84 & -2100 & -10\frac{1}{2} \\
+31 & 31 & 62 & -31 & 124 & 3100 & 15\frac{1}{2} \\
+6 & 6 & 12 & -6 & 24 & 600 & 3 \\
+\end{bmatrix}.
+\endgroup
+\end{gather*}
+\vspace{-.15in}
+
+\medskip
+\label{rank-deficient}
+
+What's going on here? Simply put, $M_2$ has \textit{less information} in it
+than $M_1$ does, despite the fact that they are ostensibly the same size. In
+fact, you may have realized that $M_2$ is a \textbf{rank-1} matrix. It has only
+one linearly independent column: all the others are simply (scaled) copies of
+it. This is what a rank-deficient matrix fundamentally is: a matrix that can
+have some of its entries ``squeezed'' out of it without losing any information.
+
+\smallskip
+
+$M_1$ and $M_2$ represent the far extremes of this phenomenon. $M_1$ is full
+rank (rank-7), and $M_2$ is just rank-1. In general, a $7\times 7$
+rank-deficient matrix might not be \textit{as} deficient as $M_2$ is: it could
+have a rank anywhere from 1 to 6.
+
+\smallskip
+
+Incidentally, 14 numbers might not seem like that big a savings over 49 (it's
+only 3.5 times fewer entries), but consider what happens as the matrix gets
+larger. Suppose it were $1920\times 1920$. Transmitting a rank-1 matrix of that
+size would require $1920+1920=3840$ numbers to go across the wire. But a
+full-rank matrix of that size would need \textit{3,686,400} entries. That's
+nearly 1,000 times as much data.
+
+\subsection{Enter Netflix}
+
+\index{frame (of a video)}
+\index{gray scale}
+\index{bit / byte}
+
+Now what's the application here? Well, it's probably one you use every day.
+Suppose your aforementioned business is a video streaming service, and your
+customer is watching a video. The matrix we've been talking about is one
+\textbf{frame} of this video. For simplicity, we'll consider images (frames)
+that are in \textbf{gray scale} rather than color. Each \textbf{pixel} of the
+image is represented by a single number on some scale: perhaps 0 indicates a
+pitch black pixel in the current frame, and 255 is bright white, and all the
+numbers in between are shades of gray.\footnote{Why a range of 0 through 255?
+Because as you may remember from Chapters 6 and 7 of \textit{A Cool Brisk
+Walk}, that's how many different values can fit in a single byte (8 bits) of
+data.}
+
+If each frame of our movie is a $1920\times 1920$-pixel square\footnote{At this
+point it may occur to you that when you watch a movie, your screen isn't
+perfectly square, but rectangular; its \index{aspect ratio} \textbf{aspect
+ratio} might be 1.875, giving a $1920\times 1024$ canvas. When your matrix
+isn't square, instead of using the eigenvalue decomposition, as we learned last
+Chapter, we can use the \index{singular value decomposition (SVD)}
+\textbf{singular value decomposition (SVD)}, a very closely related technique.
+In fact, the ``singular values'' and ``singular vectors'' that the SVD gives
+you are exactly the same thing as eigenvalues and eigenvectors for a non-square
+matrix.}, and we're shoveling 30 frames per second at our viewer, that would be
+about 105 Megabytes of information \textit{every second} we'd be trying to
+send. The whole Internet ain't got no time for that.
+
+So what we'd like to do is send a compressed version of each frame, one whose
+rank is far less than 1,920 and yet which looks pretty close to the original.
+Our problem thus reduces to: \textit{what matrix, of the same size as the
+original image's matrix but of at most rank-$k$, is the ``closest'' to the
+original?}
+
+\subsection{Yet another norm}
+
+\index{Frobenius norm}
+\index{Euclidean norm}
+
+First, we have to settle on what we mean by one matrix being ``close'' to
+another. The metric we'll use for this is to subtract one matrix from the
+other, and then take the \textbf{Frobenius norm} of this difference.
+Subtracting matrices is just the inverse of adding them
+(p.~\pageref{matrixAddition}), of course: we do it element by element and get a
+matrix of the differences. The Frobenius norm -- which always sounded to me
+like a character from a Willy Wonka story -- is just what you might expect: the
+square-root of the sum of all these squared differences. In this way, the
+Frobenius norm of a matrix is just like the Euclidean norm of a vector
+(p.~\pageref{Euclideannorm}), except that we have a two-dimensional pane of
+entries to work with instead of just a one-dimensional list.
+
+To be concrete, let's say we have a matrix $M$, and an ``approximation'' to
+matrix $M$ called $\hat{M}$, with the following values:
+
+\vspace{-.15in}
+\begin{align*}
+M =
+\begin{bmatrix}
+17 & 2 \\
+-3 & 6 \\
+\end{bmatrix}, \quad
+\hat{M} =
+\begin{bmatrix}
+14 & 4 \\
+-5 & -1 \\
+\end{bmatrix}, 
+\end{align*}
+\vspace{-.15in}
+
+How ``close'' are these two matrices to each other? We first subtract one from
+the other (doesn't matter which):
+
+\vspace{-.15in}
+\begin{align*}
+M - \hat{M} =
+\begin{bmatrix}
+3 & -2 \\
+2 & 7 \\
+\end{bmatrix}.
+\end{align*}
+\vspace{-.15in}
+
+And then we take the square-root of the sum of the squared entries to give us
+the Frobenius norm:
+
+\vspace{-.15in}
+\begin{align*}
+\sqrt{3^2 + -2^2 + 2^2 + 7^2} = 8.124.
+\end{align*}
+\vspace{-.15in}
+
+This measure passes a quick sanity check: the further apart the entries of $M$
+and $\hat{M}$ are at a particular row and column, the larger the difference
+that will be added towards the Frobenius norm, giving matrices whose entires
+are more similar a lower norm, and thus a higher similarity.
+
+\subsection{Best low-rank matrix approximations}
 
 % SVD/PCA
 %   least squares approximation
