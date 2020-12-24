@@ -252,6 +252,289 @@ higher similarity.
 
 \subsection{Best low-rank matrix approximations}
 
+\index{dominant eigenvector}
+
+And now for our eigenstuff. Recall (p.~\pageref{theScoopAboutEigenvectors} and
+following) that every eigenvector of a matrix has a corresponding eigenvalue,
+and that we could arrange these eigenvectors by decreasing eigenvalue if we
+like. The one with the largest eigenvalue had the special name ``dominant
+eigenvector.'' I'll also refer to ``the top eigenvector,'' ``the top two
+eigenvectors,'' ``the top ten eigenvectors,'' and so forth, by which I just
+mean ``the $k$ eigenvectors with the highest eigenvalues.''
+
+Okay. It turns out that the best rank-1 approximation to a square matrix (where
+``best'' means ``closest to the original when using the Frobenius norm'') is
+\textit{the dominant eigenvector, times its eigenvalue, times the transpose of
+the dominant eigenvector.} To illustrate, let's say we had this $5\times 5$
+matrix\footnote{You may notice that this example matrix happens to be
+\textit{symmetric}. Things actually get slightly weird for non-symmetric
+matrices, in which case you can again turn to the SVD,\index{singular value
+decomposition (SVD)} which is almost the same thing as the
+\index{eigendecomposition (of a matrix)} eigendecomposition.}:
+
+\vspace{-.15in}
+\label{Amatrix}
+\begin{align*}
+A =
+\begin{bmatrix}
+12 & 2 & 1 & 9 & 13 \\
+2 & 20 & 12 & 7 & 5 \\
+1 & 12 & 6 & -4 & 5 \\
+9 & 7 & -4 & 8 & 8 \\
+13 & 5 & 5 & 8 & 13 \\
+\end{bmatrix}
+,
+\end{align*}
+\vspace{-.15in}
+
+and we wanted the best rank-1 approximation to it. We ask Python for its
+dominant eigenvector, and the corresponding eigenvalue, and get this:
+
+\vspace{-.15in}
+\begin{align*}
+\overrightarrow{x_1} = 
+\begin{bmatrix}
+.462 \\ .538 \\ .257 \\ .38 \\ .535 \\
+\end{bmatrix}, \quad
+\lambda_1 = 37.363.
+\end{align*}
+\vspace{-.15in}
+
+Multiplying these out as indicated above, we get:
+
+\vspace{-.15in}
+\begin{gather*}
+\overrightarrow{x_1} \cdot \begin{bmatrix} \lambda_1 \end{bmatrix} \cdot \overrightarrow{x_1}^\intercal =\\
+\begin{bmatrix}
+.462 \\ .538 \\ .257 \\ .38 \\ .535 \\
+\end{bmatrix} \cdot
+\begin{bmatrix}
+37.363
+\end{bmatrix} \cdot
+\begin{bmatrix}
+.462 & .538 & .257 & .38 & .535 \\
+\end{bmatrix} = \\
+\begin{bmatrix}
+7.963 & 9.288 & 4.441 & 6.563 & 9.222\\
+9.288 & 10.834 & 5.18 & 7.655 & 10.757\\
+4.441 & 5.18 & 2.477 & 3.66 & 5.143\\
+6.563 & 7.655 & 3.66 & 5.409 & 7.6 \\
+9.222 & 10.757 & 5.143 & 7.6 & 10.68 \\
+\end{bmatrix}.
+\end{gather*}
+\vspace{-.05in}
+
+\index{Spectral Theorem}
+
+Take careful note to see that \textit{this is actually the \textbf{Spectral
+Theorem} in action} (from p.~\pageref{SpectralTheorem}) but using only a subset
+of the eigenvectors/eigenvalues (namely, the top one) instead of all of them.
+(This is why I put the top eigenvalue, 37.363, into a $1\times 1$ matrix in the
+equation above -- to help you see that connection.)
+
+\medskip
+
+Now how close is this approximation to our original $A$ matrix? Not that great,
+actually. If you run your eyes over the entries, and compare to $A$
+(p.~\pageref{Amatrix}) it doesn't even look like it's trying very hard. The
+Frobenius norm of the difference between the two, by the way, is a whopping
+573.04, which tells you that limiting ourselves to rank-1 isn't producing a
+very good approximation. We wouldn't want to send such an image to our viewer,
+even though it would only take 10 bytes instead of 25, because they might not
+even know whether they were on HBO or the Disney Channel.
+
+\bigskip
+
+Okay, let's move up to rank-2 then. What's the closest rank-2 matrix to our
+original? Python says the second highest eigenvalue (and its eigenvector) are:
+
+\vspace{-.15in}
+\begin{align*}
+\overrightarrow{x_2} = 
+\begin{bmatrix}
+-.458 \\ .658 \\ .448 \\ -.266 \\ -.293 \\
+\end{bmatrix}, \quad
+\lambda_2 = 27.712.
+\end{align*}
+\vspace{-.15in}
+
+Adding this second eigenvector into the mix, we get:
+
+\vspace{-.15in}
+\begin{gather*}
+\begin{bmatrix}
+| & | \\[6pt]
+\overrightarrow{\textbf{x}_{1}} &
+\overrightarrow{\textbf{x}_{2}} \\
+| & | \\[6pt]
+\end{bmatrix} \cdot
+\begin{bmatrix}
+\lambda_1 & 0 \\
+0 & \lambda_2 \\
+\end{bmatrix} \cdot
+\begin{bmatrix}
+| & | \\[6pt]
+\overrightarrow{\textbf{x}_{1}} &
+\overrightarrow{\textbf{x}_{2}} \\
+| & | \\[6pt]
+\end{bmatrix}^\intercal = \\
+\small
+\begingroup
+\setlength\arraycolsep{2pt}
+\begin{bmatrix}
+.462 & -.458 \\
+.538 & .658 \\
+.257 & .448 \\
+.38 & -.266 \\
+.535 & -.293 \\
+\end{bmatrix} \cdot
+\begin{bmatrix}
+37.363 & 0 \\
+0 & 27.712 \\
+\end{bmatrix} \cdot
+\begin{bmatrix}
+.462 & .538 & .257 & .38 & .535 \\
+-.458 & .658 & .448 & -.266 & -.293 \\
+\end{bmatrix}\endgroup\\
+=
+\begin{bmatrix}
+ 12.515 & 2.748 & -0.011 & 9.211 & 12.138 \\
+ 2.748 & 20.231 & 11.577 & 3.849 & 6.567 \\
+ -0.011 & 11.577 & 6.831 & 1.07 & 2.291 \\
+ 9.211 & 3.849 & 1.07 & 6.95 & 9.297 \\
+ 12.138 & 6.567 & 2.291 & 9.297 & 12.548 \\
+\end{bmatrix}.
+\end{gather*}
+\vspace{-.05in}
+
+Now we're talking. Flip back and forth between those numbers and the original
+$A$ on p.~\pageref{Amatrix}, and you'll see that with just two eigenvectors,
+we're starting to get a remarkably close approximation. Frobenius just
+plummeted to 101.62. Repeating this for the best rank-3 approximation, we get:
+
+\vspace{-.15in}
+\begin{gather*}
+\begin{bmatrix}
+| & | & | \\[6pt]
+\overrightarrow{\textbf{x}_{1}} &
+\overrightarrow{\textbf{x}_{2}} &
+\overrightarrow{\textbf{x}_{3}} \\
+| & | & | \\[6pt]
+\end{bmatrix} \cdot
+\begin{bmatrix}
+\lambda_1 & 0 & 0 \\
+0 & \lambda_2 & 0 \\
+0 & 0 & \lambda_3 \\
+\end{bmatrix} \cdot
+\begin{bmatrix}
+| & | & | \\[6pt]
+\overrightarrow{\textbf{x}_{1}} &
+\overrightarrow{\textbf{x}_{2}} &
+\overrightarrow{\textbf{x}_{3}} \\
+| & | & | \\[6pt]
+\end{bmatrix}^\intercal = \\
+\begingroup
+\setlength\arraycolsep{2pt}
+\footnotesize
+\begin{bmatrix}
+.462 & -.458 & .156 \\
+.538 & .658 & -.33 \\
+.257 & .448 & .525 \\
+.38 & -.266 & -.651 \\
+.535 & -.293 & .408 \\
+\end{bmatrix} \cdot
+\begin{bmatrix}
+37.363 & 0 & 0 \\
+0 & 27.712 & 0 \\
+0 & 0 & 7.6 \\
+\end{bmatrix} \cdot
+\begin{bmatrix}
+.462 & .538 & .257 & .38 & .535 \\
+-.458 & .658 & .448 & -.266 & -.293 \\
+.156 & -.33 & .525 & -.651 & .408 \\
+\end{bmatrix} \endgroup \\
+=
+\begin{bmatrix}
+12.701 & 2.356 & 0.612 & 8.438 & 12.623 \\
+ 2.356 & 21.06 & 10.259 & 5.484 & 5.542 \\
+ 0.612 & 10.259 & 8.925 & -1.528 & 3.921 \\
+ 8.438 & 5.484 & -1.528 & 10.173 & 7.276 \\
+ 12.623 & 5.542 & 3.921 & 7.276 & 13.815 \\
+\end{bmatrix},
+\end{gather*}
+\vspace{-.05in}
+
+which is even closer, with a Frobenius norm of just 59.07. Each time we add
+another eigenvector, we give our approximation another degree of freedom which
+it can use to bend closer to the original. And finally, if we use all 5, we of
+course get the original matrix back:
+
+\vspace{-.15in}
+\begin{gather*}
+\begin{bmatrix}
+| & | & | & | & | \\[6pt]
+\overrightarrow{\textbf{x}_{1}} &
+\overrightarrow{\textbf{x}_{2}} &
+\overrightarrow{\textbf{x}_{3}} &
+\overrightarrow{\textbf{x}_{4}} &
+\overrightarrow{\textbf{x}_{3}} \\
+| & | & | & | & | \\[6pt]
+\end{bmatrix} \cdot
+\begin{bmatrix}
+\lambda_1 & 0 & 0 & 0 & 0 \\
+0 & \lambda_2 & 0 & 0 & 0 \\
+0 & 0 & \lambda_3 & 0 & 0 \\
+0 & 0 & 0 & \lambda_4 & 0 \\
+0 & 0 & 0 & 0 & \lambda_5 \\
+\end{bmatrix} \cdot
+\begin{bmatrix}
+| & | & | & | & | \\[6pt]
+\overrightarrow{\textbf{x}_{1}} &
+\overrightarrow{\textbf{x}_{2}} &
+\overrightarrow{\textbf{x}_{3}} &
+\overrightarrow{\textbf{x}_{4}} &
+\overrightarrow{\textbf{x}_{5}} \\
+| & | & | & | & | \\[6pt]
+\end{bmatrix}^\intercal = \\
+\begingroup
+\setlength\arraycolsep{1.2pt}
+\tiny
+\begin{bmatrix}
+-0.462 & -0.458 & 0.156 & 0.735 & -0.109 \\
+ -0.538 & 0.658 & -0.33 & 0.082 & -0.402 \\
+ -0.257 & 0.448 & 0.525 & 0.105 & 0.668 \\
+ -0.38 & -0.266 & -0.651 & -0.181 & 0.572 \\
+ -0.535 & -0.293 & 0.408 & -0.639 & -0.23 &  \\
+\end{bmatrix} \cdot
+\begin{bmatrix}
+37.363 & 0 & 0 & 0 & 0 \\
+0 & 27.712 & 0 & 0 & 0 \\
+0 & 0 & 7.599 & 0 & 0 \\
+0 & 0 & 0 & -.151 & 0 \\
+0 & 0 & 0 & 0 &  -6.523 \\
+\end{bmatrix} \cdot
+\begin{bmatrix}
+-0.462 & -0.538 & -0.257 & -0.38 & -0.535 \\
+ -0.458 & 0.658 & 0.448 & -0.266 & -0.293 \\
+ 0.156 & -0.33 & 0.525 & -0.651 & 0.408 \\
+ 0.735 & 0.082 & 0.105 & -0.181 & -0.639 \\
+ -0.109 & -0.402 & 0.668 & 0.572 & -0.23 &  \\
+\end{bmatrix} \endgroup \\
+\normalsize
+=
+\begin{bmatrix}
+12 & 2 & 1 & 9 & 13 \\
+2 & 20 & 12 & 7 & 5 \\
+1 & 12 & 6 & -4 & 5 \\
+9 & 7 & -4 & 8 & 8 \\
+13 & 5 & 5 & 8 & 13 \\
+\end{bmatrix} = A,
+\end{gather*}
+\vspace{-.05in}
+
+by the Spectral Theorem. (And a Frobenius norm of 0.)
+
+
 % SVD/PCA
 %   least squares approximation
 
