@@ -462,14 +462,18 @@ plummeted to 101.62. Repeating this for the best rank-3 approximation, we get:
  12.623 & 5.542 & 3.921 & 7.276 & 13.815 \\
 \end{bmatrix},
 \end{gather*}
-\vspace{-.05in}
+\vspace{-.15in}
 
-which is even closer, with a Frobenius norm of just 59.07. Each time we add
-another eigenvector, we give our approximation another degree of freedom which
-it can use to bend closer to the original. And finally, if we use all 5, we of
-course get the original matrix back:
+which is even closer, with a Frobenius norm of just 59.07.
+
+\vspace{.8in}
+
+Each time we add another eigenvector, we give our approximation another degree
+of freedom which it can use to bend closer to the original. And finally, if we
+use all 5, we of course get the original matrix back:
 
 \vspace{-.15in}
+\footnotesize
 \begin{gather*}
 \begin{bmatrix}
 | & | & | & | & | \\[6pt]
@@ -496,43 +500,60 @@ course get the original matrix back:
 \overrightarrow{\textbf{x}_{5}} \\
 | & | & | & | & | \\[6pt]
 \end{bmatrix}^\intercal = \\
+\end{gather*}
+\pagebreak
+\begin{gather*}
 \begingroup
-\setlength\arraycolsep{1.2pt}
-\tiny
-\begin{bmatrix}
+\setlength\arraycolsep{2pt}
+\footnotesize
+= \begin{bmatrix}
 -0.462 & -0.458 & 0.156 & 0.735 & -0.109 \\
  -0.538 & 0.658 & -0.33 & 0.082 & -0.402 \\
  -0.257 & 0.448 & 0.525 & 0.105 & 0.668 \\
  -0.38 & -0.266 & -0.651 & -0.181 & 0.572 \\
  -0.535 & -0.293 & 0.408 & -0.639 & -0.23 &  \\
-\end{bmatrix} \cdot
+\end{bmatrix}\endgroup \ \cdot \quad \quad \quad \quad \quad \quad \quad \quad
+\quad \quad
+\\ \quad \quad \quad \quad \quad \quad \quad \quad
+\quad \quad
+\begingroup
+\setlength\arraycolsep{2pt}
 \begin{bmatrix}
 37.363 & 0 & 0 & 0 & 0 \\
 0 & 27.712 & 0 & 0 & 0 \\
 0 & 0 & 7.599 & 0 & 0 \\
 0 & 0 & 0 & -.151 & 0 \\
 0 & 0 & 0 & 0 &  -6.523 \\
-\end{bmatrix} \cdot
+\end{bmatrix}\endgroup \ \cdot \quad \quad \quad \quad \quad \quad \quad \quad
+\quad \quad
+\\ \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad
+\begingroup
+\setlength\arraycolsep{2pt}
 \begin{bmatrix}
 -0.462 & -0.538 & -0.257 & -0.38 & -0.535 \\
  -0.458 & 0.658 & 0.448 & -0.266 & -0.293 \\
  0.156 & -0.33 & 0.525 & -0.651 & 0.408 \\
  0.735 & 0.082 & 0.105 & -0.181 & -0.639 \\
- -0.109 & -0.402 & 0.668 & 0.572 & -0.23 &  \\
-\end{bmatrix} \endgroup \\
+ -0.109 & -0.402 & 0.668 & 0.572 & -0.23 \\
+\end{bmatrix}\endgroup = \\
 \normalsize
-=
 \begin{bmatrix}
 12 & 2 & 1 & 9 & 13 \\
 2 & 20 & 12 & 7 & 5 \\
 1 & 12 & 6 & -4 & 5 \\
 9 & 7 & -4 & 8 & 8 \\
 13 & 5 & 5 & 8 & 13 \\
-\end{bmatrix} = A,
+\end{bmatrix} = A \quad \checkmark
 \end{gather*}
 \vspace{-.05in}
 
+\normalsize
 by the Spectral Theorem. (And a Frobenius norm of 0.)
+
+\bigskip
+
+Finally, let's look at this work on an actual image.
+
 
 
 % SVD/PCA
