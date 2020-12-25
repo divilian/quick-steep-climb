@@ -103,7 +103,7 @@ p.~\pageref{outerProduct}) of the two 7-element vectors they received:
 \begin{gather*}
 \begin{bmatrix}
 5 \\ 3 \\ 13 \\ -4 \\ -21 \\ 31 \\ 6 \\
-\end{bmatrix} \cdot
+\end{bmatrix} \ \textrm{\textbullet} \ 
 \begin{bmatrix}
 1 & 1 & 2 & -1 & 4 & 100 & \frac{1}{2} \\
 \end{bmatrix} =\\
@@ -304,13 +304,14 @@ Multiplying these out as indicated above, we get:
 
 \vspace{-.15in}
 \begin{gather*}
-\overrightarrow{x_1} \cdot \begin{bmatrix} \lambda_1 \end{bmatrix} \cdot \overrightarrow{x_1}^\intercal =\\
+\overrightarrow{x_1} \ \textrm{\textbullet} \  \begin{bmatrix} \lambda_1
+\end{bmatrix} \ \textrm{\textbullet} \  \overrightarrow{x_1}^\intercal =\\
 \begin{bmatrix}
 .462 \\ .538 \\ .257 \\ .38 \\ .535 \\
-\end{bmatrix} \cdot
+\end{bmatrix} \ \textrm{\textbullet}\ 
 \begin{bmatrix}
 37.363
-\end{bmatrix} \cdot
+\end{bmatrix} \ \textrm{\textbullet}\ 
 \begin{bmatrix}
 .462 & .538 & .257 & .38 & .535 \\
 \end{bmatrix} = \\
@@ -367,11 +368,11 @@ Adding this second eigenvector into the mix, we get:
 \overrightarrow{\textbf{x}_{1}} &
 \overrightarrow{\textbf{x}_{2}} \\
 | & | \\[6pt]
-\end{bmatrix} \cdot
+\end{bmatrix} \ \textrm{\textbullet}\ 
 \begin{bmatrix}
 \lambda_1 & 0 \\
 0 & \lambda_2 \\
-\end{bmatrix} \cdot
+\end{bmatrix} \ \textrm{\textbullet}\ 
 \begin{bmatrix}
 | & | \\[6pt]
 \overrightarrow{\textbf{x}_{1}} &
@@ -387,11 +388,11 @@ Adding this second eigenvector into the mix, we get:
 .257 & .448 \\
 .38 & -.266 \\
 .535 & -.293 \\
-\end{bmatrix} \cdot
+\end{bmatrix} \ \textrm{\textbullet}\ 
 \begin{bmatrix}
 37.363 & 0 \\
 0 & 27.712 \\
-\end{bmatrix} \cdot
+\end{bmatrix} \ \textrm{\textbullet}\ 
 \begin{bmatrix}
 .462 & .538 & .257 & .38 & .535 \\
 -.458 & .658 & .448 & -.266 & -.293 \\
@@ -420,12 +421,12 @@ plummeted to 101.62. Repeating this for the best rank-3 approximation, we get:
 \overrightarrow{\textbf{x}_{2}} &
 \overrightarrow{\textbf{x}_{3}} \\
 | & | & | \\[6pt]
-\end{bmatrix} \cdot
+\end{bmatrix} \ \textrm{\textbullet}\ 
 \begin{bmatrix}
 \lambda_1 & 0 & 0 \\
 0 & \lambda_2 & 0 \\
 0 & 0 & \lambda_3 \\
-\end{bmatrix} \cdot
+\end{bmatrix} \ \textrm{\textbullet}\ 
 \begin{bmatrix}
 | & | & | \\[6pt]
 \overrightarrow{\textbf{x}_{1}} &
@@ -442,12 +443,12 @@ plummeted to 101.62. Repeating this for the best rank-3 approximation, we get:
 .257 & .448 & .525 \\
 .38 & -.266 & -.651 \\
 .535 & -.293 & .408 \\
-\end{bmatrix} \cdot
+\end{bmatrix} \ \textrm{\textbullet}\ 
 \begin{bmatrix}
 37.363 & 0 & 0 \\
 0 & 27.712 & 0 \\
 0 & 0 & 7.6 \\
-\end{bmatrix} \cdot
+\end{bmatrix} \ \textrm{\textbullet}\ 
 \begin{bmatrix}
 .462 & .538 & .257 & .38 & .535 \\
 -.458 & .658 & .448 & -.266 & -.293 \\
@@ -466,7 +467,7 @@ plummeted to 101.62. Repeating this for the best rank-3 approximation, we get:
 
 which is even closer, with a Frobenius norm of just 59.07.
 
-\vspace{.8in}
+\bigskip
 
 Each time we add another eigenvector, we give our approximation another degree
 of freedom which it can use to bend closer to the original. And finally, if we
@@ -483,14 +484,14 @@ use all 5, we of course get the original matrix back:
 \overrightarrow{\textbf{x}_{4}} &
 \overrightarrow{\textbf{x}_{3}} \\
 | & | & | & | & | \\[6pt]
-\end{bmatrix} \cdot
+\end{bmatrix} \ \textrm{\textbullet}\ 
 \begin{bmatrix}
 \lambda_1 & 0 & 0 & 0 & 0 \\
 0 & \lambda_2 & 0 & 0 & 0 \\
 0 & 0 & \lambda_3 & 0 & 0 \\
 0 & 0 & 0 & \lambda_4 & 0 \\
 0 & 0 & 0 & 0 & \lambda_5 \\
-\end{bmatrix} \cdot
+\end{bmatrix} \ \textrm{\textbullet}\ 
 \begin{bmatrix}
 | & | & | & | & | \\[6pt]
 \overrightarrow{\textbf{x}_{1}} &
@@ -500,21 +501,19 @@ use all 5, we of course get the original matrix back:
 \overrightarrow{\textbf{x}_{5}} \\
 | & | & | & | & | \\[6pt]
 \end{bmatrix}^\intercal = \\
-\end{gather*}
-\pagebreak
-\begin{gather*}
 \begingroup
 \setlength\arraycolsep{2pt}
 \footnotesize
-= \begin{bmatrix}
+\begin{bmatrix}
 -0.462 & -0.458 & 0.156 & 0.735 & -0.109 \\
  -0.538 & 0.658 & -0.33 & 0.082 & -0.402 \\
  -0.257 & 0.448 & 0.525 & 0.105 & 0.668 \\
  -0.38 & -0.266 & -0.651 & -0.181 & 0.572 \\
  -0.535 & -0.293 & 0.408 & -0.639 & -0.23 &  \\
-\end{bmatrix}\endgroup \ \cdot \quad \quad \quad \quad \quad \quad \quad \quad
+\end{bmatrix}\endgroup \ \textrm{\textbullet} \quad \quad \quad \quad \quad \quad \quad \quad
 \quad \quad
-\\ \quad \quad \quad \quad \quad \quad \quad \quad
+\\
+\quad \quad \quad \quad \quad \quad \quad \quad
 \quad \quad
 \begingroup
 \setlength\arraycolsep{2pt}
@@ -524,9 +523,13 @@ use all 5, we of course get the original matrix back:
 0 & 0 & 7.599 & 0 & 0 \\
 0 & 0 & 0 & -.151 & 0 \\
 0 & 0 & 0 & 0 &  -6.523 \\
-\end{bmatrix}\endgroup \ \cdot \quad \quad \quad \quad \quad \quad \quad \quad
+\end{bmatrix}\endgroup \ \textrm{\textbullet} \quad \quad \quad \quad \quad \quad \quad \quad
 \quad \quad
-\\ \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad
+\\
+\end{gather*}
+\pagebreak
+\begin{gather*}
+\quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad
 \begingroup
 \setlength\arraycolsep{2pt}
 \begin{bmatrix}
@@ -551,10 +554,87 @@ use all 5, we of course get the original matrix back:
 by the Spectral Theorem. (And a Frobenius norm of 0.)
 
 \bigskip
+\bigskip
 
 Finally, let's look at this work on an actual image.
+Figure~\ref{fig:stormtrooper} shows a $1800\times 1800$ gray scale still
+frame from a movie. At 1 byte (8 bits) per pixel, the entire original image
+would take 3.24 MBytes to transmit in full. That's a lot of data for one frame
+of a movie that the viewer will only see for $\frac{1}{30}^\textrm{th}$ of a
+second.
 
+\begin{figure}[hb]
+\centering
+\includegraphics[width=0.5\textwidth]{stormtrooper.png}
+\caption{A 3,240,000-byte gray scale image.}
+\label{fig:stormtrooper}
+\end{figure}
 
+Let's see if we can do better. Figure~\ref{fig:approximations} starts with a
+lowly rank-1 matrix (using just the dominant eigenvector), and then increases
+the rank as the images move left-to-right down the page.
+
+\begin{figure}[H]
+\centering
+\begin{tabular}{ccc}
+\scriptsize{Rank-1 (3600 bytes)} &
+\scriptsize{Rank-2 (7200 bytes)} &
+\scriptsize{Rank-3 (10,800 bytes)} \\
+\includegraphics[width=0.3\textwidth]{approx01.png} &
+\includegraphics[width=0.3\textwidth]{approx02.png} &
+\includegraphics[width=0.3\textwidth]{approx03.png}\\
+\smallskip
+\scriptsize{Rank-6 (21,600 bytes)} &
+\scriptsize{Rank-9 (32,400 bytes)} &
+\scriptsize{Rank-12 (43,200 bytes)} \\
+\includegraphics[width=0.3\textwidth]{approx06.png} &
+\includegraphics[width=0.3\textwidth]{approx09.png} &
+\includegraphics[width=0.3\textwidth]{approx12.png}\\
+\smallskip
+\scriptsize{Rank-20 (72,000 bytes)} &
+\scriptsize{Rank-30 (108,000 bytes)} &
+\scriptsize{Rank-40 (144,000 bytes)} \\
+\includegraphics[width=0.3\textwidth]{approx20.png} &
+\includegraphics[width=0.3\textwidth]{approx30.png} &
+\includegraphics[width=0.3\textwidth]{approx40.png}\\
+\scriptsize{Rank-100 (360,000 bytes)} &
+\scriptsize{Rank-200 (720,000 bytes)} &
+\scriptsize{Rank-400 (1,440,000 bytes)} \\
+\includegraphics[width=0.3\textwidth]{approx100.png} &
+\includegraphics[width=0.3\textwidth]{approx200.png} &
+\includegraphics[width=0.3\textwidth]{approx400.png}\\
+\end{tabular}
+\caption{Low-rank approximations of an image matrix, using increasing numbers
+of eigenvectors (and thus an increasing rank, with increasing
+storage/transmission costs.)}
+\label{fig:approximations}
+\end{figure}
+
+\pagebreak
+
+It's interesting to watch how the image emerges as we add more eigenvectors.
+With only the dominant eigenvector, all we can make out is a blurry,
+right-angle-centric splash of black and white. Still, it's not bad for a rank-1
+matrix, and after adding just a few more eigenvectors we can already see the
+basic shape of the helmet come through.
+
+Another observation is that we pretty quickly reach a point of diminishing
+returns. Compare the rank-100 and rank-400 matrices in the bottom row of
+Figure~\ref{fig:approximations}. Is it really worth quadrupling the size to get
+the second one?
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.7\textwidth]{frobenius.png}
+\caption{The closeness to the original matrix as a function of the
+approximation's rank.}
+\label{fig:frobenius}
+\end{figure}
+
+Figure~\ref{fig:frobenius} quantifies this by plotting the rank of the matrix
+against the Frobenius norm of the difference from the original. As you can see, 
+less than fifty or so eigenvectors (out of the total of 1800) is enough to
+eliminate nearly all the error.
 
 % SVD/PCA
 %   least squares approximation
