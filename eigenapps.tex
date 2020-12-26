@@ -654,30 +654,103 @@ this, where $E$ is some event. Sometimes the probability is based on actual
 counts of past occurrences, and sometimes it is estimated based on intuition
 and common sense. For instance:
 
-\vspace{-.15in}
-\begin{align*}
-\textrm{Pr(home team wins in college basketball)} &= .6765 \\
-\textrm{Pr(worldwide pandemic next year)} &= .1
-\end{align*}
-\vspace{-.15in}
+\begin{center}
+Pr(home team wins in college basketball) = .6765 \\
+\smallskip
+Pr(worldwide pandemic next year) = .1
+\end{center}
+
+\index{conditional probability}
 
 You may also recall the notion of \textbf{conditional probability}, in which
 our estimate of an event's likelihood changes based on some other event being
 known to have (or have not) occurred. We use the notation ``Pr($A|B$),''
 pronounced as ``the probability of $A$ given $B$'' for this. Examples:
 
-\vspace{-.15in}
-\begin{align*}
-\textrm{Pr(speeding ticket)} &= .05 \\
-\textrm{Pr(speeding ticket\ $|$\ driving a red car)} &= .15 \\[12pt]
-\textrm{Pr(Jets win tomorrow)} &= .7 \\
-\textrm{Pr(Jets win tomorrow\ $|$\ starting QB hurt in practice)} &= .4 \\
-\end{align*}
-\vspace{-.15in}
+\begin{center}
+Pr(speeding ticket) = .05 \\
+\smallskip
+Pr(speeding ticket\ $|$\ driving a red car) = .15 \\[12pt]
+\medskip
+Pr(Jets win tomorrow) = .7 \\
+\smallskip
+Pr(Jets win tomorrow\ $|$\ starting QB hurt in practice) = .4 \\
+\end{center}
 
 In one of these examples the conditional probability is higher than the
 original, and in the other case it's lower, but either way it's always between
 0 and 1.
+
+\subsection{Systems and states}
+
+\index{system}
+\index{state}
+
+Now oftentimes we have some \textbf{system} of interest, and we want to predict
+how its \textbf{state} will unfold over its lifetime. A system's ``state'' is
+just a way of talking about the (temporary) condition it is in at any one point
+in time. Perhaps our system is the U.S. economy, and in any given quarter its
+``state'' is whether or not it's in a recession. Or maybe we're interested in
+the system of local weather conditions, for which each day's state is either
+sunny, cloudy, or rainy.
+
+\index{independence}
+
+Let's expand on this last example because we all have so much experience with
+weather. One way we could get a handle on what tomorrow may bring is to count
+how many days in the past have been sunny, cloudy, and rainy in our region, and
+then assume \textbf{independence} between days. Remember that if two events are
+independent, that means that the outcome of one of them has no impact on the
+other. A Little League player's \textsl{jersey color} and \textsl{position} are
+independent of each other: if you tell me Henry's uniform is blue, that doesn't
+give me any information about whether he's an infielder or a pitcher.
+
+So assuming independence, we could count up the past 100 days in
+Fredericksburg, and conclude:
+
+\vspace{-.15in}
+\begin{align*}
+\textrm{Pr(sunny)} &= .5 \\
+\textrm{Pr(cloudy)} &= .4 \\
+\textrm{Pr(rainy)} &= .1 \\
+\end{align*}
+\vspace{-.25in}
+
+With this simple model, if someone asked us ``how likely is it to rain
+tomorrow?''~we'd reply ``about a 10\% chance,'' no matter what the weather was
+today, yesterday, or any other day. We figure that it doesn't matter what
+happened on those other days, because we're assuming every day is independent
+of the others.
+
+Now this simplistic response is unsatisfying on several levels. For one, it
+doesn't take into account the season we're in, mushing all months together into
+a mediocre gray. But also, it doesn't even take into account the recent past.
+As we've all observed, weather patterns tend to form and transform on a slower
+time scale than individual days. If it's hot today, it's pretty likely to
+remain hot for at least a little while -- we're probably not going to get a
+string of hot, cold, hot, cold, hot, and cold days consecutively.
+
+\index{Markov chain}
+\index{first-order}
+
+When the current state of a system is influenced by its \textit{previous}
+state, we can build a powerful structure called a \textbf{first-order Markov
+chain} to analyze it. Markov chains are named for the brilliant Russian
+mathematician Andrey Markov, one of the most underrated minds in history, in my
+opinion. The phrase ``first order'' here has nothing to do with Kylo Ren or
+Supreme Leader Snoke; it means that the system's current state depends only on
+its immediately preceding state, and is conditionally independent of all states
+longer ago than that.\footnote{If we said that a system's current state
+depended on its immediately \textit{two} preceding states, we'd built a
+second-order Markov chain, and so forth.} In weather terms, this means knowing
+that it rained on Tuesday tells you something important about whether it will
+also rain on Wednesday, but nothing (directly) about Thursday or beyond.
+
+\subsection{Stochastic matrices}
+
+A Markov chain can be modeled as (surprise!)~a matrix, which encodes all its
+\textit{conditional probabilities}. Each one says: ``if the previous state is
+$X$, here's the probability that the current state will be $Y$.''
 
 \vfill
 \pagebreak
