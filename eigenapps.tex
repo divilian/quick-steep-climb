@@ -636,11 +636,53 @@ against the Frobenius norm of the difference from the original. As you can see,
 less than fifty or so eigenvectors (out of the total of 1800) is enough to
 eliminate nearly all the error.
 
-% SVD/PCA
-%   least squares approximation
+\vfill
+\pagebreak
 
-% Markov chains
+\renewcommand{\thesubsection}{M\arabic{subsection}.}%... from subsections
+\section{Markov chains}
 
-% PageRank
+\index{probability}
+
+For our next eigenapplication, we'll need to review a few concepts from
+Chapter 4 of \textit{A Cool Brisk Walk}: probability.
+
+Recall that we can quantify the likelihood of some event happening by assigning
+it a \textbf{probability} between 0 and 1, where 0 means the event is
+impossible and 1 means it's a certainty. We use the notation ``Pr($E$)'' for
+this, where $E$ is some event. Sometimes the probability is based on actual
+counts of past occurrences, and sometimes it is estimated based on intuition
+and common sense. For instance:
+
+\vspace{-.15in}
+\begin{align*}
+\textrm{Pr(home team wins in college basketball)} &= .6765 \\
+\textrm{Pr(worldwide pandemic next year)} &= .1
+\end{align*}
+\vspace{-.15in}
+
+You may also recall the notion of \textbf{conditional probability}, in which
+our estimate of an event's likelihood changes based on some other event being
+known to have (or have not) occurred. We use the notation ``Pr($A|B$),''
+pronounced as ``the probability of $A$ given $B$'' for this. Examples:
+
+\vspace{-.15in}
+\begin{align*}
+\textrm{Pr(speeding ticket)} &= .05 \\
+\textrm{Pr(speeding ticket\ $|$\ driving a red car)} &= .15 \\[12pt]
+\textrm{Pr(Jets win tomorrow)} &= .7 \\
+\textrm{Pr(Jets win tomorrow\ $|$\ starting QB hurt in practice)} &= .4 \\
+\end{align*}
+\vspace{-.15in}
+
+In one of these examples the conditional probability is higher than the
+original, and in the other case it's lower, but either way it's always between
+0 and 1.
+
+\vfill
+\pagebreak
+
+\renewcommand{\thesubsection}{P\arabic{subsection}.}%... from subsections
+\section{The PageRank algorithm}
 
 \end{alttitles}
