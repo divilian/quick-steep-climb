@@ -4,6 +4,7 @@
 \begin{alttitles}
 
 \chapter{Eigenapplications}
+\label{ch:eigenapps}
 
 We end this book with a few more ultra-cool real-world applications of linear
 algebra. Unlike those in Chapter~\ref{ch:apps}, though, these will all involve
@@ -685,14 +686,17 @@ original, and in the other case it's lower, but either way it's always between
 
 \index{system}
 \index{state}
+\index{Monopoly}
 
-Now oftentimes we have some \textbf{system} of interest, and we want to predict
-how its \textbf{state} will unfold over its lifetime. A system's ``state'' is
-just a way of talking about the (temporary) condition it is in at any one point
-in time. Perhaps our system is the U.S. economy, and in any given quarter its
-``state'' is whether or not it's in a recession. Or maybe we're interested in
-the system of local weather conditions, for which each day's state is either
-sunny, cloudy, or rainy.
+Now recall from Chapter~\ref{ch:apps} that we often want to predict how the
+\textbf{state} of some \textbf{system} will unfold over its lifetime. A
+system's ``state'' is just a way of talking about the (temporary) condition it
+is in at any one point in time. In this section, we're going to focus on just a
+single aspect of a system's state, which has a single value at a point in time,
+not a bunch of stuff like in the Monopoly example. Perhaps our system is the
+U.S. economy, and in any given quarter its ``state'' is whether or not it's in
+a recession. Or maybe we're interested in the system of local weather
+conditions, for which each day's state is either sunny, cloudy, or rainy.
 
 \index{independence}
 
@@ -724,17 +728,23 @@ of the others.
 
 Now this simplistic response is unsatisfying on several levels. For one, it
 doesn't take into account the season we're in, mushing all months together into
-a mediocre gray. But also, it doesn't even take into account the recent past.
-As we've all observed, weather patterns tend to form and transform on a slower
-time scale than individual days. If it's hot today, it's pretty likely to
-remain hot for at least a little while -- we're probably not going to get a
-string of hot, cold, hot, cold, hot, and cold days consecutively.
+a mediocre gray. But more to the point, it doesn't even take into account the
+recent past. As we've all observed, weather patterns tend to form and transform
+on a slower time scale than individual days. If it's hot today, it's pretty
+likely to remain hot for at least a little while -- we're probably not going to
+get a string of hot, cold, hot, cold, hot, and cold days consecutively.
 
 \index{Markov chain}
+\index{Markov property}
+\index{Markov, Andrey}
 \index{first-order}
+\index{Ren, Kylo}
+\index{Kylo Ren}
+\index{Supreme Leader Snoke}
 
-When the current state of a system is influenced by its \textit{previous}
-state, we can build a powerful structure called a \textbf{first-order Markov
+Remember that when the current state of some system is influenced only by its
+\textit{previous} state, it has the so-called ``Markov property.'' In this
+case, we can build a powerful structure called a \textbf{first-order Markov
 chain} to analyze it. Markov chains are named for the brilliant Russian
 mathematician Andrey Markov, one of the most underrated minds in history, in my
 opinion. The phrase ``first order'' here has nothing to do with Kylo Ren or
@@ -751,6 +761,132 @@ also rain on Wednesday, but nothing (directly) about Thursday or beyond.
 A Markov chain can be modeled as (surprise!)~a matrix, which encodes all its
 \textit{conditional probabilities}. Each one says: ``if the previous state is
 $X$, here's the probability that the current state will be $Y$.''
+
+For example, maybe it's true that heat waves tend to last longer than a day. If
+it was sunny yesterday, it's likely to remain sunny today. In symbols, we might
+say:
+
+\vspace{-.15in}
+\begin{align*}
+\textrm{Pr(sunny}_k\ |\ \textrm{sunny}_{k-1}) &= .7 \\
+\end{align*}
+\vspace{-.25in}
+
+The $k$ subscript is just to number the days. This formula says: ``the chances
+of it being sunny on any particular day, given that it was sunny the day
+before, are 70\%.''
+
+\smallskip
+
+Perhaps it's also true in our region that rainstorms tend not to last longer
+than one day. (Once a storm finally breaks, the atmosphere has ``gotten the
+rain out of its system'' and drier days will likely follow.) So we might
+estimate these quantities:
+
+\vspace{-.15in}
+\begin{align*}
+\textrm{Pr(rainy}_k\ |\ \textrm{rainy}_{k-1}) &= .05 \\
+\textrm{Pr(cloudy}_k\ |\ \textrm{rainy}_{k-1}) &= .55 \\
+\textrm{Pr(sunny}_k\ |\ \textrm{rainy}_{k-1}) &= .4 \\
+\end{align*}
+\vspace{-.25in}
+
+We've saying that two rainy days in a row are very unlikely: if it rained
+yesterday, it's most likely to be cloudy (and dry) today, not wet again.
+
+\index{mutually exclusive}
+\index{collectively exhaustive}
+
+Note carefully that the above three numbers \textit{add up to exactly 1}, as
+they must. The weather on day $k$ must either be rainy, cloudy, or sunny in our
+simple weather model. Since these three possibilities are mutually exclusive
+and collectively exhaustive, their probabilities must total 1.
+
+\smallskip
+
+If you nodded to the previous paragraph, make sure you also understand that the
+\textit{following} three numbers do \textit{not} have to add up to 1 (and
+normally won't):
+
+\vspace{-.15in}
+\begin{align*}
+\textrm{Pr(cloudy}_k\ |\ \textrm{rainy}_{k-1}) &= .55 \\
+\textrm{Pr(cloudy}_k\ |\ \textrm{cloudy}_{k-1}) &= .6 \\
+\textrm{Pr(cloudy}_k\ |\ \textrm{sunny}_{k-1}) &= .2 \\
+\end{align*}
+\vspace{-.25in}
+
+% WARNING: "top of the page"
+
+Students sometimes get confused here. The three expressions look an awful lot
+like the ones at the top of the page, yet the bottom three don't represent
+mutually exclusive and collectively exhaustive options at all. The first of the
+bottom three says ``what's the probability it'll be cloudy today if it was
+rainy yesterday?'' The second asks a question about a completely different
+circumstance: ``what about if it was \textit{cloudy} yesterday? Now how likely
+are clouds today?'' These two numbers (.55 and .6) are unrelated to one
+another, and not bound by any probability axioms.
+
+\bigskip
+
+And now, the matrix. There are nine different conditional probabilities for
+this system, and we'll arrange them in a matrix called $W$ (for ``weather'') as
+follows:
+
+\vspace{-.2in}
+\[
+\begin{blockarray}{ccccccccc}
+& & & & \leftarrow & {\textrm{day}_{k-1}} & \rightarrow \\[11pt]
+& & & & {\footnotesize\textrm{sunny}} & {\footnotesize\textrm{cloudy}} &
+{\footnotesize\textrm{rainy}} \\
+\begin{block}{cccc[ccccc]}
+& & \uparrow & {\footnotesize\textrm{sunny}} & .7 & .3 & .4 \\
+{\large W =} \quad\quad\quad & & {\textrm{day}_k} \ \ & {\footnotesize\textrm{cloudy}} & .2 & .6 & .55 \\
+& & \downarrow & {\footnotesize\textrm{rainy}} & .1 & .1 & .05 \\
+\end{block}
+\end{blockarray}
+\]
+
+% WARNING: "last couple of pages"
+The columns correspond to yesterday's weather, and the rows correspond to
+today's weather. So if it was cloudy yesterday, the probability of sun today is
+.3 (top-middle entry). If it was sunny yesterday, the probability of rain today
+is .1 (bottom-left corner). Take a moment to look at this matrix and verify
+your understanding of what each entry means. Also verify that the example
+numbers on the previous couple of pages have all been entered in the right
+places.
+
+\index{stochastic matrix}
+\index{probability matrix}
+\index{substitution matrix}
+\index{transition matrix}
+
+A matrix of the form above goes by many names: some call them \textbf{Markov
+matrices}, others \textbf{probability matrices}, still others
+\textbf{transition matrices}, and yet others \textbf{substitution matrices}.
+Me? I like the term \textbf{stochastic matrices} (since it sounds cool) so
+that's what we'll go with here. (``Stochastic,'' by the way, is a word that
+basically means ``random'' or ``indeterminate.'' Any time you're dealing with
+probability, you have a stochastic system.)
+
+\index{Leslie matrix}
+
+Just like our Leslie matrices from p.~\pageref{sec:leslie} did, stochastic
+matrices have certain constraints they must adhere to in order to join the
+club. For a matrix to be a stochastic matrix:
+
+\begin{compactenum}
+\item all its entries must between 0 and 1, and
+\item the sum of each of its columns must be exactly 1.
+\end{compactenum}
+
+(Notice I wrote ``the sum of each \textit{column},'' not row, for the same
+reason I took pains to explain a few paragraphs ago. The rows don't normally
+sum to 1, and there's no reason they should.)
+
+Before going further, take a moment and verify that the $W$ matrix above is
+indeed a stochastic matrix.
+
 
 \vfill
 \pagebreak
