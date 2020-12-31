@@ -836,7 +836,7 @@ follows:
 \vspace{-.2in}
 \[
 \begin{blockarray}{ccccccccc}
-& & & & \leftarrow & {\textrm{day}_{k-1}} & \rightarrow \\[11pt]
+& & & & \leftarrow & {\overrightarrow{\textrm{day}_{k-1}}} & \rightarrow \\[11pt]
 & & & & {\footnotesize\textrm{sunny}} & {\footnotesize\textrm{cloudy}} &
 {\footnotesize\textrm{rainy}} \\
 \begin{block}{cccc[ccccc]}
@@ -887,11 +887,261 @@ sum to 1, and there's no reason they should.)
 Before going further, take a moment and verify that the $W$ matrix above is
 indeed a stochastic matrix.
 
+Then, complete this puzzle. Given the stochastic matrix $W$, which of the
+following weeks of weather is most likely to actually occur? And which is least
+likely? (``S''=sunny, ``C''=cloudy, ``R''=rainy)
+
+\label{markovPuzzle}
+
+\begin{adjustwidth}{38pt}{30pt}
+\begin{multicols}{2}
+\begin{compactenum}[a.]
+\item S-R-S-R-S-R-S
+\item S-R-R-R-S-S-S
+\item S-C-S-C-S-C-S
+\item S-S-S-S-C-C-C
+\end{compactenum}
+\end{multicols}
+\end{adjustwidth}
+
+(Answers on p.~\pageref{markovPuzzleSol}.)
+
+\subsection{Simulating the Markov chain}
+
+\index{linear operator}
+
+The $W$ matrix is square, and thus a linear operator. It can be multiplied by
+$3\times 1$ column vectors to produce other $3\times 1$ column vectors. Its
+domain is vectors that represent yesterday's weather, and its codomain is
+vectors that represent today's weather.
+
+Suppose yesterday -- which we'll call ``day 1'' since it's the first day we'll
+consider -- was a sunny day. We now want to predict what the weather will be
+today. If we create a column vector for yesterday that has 1 for ``sunny'' and
+0 for the other weather options, all we need to do is multiply it by $W$, and
+whammo:
+
+\vspace{-.15in}
+\begin{align*}
+W \cdot \overrightarrow{\textrm{day}_1} = \overrightarrow{\textrm{day}_2}.
+\end{align*}
+\vspace{-.15in}
+
+By the actual numbers, we get:
+\[
+\begin{blockarray}{cccccc}
+& {\footnotesize\textrm{sunny}} & {\footnotesize\textrm{cloudy}} &
+{\footnotesize\textrm{rainy}} \\
+\begin{block}{c[ccccc]}
+{\footnotesize\textrm{sunny}} & .7 & .3 & .4 \\
+{\footnotesize\textrm{cloudy}} & .2 & .6 & .55 \\
+{\footnotesize\textrm{rainy}} & .1 & .1 & .05 \\
+\end{block}
+\end{blockarray} \cdot
+\begin{bmatrix}
+1 \\ 0 \\ 0 \\
+\end{bmatrix} =
+\begin{bmatrix}
+.7 \\ .2 \\ .1
+\end{bmatrix}.
+\]
+
+We set $\overrightarrow{\textrm{day}_1}$ to $[\ 1\ \ 0\ \ 0\ ]^\intercal$
+because we \textit{knew} yesterday's weather. When we set out to make our
+forecast, we knew that there was a 100\% chance it was sunny yesterday, and 0\%
+chance it was either cloudy or rainy.
+
+The resulting $\overrightarrow{\textrm{day}_2}$ vector, of course, does not
+turn out to have only 0's and 1's. That's because the forecast is uncertain.
+What the $\overrightarrow{\textrm{day}_2}$ vector means is that there will be a
+10\% chance of rain today, a 20\% chance of overcast skies, and a 70\% chance
+of clear blue.
+
+Just like with Leslie matrices, we can run this forward any number of times we
+want to predict into the distant future. Let's find out what the weather is
+likely to be on day 4 (the day after tomorrow):
+
+\vspace{-.15in}
+\begin{align*}
+W \cdot \overrightarrow{\textrm{day}_1} &= \overrightarrow{\textrm{day}_2} \\
+W \cdot \overrightarrow{\textrm{day}_2} &= \overrightarrow{\textrm{day}_3} \\
+W \cdot \overrightarrow{\textrm{day}_3} &= \overrightarrow{\textrm{day}_4} \\
+\textrm{so} \\
+W^3 \cdot \overrightarrow{\textrm{day}_1} &= \overrightarrow{\textrm{day}_4}.
+\end{align*}
+\vspace{-.15in}
+
+\index{associative (operation)}
+
+That last step takes advantage of the associative property of matrix
+multiplication. This yields:
+
+\[
+\begin{blockarray}{cccccc}
+& {\footnotesize\textrm{sunny}} & {\footnotesize\textrm{cloudy}} &
+{\footnotesize\textrm{rainy}} \\
+\begin{block}{c[ccccc]}
+{\footnotesize\textrm{sunny}} & .5455 & .4815 & .49575 \\
+{\footnotesize\textrm{cloudy}} & .35925 & .42325 & .409125 \\
+{\footnotesize\textrm{rainy}} & .09525 & .09525 & .095125 \\
+\end{block}
+\end{blockarray} \cdot
+\begin{bmatrix}
+1 \\ 0 \\ 0 \\
+\end{bmatrix} =
+\begin{bmatrix}
+.5455 \\ .35925 \\ .09525
+\end{bmatrix}.
+\]
+
+Apparently, then, on the day after tomorrow we have only about a 55\% chance of
+sunny weather. That is, if it had been sunny yesterday. What if it had been
+cloudy yesterday?
+
+
+\[
+\begin{blockarray}{cccccc}
+& {\footnotesize\textrm{sunny}} & {\footnotesize\textrm{cloudy}} &
+{\footnotesize\textrm{rainy}} \\
+\begin{block}{c[ccccc]}
+{\footnotesize\textrm{sunny}} & .5455 & .4815 & .49575 \\
+{\footnotesize\textrm{cloudy}} & .35925 & .42325 & .409125 \\
+{\footnotesize\textrm{rainy}} & .09525 & .09525 & .095125 \\
+\end{block}
+\end{blockarray} \cdot
+\begin{bmatrix}
+0 \\ 1 \\ 0 \\
+\end{bmatrix} =
+\begin{bmatrix}
+.4815 \\ .42325 \\ .09525
+\end{bmatrix}.
+\]
+
+Given cloudy weather yesterday, our forecast for the day after tomorrow would
+look even bleaker: just a 48\% chance of sun.
+
+\subsection{...and eigenvectors}
+
+Now what does all of this have to do with eigenvectors? So far, all this neat
+Markov chain material could have been in Chapter~\ref{ch:apps} before we'd
+learned about eigenstuff.
+
+Well, if you haven't guessed it, the key insight is related to the diagrams in
+Section~\ref{magneticPull} (``Magnetic pull,'' p.~\pageref{magneticPull}).
+Remember that when we took any old vector, and repeatedly multiplied a square
+matrix by it, the answers we got out were sucked closer and closer to the
+matrix's dominant eigenvector, as if by magic.
+
+Realize that's exactly what we're doing here with this forecasting-the-future
+stuff. We started with a vector of 0's and 1's representing the actual weather
+on a particular day, and we multiplied it by $W$ once for each day we wanted to
+project our forecast into the future. This means that the further into the
+future we go, the forecast is going to inevitably be drawn to $W$'s dominant
+eigenvector.
+
+Python tells us that the dominant eigenvector for our matrix $W$ is:
+
+\vspace{-.15in}
+\begin{align*}
+\overrightarrow{x_1} = \begin{bmatrix} .5159 \\ .3889 \\ .0952 \end{bmatrix},
+\ \ \textrm{with} \ \lambda_1 = 1.
+\end{align*}
+\vspace{-.15in}
+
+Believe it or not, this vector gives us \textbf{the long-run distribution of
+the states in the weather system.} Up until now, we've been extrapolating from
+yesterday's weather out two or three days. But suppose I said, ``okay, let's
+just say a year goes by. What's the probability on any given future day that
+we'll have sunny, cloudy, or rainy weather?'' The answer is given in that
+magical eigenvector $\overrightarrow{x_1}$. On days far in the future, there
+will be precisely a 51.59\% chance of sun, a 38.89\% chance of clouds, and a
+9.52\% chance of showers.
+
+\index{initial condition}
+
+This is the long-run behavior of the Markov chain, dissected and exposed.
+
+It's interesting to think about the fact that it only depends on the $W$ matrix
+itself, not on the starting vector we used for
+$\overrightarrow{\textrm{day}_1}$ (such a starting point is often called an
+\textbf{initial condition}). If you think about it, it makes a lot of sense. If
+we're projecting the long-running behavior of a system, many many days in the
+future, should it really matter whether \textit{today} happened to be sunny,
+cloudy, or rainy? Surely predictions way out in the future shouldn't rely any
+longer on any one observation in the distant past. Its influence has long since
+faded to nothing. And that's exactly what we find. If you're trying to predict
+the weather a few days from now, it's worth it to consider what yesterday's
+weather was and extrapolate out from that. But if you're interested in planning
+your wedding weekend for next summer, that's just too far out for yesterday's
+weather to matter. The eigenvector will keep your forecast honest.
 
 \vfill
 \pagebreak
 
 \renewcommand{\thesubsection}{P\arabic{subsection}.}%... from subsections
 \section{The PageRank algorithm}
+
+\vfill
+\pagebreak
+
+\subsection*{Answers to Markov chain puzzle from
+p.~\pageref{markovPuzzle}}
+
+Just by thinking about how we designed the probabilities, you can probably
+eyeball that sequence d is the most likely and sequence b the least likely. In
+sequence d, we have four sunny days in a row, followed by three cloudy days,
+and it is in fact true that both sunny days and cloudy days like to follow each
+other. In sequence b, though, we have four rainy days in a row which just
+isn't going to happen very often, since our probability of two consecutive
+rainy days is a mere .05.
+
+Here's the precise numerical answers:
+
+\begin{compactenum}[a.]
+\small
+\item
+Pr(rainy$_2\ |\ $sunny$_1$) $\cdot$
+Pr(sunny$_3\ |\ $rainy$_2$) $\cdot$
+Pr(rainy$_4\ |\ $sunny$_3$) $\cdot$
+Pr(sunny$_5\ |\ $rainy$_4$) $\cdot$
+Pr(rainy$_6\ |\ $sunny$_5$) $\cdot$
+Pr(sunny$_7\ |\ $rainy$_6$) $\\=
+.1 \cdot .4 \cdot .1 \cdot .4 \cdot .1 \cdot .4 = $\ \textbf{.000064} \\
+\item
+Pr(rainy$_2\ |\ $sunny$_1$) $\cdot$
+Pr(rainy$_3\ |\ $rainy$_2$) $\cdot$
+Pr(rainy$_4\ |\ $rainy$_3$) $\cdot$\\
+Pr(sunny$_5\ |\ $rainy$_4$) $\cdot$
+Pr(sunny$_6\ |\ $sunny$_5$) $\cdot$
+Pr(sunny$_7\ |\ $sunny$_6$) $\\=
+.1 \cdot .05 \cdot .05 \cdot .4 \cdot .7 \cdot .7 = $\ \textbf{.000049} \\
+\item
+Pr(cloudy$_2\ |\ $sunny$_1$) $\cdot$
+Pr(sunny$_3\ |\ $cloudy$_2$) $\cdot$
+Pr(cloudy$_4\ |\ $sunny$_3$) $\cdot$
+Pr(sunny$_5\ |\ $cloudy$_4$) $\cdot$
+Pr(cloudy$_6\ |\ $sunny$_5$) $\cdot$
+Pr(sunny$_7\ |\ $cloudy$_6$) $\\=
+.2 \cdot .3 \cdot .2 \cdot .3 \cdot .2 \cdot .3 = $\ \textbf{.000064} \\
+\item
+Pr(sunny$_2\ |\ $sunny$_1$) $\cdot$
+Pr(sunny$_3\ |\ $sunny$_2$) $\cdot$
+Pr(sunny$_4\ |\ $sunny$_3$) $\cdot$
+Pr(cloudy$_5\ |\ $sunny$_4$) $\cdot$
+Pr(cloudy$_6\ |\ $cloudy$_5$) $\cdot$
+Pr(cloudy$_7\ |\ $cloudy$_6$) $\\=
+.7 \cdot .7 \cdot .7 \cdot .2 \cdot .6 \cdot .6 = $\ \textbf{.024696} \\
+
+\end{compactenum}
+
+Take special note that even though weeks a and b have the same number of rainy
+and sunny days, the order makes all the difference. Since rainy days don't like
+to follow each other, sequence a is more likely to occur than sequence b. By
+contrast, weeks c and d have the same number of sunny and cloudy days, but
+since those types of weather \textit{do} like to follow each other, sequence d
+is far more likely.
+
+\label{markovPuzzleSol}
+
 
 \end{alttitles}
