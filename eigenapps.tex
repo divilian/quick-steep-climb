@@ -1078,8 +1078,176 @@ weather to matter. The eigenvector will keep your forecast honest.
 \vfill
 \pagebreak
 
-\renewcommand{\thesubsection}{P\arabic{subsection}.}%... from subsections
-\section{The PageRank algorithm}
+\renewcommand{\thesubsection}{W\arabic{subsection}.}%... from subsections
+\section{Web search}
+
+We end this chapter, book, and series with a look at one of the most
+influential algorithms in world history. It's called
+``PageRank,''\footnote{PageRank was invented by Larry Page and Sergey Brin, the
+founders of Google. I always wondered if Sergey was jealous that the algorithm
+wasn't called ``BrinRank.'' Wdyt?} and it's what made Google Google. Like the
+other applications in this chapter, it's based on eigenvectors.
+
+\subsection{Web search: pre-Google}
+
+\index{Yahoo\!}
+
+It's interesting to study the history of Web search engines, which we don't
+have time to do here. But one thing you should know is the approach that Google
+used to dominate the market. Before Google, search engines (like Yahoo!,
+Excite, and Alta Vista) focused only on returning results that matched your
+search terms well.
+
+\index{Jezebel}
+\index{matchmaker@\texttt{matchmaker.com}}
+
+Remember all the way back to the beginning of this book
+(p.~\pageref{matchmakerExample} and following), where we discussed a matchmaker
+dating application for Jezebel, Filbert, and friends. Each person took a survey
+of interests, and was thereafter represented by a single vector of numbers,
+which represented how well they liked hiking, candlelight dinners, and so
+forth. To determine the compatibility between two people, we simply computed
+the dot product of their two vectors. This worked because in order for a dot
+product to be large, the two vectors have to have large entries in the same
+slots of the vector.
+
+\index{Mr.~Right}
+\index{normalizing (a vector)}
+
+One wrinkle with this approach, which we analyzed on
+pp.\pageref{matchmakerGameTheSystemStart}-\pageref{matchmakerGameTheSystemEnd},
+was that it was possible for someone to game the system by simply answering 10
+to all the questions. The way to counteract this insidious strategy was to
+\textit{normalize} everyone's vector before computation. This way, each person
+effectively only has a certain total ``amount'' of ``interests'' which they
+have to spread among their answers.
+
+\index{word count}
+\index{cnn.com@\texttt{cnn.com}}
+
+Interestingly, this is almost exactly the approach used by Web search engines
+to gauge the similarity between two pages, or the similarity of a page to a
+search query. Each Web page is represented as a vector of numbers. In place of
+survey responses as the vector elements, substitute \textbf{word counts}.
+That's right: for every word that appears on any Web page anywhere, a page's
+vector has an entry for \textit{the number of times that word appears on that
+page.} So the vector corresponding to (say) \texttt{cnn.com}'s home page today
+might be:
+
+\vspace{-.15in}
+\begin{center}
+\begin{tabular}{cccccccc}
+$\overrightarrow{\textbf{cnn.com}}$ \ = [ & 105 & 0 & 1 & 2 & $\cdots$ & 0 & ] \\
+& \scriptsize{a} & \scriptsize{aardvark} & \scriptsize{abolish} &
+\scriptsize{abstention} & $\cdots$ & \scriptsize{zoology} & \medskip \\
+\end{tabular}
+\end{center}
+\vspace{-.15in}
+
+\index{aardvark}
+\index{zoology}
+\index{bag of words}
+
+This would indicate that the text on \texttt{cnn.com} has 105 instances of the
+word ``a,'' no ``aardvarks,'' one ``abolish,'' two ``abstentions,'' and so
+forth: one entry for every possible word.\footnote{This might seem like a
+prohibitively huge number to you at first, but it's really not. The English
+language, for instance, only has about half a million words in it, and that's
+if you count absolutely \textit{everything}, even obscure words that haven't
+been used since the 15th century. Throw in all the proper nouns, trademarks,
+slang terms, misspellings, abbreviations, plus the words in every
+\textit{other} language on earth and you're still just in the low millions.
+Contrast that with the number of \textit{pages} there are on the Web, which is
+in the billions.} Notice we're deliberately throwing away the information about
+the \textit{order} words appear on the page. All we care about is how many
+times each word appears. This is called the ``\textbf{bag of words}'' model,
+and turns out to work very well in practice.
+
+After forming this vector for a page, we then play the same trick we did on
+Jezebel \& Co., which is to normalize it:
+
+\vspace{-.15in}
+\begin{center}
+\begin{tabular}{ccccccc}
+$\overrightarrow{\textbf{cnn.com}}$ \ = [ & \footnotesize{.0249} &
+\footnotesize{0} & \footnotesize{.000237} & \footnotesize{.000474} & $\cdots$ &
+\footnotesize{0} \quad ] \\
+& \scriptsize{a} & \scriptsize{aardvark} & \scriptsize{abolish} &
+\scriptsize{abstention} & $\cdots$ & \scriptsize{zoology} \quad \medskip \\
+\end{tabular}
+\end{center}
+\vspace{-.15in}
+
+This tells us that about 2.5\% of all the words on \texttt{cnn.com} today are
+the word \texttt{a}, .0237\% of them are the word \texttt{abolish}, and so on.
+We're thus summing up the content of the page by saying: ``this
+\texttt{cnn.com} page is 2.5\% `about' the word \texttt{a}, .0237\% `about' the
+word \texttt{abolish}, \textit{etc.}''
+
+Now, if I wanted to find ``pages with similar content to \texttt{cnn.com},''
+I'd calculate the dot product of every page's (normalized) vector with CNN's
+vector, and take the highest results. Or, if a Yahoo!~user entered
+``\texttt{harry potter the sorcerers stone}'' in the search box, I'd first make
+a vector on the fly with a 1 for each of the five words of the query and 0
+everywhere else, then normalize it, and finally take its dot product with every
+page's vector. Effectively, this means I'd be looking for the pages for which
+the percentage of words that are \texttt{harry}, \texttt{potter}, \texttt{the},
+\texttt{sorcerers}, or \texttt{stone} is the highest.
+
+\medskip
+
+I'm glossing over several other pragmatic steps that search engines take to
+improve the accuracy of their results. Among them are:
+
+\vspace{-.1in}
+\begin{itemize}
+
+\item Getting rid of punctuation, capitalization, and other stuff that doesn't
+pertain to the root meanings of a word.
+
+\index{stemming}
+
+\item Collapsing all different forms of the same root word to a single entry.
+In English, this is called \textbf{stemming}, because we're finding the word's
+stem and using it instead of the raw word. The idea here is that the words
+\texttt{jump}, \texttt{jumps}, \texttt{jumped}, and \texttt{jumping} all
+reflect the same basic meaning. If we're trying to capture the topics of a Web
+page, we really don't care which of the specific variants of the word appear,
+only its root meaning.
+
+\index{stop list}
+
+\item Dropping super-common words altogether. Words like ``\texttt{a},''
+``\texttt{the},'' and ``\texttt{of}'' don't actually hold any meaningful
+content, because every page has zillions of them regardless of what it's about.
+Search engines use a \textbf{stop list} of common words to discard.
+
+\index{TF/IDF}
+
+\item Scaling the importance of each word by how common it is. This is a
+gentler version of the previous item, but it's very important. The idea is that
+the more common a word is, the less about the page it tells you by being
+present on it.
+
+Consider these two words, for example: \texttt{dollar}, and \texttt{Jedi}. If I
+chose a random Web page and told you only that it contained the word
+\texttt{dollar}, how much would you know about its content? Some, but not much.
+But if I told you that it contained the word \texttt{Jedi}, how much would you
+know? A lot more. This is because \texttt{dollar} is a more common word, and
+therefore appears in many more different contexts than the word \texttt{Jedi}
+does. A popular algorithm for this is called \textbf{TF/IDF}, which stands for
+``term frequency / inverse document frequency.'' The amount that a vector's
+entry contributes to the dot product is the frequency of that word in the page
+(\textit{i.e.}, how many times \texttt{abstention} or a variant of it appears
+in that page) divided by that word's frequency appearing in documents
+(\textit{i.e.}, what percentage of all Web pages that \texttt{abstention}
+appears on). Words like \texttt{dollar} will appear in a much higher percentage
+of Web pages, and thence be ``discounted'' more steeply when it comes to
+computing similarity to queries.
+
+\end{itemize}
+
+\subsection{Web search: Google}
 
 \vfill
 \pagebreak
