@@ -1094,6 +1094,7 @@ applications in this chapter, it's based on eigenvectors. First, though, let's
 take a look at the state of the art before PageRank.
 
 \subsection{Web search: pre-Google}
+\label{sec:webSearchPreGoogle}
 
 \index{Yahoo\!}
 
@@ -1167,7 +1168,8 @@ Contrast that with the number of \textit{pages} there are on the Web, which is
 in the billions.} Notice we're deliberately throwing away the information about
 the \textit{order} words appear on the page. All we care about is how many
 times each word appears. This is called the ``\textbf{bag of words}'' model,
-and turns out to work very well in practice.
+since it's like taking scissors to the page, cutting up all the individual
+words, and dropping them in a bag. It turns out to work very well in practice.
 
 After forming this vector for a page, we then play the same trick we did on
 Jezebel \& Co., which is to normalize it:
@@ -1270,9 +1272,9 @@ typed.''
 When Google came on the scene in 1998, they of course did all that
 content-matching stuff too. But they added a critical second component to the
 criteria for ranking search results. In a way, I've always thought their new
-ingredient was kind of depressing, actually, but in the end it turned out that
-it's what the world really wanted. The key second ingredient was to factor in
-the \textbf{popularity} of a page, in addition to its content.
+ingredient was kind of depressing, but in the end it turned out to be what
+the world really wanted. The key second ingredient was to factor in the
+\textbf{popularity} of a page, in addition to its content.
 
 \index{Rowling, J.K.}
 \index{Potter, Harry}
@@ -1282,23 +1284,25 @@ Simply put, Google realized that in addition to wanting pages that match their
 search terms, users also want pages that are well-known and in some sense
 authoritative. They want to be channeled towards the pages that everyone else
 already knows about and likes. I find this depressing because it seems to
-encourage a herd mentality, and to discourage innovation and discovery. But the
-fact of the matter is that when I type ``\texttt{harry potter the sorcerers
-stone}'' in a search box, most of the time I don't want to read some random
-crazy Harry Potter fan's Web page from Greenland. Instead, I want the IMDB page
-from the movie, or J.K.Rowling's site that discusses her ideas, or the
-Wikipedia page describing the book's release and its reception. In a word, I
-want the popular pages.
+encourage a herd mentality, and to discourage the discovery of new information.
+But the fact of the matter is that when I type ``\texttt{harry potter the
+sorcerers stone}'' in a search box, most of the time I don't want to read the
+Web page of some random crazy Harry Potter fan from Greenland. Instead, I want
+the IMDB page from the movie, or J.K.Rowling's site that discusses her ideas,
+or the Wikipedia page describing the book's release and its reception. In a
+word, I want the popular websites.
 
 That was Page's and Brin's first innovation: to factor popularity into search
 results, so that even if a big well-known website didn't match the search terms
-as well as a lesser-known website, it would get funneled up to the top anyway.
+as well as a lesser-known website did, it would get funneled up to the top of
+the results list anyway.
 
 \subsection{The PageRank algorithm}
 
-Their second innovation was in how to judge a page's popularity. A good
-illustration here is to think of the drama on a middle school playground.
-Everyone knows that the school has popular kids, and not-so-popular kids. (I
+So their first innovation was to take into account a page's popularity at all.
+Their second one was in how to \textit{determine} the popularity of a page. A
+good illustration here is to think of the drama on a middle school playground.
+Everyone knows that a school has popular kids, and not-so-popular kids. (I
 was one of the latter.) A first cut at measuring this could be expressed as
 follows:
 
@@ -1350,10 +1354,9 @@ themselves well-liked and admired by others express admiration for
 \subsection{Calculating the PageRank vector}
 
 Now as true as the above definition of popularity rings, you may rightly object
-that it seems circular. We want to measure how popular a certain kid is. And we
-know that popular kids are liked by lots of popular kids...but how could we
-determine whether their admirers are themselves popular without getting in an
-infinite loop?
+that it seems circular. We want to measure how popular Sam is. And we know that
+popular kids are liked by lots of popular kids...but how could we determine how
+popular Sam's admirers are themselves without getting in an infinite loop?
 
 Eigenvectors will turn out to solve this problem for us. Like. Magic.
 
@@ -1373,10 +1376,10 @@ In this minuscule ``Web'' of just four pages, page A has a link to page B, page
 B has links to each of the other three, page C has links to B and D, and page D
 has only a link to page C.
 
-Remember also from Section~\ref{sec:graphs} that we can represent a graph by
-its adjacency matrix $A$. This square matrix has one row/column for each vertex
-of the graph, and a 1 in the positions with an edge from one vertex to another.
-In this case, the matrix is:
+Remember also from p.~\pageref{firstAdjacencyMatrix} that we can represent a
+graph by its adjacency matrix $A$. This square matrix has one row/column for
+each vertex of the graph, and a 1 in the positions with an edge from one vertex
+to another. In this case, the matrix is:
 
 \[
 A_{\textrm{mini-Web}} = 
@@ -1394,6 +1397,250 @@ A_{\textrm{mini-Web}} =
 (Run your eyeballs over that matrix, and compare it with the graph, before
 continuing.)
 
+\medskip
+
+\index{PageRank vector}
+
+We're going to compute what's known as the \textbf{PageRank vector} for this
+graph. It will have one numeric entry for each Web page, which will represent
+the popularity of that page.
+
+Here's how to do it.
+
+First, we'll do some light bookkeeping on the $A_{\textrm{mini-Web}}$ matrix,
+by (1) taking its transpose and then (2) normalizing the columns. We'll call
+this revised matrix $M$:
+
+\begingroup
+\renewcommand*{\arraystretch}{1.2}
+\[
+M_{\textrm{mini-Web}} = 
+\begin{blockarray}{ccccc}
+& {\footnotesize\textrm{A}} & {\footnotesize\textrm{B}} & {\footnotesize\textrm{C}} & {\footnotesize\textrm{D}} \\
+\begin{block}{c[cccc]}
+{\footnotesize\textrm{A}} & 0 & \frac{1}{3} & 0 & 0 \\
+{\footnotesize\textrm{B}} & 1 & 0 & \frac{1}{2} & 0 \\
+{\footnotesize\textrm{C}} & 0 & \frac{1}{3} & 0 & 1 \\
+{\footnotesize\textrm{D}} & 0 & \frac{1}{3} & \frac{1}{2} & 0 \\
+\end{block}
+\end{blockarray}.
+\]
+\endgroup
+
+\index{transpose}
+\index{Manhattan norm}
+
+I used the Manhattan norm here to make the numbers easier on the eyes, but any
+other norm would be okay too. Note that the sum of each column is 1.
+
+Now here's how to interpret $M$. Each column corresponds to one page's
+``praise'' for the other pages in the Web. And that page has a total of
+\textit{one} ``praise point'' to spend on this praise. In the first column, we
+see that page A has put all its eggs in one basket: it's screaming loudly that
+page B, and only page B, is important. That's because in the graph, A has only
+one outgoing link (which is to B). In the second column, by contrast, page B
+has spread its praise equally across pages A, C, and D -- since it has links to
+all three of those. Page C divvies up its praise between B and D, while D
+shouts loudly for C and only C.
+
+The rationale behind normalizing the columns should now be apparent to you.
+It's the matchmaker leveling effect in action again. A page can have as many
+outgoing links as it wants, but the more it has, the less potent each one will
+be in determining popularity.
+
+\medskip
+
+\index{random surfer}
+\index{surfer}
+
+To get your head around PageRank, try to visualize a \textbf{random surfer}
+mindlessly clicking links in his browser as he surfs the Web. Imagine that
+this surfer started with some arbitrary page, and then he chose one of its
+links at random and clicked on it. Then he chose one of \textit{that} page's
+links at random and clicked on it, and continued that process indefinitely.
+(You should try this at home -- it's usually rather amusing where you end up
+after a minute or two, no matter what page you started on.)
+
+The key question to ask is this: after the random surfer does his thing for a
+few hours, what's the probability that he lands on page A? What about B? C? D?
+
+Let's work it out mathematically. We'll create a vector
+$\overrightarrow{\textbf{p}}$ that contains, for each page, the probability
+that the random surfer will be on that page. The process starts with a
+completely random page, remember, so we have a $\frac{1}{4}$ probability of
+starting on each:
+
+\vspace{-.2in}
+\begin{align*}
+\overrightarrow{p}_1 =
+\begin{bmatrix}
+.25 \\
+.25 \\
+.25 \\
+.25 \\
+\end{bmatrix}.
+\end{align*}
+\vspace{-.2in}
+
+The ``1'' subscript says that these are the probabilities for the
+\textit{first} page the random surfer browses.
+
+Okay, what's the probability that the \textit{second} page he browses is each
+of the four?
+
+\index{Law of Total Probability}
+
+If you remember your Law of Total Probability from \textit{A Cool Brisk Walk},
+you'll know that the probability of visiting page A second is:
+
+\vspace{-.15in}
+\begin{align*}
+\textrm{Pr(page A second)}\ =\ &\textrm{Pr(page A second}\ |\ \textrm{page A
+first)}\ + \\
+                             &\textrm{Pr(page A second}\ |\ \textrm{page B
+first)}\ + \\
+                             &\textrm{Pr(page A second}\ |\ \textrm{page C
+first)}\ + \\
+                             &\textrm{Pr(page A second}\ |\ \textrm{page D first)}.
+\end{align*}
+\vspace{-.15in}
+
+In other words, there are four different ways that page A could be my second
+destination; namely, my first two pages could have been AA, BA, CA, or DA.
+
+Do you see how to get the probability of this -- and also the probability of
+landing on any of the other pages second -- from the $M$ matrix? It's a snap.
+All you do is matrix-vector multiplication! $\overrightarrow{\textbf{p}_2}$ is
+simply $M \cdot \overrightarrow{\textbf{p}_1}$.
+
+\vspace{-.15in}
+\begin{center}
+$\overrightarrow{p}_2 = M \cdot \overrightarrow{p}_1 = 
+\begin{bmatrix}
+0 & \frac{1}{3} & 0 & 0 \\
+1 & 0 & \frac{1}{2} & 0 \\
+0 & \frac{1}{3} & 0 & 1 \\
+0 & \frac{1}{3} & \frac{1}{2} & 0 \\
+\end{bmatrix} \cdot
+\begin{bmatrix}
+.25 \\
+.25 \\
+.25 \\
+.25 \\
+\end{bmatrix} =$ \\
+\medskip
+$.25 \cdot
+\begin{bmatrix}
+0 \\
+1 \\
+0 \\
+0 \\
+\end{bmatrix} +
+.25 \cdot
+\begin{bmatrix}
+.333 \\
+0 \\
+.333 \\
+.333 \\
+\end{bmatrix} +
+.25 \cdot
+\begin{bmatrix}
+0 \\
+.5 \\
+0 \\
+.5 \\
+\end{bmatrix} +
+.25 \cdot
+\begin{bmatrix}
+0 \\
+0 \\
+1 \\
+0 \\
+\end{bmatrix} = 
+\begin{bmatrix}
+.083 \\
+.375 \\
+.333 \\
+.208 \\
+\end{bmatrix}.
+$
+\end{center}
+\vspace{-.15in}
+
+I'm using the ``second way'' of thinking about matrix-vector multiplication
+here (from p.~\pageref{twoInterpretations}) -- a linear combination of $M$'s
+columns. Since there's a $\frac{1}{4}$ chance of being on page A first, and
+page A always goes to page B, that means there's a .25 probability of starting
+the random surf with the sequence AB, and a 0 probability of starting with AA,
+AC, or AD. So when constructing our totals, we add .25 times $[\ 0\ \ 1\ \ 0\ \
+0\ ]^\intercal$.
+
+There's also a $\frac{1}{4}$ probability of starting on page B. But if that
+happens, then there's a $\frac{1}{3}$ chance (each) of going to A, C, or D
+next. Put that together, and you see that there's a $\frac{1}{12}$ probability
+of starting with any of the BA, BC, or BD sequences, and a 0 probability of
+starting with BB. \textit{Etc.} Repeat that process, and you get the
+$\overrightarrow{\textbf{p}}_2$ result shown above: a 37.5\% chance of landing
+on page B second, nearly that high a chance (33.3\%) of landing on page C
+second, and smaller likelihoods (8.3\% and 20.8\%, respectively) of landing on
+page A or D second.
+
+What about how likely each page is to be \textit{third} in the sequence? Just
+multiply by $M$ again to get $\overrightarrow{\textbf{p}_3}$.
+
+What about fourth? Just multiply by $M$ again to get
+$\overrightarrow{\textbf{p}_4}$. 
+
+What about fifth? Just multiply by $M$ again to get
+$\overrightarrow{\textbf{p}_5}$. 
+
+\textit{(\dots and so on \dots)}
+
+And now for the finishing touch. What about the \textit{long-term} likelihood
+of visiting each of the pages? In other words, after the random surfer has been
+doing his thing for a while, what do the probabilities settle down to?
+
+What we're really asking for is $\overrightarrow{\textbf{p}_\infty}$. This
+would seem to require infinite multiplications to compute the value of
+$M^\infty \cdot \overrightarrow{\textbf{p}_1}$. But remember the magic of
+eigenvectors: if you keep multiplying $M$ by \textit{any} vector, it will be
+drawn to the dominant eigenvector like a moth to the flame. So we don't have to
+actually multiply infinitely many times, or even once; instead, we just take
+$M$'s dominant eigenvector!
+
+And that, my friends, is the PageRank vector. For the graph above, the dominant
+eigenvector turns out to be:
+
+\vspace{-.15in}
+\begin{align*}
+\overrightarrow{\textbf{pagerank}}_\textrm{mini-Web} =
+\begin{bmatrix}
+.159 \\
+.286 \\
+.305 \\
+.249 \\
+\end{bmatrix},
+\end{align*}
+\vspace{-.15in}
+
+which announces with finality that C is officially the most popular page of the
+bunch, with a PageRank score of .305, and that the others are B, D, and A, in
+that order.
+
+The PageRank algorithm vanquishes the circularity problem. We can safely define
+popular pages as ``pages which lots of other popular pages link to'' yet not
+get stuck in an infinite loop. All we need to do is calculate the dominant
+eigenvector of the modified adjacency matrix, and we magically obtain the
+popularity of every page in our Web.
+
+Combining this popularity information with the relevancy information used by
+older search engines (p.~\pageref{sec:webSearchPreGoogle}) is how Google
+changed the world. It's why you can type any old thing into a search engine
+these days and in the blink of an eye get exactly the pages you were looking
+for. I search the Web many times every day, and I almost never need to go to
+even the \textit{second} page of search results. The pages I want are
+invariably at the top of the list. Who knew that steering me towards popular
+pages would be exactly what I really wanted?
 
 \vfill
 \pagebreak
