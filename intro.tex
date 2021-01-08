@@ -300,7 +300,7 @@ the mainstays of this book. The easiest way I know of to do this is to download
 the \textbf{Anaconda} Python distribution from \url{www.anaconda.com}, and then
 start the \textbf{Spyder} application that automatically comes with it.
 
-Whether you use Spyder or a different IDE (IDLE, Eclipse, and PyCharm are some
+Whether you use Spyder or a different IDE (Eclipse, IDLE, and PyCharm are some
 other popular ones), the main thing to focus on -- and the only thing I'll
 describe in this book -- is the Python code itself, which you'll type in an
 \textbf{editor} window that sorta resembles Microsoft Word or Google Docs.
@@ -311,7 +311,7 @@ the ``run/execute'' operation is in your IDE (in Spyder it's a little green
 \textbf{console} window (normally another pane on the screen; in Spyder it's on
 the lower-right by default). Just think of this like a calculator: you first
 type in something like ``\texttt{258 $\times$ 312}'' and then when you press
-the equals sign (\texttt{=}) the answer \texttt{80496} appears.
+the equals sign (``\texttt{=}'') the answer \texttt{80496} appears.
 
 That's more or less all we'll be doing in this book. The code you write in the
 editor window will be like the ``\texttt{258 $\times$ 312}'' part (except it
@@ -423,28 +423,31 @@ multiple words. Underscores are \textit{not} considered ``funky.''} Some of the
 symbols used for common mathematical operations are obvious, and some are not:
 
 \begin{compactitem}
-\item[\texttt{\large +}]-- addition
-\item[\texttt{\large -}]-- subtraction
-\item[\texttt{\large *}]-- multiplication
-\item[\texttt{\large /}]-- division
-\item[\texttt{\large \%}]-- modulus (``remainder when dividing by'')
-\item[\texttt{\large **}]-- exponentiation (``to the power of'')
+\item[\quad\quad\quad\quad\quad \texttt{\large +}]-- addition
+\item[\quad\quad\quad\quad\quad \texttt{\large -}]-- subtraction
+\item[\quad\quad\quad\quad\quad \texttt{\large *}]-- multiplication
+\item[\quad\quad\quad\quad\quad \texttt{\large /}]-- division
+\item[\quad\quad\quad\quad\quad \texttt{\large \%}]-- modulus (``remainder when dividing by'')
+\item[\quad\quad\quad\quad\ \texttt{\large **}]-- exponentiation (``to the power of'')
+\item[\texttt{sqrt(}\textsl{value}\texttt{)}]-- square root
 \end{compactitem}
 
-\medskip
+\smallskip
 
-Finally, the last line (with \texttt{print()}) is used for displaying output to
-the console. Inside the parentheses, you put a quoted piece of text that you
-want to display. You put a pair of back-to-back curly braces
-(``\texttt{\{\}}'') to create a placeholder for a variable's value to be
-inserted. Then, following the final quotation mark, you put
+Finally, the last line of that code (with \texttt{print()}) is used for
+displaying output to the console. Inside the parentheses, you put a quoted
+piece of text that you want to display. You put a pair of back-to-back curly
+braces (``\texttt{\{\}}'') to create a placeholder for a variable's value to be
+inserted.\footnote{There are other ways, too, of combining text and numbers in
+a message without using curly-brace placeholders and the \texttt{.format()}
+function.} Then, following the final quotation mark, you put
 ``\texttt{.format()}'' (notice the leading dot) and inside \textit{its} parens
-you list the variables (separated by commas if they're more than one) that you
-want Python to substitute in the placeholders. Make sure you get the syntax
-right, character-for-character, because like most programming things it's
-error-prone and unforgiving.
+you list the variables (in order and separated by commas if there's more than
+one) that you want Python to substitute in the placeholders. Make sure you get
+the syntax right, character-for-character, because like most programming things
+it's unforgiving.
 
-\medskip
+\smallskip
 
 Code in a Python program executes line-by-line, top-to-bottom. So after the
 NumPy library is imported, and the \texttt{founding} variable is given the
@@ -453,7 +456,7 @@ to 245. The print statement then sticks that value in for the placeholder in
 its message, and outputs the complete message to the screen: ``\texttt{Our
 country is 245 years old!}''
 
-\bigskip
+\medskip
 
 That's it! After you've typed this example program into Spyder's (or your
 IDE's) editor, and run it to see the output shown above in the console, I
