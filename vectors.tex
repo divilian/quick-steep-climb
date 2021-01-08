@@ -1,6 +1,4 @@
 
-% TODO: appendix with Python
-
 % TODO: somewhere in this chapter, I should do the parachute illustration with
 % the gravitational force and the cross-wind force and the momentum from the
 % airplane force. But where?
@@ -242,6 +240,8 @@ and index into it at coordinate 1, we get the (scalar) value 93.
 Notation-wise, if we have a two-dimensional vector called
 $\overrightarrow{\textbf{bob}}$, we'll often write $bob_0$ for the value of the
 first coordinate and $bob_1$ for the second.
+
+\label{PythonStartsAtZero}
 
 As an aside, you might wonder why the coordinates are numbered 0 and 1 instead
 of 1 and 2. The answer has to do with the fact that we'll be using Python in
@@ -515,9 +515,9 @@ really all just one thing.
 \section{Vector operations}
 \label{vectorOps}
 
-We're going to be combining scalars/vectors to yield other scalars/vectors like
-literally all the time. The following three operations must be mastered until
-you can do them in your sleep.
+We're going to be combining scalars/vectors to yield other scalars/ vectors
+like literally all the time. The following three operations must be mastered
+until you can do them in your sleep.
 
 \subsection{Operation \#1: Scalar-vector multiplication}
 
@@ -1714,10 +1714,101 @@ bachelors pairs up with Jezebel:
 \end{align*}
 
 \normalsize
-Filbert it is. Mr.~Right's scheme was defeated: normalization revealed that
+Filbert wins, and Mr.~Right is defeated: normalization revealed that
 Filbert is truly more compatible with Jezebel than he is.
 
 \label{matchmakerGameTheSystemEnd}
 Let's bring this chapter to a close, and wish Filbert and Jezebel a very
 romantic evening together. :)
+
+\hrulefill \\
+
+\pagebreak
+
+\section*{\faPython \ \ \textit{Appendix: Python}}
+
+\index{array}
+\index{ndarray@\texttt{ndarray} (NumPy type)}
+\index{list}
+
+\index{index number}
+In this Python appendix, we'll focus mostly on how to create vectors in Python,
+and how to perform operations on them. For this, we'll use the \texttt{ndarray}
+type from the NumPy library.\footnote{An ``array'' is basically another name
+for a list of items; Python, in fact, also has a simpler type called a
+\textbf{list} that could be used as a primitive, makeshift sort of vector.
+NumPy arrays are the better choice for data-centric applications. Also, the
+first two letters of \texttt{ndarray} stand for ``$n$-dimensional.''} Creating
+an \texttt{ndarray} (or just ``array'' for short) has the effect of introducing
+a named variable whose value is a whole sequence of numbers, not just a single
+number like a scalar variable has. In Python, each element of an array has an
+consecutive index number, which as I mentioned on
+p.~\pageref{PythonStartsAtZero}, start at 0 instead of at 1.
+
+In our first example, we use the \texttt{array()} NumPy function to create a
+history of local temperatures:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+from numpy import *
+
+temps = array([42,48,47,51,32])
+\end{Verbatim}
+
+\index{boxies (square brackets)}
+\index{[]@\texttt{[]} (boxies)}
+
+(I'm writing this chapter in the wintertime, by the way, which may explain my
+frosty Fredericksburg.)
+
+We now have a new array that goes by the name \texttt{temps}. We can use the
+\texttt{print()} function to see all its values, and we can include numbered
+indices (indexes) inside a pair of ``boxies'' (square brackets) after the array
+name to look at individual items.
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+print(temps)
+print(temps[0])
+print(temps[4])
+\end{Verbatim}
+
+\vspace{-.2in}
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+[42 48 47 51 32]
+42
+32
+\end{Verbatim}
+
+Take notice! In a five-element array, since element \#0 is the first one,
+element \#4 is the last one.
+
+We can ask an array how long it is by appending \texttt{.size} to its name:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+print(temps.size)
+\end{Verbatim}
+\vspace{-.2in}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+5
+\end{Verbatim}
+
+\index{slice}
+
+We can also get a \textbf{slice} of a vector by specifying a range of indices.
+It works like this:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+print(temps[1:4])
+\end{Verbatim}
+\vspace{-.2in}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+[48 47 51]
+\end{Verbatim}
+
+The ``\texttt{1:4}'' inside the boxies means ``I'd like all elements numbered 1
+(inclusive) through 4 (exclusive).'' This is a total of \textit{three}
+elements: the ones at index numbers 1, 2, and 3. The fact that 4 is
+\textit{not} included in the slice \texttt{1:4} is yet another minor but weird
+thing you have to get used to. (Maybe you should make a list of these.)
 
