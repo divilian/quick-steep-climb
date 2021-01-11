@@ -969,8 +969,134 @@ I'm going to need to put you off on this all the way to
 p.~\pageref{changeOfBasisOtherWayFinally}, since it will involve a few concepts
 we haven't covered yet. I promise we'll return to Hermione, though!
 
-\vspace{.6in}
-.
+\vspace{.1in}
+\hrulefill \\
+
+\pagebreak
+
+\section*{\faPython \ \ \textit{Appendix: Python}}
+
+There's not much Python content specifically devoted to linear independence, so
+let me take this brief appendix just to outline the syntax for functions,
+loops, and basic plotting, which we'll use later.
+
+\subsection*{Python functions}
+
+\index{modularity}
+\index{function (Python)}
+
+As most of you already know, a key idea in computer programming is
+\textbf{modularity}. This means the breaking up of a large program into
+smaller, cohesive chunks that are each focused on doing one specific thing
+well. In most programming languages (Python included) these are called
+``\textbf{functions},'' which is somewhat related to our use of mathematical
+functions in \textit{A Cool Brisk Walk} in that they map inputs to outputs.
+
+Here's how they work in Python. To create a function, you use this syntax:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+def functionName(argument1, argument2, ...):
+    ... statements ...
+    return output
+\end{Verbatim}
+
+\index{def@\texttt{def} (Python)}
+\index{argument}
+
+The word ``\texttt{def}'' is literal: it means you're \textbf{def}ining a
+function. The words ``\texttt{functionName}, \texttt{argument1}, and
+\texttt{statements}'' are \textit{not} literal: they are placeholders for the
+name of your function, the names of the inputs it accepts, and the code that
+comprises the function. ``Argument'' is the nutty word that programmers use for
+``an input given to a function''; each one has a name, and these are separated
+by commas inside a pair of parens, followed by a colon.
+
+\index{return statement}
+\index{body (function)}
+
+Important: all the Python code that comprises the \textbf{body} of the function
+must be \textit{indented one tab to the right.} Python is almost the only
+language that delineates its structure through indentation, and this can cause
+students hangups if they're not on their guard. The indented code actually in
+the function can be any Python code at all. At one (or more) places in the
+code, a ``\textbf{return statement}'' will indicate a value that is given as
+the function's output.
+
+Here's a very short example of a function we might write:
+
+\index{average@\texttt{average()} function}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+def average(my_vector):
+    return my_vector.sum() / my_vector.size
+\end{Verbatim}
+
+We learned in the last appendix how to sum up the values in an array, and also
+how to obtain the number of elements it contains. This function combines these
+two operations and takes the arithmetic mean, or average, of the results.
+
+\index{call@``calling'' a function}
+
+To actually make use of this function, we ``\textbf{call}'' it by typing its
+name, parens, and an input value, then either printing the output or capturing
+it in another variable. Here goes:
+
+\index{weights@\texttt{weights}}
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+weights = np.array([ 145.6, 212.9, 156.4 ])
+
+avg_weight = average(weights)
+print("The avg weight is {} pounds.".format(avg_weight))
+\end{Verbatim}
+\vspace{-.2in}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+The avg weight is 171.63333333333333 pounds.
+\end{Verbatim}
+
+Notice carefully that although the \texttt{average()} function named its
+argument ``\texttt{my\_vector},'' when we called the function we specified a
+different name (``\texttt{weights}''). This is a happy healthy thing, and you
+should get used to it. All you have to remember is that whatever is given as an
+input to the function, \textit{the function will itself temporarily name it
+with its own name} for use in calculation.
+
+In the case of two or more arguments, the order in which they are listed is
+what keeps everything in sync between the function and the code that calls it.
+Here's an example which uses both scalar-vector multiplication and vector
+addition:
+
+\begin{Verbatim}[fontsize=\footnotesize,samepage=true,frame=single,framesep=3mm]
+def next_years_salary(salaries, increases, cost_of_living_raise):
+    new_salaries = salaries + increases
+    return new_salaries + (cost_of_living_raise * new_salaries)
+
+eng = np.array([86000, 91000, 86000])
+eng_bumps = np.array([2000, 3000, 4000])
+eng = next_years_salary(eng, eng_bumps, .02)
+print("Next year's engineering salaries are: {}.".format(eng))
+\end{Verbatim}
+\vspace{-.2in}
+
+\begin{Verbatim}[fontsize=\footnotesize,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+Next year's engineering salaries are: [89760. 95880. 91800.].
+\end{Verbatim}
+
+In this case, the function itself named its arguments \texttt{salaries},
+\texttt{increases}, and \texttt{cost\_of\_living\_raise}. When we called it,
+however, we gave it different names for the first two arguments, and didn't
+even \textit{have} a name for the third one! (We just specified the literal
+value .02 as the third input.)
+
+\subsection*{Python loops}
+
+\index{loop}
+\index{for loop@\texttt{for} loop}
+
+Another programming technique we'll use is that of a \textbf{loop},
+specifically a \textbf{for loop}.
+
+\vfill
 
 \pagebreak
 \subsection*{Answers to Domino Game puzzles from
@@ -1017,3 +1143,4 @@ $-1$ \raisebox{-0.3\height}{\includegraphics[width=0.1\textwidth]{gray4_4.png}} 
 \raisebox{-0.3\height}{\includegraphics[width=0.1\textwidth]{white0_0.png}} \quad
 
 \end{enumerate}
+
