@@ -583,6 +583,7 @@ convenience.
 
 \subsection{Operation \#2: Vector addition}
 
+\index{vector addition}
 Adding two vectors together, though, is a perfectly acceptable enterprise,
 provided that the vectors have the same number of elements. The way we do it is
 to add each pair of elements together and produce another vector of the same
@@ -706,6 +707,7 @@ For example, $[\ 5\ \ 2\ \ 7\ ] - [\ 1\ \ 4\ \ 7\ ]$ is just $[\ 4\ \ -2\ \ 0\ ]
 \subsection{Operation \#3: Vector multiplication (dot product)}
 
 \label{dotProduct}
+\index{vector multiplication}
 \index{dot product}
 \index{cross product}
 
@@ -1730,40 +1732,153 @@ romantic evening together. :)
 \index{array}
 \index{ndarray@\texttt{ndarray} (NumPy type)}
 \index{list}
+\index{NumPy}
 
 \index{index number}
+
 In this Python appendix, we'll focus mostly on how to create vectors in Python,
 and how to perform operations on them. For this, we'll use the \texttt{ndarray}
-type from the NumPy library.\footnote{An ``array'' is basically another name
-for a list of items; Python, in fact, also has a simpler type called a
-\textbf{list} that could be used as a primitive, makeshift sort of vector.
-NumPy arrays are the better choice for data-centric applications. Also, the
-first two letters of \texttt{ndarray} stand for ``$n$-dimensional.''} Creating
-an \texttt{ndarray} (or just ``array'' for short) has the effect of introducing
-a named variable whose value is a whole sequence of numbers, not just a single
-number like a scalar variable has. In Python, each element of an array has an
-consecutive index number, which as I mentioned on
-p.~\pageref{PythonStartsAtZero}, start at 0 instead of at 1.
+type from the NumPy library. Creating an \texttt{ndarray} (or just ``array''
+for short)\footnote{An ``array'' is basically another name for a list of items.
+Python also has a simpler type -- called a \textbf{list} -- that could be used
+as a primitive, makeshift sort of vector. NumPy arrays are the better choice
+for data-centric applications, though, and have many convenient features over
+plain-Jane lists. By the way, the first two letters of \texttt{ndarray} stand
+for ``$n$-dimensional.''} has the effect of introducing a named variable whose
+value is a whole sequence of numbers, not just a single number as with a scalar
+variable. In Python, each element of an array has a consecutive index number,
+and as I mentioned on p.~\pageref{PythonStartsAtZero}, these indices start at 0
+instead of at 1.
+
+\subsection*{Creating vectors (arrays)}
 
 In our first example, we use the \texttt{array()} NumPy function to create a
-history of local temperatures:
+brief history of local temperatures\footnote{I'm writing this chapter in the
+wintertime, by the way, which may explain my frosty Fredericksburg.}:
 
+\vspace{-.1in}
 \begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
-from numpy import *
-
 temps = array([42,48,47,51,32])
 \end{Verbatim}
+\vspace{-.15in}
 
 \index{boxies (square brackets)}
 \index{[]@\texttt{[]} (boxies)}
 
-(I'm writing this chapter in the wintertime, by the way, which may explain my
-frosty Fredericksburg.)
+(This line of code, and all others, must come \textit{after} the standard
+``\texttt{from numpy import *}'' preamble mentioned on
+p.~\pageref{importNumpy}, of course.)
 
-We now have a new array that goes by the name \texttt{temps}. We can use the
-\texttt{print()} function to see all its values, and we can include numbered
-indices (indexes) inside a pair of ``boxies'' (square brackets) after the array
-name to look at individual items.
+Notice very carefully that the above line of code has a pair of ``boxies''
+(square brackets) inside the pair of parentheses. It won't work without both
+pairs, in the correct nesting order. Anyway, after running that code we now
+have a new array that goes by the name \texttt{temps}. We can use the
+\texttt{print()} function to see all its values:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+print(temps)
+\end{Verbatim}
+
+\vspace{-.2in}
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+[42 48 47 51 32]
+\end{Verbatim}
+
+\medskip
+\index{zeros@\texttt{zeros()} function}
+It will also be useful sometimes to create a vector of all zeros. (This is
+helpful when we have an array of different cumulative counts.) The
+\texttt{zeros()} function can be used here:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+nada = zeros(6)
+print(nada)
+\end{Verbatim}
+\vspace{-.2in}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+[0. 0. 0. 0. 0. 0.]
+\end{Verbatim}
+
+(The trailing decimal points, by the way, indicate that these entries are
+stored as floating-point numbers (``decimal numbers'') instead of integers.
+This won't be super important for us.)
+
+\medskip
+\index{arange@\texttt{arange()} function}
+
+It's also common to create a vector with a sequence of consecutive entries. For
+this, we have the \texttt{arange()} function\footnote{Be careful -- this is
+\textit{not} the English word \textsl{arrange} which has two r's in it! Instead,
+it's an amalgamation of the phrase ``array range.''} which can be given one,
+two, or three numbers inside the parens:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+a = arange(7)
+b = arange(5,12)
+c = arange(5,50,5)
+print(a)
+print(b)
+print(c)
+\end{Verbatim}
+\vspace{-.2in}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+[0 1 2 3 4 5 6]
+[ 5  6  7  8  9 10 11]
+[ 5 10 15 20 25 30 35 40 45]
+\end{Verbatim}
+
+As you can see, the first version yields a vector of the appropriate length
+whose entries start at 0; the second version goes from a specific starting
+point up to (but not including) a specific end point; and the third version
+goes from a starting point to (but again, not including) an ending point by a
+particular step size. The fact that 12 is \textit{not} included in the vector
+produced by \texttt{arange(5,12)} is another minor but weird thing you have to
+get used to. (Maybe you should make a list of these.)
+
+\medskip
+\index{random@\texttt{random.rand()} function}
+
+There will be cases where we want to get vectors full of \textit{random}
+numbers. NumPy gives us many, many ways to do this, most of which are outside
+the scope of this book. I'll just mention one, which is to get a vector of
+random numbers between 0 and 1:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+r = random.rand(4)
+print(r)
+\end{Verbatim}
+\vspace{-.2in}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+[0.64039213 0.2164199  0.48690418 0.72351423]
+\end{Verbatim}
+
+The ``4'' specifies how long the vector should be.
+
+Finally, a very common way to create a vector is to load its contents from a
+data file. Suppose there were a file on your computer called
+\texttt{somedata.txt} which had a long list of numbers, one number per line.
+You could import the whole thing into a NumPy array called \texttt{my\_data}
+like this:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+my_data = loadtxt("somedata.txt")
+\end{Verbatim}
+
+\index{plain-text file}
+\index{txt file@\texttt{.txt} file}
+
+The file must be in ``plain-text'' format (\textit{i.e.}, not a Word document
+or a PDF file or any other such formatted thing). Often, but not always, such
+files have a ``\texttt{.txt}'' extension to indicate that.
+
+
+\subsection*{Working with vectors (arrays)}
+
+To retrieve individual elements from a vector, we can specify numbered indices
+inside a pair of boxies after the array name:
 
 \begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
 print(temps)
@@ -1778,8 +1893,8 @@ print(temps[4])
 32
 \end{Verbatim}
 
-Take notice! In a five-element array, since element \#0 is the first one,
-element \#4 is the last one.
+Heads up! In a five-element array, since element \#0 is the first one, element
+\#4 is the last one.
 
 We can ask an array how long it is by appending \texttt{.size} to its name:
 
@@ -1808,7 +1923,174 @@ print(temps[1:4])
 
 The ``\texttt{1:4}'' inside the boxies means ``I'd like all elements numbered 1
 (inclusive) through 4 (exclusive).'' This is a total of \textit{three}
-elements: the ones at index numbers 1, 2, and 3. The fact that 4 is
-\textit{not} included in the slice \texttt{1:4} is yet another minor but weird
-thing you have to get used to. (Maybe you should make a list of these.)
+elements: the ones at index numbers 1, 2, and 3. (Again, 4 itself is not
+included, and yes that's annoying.)
 
+\medskip
+\index{round@\texttt{round\_()} function}
+\index{trunc@\texttt{trunc()} function}
+
+To round a vector's elements to the nearest integer, or to simply drop the part
+after the decimal point, we can use the functions
+\texttt{round\_()}\footnote{Careful: don't forget the trailing underscore!} or
+\texttt{trunc()}, respectively:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+weights = np.array([ 145.6, 212.9, 156.4 ])
+print(weights)
+print(round_(weights))
+print(trunc(weights))
+\end{Verbatim}
+\vspace{-.2in}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+[145.6 212.9 156.4]
+[146. 213. 156.]
+[145. 212. 156.]
+\end{Verbatim}
+
+\medskip
+We can also add up the elements in a vector, find the smallest and largest, and
+find the \textit{index of} the smallest and of the largest:
+
+\index{sum@\texttt{.sum()}}
+\index{min@\texttt{.min()}}
+\index{max@\texttt{.max()}}
+\index{argmin@\texttt{.argmin()}}
+\index{argmax@\texttt{.argmax()}}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+print(weights.sum())
+print(weights.min())
+print(weights.max())
+print(weights.argmin())
+print(weights.argmax())
+\end{Verbatim}
+\vspace{-.2in}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+514.9
+145.6
+212.9
+0
+1
+\end{Verbatim}
+
+The value printed by ``\texttt{.argmin()}'' is the index of the smallest value
+in the vector, which in this case is element \#0 (whose value is 145.6). 
+The value printed by ``\texttt{.argmax()}'' is 1, since element \#1 (whose
+value is 212.9) is the highest.
+
+\bigskip
+
+\pagebreak
+\index{scalar-vector multiplication}
+And finally, our actual linear algebra operations. To perform scalar-vector
+multiplication, just use the splat (``\texttt{*}'') symbol:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+weights_kg = (1/2.2) * weights
+print(weights_kg)
+\end{Verbatim}
+\vspace{-.2in}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+[66.18181818 96.77272727 71.09090909]
+\end{Verbatim}
+
+\index{vector addition}
+And to perform vector addition, just use the plus (``\texttt{+}'') symbol:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+holiday_gains = np.array([8.5, 10, 11])
+print(weights + holiday_gains)
+\end{Verbatim}
+\vspace{-.2in}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+[154.1 222.9 167.4]
+\end{Verbatim}
+
+(Ouch. Too much fudge.)
+
+\smallskip
+
+\index{vector multiplication}
+\index{dot product}
+\index{dot@\texttt{.dot()}}
+
+You could've guessed how to do those two operations without me even telling
+you. The only slightly weird-looking one is the dot product. It requires typing
+``\texttt{.dot()}'' (which I always pronounce ``dot-dot''):
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+a = np.array([5,3,0,2])
+b = np.array([0,1,9,6])
+print(a.dot(b))
+
+\end{Verbatim}
+\vspace{-.2in}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+15
+\end{Verbatim}
+
+\pagebreak
+\index{linalg.norm@\texttt{linalg.norm()}}
+\index{norm@\texttt{norm()} (from \texttt{linalg})}
+
+And lastly, norms. To compute a vector's Euclidean norm, we use the
+\texttt{linalg.norm()} function with the vector in the parens:
+
+\index{norm (of a vector)}
+\index{Euclidean norm}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+print(linalg.norm(a))
+\end{Verbatim}
+\vspace{-.2in}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+6.164414002968976
+\end{Verbatim}
+
+If you're feeling paranoid, we can compute it by hand using the Pythagorean
+theorem to confirm this is the correct answer:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+print(sqrt(a[0]**2 + a[1]**2 + a[2]**2 + a[3]**2))
+\end{Verbatim}
+\vspace{-.2in}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+6.164414002968976
+\end{Verbatim}
+
+If you want any norm other than the Euclidean, you can specify the ``order'' of
+the norm as a second number in the parens:
+
+\index{inf@\texttt{Inf} (infinity)}
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+print(linalg.norm(a,0))
+print(linalg.norm(a,1))
+print(linalg.norm(a,2))
+print(linalg.norm(a,3))
+print(linalg.norm(a,4))
+print(linalg.norm(a,Inf))
+\end{Verbatim}
+\vspace{-.2in}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+3.0
+10.0
+6.164414002968976
+5.428835233189813
+5.183633637236413
+5.0
+\end{Verbatim}
+
+This prints for us the $\ell^0$, $\ell^1$, $\ell^2$, $\ell^3$, $\ell^4$, and
+$\ell^\infty$ norms of our \texttt{a} vector. In particular, the $\ell^0$ is
+the number of non-zero entries, the $\ell^1$ is the sum of the entries, the
+$\ell^\infty$ is the maximum entry, and of course the $\ell^2$ norm is the same
+as the Euclidean norm.
