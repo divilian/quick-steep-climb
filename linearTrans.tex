@@ -1,6 +1,4 @@
 
-% TODO: appendix with Python
-
 \chapter{Linear transformations}
 
 \index{linear transformation}
@@ -1479,3 +1477,75 @@ outright kills any hope of injective-ness, of course.
 Such linear transformations -- and matrices -- are non-reversible, and as we'll
 see in the next chapter, they have no \textbf{inverse} matrix at all. Stay
 tuned.
+
+\vspace{.1in}
+\hrulefill \\
+
+\pagebreak
+
+\section*{\faPython \ \ \textit{Appendix: Python}}
+
+In this appendix, we'll write a function that will visually display the
+behavior of a linear transformation, so we can get our head around what each
+one does to the points it takes as input.
+
+\index{pylab library}
+
+To this end, let's learn a little bit more \texttt{pylab} plotting. One thing
+we'd like to do is add an \textit{arrow} to a plot, which starts at a
+particular $x$-$y$ coordinate and culminates at an arrowhead at another
+specific particular $x$-$y$ coordinate. The (clunky, IMO) command to do this in
+pylab is this:
+
+\index{pylab.arrow@\texttt{pylab.arrow()}}
+
+\quad\quad\quad\texttt{pylab.arrow(}\textsl{from\_xValue, from\_yValue,}\\
+\indent\quad\quad\quad\quad\quad \textsl{to\_xValue - from\_xValue, to\_yValue - from\_yValue,}\\
+\indent\quad\quad\quad\quad\quad\texttt{head\_width=.2, head\_length=.5)}
+
+There are six (count 'em) arguments, the first four of which are coordinate-ish
+things and the last two of which are aesthetic trappings (which you can change
+to suit your taste). The first four numbers are, in order:
+
+\begin{compactenum}
+\item The $x$-coordinate of where the arrow starts.
+\item The $y$-coordinate of where the arrow starts.
+\item The length of the arrow in the $x$ direction.
+\item The length of the arrow in the $y$ direction.
+\end{compactenum}
+
+Because the third and fourth arguments are lengths, instead of coordinates, you
+have to do some subtraction to compute the right values for them. It's not that
+big a deal, but I do occasionally resent it.
+
+\medskip
+
+The second thing to add to our plotting repertoire is the ability to create
+horizontal and vertical lines, so we can display the axes on a plot. This is
+simpler; you just call \texttt{pylab.axhline(}\textsl{some\_y\_value}\texttt{)}
+or \texttt{pylab.axvline(}\textsl{some\_x\_value}\texttt{)} to draw a
+horizontal or vertical line, respectively. If we do simply want to create a
+pair of axes, then the ``\textsl{some\_x/y\_value}s'' are both 0.
+
+Put this all together, and we can use this code to create
+Figure~\ref{fig:firstArrow}:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+import pylab
+pylab.plot(-5,7,'o')
+pylab.arrow(-5,7,8,-4,head_width=.2,head_length=.5)
+pylab.axhline(0)
+pylab.axvline(0)
+pylab.xlim(-10,10)
+pylab.ylim(-10,10)
+pylab.show()
+\end{Verbatim}
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.7\textwidth]{first_arrow.png}
+\caption{Drawing an arrow from point (-5,7) to point (3,3).}
+\label{fig:firstArrow}
+\end{figure}
+
+
