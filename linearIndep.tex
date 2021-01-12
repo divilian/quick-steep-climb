@@ -1011,7 +1011,7 @@ comprises the function. ``Argument'' is the nutty word that programmers use for
 ``an input given to a function''; each one has a name, and these are separated
 by commas inside a pair of parens, followed by a colon.
 
-\index{return statement}
+\index{return statement@\texttt{return} statement}
 \index{body (function)}
 \index{indentation (in Python)}
 
@@ -1019,7 +1019,10 @@ Important: all the Python code that comprises the \textbf{body} of the function
 must be \textit{indented one tab to the right.} Python is almost the only
 language that delineates its structure through indentation, and this can cause
 students hangups if they're not on their guard. The indented code actually in
-the function can be any Python code at all. At one (or more) places in the
+the function can be any Python code at all. At one (or more\footnote{You might
+wonder why a function would have more than one \texttt{return} statement, since
+a \texttt{return} stops the function and gives an output. We'll see an example
+of multiple \texttt{return}s on p.~\pageref{multipleReturns}.}) places in the 
 code, a ``\textbf{return statement}'' will indicate a value that is given as
 the function's output.
 

@@ -91,6 +91,7 @@ A =
 \vspace{-.15in}
 
 \index{dimension}
+\label{dimension}
 
 Matrices are always rectangular, but not always square. The $A$ matrix is
 called a ``$3\times 4$'' (three-by-four) matrix, since it has three
@@ -1257,11 +1258,522 @@ reserve the new term ``orthonormal matrix'' for any matrix that satisfies
 term ``orthogonal matrix.'' (Keep a watch on your news feed for that
 Stephen-becomes-King-of-the-World thing -- I'm still working on it.)
 
-\vfill
+\vspace{.1in}
+\hrulefill \\
 
 \pagebreak
 
+\section*{\faPython \ \ \textit{Appendix: Python}}
 
+\index{array}
+\index{ndarray@\texttt{ndarray} (NumPy type)}
+\index{NumPy}
+
+\index{index number}
+\index{dimension}
+
+With NumPy, a matrix is very similar to a vector. That's because they're both
+\texttt{ndarray}s. They only vary in the number of \textbf{dimensions}, but we
+have to be careful here because NumPy uses the term ``dimension'' in a
+different way than we've been doing (say, on p.~\pageref{dimension}). In our
+lingo, a matrix with three rows and four columns has dimensions $3\times 4$.
+But NumPy would say that this matrix -- and \textit{all} matrices -- has
+dimension \textbf{2}. Why 2? Because it has a left-to-right dimension (rows)
+and an up-and-down dimension (columns).
+
+\index{tensor}
+
+For us, this won't be too complicated, because we won't be dealing with objects
+of higher dimension (which are called \textbf{tensors}, by the way) than 2. So
+all this really means for us is that a one-dimensional \texttt{ndarray} is a
+vector, and a two-dimensional \texttt{ndarray} is a matrix. And when we want to
+zero in on a particular element of a matrix, we need \textit{two} index
+numbers: one for the row and one for the column.
+
+\subsection*{Creating matrices (2-d arrays)}
+
+\index{[]@\texttt{[]} (boxies)}
+\index{boxies (square brackets)}
+
+Creating a NumPy matrix is a snap -- you just need to be prepared to type a lot
+of boxies. Here's a $3\times 2$ matrix:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+mat = array([[6,9],[4,5],[1,4]])
+\end{Verbatim}
+\vspace{-.2in}
+
+Notice the boxies-within-boxies: the very outermost pair is for the entire
+array, where each inner pair specifies one row. In this way, you see that a
+matrix is an array-of-arrays; or, if you prefer, a list of rows. We can print
+them the same way we did vectors:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+print(mat)
+\end{Verbatim}
+\vspace{-.2in}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+[[6 9]
+ [4 5]
+ [7 4]]
+\end{Verbatim}
+
+\medskip
+\index{zeros@\texttt{zeros()} function}
+
+The \texttt{zeros()} function works for matrices, but with a slightly different
+syntax: we specify the dimensions we'd like after the word \texttt{shape} and a
+comma:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+nada = zeros(shape=(4,7))
+print(nada)
+\end{Verbatim}
+\vspace{-.2in}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+[[0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0.]]
+\end{Verbatim}
+
+\medskip
+\index{random@\texttt{random.rand()} function}
+
+And we can do the random number thing, too, by passing the
+\texttt{random.rand()} function dimension numbers:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+crazy = random.rand(3,5)
+print(crazy)
+\end{Verbatim}
+\vspace{-.2in}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+[[0.09121684 0.3084825  0.2529024  0.78089448 0.46138631]
+ [0.30003058 0.9275848  0.72649169 0.10995998 0.97565467]
+ [0.32876047 0.25447349 0.78955441 0.07921066 0.20986057]]
+\end{Verbatim}
+
+(As before, each number is between 0 and 1.)
+
+\medskip
+\index{loadtxt@\texttt{loadtxt()} (NumPy)}
+\index{plain-text file}
+\index{txt file@\texttt{.txt} file}
+
+Lastly, we can read a matrix from a file just like we did with a vector. Most
+commonly, such files will use a comma as a \textbf{delimiter} to separate
+entries on a line, so we'll specify that in our function call:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+my_matrix = loadtxt("somematrixdata.txt", delimiter=",")
+\end{Verbatim}
+
+\index{csv file@\texttt{.csv} file}
+\index{csv@CSV (comma-separated values)}
+
+By the way, often files like these will have a \texttt{.csv} extension instead
+of \texttt{.txt}; this stands for \textbf{comma-separated values}, for obvious
+reasons.
+
+
+\subsection*{Working with matrices (arrays)}
+
+index{shape@\texttt{.shape}}
+
+To learn the dimensions of a matrix, use \texttt{.shape} which gives a vector
+of the dimensions:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+print(mat)
+print(mat.shape)
+print("The matrix has {} rows.".format(mat.shape[0]))
+print("The matrix has {} columns.".format(mat.shape[1]))
+\end{Verbatim}
+\vspace{-.2in}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+[[6 9]
+ [4 5]
+ [1 4]]
+(3, 2)
+The matrix has 3 rows.
+The matrix has 2 columns.
+\end{Verbatim}
+
+
+We can give a matrix \textit{two} index numbers (comma-separated) to retrieve
+or change individual elements:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+print(mat[0,1])
+print(mat[2,0])
+mat[1,1] = 19
+print(mat)
+\end{Verbatim}
+\vspace{-.2in}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+2
+7
+[[ 3  2]
+ [ 4 19]
+ [ 7  4]]
+\end{Verbatim}
+
+\index{:@\texttt{:} (colon)}
+\index{colon operator (NumPy)}
+
+Note that both rows and columns are indexed starting at 0.
+
+\medskip
+
+We can get an entire row, or an entire column, by using a colon
+(``\texttt{:}'') in place of one of the indices:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+print(mat[2,:])
+print(mat[:,1])
+\end{Verbatim}
+\vspace{-.2in}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+[1 4]
+[ 9 19  4]
+\end{Verbatim}
+
+Somewhat weirdly, getting exactly one column (as we did in the second operation
+just now) gives us back the correct (column) vector, but instead of printing it
+out as a column, NumPy prints it as a row. Trying to save screen space? Not
+sure.
+
+\index{slice}
+\medskip
+
+Our slicing technique works the same as before (p.~\pageref{slice}), on the
+rows and/or the columns. Let's create a slightly bigger matrix to show it off:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+bigger = array([[-9,-8,-7],[2,4,-6],[0,0,0],[1,9,6]])
+print(bigger)
+\end{Verbatim}
+\vspace{-.2in}
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+[[-9 -8 -7]
+ [ 2  4 -6]
+ [ 0  0  0]
+ [ 1  9  6]]
+\end{Verbatim}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+print(bigger[1,0:2])
+\end{Verbatim}
+\vspace{-.2in}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+[2 4]
+\end{Verbatim}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+print(bigger[0:3,1:3])
+\end{Verbatim}
+\vspace{-.2in}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+[[-8 -7]
+ [ 4 -6]
+ [ 0  0]]
+\end{Verbatim}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+print(bigger[0:3,2])
+\end{Verbatim}
+\vspace{-.2in}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+[-7 -6  0]
+\end{Verbatim}
+
+(Yeah, displays as row vector, it's weird I agree.)
+
+\medskip
+\index{transpose@\texttt{.transpose()}}
+
+Finally, some linear algebra operations. We can take the transpose of a matrix
+by appending \texttt{.transpose()}:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+print(bigger.transpose())
+\end{Verbatim}
+\vspace{-.2in}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+[[-9  2  0  1]
+ [-8  4  0  9]
+ [-7 -6  0  6]]
+\end{Verbatim}
+
+\index{matrix-vector multiplication}
+\index{dot@\texttt{.dot()}}
+
+And matrix-vector multiplication also uses the \texttt{.dot()} syntax:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+x = array([4,5,6])
+print(bigger.dot(x))
+\end{Verbatim}
+\vspace{-.2in}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+[-118   -8    0   85]
+\end{Verbatim}
+
+
+\subsection*{Python branching}
+
+\index{branching}
+\index{indentation (in Python)}
+\index{if statement@\texttt{if} statement}
+
+Finally, one more Python programming thing. Every programming language has ways
+to \textbf{branch}, which means to control the flow of the program so that the
+lines aren't executed in strict sequential order, depending on the situation.
+Python uses the ``\texttt{if} statement'' for this, and again relies on
+indentation to know where the relevant block of code ends. They are often used
+in conjunction with \texttt{for} loops. Example:
+
+\index{weights@\texttt{weights}}
+
+\begin{Verbatim}[fontsize=\footnotesize,samepage=true,frame=single,framesep=3mm]
+weights = np.array([ 145.6, 212.9, 126.4 ])
+
+for i in arange(weights.size):
+   if weights[i] < 150:
+      print("You weigh {} lbs and might consider eating more."
+         .format(weights[i]))
+   print("Thanks for weighing in!")
+\end{Verbatim}
+\vspace{-.2in}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+You weigh 145.6 lbs and might consider eating more.
+Thanks for weighing in!
+Thanks for weighing in!
+You weigh 126.4 lbs and might consider eating more.
+Thanks for weighing in!
+\end{Verbatim}
+
+Each time the loop is executed, \texttt{i} has a different value, and hence the
+next element of the \texttt{weights} vector is considered. Only if that
+particular element satisfies the condition (less than 150) does the indented
+code under the \texttt{if} get executed. Note that the ``\texttt{Thanks!}''
+message gets printed out \textit{regardless} of the weight. Only lines indented
+to the right of the \texttt{if} are what the \texttt{if} statement controls.
+
+The ``\texttt{weights[i] < 150}'' part is called the \texttt{if} statement's
+\textbf{condition}, and there is some wacky syntax you have to master to write
+them correctly. Here it is:
+
+\begin{center}
+\begin{tabular}{c|c}
+Operator & Meaning \\
+\hline
+\texttt{>} & greater than \\
+\hline
+\texttt{<} & less than \\
+\hline
+\texttt{>=} & greater than or equal to \\
+\hline
+\texttt{<=} & less than or equal to \\
+\hline
+\texttt{!=} & \textit{not} equal to \\
+\hline
+\texttt{==} & equal to \\
+\hline
+\texttt{and} & and \\
+\hline
+\texttt{or} & or \\
+\hline
+\texttt{not} & not \\
+\end{tabular}
+\end{center}
+
+The last three of those are used when creating a \textbf{compound condition}
+comprised of more than one test. For example:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+    if (sex[i] == "male" and weights[i] < 160  or
+        sex[i] == "female" and weights[i] < 140):
+        ...
+\end{Verbatim}
+
+Here, the body of the \texttt{if} statement will only be executed for males
+under 160 lbs and for females under 140 lbs.
+
+\subsection*{Boolean variables in Python}
+
+The raw material that \texttt{if} statements work with is of the
+\textbf{Boolean} type, not numbers, strings, or anything else. A Boolean
+variable, named after 19th-century logician George Boole, holds either the
+value \texttt{True} or \texttt{False}. (And these are capitalized in Python.)
+
+It's common for a function to return a Boolean when its purpose is to check
+whether some condition holds. Let's write a function called
+\texttt{is\_square()} to determine whether a matrix is square. Here goes:
+
+\index{is\_square@\texttt{is\_square()}}
+\index{square matrix}
+\index{return statement@\texttt{return} statement}
+index{shape@\texttt{.shape}}
+
+\label{multipleReturns}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+def is_square(m):
+    if m.shape[0] == m.shape[1]:
+        return True
+    else:
+        return False
+\end{Verbatim}
+
+\index{else@\texttt{else} branch}
+
+Here we've added another feature to our \texttt{if} statement, namely an
+\textbf{else branch}. I'm sure you can guess what it means, even if you've
+never seen an \texttt{if}/\texttt{else} construction before: the code indented
+under \texttt{else} gets executed \textit{only} if the condition in the
+\texttt{if} statement is \texttt{False}. So an \texttt{if}/\texttt{else} is
+simply an either/or.
+
+You'll remember I mentioned in the last chapter that some functions have more
+than one \texttt{return} statement in them. Now you can see why that would be
+useful. A function finishes immediately as soon as it encounters a
+\texttt{return}, and does not execute any code below it. However, because of
+\texttt{if} statements, the path through a function might zigzag over and past
+some \texttt{return} statements before reaching others.
+
+Anyway, you can see how this function works: it simply compares the number of
+rows in the matrix with the number of columns, and returns \texttt{True} if
+these are the same. That, after all, is the definition of squareness.
+
+\bigskip
+
+\index{is\_diagonal@\texttt{is\_diagonal()}}
+\index{diagonal matrix}
+Here's another example:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+def is_diagonal(m):
+    if m.shape[0] != m.shape[1]:
+        return False
+    for i in arange(m.shape[0]):
+        for j in arange(m.shape[1]):
+            if i != j  and  m[i,j] != 0:
+                return False
+    return True
+\end{Verbatim}
+
+That one packs a wallop. Can you figure out how it works?
+
+First, we check to see if the matrix is square, since the way we've defined
+diagonal matrices in this book, they must be square. If that check fails, we
+immediately return our answer -- \texttt{False} -- and unpause our Netflix
+video. If it \textit{is} square, however, we have more work to do.
+
+\index{nested for loop@nested \texttt{for} loop}
+\index{for loop@\texttt{for} loop}
+
+The further work involves a \textbf{nested for loop}, since we need to examine
+all elements of the matrix \texttt{m}: every row and every column. I have the
+\texttt{i} loop variable going through the rows, and for \textit{each} row, the
+\texttt{j} loop goes through all the columns. (It's important that you see how
+each iteration of the outer (\texttt{i}) loop results in \textit{multiple}
+iterations of the inner (\texttt{j}) loop.)
+
+Now for every element, I check two things. First, does its row number equal its
+column number? If these are equal, then that means the element I'm examining is
+on the diagonal. Nothing special is required in this case; a diagonal matrix is
+free to have anything it wants on its diagonal. However, if \texttt{i} does
+\textit{not} equal \texttt{j}, then I'm examining an off-diagonal entry. If the
+matrix in question is truly diagonal, all of those off-diagonal entries had
+better be 0. As soon as I find an off-diagonal, non-zero entry, I immediately
+raise my red flag and return from the function, again with a negative answer.
+
+\index{else@\texttt{else} branch}
+
+Only after I've gone through \textit{every} entry, and confirmed that
+\textit{all} of the off-diagonal entries are zero, can I declare victory and
+return \texttt{True}. Many students mess up on this part: they often put an
+\texttt{else} branch on that \texttt{if}. This is fine syntactically, but wrong
+logically: just because I find a single entry that satisfies my criteria does
+not mean the entire matrix is therefore diagonal! No, I can only dare to return
+\texttt{True} at the very, very end, after checking everything out.
+
+Let's see whether our functions work. First, we'll create three matrices of
+varying contents, and print them out:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+m1 = array([[2,3,4],[5,6,7]])
+m2 = array([[5,0,1],[0,3,0],[0,0,9]])
+m3 = array([[16,0,0],[0,27,0],[0,0,5]])
+print(m1)
+print(m2)
+print(m3)
+\end{Verbatim}
+\vspace{-.2in}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+[[2 3 4]
+ [5 6 7]]
+
+[[5 0 1]
+ [0 3 0]
+ [0 0 9]]
+
+[[16  0  0]
+ [ 0 27  0]
+ [ 0  0  5]]
+\end{Verbatim}
+
+Then, let's call both functions on each of them, and see which ones return
+\texttt{True}:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+if is_square(m1):
+    print("m1 is square!")
+if is_diagonal(m1):
+    print("m1 is diagonal!")
+if is_diagonal(m2):
+    print("m2 is diagonal!")
+if is_square(m2):
+    print("m2 is square!")
+if is_square(m3):
+    print("m3 is square!")
+if is_diagonal(m3):
+    print("m3 is diagonal!")
+\end{Verbatim}
+\vspace{-.2in}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+m2 is square!
+m3 is square!
+m3 is diagonal!
+\end{Verbatim}
+
+We hereby declare victory. 
+
+\bigskip
+
+Do you think you could write an \texttt{is\_upper\_triangular()} function in
+this vein? \texttt{is\_symmetric()}? How about \texttt{is\_orthogonal()} or
+\texttt{is\_block\_diagonal()}? Clearly, some of these are way harder than
+others to write the code for, but all are indeed possible with Python.
+
+\vspace{.4in}
+\hrulefill \\
 
 \subsection*{Answers to ``special'' matrix quiz from
 p.~\pageref{specialMatrixQuiz}}
