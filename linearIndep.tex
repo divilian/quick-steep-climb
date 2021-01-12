@@ -1013,6 +1013,7 @@ by commas inside a pair of parens, followed by a colon.
 
 \index{return statement}
 \index{body (function)}
+\index{indentation (in Python)}
 
 Important: all the Python code that comprises the \textbf{body} of the function
 must be \textit{indented one tab to the right.} Python is almost the only
@@ -1094,7 +1095,182 @@ value .02 as the third input.)
 \index{for loop@\texttt{for} loop}
 
 Another programming technique we'll use is that of a \textbf{loop},
-specifically a \textbf{for loop}.
+specifically a \textbf{for loop}. These work very much the same as for loops do
+in any other language. They are used when the programmer wants a certain block
+of code to be repeated multiple times, possibly with minor changes each time.
+Importantly, for loops are used when the programmer knows at the outset how
+many times the loop needs to execute. (When she doesn't know this, she should
+use a \textbf{while loop} instead, which we won't cover in this book.)
+
+\index{iteration}
+One bit of lingo: each time the block of statements is executed is called an
+\textbf{iteration}. You'll may hear people say that a chunk of code
+``\textbf{iterates}'' or ``works \textbf{iteratively}''; by this they simply
+mean it contains a loop.
+
+\smallskip
+
+In Python, the pattern we'll use is as follows:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+for i in arange(n):
+    ...statements...
+\end{Verbatim}
+
+\index{arange@\texttt{arange()} function}
+\index{indentation (in Python)}
+
+Again, the indentation is key: the only way Python knows when the
+to-be-repeated code block ends, and the code after the loop resumes, is that
+the former is tabbed over whereas the latter is flush-left.
+
+The \texttt{i} that appears after \texttt{for} is called the \textbf{loop
+variable}: it is the only thing about the block of statements that may vary
+between iterations. And this is only because the statements themselves often
+have a reference to \texttt{i}, as we'll see in a moment.
+
+Finally, you'll recognize ``\texttt{arange}'' in the first line as our new
+friend from p.~\pageref{arange}. (Remember: only one `r'!) That line of code
+says: ``run the following block of statements multiple times. In the first
+iteration, set the \texttt{i} variable to the value 0. The second time, set it
+to 1. Continue all the way up to $n$-1.''
+
+\medskip
+
+As an example, let's write our own function to compute a vector's Euclidean
+norm (even though NumPy gives us this out-of-the-box):
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+def euclidean_norm(x):
+    total = 0
+    for i in arange(x.size):
+        total = total + x[i]**2
+    return sqrt(total)
+\end{Verbatim}
+
+Notice how the loop variable (\texttt{i}) is being used as an index to the
+\texttt{x} array, so that a different element is selected each time for
+squaring and adding to the running total. In the call to \texttt{arange()}, we
+used \texttt{x.size}, so that we would run the loop exactly once for each
+element. Let's take it for a spin:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+abc = array([5,3,0,2])
+print(euclidean_norm(abc))
+\end{Verbatim}
+\vspace{-.2in}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+6.164414002968976
+\end{Verbatim}
+
+This does match our result from p.~\pageref{pythonNorm} exactly.
+
+\pagebreak
+
+\subsection*{Python plotting}
+
+\index{pylab library}
+\index{plotting}
+
+Finally, let's just learn a few simple plotting commands so we can reproduce
+the kinds of figures that are in this book. Python has a plethora of different
+plotting libraries, all of which have different features and pros and cons.
+Just to keep things super simple, we'll use the \texttt{pylab} library which
+requires a minimum of fuss.
+
+First, you import it with your other imported things by typing ``\texttt{import
+pylab}'' at the top of your program.
+
+\index{pylab.plot@\texttt{pylab.plot()}}
+Then, to plot a single point, you can use the \texttt{pylab.plot()} function.
+It takes three arguments: an $x$ and a $y$ coordinate, and then a character
+indicating the ``shape'' of the plotted point, for which we'll use \texttt{'o'}
+to get a circle. (There are boatloads of other options.)
+
+\index{pylab.xlim@\texttt{pylab.xlim()} / \texttt{pylab.ylim()}}
+
+It's also useful to be able to set the overall ranges of your plot (in both $x$
+and $y$ directions) so you can zoom in or out as desired. For this, we call
+\texttt{pylab.xlim(}\textsl{min}\texttt{,}\textsl{max}\texttt{)} to set the
+$x$-axis range, and similarly for the $y$-axis range.
+
+Finally, in your Python environment you may need \texttt{pylab.show()} to get
+it to actually render the plot in a window.
+
+\bigskip
+
+\index{linearCombo@\texttt{linearCombo()}}
+
+Let's put this all together. We'll first write a function \texttt{linearCombo}
+that will compute a linear combination of two dominos.
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+def linearCombo(n1,n2):
+    domino1 = array([1,2])
+    domino2 = array([4,4])
+    return n1 * domino1 + n2 * domino2
+\end{Verbatim}
+
+This uses our yellow dominos from this chapter. Now we'll call this function by
+generating a hundred random linear combinations of these dominos, and plotting
+each. Here's the code:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+for i in range(100):
+    n1 = (random.rand(1) * 4) - 2
+    n2 = (random.rand(1) * 4) - 2
+    randomCombo = linearCombo(n1,n2)
+    pylab.plot(randomCombo[0],randomCombo[1],'o')
+pylab.xlim(-10,10)
+pylab.ylim(-10,10)
+pylab.show()
+\end{Verbatim}
+
+If you stare at the ``\texttt{n1}'' line inside the loop, you'll realize that
+it's generating a random number between -2 and 2. (\texttt{random.rand(1)},
+you'll recall, gives us a random number between 0 and 1. By multiplying that
+number by 4 and subtracting 2, we've spread its possible values over the
+desired range. We do the same for \texttt{n2}. So the function is basically
+plotting ``a random linear combination of the yellow dominos'' a hundred times.
+
+The result is on the left side of Figure~\ref{fig:plot}. You'll see the bulk of
+the dots fall on a southwest-ish-to-northeast-ish line. That's because both
+of our dominoes (
+\raisebox{-0.25\height}{\includegraphics[width=0.07\textwidth]{gray1_2.png}}
+and
+\raisebox{-0.25\height}{\includegraphics[width=0.07\textwidth]{gray4_4.png}} )
+do point in that general direction. But if we got really lucky (?) with our
+random number draws, we could conceivably get \textit{any} point on the plane,
+even a really northwest or a really southeast one.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.45\textwidth]{plot_yellow.png}
+\includegraphics[width=0.45\textwidth]{plot_blue.png}
+\caption{A hundred random linear combinations of the yellow dominos (left) and
+the blue dominos (right).}
+\label{fig:plot}
+\end{figure}
+
+With the blue dominoes, as you've hopefully learned this chapter, that's not
+possible. If you change the first two lines of the \texttt{linearCombo()}
+function to this:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+            ...
+    domino1 = array([2,3])
+    domino2 = array([4,6])
+            ...
+\end{Verbatim}
+
+and re-run the code, you get the right side of Figure~\ref{fig:plot}, in which
+every single point, no matter the random numbers, is exactly on the 
+\raisebox{-0.25\height}{\includegraphics[width=0.07\textwidth]{darkgray2_3.png}}
+line (which is precisely the same line as the 
+\raisebox{-0.25\height}{\includegraphics[width=0.07\textwidth]{darkgray4_6.png}}
+ line, of course), giving a very warped view of our supposedly two-dimensional
+universe. Alas, that's life with blue dominoes.
 
 \vfill
 
