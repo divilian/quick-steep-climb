@@ -1938,7 +1938,7 @@ after the decimal point, we can use the functions
 
 \index{weights@\texttt{weights}}
 \begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
-weights = np.array([ 145.6, 212.9, 156.4 ])
+weights = array([ 145.6, 212.9, 156.4 ])
 print(weights)
 print(round_(weights))
 print(trunc(weights))
@@ -2004,7 +2004,7 @@ print(weights_kg)
 And to perform vector addition, just use the plus (``\texttt{+}'') symbol:
 
 \begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
-holiday_gains = np.array([8.5, 10, 11])
+holiday_gains = array([8.5, 10, 11])
 print(weights + holiday_gains)
 \end{Verbatim}
 \vspace{-.2in}
@@ -2013,7 +2013,7 @@ print(weights + holiday_gains)
 [154.1 222.9 167.4]
 \end{Verbatim}
 
-(Ouch. Too much fudge.)
+(Oof. Too much milk chocolate fudge.)
 
 \smallskip
 
@@ -2026,9 +2026,9 @@ you. The only slightly weird-looking one is the dot product. It requires typing
 ``\texttt{.dot()}'' (which I always pronounce ``dot-dot''):
 
 \begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
-a = np.array([5,3,0,2])
-b = np.array([0,1,9,6])
-print(a.dot(b))
+abc = array([5,3,0,2])
+def = array([0,1,9,6])
+print(abc.dot(def))
 
 \end{Verbatim}
 \vspace{-.2in}
@@ -2049,7 +2049,7 @@ And lastly, norms. To compute a vector's Euclidean norm, we use the
 \label{pythonNorm}
 
 \begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
-print(linalg.norm(a))
+print(linalg.norm(abc))
 \end{Verbatim}
 \vspace{-.2in}
 
@@ -2061,7 +2061,7 @@ If you're feeling paranoid, we can compute it by hand using the Pythagorean
 theorem to confirm this is the correct answer:
 
 \begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
-print(sqrt(a[0]**2 + a[1]**2 + a[2]**2 + a[3]**2))
+print(sqrt(abc[0]**2 + abc[1]**2 + abc[2]**2 + abc[3]**2))
 \end{Verbatim}
 \vspace{-.2in}
 
@@ -2074,12 +2074,12 @@ the norm as a second number in the parens:
 
 \index{inf@\texttt{Inf} (infinity)}
 \begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
-print(linalg.norm(a,0))
-print(linalg.norm(a,1))
-print(linalg.norm(a,2))
-print(linalg.norm(a,3))
-print(linalg.norm(a,4))
-print(linalg.norm(a,Inf))
+print(linalg.norm(abc,0))
+print(linalg.norm(abc,1))
+print(linalg.norm(abc,2))
+print(linalg.norm(abc,3))
+print(linalg.norm(abc,4))
+print(linalg.norm(abc,Inf))
 \end{Verbatim}
 \vspace{-.2in}
 
@@ -2093,7 +2093,7 @@ print(linalg.norm(a,Inf))
 \end{Verbatim}
 
 This prints for us the $\ell^0$, $\ell^1$, $\ell^2$, $\ell^3$, $\ell^4$, and
-$\ell^\infty$ norms of our \texttt{a} vector. In particular, the $\ell^0$ is
+$\ell^\infty$ norms of our \texttt{abc} vector. In particular, the $\ell^0$ is
 the number of non-zero entries, the $\ell^1$ is the sum of the entries, the
 $\ell^\infty$ is the maximum entry, and of course the $\ell^2$ norm is the same
 as the Euclidean norm.
