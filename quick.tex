@@ -1,3 +1,19 @@
+% To compile:
+%   pdflatex quick.tex
+%   makeindex quick.idx
+%   pdflatex quick.tex
+%
+% The content and cover files, explained:
+% - cover.xcf: Gimp file of full cover (front/back/spine)
+% - cover.pdf: full cover (front/back/spine)
+% - quick_cover.xcf DOES NOT EXIST (probably should)
+% - quick_cover.pdf just front
+% - blank.pdf a blank PDF page
+% - quick.pdf: content only, entire book
+% - quick_wcover.pdf: front cover and content, for electronic posting.
+%   To make this:
+%   $ pdftk quick_cover.pdf blank.pdf quick.pdf output quick_wcover.pdf
+%
 % TODO: allllll the LaTeX warnings I get when I compile this, many of which are
 % probably meaningful.
 % TODO: inconsistencies between whether vectors (with \overright arrows) are
