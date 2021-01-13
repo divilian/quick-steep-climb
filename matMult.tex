@@ -1,6 +1,4 @@
 
-% TODO: appendix with Python
-
 \chapter{Matrix multiplication}
 
 So far, we've multiplied scalars by vectors
@@ -828,6 +826,8 @@ A \cdot (B \cdot C).
 \end{align*}
 \vspace{-.15in}
 
+\label{associativityExample}
+
 Again, an example to illustrate:
 
 \vspace{-.15in}
@@ -1183,6 +1183,7 @@ equations simultaneously is the trick.
 You may have done more than just ``two equations, two unknowns'' in high
 school, like this problem that has three of each:
 
+\label{threeEqsThreeUnknowns}
 \vspace{-.25in}
 \begin{align*}
 6x + 2y - 4z &= -4 \\
@@ -1315,6 +1316,7 @@ our ${\scriptsize \begin{bmatrix} 1 \\ 7 \end{bmatrix}}$ vector.
 
 \smallskip
 
+\label{askPython1}
 Great, so how do we compute $A^{-1}$? Answer: ask a computer. Any programming
 language worth its salt (including Python) can figure it out lickety-split with
 one line of code. Here, I'm just going to tell you the answer I got, and see if
@@ -1396,6 +1398,7 @@ you like, with no algebraic manipulation required. As long as you have a
 programming language to compute the inverse for you, you can crank out your
 answer in no time. Here's the answer to the three-equation example I showed
 earlier:
+\label{threeEqsThreeUnknownsSol}
 
 \vspace{-.25in}
 \begin{align*}
@@ -1423,6 +1426,7 @@ x \\ y \\ z \\
 \end{align*}
 \vspace{-.25in}
 
+\label{askPython2}
 \begin{center}
 \textit{Ask Python, ``what's the inverse of \
 ${\footnotesize \begin{bmatrix}
@@ -1614,6 +1618,7 @@ You can probably guess how to do this: all we have to do is compute the
 matrix, and we'll get the corresponding $\textrm{COB}_{B_s \rightarrow B_d}$
 change-of-basis matrix.
 
+\label{askPython3}
 \begin{center}
 \textit{Hey Python, ``what's the inverse of \
 ${\footnotesize \begin{bmatrix}
@@ -1976,3 +1981,180 @@ surjective.
 
 Either all the stuff in the first box is true, or all the stuff in the second
 box. There is no in between.
+
+
+\vspace{.1in}
+\hrulefill \\
+
+\pagebreak
+
+\section*{\faPython \ \ \textit{Appendix: Python}}
+
+\index{dot@\texttt{.dot()}}
+
+Matrix multiplication in Python is easy peasy. In fact, it's exactly the same
+as vector multiplication, and matrix-vector multiplication: all three
+operations use the same \texttt{.dot()} syntax. Reproducing the example on
+p.~\pageref{associativityExample}:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+A = array([[4,2],[2,3]])
+B = array([[1,-1],[2,0]])
+C = array([[3,4],[1,5]])
+
+print("A times B is:")
+print(A.dot(B))
+print("B times C is:")
+print(B.dot(C))
+
+print("(A times B) times C is:")
+print(A.dot(B).dot(C))
+
+print("A times (B times C) is:")
+print(A.dot(B.dot(C)))
+\end{Verbatim}
+
+\vspace{-.2in}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+A times B is:
+[[ 8 -4]
+ [ 8 -2]]
+
+B times C is:
+[[ 2 -1]
+ [ 6  8]]
+
+(A times B) times C is:
+[[20 12]
+ [22 22]]
+
+A times (B times C) is:
+[[20 12]
+ [22 22]]
+\end{Verbatim}
+
+\subsection*{Matrix inverse with NumPy}
+
+\index{matrix multiplication}
+\index{linalg.inv@\texttt{linalg.inv()}}
+
+Many times this chapter (\textit{e.g.}, p.~\pageref{askPython1},
+p.~\pageref{askPython2}, p.~\pageref{askPython3}) I've told you that Python can
+magically find the inverse of a matrix for us, and that this is so easy I'm not
+even going to go through how to compute it by hand. Now's the time for me to
+follow through on that promise. To find the inverse of a matrix, you simply
+call ``\texttt{linalg.inv()}'' and pass the matrix as an argument.
+
+Here are the examples from this chapter:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+amazing = array([[6,2,-4],[1,1,2],[2,-2,8]])
+print(linalg.inv(amazing))
+\end{Verbatim}
+\vspace{-.4in}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+[[ 0.15 -0.1   0.1 ]
+ [-0.05  0.7  -0.2 ]
+ [-0.05  0.2   0.05]]
+\end{Verbatim}
+
+If that truly is the inverse of \texttt{amazing}, then we'd better be able to
+multiply it by \texttt{amazing} and get the identity matrix back, right?
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+print(amazing.dot(linalg.inv(amazing)))
+\end{Verbatim}
+\vspace{-.4in}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+[[ 1.00000000e+00  0.00000000e+00  5.55111512e-17]
+ [ 2.77555756e-17  1.00000000e+00  1.38777878e-17]
+ [ 5.55111512e-17 -2.22044605e-16  1.00000000e+00]]
+\end{Verbatim}
+
+Believe it or not, that's the right answer. At first you might cry foul that
+this looks very different from this:
+
+\vspace{-.25in}
+\begin{align*}
+\begin{bmatrix}
+1 & 0 & 0 \\
+0 & 1 & 0 \\
+0 & 0 & 1 \\
+\end{bmatrix}
+\end{align*}.
+\vspace{-.15in}
+
+\index{scientific notation}
+\index{identity matrix}
+
+But actually it's not. Look again. The ``\texttt{e-16}''s and
+``\texttt{e-17}''s at the end of some of the entries are Python's way of
+displaying \textbf{scientific notation}. ``\texttt{e-17}'' actually means
+``times $10^{-17}$,'' a number which is $\frac{1}{10^{17}}$ or
+.00000000000000001 if you prefer. That means that when you see
+\texttt{5.55111512e-17} as a matrix entry, Python is really telling you that
+it's the number .00000000000000000555111512, which I think you'll agree is
+about zero. Similarly, the value \texttt{1.00000000e+00} just means $1\times
+10^0$, which equals one. So the matrix above actually \textit{is} the identity
+matrix, to a very high degree of precision.\footnote{This behavior happens very
+often with computer programs, and there's really no way around it. Every time a
+computer stores a number, it's really storing an approximation to that number
+given a certain amount of storage (in bits) that it has been given to store it.
+This leads to tiny round-off errors that can result in things being very very
+close to, but not exactly, the correct value.}
+very close to an identity matrix.
+
+\medskip
+
+If you try to take the inverse of a singular matrix, of course, you'll get an
+error (after all, you can't divide by zero no matter how pure your intentions):
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+singular = array([[2,4,6],[-1,2,9],[1,2,3]])
+print(linalg.inv(singular))
+\end{Verbatim}
+\vspace{-.4in}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+LinAlgError: Singular matrix
+\end{Verbatim}
+\vspace{-.2in}
+
+Ouch! We got told.
+
+\bigskip
+
+\index{linalg.solve@\texttt{linalg.solve()}}
+
+Finally, let me mention that if you actually want to solve a system of
+simultaneous equations a la p.~\pageref{threeEqsThreeUnknowns}, it's best to
+not take the inverse with \texttt{linalg.inv()} and multiply it by the vector.
+This is because doing so accumulates more round-off error of the type mentioned
+above. It turns out to be more precise (and faster besides) to use the
+\texttt{linalg.solve()} function for this. This function takes two arguments --
+the matrix of coefficients, and the vector of constants from the
+right-hand-sides of the equals signs -- and computes the answer all in one go.
+Here are the answers we found earlier (on
+p.~\pageref{threeEqsThreeUnknownsSol}):
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+twoM = array([[2,-3],[3,1]])
+twoV = array([1,7])
+print(linalg.solve(twoM,twoV))
+
+threeM = array([[6,2,-4],[1,1,2],[2,-2,8]])
+threeV = array([-4,8,4])
+print(linalg.solve(threeM,threeV))
+\end{Verbatim}
+\vspace{-.26in}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+[2. 1.]
+
+[-1.  5.  2.]
+\end{Verbatim}
+
+Bada. Boom.
