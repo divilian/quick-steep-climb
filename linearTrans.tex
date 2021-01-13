@@ -741,6 +741,8 @@ As a matter of fact, we can create a linear operator to rotate vectors
 counter-clockwise (just to pick an angle at random). The formula for computing
 the rotation matrix is:
 
+\label{rotationMatrix}
+
 \vspace{-.15in}
 \begin{align*}
 R_{\theta} =
@@ -1486,8 +1488,8 @@ tuned.
 \section*{\faPython \ \ \textit{Appendix: Python}}
 
 In this appendix, we'll write a function that will visually display the
-behavior of a linear transformation, so we can get our head around what each
-one does to the points it takes as input.
+behavior of a 2-dimensional linear operator, so we can get our head around what
+each one does to the points it takes as input.
 
 \index{pylab library}
 
@@ -1527,6 +1529,8 @@ or \texttt{pylab.axvline(}\textsl{some\_x\_value}\texttt{)} to draw a
 horizontal or vertical line, respectively. If we do simply want to create a
 pair of axes, then the ``\textsl{some\_x/y\_value}s'' are both 0.
 
+\smallskip
+
 Put this all together, and we can use this code to create
 Figure~\ref{fig:firstArrow}:
 
@@ -1548,4 +1552,80 @@ pylab.show()
 \label{fig:firstArrow}
 \end{figure}
 
+
+Okay. Now let's write a function which will take a $2\times 2$ matrix as an
+argument, generate some random inputs, and plot an arrow (like the one above)
+for each input showing which point it gets mapped to. The complete code is in
+Figure~\ref{fig:plotop}.
+
+The meat of this function is actually all on one line: \texttt{output\_vector =
+M.dot(input\_vector)}. That's what takes each randomly-generated input vector
+and performs matrix-vector multiplication on it to yield the corresponding
+output. Everything else is random number generation and window dressing.
+
+\begin{figure}[ht]
+\index{plot\_operator@\texttt{plot\_operator()}}
+\centering
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+def plot_operator(M):
+    for i in arange(100):
+        xval = random.rand() * 10 - 5
+        yval = random.rand() * 10 - 5
+        input_vector = array([xval, yval])
+        pylab.plot(xval, yval, 'o')
+
+        output_vector = M.dot(input_vector)
+
+        pylab.arrow(input_vector[0], input_vector[1],
+            output_vector[0] - input_vector[0],
+            output_vector[1] - input_vector[1], 
+            head_width=.2, head_length=.3)
+
+    pylab.xlim(-5,5)
+    pylab.ylim(-5,5)
+    pylab.axhline(0)
+    pylab.axvline(0)
+    pylab.show()
+\end{Verbatim}
+\caption{The \texttt{plot\_operator()} function.}
+\label{fig:plotop}
+\end{figure}
+
+Let's take it for a spin with a few matrices:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+stretch = array([[2,0],[0,2]])
+plot_operator(stretch)
+
+flip_horiz_shrink_vert = array([[-1,0],[0,.8]])
+plot_operator(flip_horiz_shrink_vert)
+
+rotate_90_ccw = array([[0,1],[-1,0]])
+plot_operator(rotate_90_cw)
+
+rad_17 = 17 * pi / 180
+rotate_17deg_ccw = array([[cos(rad_17),-sin(rad_17)],
+    [sin(rad_17),cos(rad_17)]])
+plot_operator(rotate_17deg_ccw)
+\end{Verbatim}
+
+\pagebreak
+
+For that last one, we had to first convert 17\textdegree to radians (by
+multiplying by $\frac{\pi}{180}$) and then plug that value into the sines and
+cosines of the general rotation matrix on p.~\pageref{rotationMatrix}. The
+results of these four operators are shown in the plots in Figure~\ref{opPlots}.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.48\textwidth]{stretch.png}
+\includegraphics[width=0.48\textwidth]{flip_horiz_shrink_vert.png} \\
+\includegraphics[width=0.48\textwidth]{rotate_90deg_cw.png}
+\includegraphics[width=0.48\textwidth]{rotate_17deg_ccw.png} \\
+\caption{The operations of four matrices depicted graphically on random input
+vectors: \texttt{stretch} (upper-left), \texttt{flip\_horiz\_shrink\_vert}
+(upper-right), \texttt{rotate\_90deg\_ccw} (lower-left), and
+\texttt{rotate\_17deg\_cw} (lower-right).}
+\label{opPlots}
+\end{figure}
 
