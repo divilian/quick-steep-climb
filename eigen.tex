@@ -1,6 +1,4 @@
 
-% TODO: appendix with Python
-
 \setsecnumdepth{section}
 
 \chapter{Eigenanalysis}
@@ -659,6 +657,7 @@ eigenvalue.
 
 \subsection{Finding the eigenvectors/eigenvalues}
 
+\label{eigenPython}
 By the way, so far I've just stated to you what the eigenvectors are, and you
 might wonder how I figured that out. The answer is that I simply gave the
 matrix to Python and asked it for the eigenvectors and eigenvalues. We'll see
@@ -668,8 +667,6 @@ in practice.
 %\smallskip
 %\phantom{.}
 %\pagebreak
-
-% TODO: add "Instructions for doing this are given at the end of the chapter."
 
 \section{The Spectral Theorem}
 
@@ -1248,3 +1245,80 @@ eigenvalues, and eigenvectors back-to-back-to-back.
 
 Crisp and elegant, and as sweet smelling as an apple orchard. In our next and
 final chapter, we'll eat a few of these juicy apples.
+
+\vfill
+\hrulefill \\
+
+\pagebreak
+
+\section*{\faPython \ \ \textit{Appendix: Python}}
+
+On p.~\pageref{eigenPython} I mentioned that to actually find the eigenvalues
+and eigenvectors of a matrix, you can just ask Python. Okay, so how do you do
+that?
+
+\index{linalg.eig@\texttt{linalg.eig()}}
+
+Here's how: \texttt{linalg.eig()}. This function takes a matrix as an argument,
+and returns a vector of two things: the eigenvalues (in their own vector), and
+the corresponding eigenvectors. The latter come in a matrix where each column
+is its own eigenvector, and where eigenvalue $k$ corresponds to the eigenvector
+in column $k$.
+
+Let's begin with the $M$ matrix (p.~\pageref{mmatrix}) we've been using all
+chapter. I'll save the result from calling \texttt{linalg.eig()} (in a variable
+called ``\texttt{eigstuff}'') and then print out each component separately.
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+M = array([[1.5,-1],[-.5,1]])
+eigstuff = linalg.eig(M)
+print(eigstuff[0])
+print(eigstuff[1])
+\end{Verbatim}
+\vspace{-.2in}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+[2.  0.5]
+[[ 0.89442719  0.70710678]
+ [-0.4472136   0.70710678]]
+\end{Verbatim}
+
+\index{normalizing (a vector)}
+
+The two eigenvalues are 2 and $\frac{1}{2}$, as we knew. Now the numbers in the
+eigenvector matrix look a little funky, but you just have to realize that
+they've been normalized. That first eigenvector -- which goes with eigenvalue
+2 -- is:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+dominant_eigvec = eigstuff[1][:,0]
+print(dominant_eigvec)
+\end{Verbatim}
+\vspace{-.2in}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+[ 0.89442719 -0.4472136 ]
+\end{Verbatim}
+
+(Notice how I did that, by the way. I took \texttt{eigstuff}, accessed element
+1 of it (the second element) to get the matrix of eigenvectors, and then used
+``\texttt{:,0}'' in the boxies to get all rows of column 0.)
+
+Now $[\ 0.894\ \ -0.447\ ]^\intercal$ may not look familiar, but remember that
+it only indicates the \textit{direction} of the eigenvector. Any vector in the
+same direction is also an eigenvector. So if we, say, divided it by the second
+entry to get an equally good dominant eigenvector:
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
+another_eigvec = dominant_eigvec / dominant_eigvec[1]
+print(another_eigvec)
+\end{Verbatim}
+\vspace{-.2in}
+
+\begin{Verbatim}[fontsize=\small,samepage=true,frame=leftline,framesep=5mm,framerule=1mm]
+[ -2. 1. ]
+\end{Verbatim}
+
+that should ring a bell. We can do the same with the other eigenvectors, of
+course, and there's really nothing more to it than that. (Believe me:
+calculating them by hand is a \textit{major} pain.)
