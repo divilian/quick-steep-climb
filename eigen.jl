@@ -68,7 +68,7 @@ annotate!(.4,.9,Plots.text("\$(-1,\\frac{1}{2})\$",13))
 
 # output vector
 plot!([0,-2],[0,1],color="black",linewidth=2,arrow=(1,1),linestyle=:dash)
-annotate!(-3.4,1.3,text("(-2,-1)",13))
+annotate!(-3.4,1.3,text("(-2,1)",13))
 annotate!(-3,.25,text("boom!",10))
 
 # window dressing
@@ -89,7 +89,7 @@ annotate!(-2,2,Plots.text("(-2,1)",13))
 
 # output vector
 plot!([0,-4],[0,2],color="black",linewidth=2,arrow=(1,1),linestyle=:dash)
-annotate!(-4,3,text("(-4,-2)",13))
+annotate!(-4,3,text("(-4,2)",13))
 annotate!(-4,.5,text("boom!",13))
 
 # window dressing
