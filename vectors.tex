@@ -307,7 +307,7 @@ we ascend up the hierarchy, things will get less and less visualizable.
 
 As I mentioned earlier in this chapter, having more than two coordinates in a
 vector isn't really all that weird...you simply have to give up any hope of
-visualizing it geometrically. But it's easy enough to do: a list of four
+visualizing things geometrically. But it's easy enough to do: a list of four
 numbers -- 89, 93, 70, and 133 -- is the most natural thing in the world. One
 could imagine finding the sum of the elements, the maximum element, the number
 of negative elements, or other more exotic things.
@@ -319,9 +319,15 @@ If I have a vector with $n$ coordinates, those coordinates are numbered 0 up to
 $n-1$, but \textit{not} up to $n$.
 
 \index{dimension}
-Also note that the number of elements/coordinates is also the
+The number of elements/coordinates is also sometimes called the
 \textbf{dimensionality} (number of dimensions) of the vector. Simply put, a
-vector that has nine elements in it is called ``a 9-dimensional vector.''
+vector that has nine elements in it is called ``a 9-dimensional
+vector.''\footnote{The terminology used varies somewhat from person to person
+here. Some people use ``dimensionality'' to mean the same thing as the
+``\textbf{rank}'' of the object, which is ``how many different directions does
+the object go in?'' All vectors have rank 1, and all matrices (see
+Chapter~\ref{ch:matrices}) have rank 2. Interestingly, scalars have rank
+\textit{0}.}
 
 \subsection{3. A collection with non-numeric indices}
 
@@ -789,8 +795,8 @@ two vectors:
 \end{align*}
 \vspace{-.15in}
 
-Thar's som' mighty big entries in them vectors. Surely multiplying them
-together would give a large result, right? No:
+There's some mighty big entries in those vectors. Surely multiplying them
+together would give a huge result, right? No:
 
 \vspace{-.15in}
 \begin{align*}
@@ -1307,7 +1313,7 @@ angle between them in the calculation.}
 
 We've learned that one way to compute the dot product between
 $\overrightarrow{\textbf{a}}$ and $\overrightarrow{\textbf{b}}$ is to multiply
-their corresponding entries:
+their corresponding entries, then add:
 
 \vspace{-.25in}
 \begin{align*}
@@ -1725,7 +1731,7 @@ romantic evening together. :)
 
 \hrulefill \\
 
-\pagebreak
+\vfil\pagebreak
 
 \section*{\faPython \ \ \textit{Appendix: Python}}
 
