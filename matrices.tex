@@ -1605,12 +1605,13 @@ comprised of more than one test. For example:
 
 \begin{Verbatim}[fontsize=\small,samepage=true,frame=single,framesep=3mm]
     if (sex[i] == "male" and weights[i] < 160  or
-        sex[i] == "female" and weights[i] < 140):
+        sex[i] == "female" and weights[i] < 140  or
+        sex[i] == "non-binary" and weights[i] < 150):
         ...
 \end{Verbatim}
 
 Here, the body of the \texttt{if} statement will only be executed for males
-under 160 lbs and for females under 140 lbs.
+under 160 lbs, non-binaries under 150 lbs., and females under 140 lbs.
 
 \subsection*{Boolean variables in Python}
 
